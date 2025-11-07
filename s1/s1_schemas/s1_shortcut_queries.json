@@ -1,0 +1,60 @@
+{
+  "metadata": {
+    "source": "SentinelOne Operations Center",
+    "schema_name": "Shortcut Queries",
+    "extraction_date": "2025-10-21",
+    "description": "Shortcut queries for S1QL 2.0 that search multiple predefined fields",
+    "shortcut_count": 12
+  },
+  "usage_info": "Shortcut queries search multiple fields for a value. The fields searched are predefined, and each shortcut name is preceded by a hash character #. When the hash character # is entered, the Search Helper shows the shortcut names. Click the question icon ? to view all fields searched for each shortcut name. The hash character (#) is only required for AI SIEM Event Search and PowerQuery based queries. These queries use S1QL 2.0. Legacy Deep Visibility (S1QL 1.0) AI SIEM Event Search and PowerQuery (S1QL 2.0) Description CmdLine #cmdline All Processes CmdLine Arguments DNS #dns All DNS requests and responses FilePath #filepath All Paths Hash #hash any MD5, SHA1, or SHA256 field IP #ip All IPs Md5 #md5 All Md5 Name #name All Processes Names Sha1 #sha1 All Sha1 Sha256 #sha256 All Sha256 StorylineId #storylineid All Storyline Ids UID #uid All UIDs UserName #username All Processes Users",
+  "shortcuts": [
+    {
+      "s1ql_shortcut": "#cmdline",
+      "description": "All Processes CmdLine Arguments"
+    },
+    {
+      "s1ql_shortcut": "#dns",
+      "description": "All DNS requests and responses"
+    },
+    {
+      "s1ql_shortcut": "#filepath",
+      "description": "All Paths"
+    },
+    {
+      "s1ql_shortcut": "#hash",
+      "description": "any MD5, SHA1, or SHA256 field"
+    },
+    {
+      "s1ql_shortcut": "#ip",
+      "description": "All IPs"
+    },
+    {
+      "s1ql_shortcut": "#md5",
+      "description": "All Md5"
+    },
+    {
+      "s1ql_shortcut": "#name",
+      "description": "All Processes Names"
+    },
+    {
+      "s1ql_shortcut": "#sha1",
+      "description": "All Sha1"
+    },
+    {
+      "s1ql_shortcut": "#sha256",
+      "description": "All Sha256"
+    },
+    {
+      "s1ql_shortcut": "#storylineid",
+      "description": "All Storyline Ids"
+    },
+    {
+      "s1ql_shortcut": "#uid",
+      "description": "All UIDs"
+    },
+    {
+      "s1ql_shortcut": "#username",
+      "description": "All Processes Users"
+    }
+  ]
+}

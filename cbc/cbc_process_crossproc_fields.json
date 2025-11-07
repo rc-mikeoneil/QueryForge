@@ -1,0 +1,98 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_crossproc_fields": {
+      "crossproc_action": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. The cross-process action initiated by the actor process"
+      },
+      "crossproc_api": {
+        "type": "keyword",
+        "description": "Searchable. Name of the operating system API called by the actor process. In cases where that call targets another process, that process is reported as crossproc_name. In cases where there is no target process, this field represents a system API call.  Available with:all sensors with Endpoint Standard Windows 3.8 or later sensor with Enterprise EDR macOS sensors with Enterprise EDR (only reporting the PEP_CREATE_PHANDLE_API call made in task_for_pid() requests)"
+      },
+      "crossproc_cmdline": {
+        "type": "keyword",
+        "description": "Command line of the cross-process command"
+      },
+      "crossproc_cmdline_length": {
+        "type": "keyword",
+        "description": "Character count of the cross-process command line executed"
+      },
+      "crossproc_count": {
+        "type": "integer",
+        "description": "Searchable. Count of crossproc events reported by the sensor since last initialization"
+      },
+      "crossproc_effective_reputation": {
+        "type": "keyword",
+        "description": "Effective reputation of the binary on one side of the cross-process action; if crossproc_target=true, it is the effective reputation of the process targeted in the cross-process action; if crossproc_target=false, it is of the actor process (applied by the sensor when the event occurred)"
+      },
+      "crossproc_effective_reputation_source": {
+        "type": "keyword",
+        "description": "Source of the effective reputation for the cross-process"
+      },
+      "crossproc_excluded_count": {
+        "type": "integer",
+        "description": "Count of excluded crossproc events, as reported by the sensor since last initialization"
+      },
+      "crossproc_guid": {
+        "type": "keyword",
+        "description": "Unique process identifier of one of the cross-process members; if crossproc_target=true, it is the GUID of the process targeted in the cross-process action; if crossproc_target=false, it is the GUID of the actor process (same as crossproc_process_guid)"
+      },
+      "crossproc_hash": {
+        "type": "keyword",
+        "description": "Searchable. MD5 and/or SHA-256 hash(es) of the binaries whose processes are running on one side of the cross-process action; if crossproc_target=true, the hash(es) are of the process targeted in the cross-process action; if crossproc_target=false, the hash(es) are of the actor process",
+        "array": true
+      },
+      "crossproc_issuer": {
+        "type": "keyword",
+        "description": "Crossproc certificate issuer names",
+        "array": true
+      },
+      "crossproc_md5": {
+        "type": "md5",
+        "description": "Searchable. MD5 hash of the binary on one side of the cross-process action; if crossproc_target=true, it is the MD5 of the process targeted in the cross-process action; if crossproc_target=false, it is the MD5 of the actor process"
+      },
+      "crossproc_name": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Filesystem path of the binary of one side of the cross-process action (can be missing for certain crossproc actions); if crossproc_target=true, it is the path of the process targeted in the cross-process action; if crossproc_target=false, it is the path of the actor process"
+      },
+      "crossproc_pid": {
+        "type": "integer",
+        "description": "Process identifier assigned by the operating system to one of the cross-process members; if crossproc_target=true, it is the PID of the process targeted in the cross-process action; if crossproc_target=false, it is the PID of the actor process"
+      },
+      "crossproc_process_guid": {
+        "type": "keyword",
+        "description": "Searchable. Unique identifer of the process on one side of the cross-process action; if crossproc_target=true, it is the GUID of the process targeted in the cross-process action; if crossproc_target=false, it is the GUID of the actor process (same as crossproc_guid)"
+      },
+      "crossproc_product_name": {
+        "type": "keyword",
+        "description": "Product name associated with the crossproc executable (from the binary resource)"
+      },
+      "crossproc_publisher": {
+        "type": "keyword",
+        "description": "Crossproc certificate signer names",
+        "array": true
+      },
+      "crossproc_publisher_state": {
+        "type": "keyword",
+        "description": "Certificate signature state of the crossproc as string. Can be combination of FILE_SIGNATURE_STATE_INVALID, FILE_SIGNATURE_STATE_SIGNED, FILE_SIGNATURE_STATE_VERIFIED, FILE_SIGNATURE_STATE_NOT_SIGNED, FILE_SIGNATURE_STATE_UNKNOWN, FILE_SIGNATURE_STATE_CHAINED, FILE_SIGNATURE_STATE_TRUSTED, FILE_SIGNATURE_STATE_OS, FILE_SIGNATURE_STATE_CATALOG_SIGNED or FILE_SIGNATURE_STATE_NOT_SIGNED if not signed",
+        "array": true
+      },
+      "crossproc_reputation": {
+        "type": "keyword",
+        "description": "Reputation of crossproc as provided by the CDC"
+      },
+      "crossproc_sha256": {
+        "type": "sha256",
+        "description": "Searchable. SHA-256 hash of the binary on one side of the cross-process action; if crossproc_target=true, it is the SHA-256 of the process targeted in the cross-process action; if crossproc_target=false, it is the SHA-256 of the actor process"
+      },
+      "crossproc_target": {
+        "type": "bool",
+        "description": "Searchable. True if the process was the target of the cross-process event; false if the process was the actor"
+      },
+      "crossproc_username": {
+        "type": "keyword",
+        "description": "Username associated with the crossproc process"
+      }
+    }
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "comprehensive_security_patterns": {
+    "description": "Multi-indicator detection patterns for Cortex XDR XQL queries",
+    "patterns": {
+      "rdp_detection": {
+        "description": "Comprehensive Remote Desktop Protocol detection",
+        "indicators": ["ports", "processes", "network", "actions"],
+        "dataset": "xdr_data",
+        "query": "dataset = xdr_data | filter action_local_port in (3389, 3388) or action_remote_port in (3389, 3388) or actor_process_image_name in ('mstsc.exe', 'rdpclip.exe', 'rdpinit.exe', 'termsrv.dll') or actor_process_command_line contains 'mstsc' or actor_process_command_line contains '/v:' or action_remote_ip_country != null and dst_action_external_hostname contains 'rdp'",
+        "notes": "Detects RDP activity via ports, processes, and network indicators"
+      },
+      "smb_lateral_movement": {
+        "description": "SMB-based lateral movement",
+        "indicators": ["ports", "processes", "network"],
+        "dataset": "xdr_data",
+        "query": "dataset = xdr_data | filter action_local_port in (445, 139) or action_remote_port in (445, 139) or actor_process_image_name in ('net.exe', 'net1.exe', 'psexec.exe', 'paexec.exe') or actor_process_command_line contains '\\\\admin$' or actor_process_command_line contains '\\\\c$' or actor_process_command_line contains 'net use' or dst_action_external_hostname contains '\\\\\\\\'",
+        "notes": "Detects SMB lateral movement via administrative shares"
+      },
+      "powershell_execution": {
+        "description": "Suspicious PowerShell execution",
+        "indicators": ["processes", "command_line"],
+        "dataset": "xdr_data",
+        "query": "dataset = xdr_data | filter actor_process_image_name in ('powershell.exe', 'pwsh.exe', 'powershell_ise.exe') and (actor_process_command_line contains '-enc' or actor_process_command_line contains '-encodedcommand' or actor_process_command_line contains '-w hidden' or actor_process_command_line contains '-windowstyle hidden' or actor_process_command_line contains '-nop' or actor_process_command_line contains '-noprofile' or actor_process_command_line contains '-ep bypass' or actor_process_command_line contains 'invoke-expression' or actor_process_command_line contains 'iex' or actor_process_command_line contains 'downloadstring' or actor_process_command_line contains 'downloadfile')",
+        "notes": "Detects PowerShell with common evasion and download patterns"
+      },
+      "wmi_execution": {
+        "description": "WMI execution for lateral movement",
+        "indicators": ["processes", "command_line", "parent_process"],
+        "dataset": "xdr_data",
+        "query": "dataset = xdr_data | filter actor_process_image_name in ('wmic.exe', 'wmiprvse.exe', 'scrcons.exe') or actor_process_command_line contains 'wmic' and actor_process_command_line contains 'process call create' or causality_actor_process_image_name = 'wmiprvse.exe'",
+        "notes": "Detects WMI usage for remote execution"
+      },
+      "credential_dumping": {
+        "description": "Credential dumping attempts",
+        "indicators": ["processes", "command_line", "target_process"],
+        "dataset": "xdr_data",
+        "query": "dataset = xdr_data | filter actor_process_image_name in ('mimikatz.exe', 'procdump.exe', 'sqldumper.exe') or actor_process_command_line contains 'sekurlsa' or (actor_process_command_line contains 'procdump' and actor_process_command_line contains 'lsass') or (actor_process_command_line contains 'comsvcs.dll' and actor_process_command_line contains 'minidump') or action_process_image_name = 'lsass.exe'",
+        "notes": "Detects credential dumping via various tools"
+      },
+      "webshell_activity": {
+        "description": "Web shell execution detection",
+        "indicators": ["processes", "parent_process"],
+        "dataset": "xdr_data",
+        "query": "dataset = xdr_data | filter causality_actor_process_image_name in ('w3wp.exe', 'httpd.exe', 'nginx.exe', 'apache.exe', 'tomcat.exe') and actor_process_image_name in ('cmd.exe', 'powershell.exe', 'wscript.exe', 'cscript.exe', 'net.exe', 'whoami.exe', 'ipconfig.exe', 'ping.exe')",
+        "notes": "Detects suspicious processes spawned by web servers"
+      },
+      "scheduled_task_persistence": {
+        "description": "Scheduled task creation",
+        "indicators": ["processes", "command_line"],
+        "dataset": "xdr_data",
+        "query": "dataset = xdr_data | filter actor_process_image_name in ('schtasks.exe', 'at.exe') or (actor_process_command_line contains 'schtasks' and actor_process_command_line contains '/create') or actor_process_command_line contains 'New-ScheduledTask' or actor_process_command_line contains 'Register-ScheduledTask'",
+        "notes": "Detects scheduled task creation for persistence"
+      },
+      "service_creation": {
+        "description": "Windows service creation",
+        "indicators": ["processes", "command_line"],
+        "dataset": "xdr_data",
+        "query": "dataset = xdr_data | filter actor_process_image_name = 'sc.exe' and (actor_process_command_line contains 'create' or actor_process_command_line contains 'config') or actor_process_command_line contains 'New-Service'",
+        "notes": "Detects Windows service creation and modification"
+      },
+      "registry_persistence": {
+        "description": "Registry persistence mechanisms",
+        "indicators": ["registry_operations"],
+        "dataset": "xdr_data",
+        "query": "dataset = xdr_data | filter action_registry_key_name contains '\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run' or action_registry_key_name contains '\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\RunOnce' or action_registry_key_name contains '\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Winlogon\\\\Userinit' or action_registry_key_name contains '\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Winlogon\\\\Shell'",
+        "notes": "Detects registry Run key modifications"
+      },
+      "suspicious_downloads": {
+        "description": "Suspicious file downloads",
+        "indicators": ["processes", "command_line", "network"],
+        "dataset": "xdr_data",
+        "query": "dataset = xdr_data | filter actor_process_image_name in ('powershell.exe', 'cmd.exe', 'wscript.exe', 'cscript.exe', 'mshta.exe', 'rundll32.exe', 'regsvr32.exe', 'certutil.exe', 'bitsadmin.exe') and (actor_process_command_line contains 'http://' or actor_process_command_line contains 'https://' or actor_process_command_line contains 'downloadfile' or actor_process_command_line contains 'downloadstring' or actor_process_command_line contains 'invoke-webrequest' or actor_process_command_line contains '-decode')",
+        "notes": "Detects file downloads via scripting engines"
+      },
+      "lolbins_execution": {
+        "description": "Living Off the Land Binaries abuse",
+        "indicators": ["processes", "command_line"],
+        "dataset": "xdr_data",
+        "query": "dataset = xdr_data | filter actor_process_image_name in ('mshta.exe', 'regsvr32.exe', 'rundll32.exe', 'certutil.exe', 'msiexec.exe', 'installutil.exe', 'regasm.exe', 'regsvcs.exe', 'msxsl.exe', 'odbcconf.exe') or actor_process_command_line contains 'javascript:' or actor_process_command_line contains 'vbscript:' or actor_process_command_line contains '/i:http'",
+        "notes": "Detects abuse of legitimate Windows binaries"
+      },
+      "bypass_uac": {
+        "description": "UAC bypass techniques",
+        "indicators": ["processes", "command_line"],
+        "dataset": "xdr_data",
+        "query": "dataset = xdr_data | filter actor_process_command_line contains 'eventvwr.exe' or actor_process_command_line contains 'fodhelper.exe' or actor_process_command_line contains 'computerdefaults.exe' or (actor_process_image_name = 'dism.exe' and causality_actor_process_image_name not in ('svchost.exe', 'services.exe'))",
+        "notes": "Detects common UAC bypass techniques"
+      },
+      "network_scanning": {
+        "description": "Network scanning activity",
+        "indicators": ["network_connections", "processes"],
+        "dataset": "xdr_data",
+        "query": "dataset = xdr_data | filter actor_process_image_name in ('nmap.exe', 'masscan.exe', 'angry_ip_scanner.exe', 'advanced_port_scanner.exe') or event_type = ENUM.NETWORK and event_sub_type = ENUM.NETWORK_CONNECTION | comp count() as connection_count by agent_hostname, actor_process_image_name, bin(_time, 1m) | filter connection_count > 100",
+        "notes": "Detects port scanning based on high connection rates"
+      },
+      "process_injection": {
+        "description": "Process injection techniques",
+        "indicators": ["cross_process", "behaviors"],
+        "dataset": "xdr_data",
+        "query": "dataset = xdr_data | filter event_type = ENUM.INJECT_PROCESS or event_type = ENUM.INJECT_THREAD or action_remote_process_thread_id != null or actor_process_image_name != action_process_image_name",
+        "notes": "Detects process injection via various techniques"
+      },
+      "data_exfiltration": {
+        "description": "Potential data exfiltration",
+        "indicators": ["network", "file_operations"],
+        "dataset": "xdr_data",
+        "query": "dataset = xdr_data | filter action_local_port in (21, 22, 69, 873) or action_remote_port in (21, 22, 69, 873) or dst_action_external_hostname contains 'ftp' or dst_action_external_hostname contains 'sftp' or (actor_process_command_line contains 'copy' and action_remote_ip_country != null)",
+        "notes": "Detects file transfer activity to external hosts"
+      }
+    }
+  }
+}

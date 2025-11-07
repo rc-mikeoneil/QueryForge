@@ -1,0 +1,60 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_general_fields": {
+      "domain": {
+        "type": "domain",
+        "description": "Domain name"
+      },
+      "enriched": {
+        "type": "bool",
+        "description": "Searchable. True if the result includes data from the Endpoint Standard product. Not present if false.  Requires Endpoint Standard"
+      },
+      "hash": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Aggregate set of MD5 and SHA-256 hashes associated with the process (including childproc_hash, crossproc_hash, filemod_hash, modload_hash, process_hash); enables one-step search for any matches on the specified hashes",
+        "array": true
+      },
+      "hostname": {
+        "type": "keyword",
+        "description": "Hostname"
+      },
+      "ipaddr": {
+        "type": "ipaddr",
+        "description": "IPv4 address (CIDR supported)"
+      },
+      "ipport": {
+        "type": "integer",
+        "description": "Network port"
+      },
+      "ipv6addr": {
+        "type": "ipv6addr",
+        "description": "IPv6 address (CIDR supported)"
+      },
+      "legacy": {
+        "type": "bool",
+        "description": "Deprecated. Use enriched"
+      },
+      "md5": {
+        "type": "md5",
+        "description": "MD5 hash"
+      },
+      "path": {
+        "type": "path",
+        "description": "File path"
+      },
+      "sha256": {
+        "type": "sha256",
+        "description": "SHA-256 hash"
+      },
+      "ttp": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Patterns of behavior (i.e. tactics, techniques, procedures) associated with specific threat actor(s) attributed to events of the process",
+        "array": true
+      },
+      "username": {
+        "type": "keyword",
+        "description": "User context"
+      }
+    }
+  }
+}

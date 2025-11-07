@@ -1,0 +1,106 @@
+{
+  "metadata": {
+    "source": "SentinelOne Operations Center",
+    "schema_name": "Logins",
+    "extraction_date": "2025-10-21",
+    "description": "Logins event fields for S1QL 2.0 queries",
+    "field_count": 19
+  },
+  "fields": [
+    {
+      "s1ql_field": "event.login.accountDomain",
+      "description": "Domain or computer name for which login attempt was performed",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "event.login.accountName",
+      "description": "The name of the account that reported information about the logon event. On Windows, this value is collected from logon event SubjectUserName field.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "event.login.accountSid",
+      "description": "Security identifier (SID) of the account that attempted to login. The SID is a data structure of variable length that identifies the user account. Every account on a network is issued a unique SID when the account is first created.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "event.login.baseType",
+      "description": "Login base type",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "event.login.failureReason",
+      "description": "Login failure reason",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "event.login.isAdministratorEquivalent",
+      "description": "Indicates login events for accounts with administrator privileges. Based on the ElevatedToken field in Windows logon events. If \"True\", then the session this event represents is elevated and has administrator privileges.",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "event.login.loginIsSuccessful",
+      "description": "Was the login attempt successful",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "event.login.sessionId",
+      "description": "Session ID of the successful login",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "event.login.tgt.domainName",
+      "description": "The name of the Domain the user is associated with in the login event.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "event.login.tgt.user.name",
+      "description": "The name of the user that logged in.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "event.login.tgt.userSid",
+      "description": "The Security Descriptor (SID) of the user that logged in.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "event.login.type",
+      "description": "Type of login which was performed. The value is based on Microsoft security logon types. Note that the logon event type NewCredentials is called NETWORK_CREDENTIALS.",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "event.login.userName",
+      "description": "The username used in login event. On Windows, this value is collected from logon event TargetUserName field.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "event.logout.tgt.domainName",
+      "description": "The name of the Domain the user is associated with in the logout event.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "event.logout.tgt.user.name",
+      "description": "The name of the user that logged out.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "event.logout.tgt.userSid",
+      "description": "The Security Descriptor (SID) of the user that logged out.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "event.logout.type",
+      "description": "The type of login which was used for the original login. The possible values are: 2 - Interactive login from the physical device. 3 - Network - a user or computer logged in from the network. 4 - Batch - logged on by a batch server, the user was likely not directly involved. 5 - Service - A service was started by the SCM, generating a login event for the service's user. 6 - doesn't exist. 7 - A locked but already logged-in computer was unlocked. 8 - NetworkCleartext - Similar to network, except the user's password was passed to the authentication package in plain text instead of passing the hash. 9 - NewCredentials - A caller cloned its current token and specified new credentials for outbound connections. The new logon session has the same local identity, but uses different credentials for other network connections. 10 - Remote Interactive - A login via Terminal Service or remote desktop (RDP). 11 - CachedInteractive - The credentials used are locally stored network credentials. The domain controller was not contacted to verify the credentials. More details on all can be found here: https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/basic-audit-logon-events",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.endpoint.ip.address",
+      "description": "IP address of the machine performing the login attempt",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.endpoint.name",
+      "description": "The name of the source machine the user is associated with in the login event.",
+      "data_type": "String"
+    }
+  ]
+}

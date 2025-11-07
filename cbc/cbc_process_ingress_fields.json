@@ -1,0 +1,10 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_ingress_fields": {
+      "ingress_time": {
+        "type": "integer",
+        "description": "Searchable. Timestamp of when the Carbon Black Cloud receives data for initial processing (Unix format)"
+      }
+    }
+  }
+}

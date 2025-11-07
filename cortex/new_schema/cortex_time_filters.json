@@ -1,0 +1,54 @@
+{
+  "cortex_xdr_query_schema": {
+    "time_filters": {
+      "presets": {
+        "last_hour": {
+          "description": "Query data from the last 60 minutes",
+          "syntax": "_time > current_time() - interval '1 hour'"
+        },
+        "last_24_hours": {
+          "description": "Query data from the last 24 hours",
+          "syntax": "_time > current_time() - interval '24 hours'"
+        },
+        "last_7_days": {
+          "description": "Query data from the last 7 days",
+          "syntax": "_time > current_time() - interval '7 days'"
+        },
+        "last_30_days": {
+          "description": "Query data from the last 30 days",
+          "syntax": "_time > current_time() - interval '30 days'"
+        }
+      },
+      "custom": {
+        "absolute": {
+          "description": "Specify exact timestamps",
+          "examples": [
+            "_time > timestamp('2024-01-01 00:00:00')",
+            "_time between timestamp('2024-01-01') and timestamp('2024-01-31')"
+          ]
+        },
+        "relative": {
+          "description": "Relative to current time",
+          "syntax": "current_time() - interval '<value> <unit>'",
+          "units": [
+            "second",
+            "minute",
+            "hour",
+            "day",
+            "week",
+            "month"
+          ],
+          "examples": [
+            "_time > current_time() - interval '2 hours'",
+            "_time > current_time() - interval '3 days'"
+          ]
+        }
+      },
+      "recommendations": {
+        "default_range": "24 hours for most investigations",
+        "maximum_range": "Data retention varies by deployment (typically 30-90 days)",
+        "performance_note": "Smaller time ranges significantly improve query speed"
+      }
+    }
+  }
+}

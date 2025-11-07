@@ -1,0 +1,4521 @@
+{
+  "schema": {
+    "datasets": {
+      "command_scripts": {
+        "name": "Command Scripts",
+        "metadata": {
+          "source": "SentinelOne Operations Center",
+          "schema_name": "Command Scripts",
+          "extraction_date": "2025-10-21",
+          "description": "Command Scripts event fields for S1QL 2.0 queries",
+          "field_count": 10
+        },
+        "fields": {
+          "cmdScript.applicationName": {
+            "description": "Name of application that ran command script",
+            "data_type": "String"
+          },
+          "cmdScript.content": {
+            "description": "The content of the executed command script. Limited up to first 65KB.",
+            "data_type": "String"
+          },
+          "cmdScript.isComplete": {
+            "description": "Marks if the command script content is complete or truncated due to size limit. The maximal size limit is 65KB.",
+            "data_type": "Boolean"
+          },
+          "cmdScript.originalSize": {
+            "description": "The size (in bytes) of the complete command script",
+            "data_type": "Numeric"
+          },
+          "cmdScript.sha256": {
+            "description": "The SHA256 hash of the complete command script. This value can be used in Exclusions.",
+            "data_type": "String"
+          },
+          "src.process.cmdline": {
+            "description": "Command line arguments sent to the source process. For example: In the command line \"runc init\" the source process runc is activated. src.process.cmdline will be \"runc init\" In the command line \"C:\\Windows\\system32\\svchost.exe -k wsappx -p -s AppXSvc\" the source process svchost.exe is activated. src.process.cmdline will be \"C:\\Windows\\system32\\svchost.exe -k wsappx -p -s AppXSvc\"",
+            "data_type": "String"
+          },
+          "src.process.image.md5": {
+            "description": "MD5 signature",
+            "data_type": "String"
+          },
+          "src.process.image.path": {
+            "description": "Full path of source process",
+            "data_type": "String"
+          },
+          "src.process.image.sha1": {
+            "description": "SHA1 signature",
+            "data_type": "String"
+          },
+          "tgt.file.sha1": {
+            "description": "SHA1 Signature of File",
+            "data_type": "String"
+          }
+        }
+      },
+      "cross_process": {
+        "name": "Cross Process",
+        "metadata": {
+          "source": "SentinelOne Operations Center",
+          "schema_name": "Cross Process",
+          "extraction_date": "2025-10-21",
+          "description": "Cross Process event fields for S1QL 2.0 queries",
+          "field_count": 32
+        },
+        "fields": {
+          "k8sCluster.containerImage.id": {
+            "description": "Container Image ID",
+            "data_type": "String"
+          },
+          "k8sCluster.containerImage.sha256": {
+            "description": "Container Image Sha256",
+            "data_type": "String"
+          },
+          "tgt.process.accessRights": {
+            "description": "Type of access granted to process by cross process",
+            "data_type": "Numeric"
+          },
+          "tgt.process.activeContent.hash": {
+            "description": "Active Content SHA1 for target process",
+            "data_type": "String"
+          },
+          "tgt.process.activeContent.id": {
+            "description": "Active Content file unique ID for target process",
+            "data_type": "String"
+          },
+          "tgt.process.activeContent.path": {
+            "description": "Active Content file path of source process was the target of the event",
+            "data_type": "String"
+          },
+          "tgt.process.activeContent.signedStatus": {
+            "description": "Active Content file signed status for target process",
+            "data_type": "Enum"
+          },
+          "tgt.process.activeContentType": {
+            "description": "Active Content type of target process",
+            "data_type": "Enum"
+          },
+          "tgt.process.cmdline": {
+            "description": "Full command line sent with the target process",
+            "data_type": "String"
+          },
+          "tgt.process.displayName": {
+            "description": "Display name of target process",
+            "data_type": "String"
+          },
+          "tgt.process.image.binaryIsExecutable": {
+            "description": "Is binary backing the target process an executable",
+            "data_type": "Boolean"
+          },
+          "tgt.process.image.md5": {
+            "description": "MD5 of target process",
+            "data_type": "String"
+          },
+          "tgt.process.image.path": {
+            "description": "Image path of target process",
+            "data_type": "String"
+          },
+          "tgt.process.image.sha1": {
+            "description": "SHA1 of target process",
+            "data_type": "String"
+          },
+          "tgt.process.image.sha256": {
+            "description": "SHA256 of target process",
+            "data_type": "String"
+          },
+          "tgt.process.integrityLevel": {
+            "description": "Integrity level of target process",
+            "data_type": "Enum"
+          },
+          "tgt.process.isNative64Bit": {
+            "description": "Is target process compiled natively for 64-Bit or runs as WoW",
+            "data_type": "Boolean"
+          },
+          "tgt.process.isRedirectCmdProcessor": {
+            "description": "Is interpreter for target process with stdout redirection",
+            "data_type": "Boolean"
+          },
+          "tgt.process.isStorylineRoot": {
+            "description": "Indicates if the target process is the root of Storyline",
+            "data_type": "Boolean"
+          },
+          "tgt.process.name": {
+            "description": "The file name of the target process. When process A creates process B, the target process name in the process creation event will be of process B.",
+            "data_type": "String"
+          },
+          "tgt.process.pid": {
+            "description": "PID for target process",
+            "data_type": "Numeric"
+          },
+          "tgt.process.publisher": {
+            "description": "Publisher that digitally signed the binary being invoked as part of the target process",
+            "data_type": "String"
+          },
+          "tgt.process.reasonSignatureInvalid": {
+            "description": "Indicates the reason the target process signature is not valid",
+            "data_type": "String"
+          },
+          "tgt.process.relation": {
+            "description": "Relationship between source process and target process",
+            "data_type": "Enum"
+          },
+          "tgt.process.sessionId": {
+            "description": "ID of the terminal (cmd, shell, other) session of target process",
+            "data_type": "Numeric"
+          },
+          "tgt.process.signedStatus": {
+            "description": "Signature status of target process",
+            "data_type": "Enum"
+          },
+          "tgt.process.startTime": {
+            "description": "Start time of target process. Format: epoch time (milliseconds since 1.1.1970), Timezone: UTC",
+            "data_type": "Numeric"
+          },
+          "tgt.process.storyline.id": {
+            "description": "Storyline ID of target event",
+            "data_type": "String"
+          },
+          "tgt.process.subsystem": {
+            "description": "Subsystem of target process",
+            "data_type": "String"
+          },
+          "tgt.process.uid": {
+            "description": "Unique ID of target process",
+            "data_type": "String"
+          },
+          "tgt.process.user": {
+            "description": "Username under which target process ran",
+            "data_type": "String"
+          },
+          "tgt.process.verifiedStatus": {
+            "description": "Verification status of signature of the target process",
+            "data_type": "Enum"
+          }
+        }
+      },
+      "dns": {
+        "name": "DNS",
+        "metadata": {
+          "source": "SentinelOne Operations Center",
+          "schema_name": "DNS",
+          "extraction_date": "2025-10-21",
+          "description": "DNS event fields for S1QL 2.0 queries",
+          "field_count": 6
+        },
+        "fields": {
+          "event.dns.protocol": {
+            "description": "The protocol used in the DNS request",
+            "data_type": "Enum"
+          },
+          "event.dns.provider": {
+            "description": "The provider used by the agent to collect the DNS event telemetry",
+            "data_type": "Enum"
+          },
+          "event.dns.request": {
+            "description": "Domain name of the resource requested by the host",
+            "data_type": "String"
+          },
+          "event.dns.response": {
+            "description": "The data in the DNS response describing the resource. I.e. the IP address, DNS, type, and so on.",
+            "data_type": "String"
+          },
+          "event.dns.responseCode": {
+            "description": "The DNS response code returned by the DNS server",
+            "data_type": "Numeric"
+          },
+          "event.dns.transportProtocol": {
+            "description": "The transport protocol used in the DNS request",
+            "data_type": "Enum"
+          }
+        }
+      },
+      "driver": {
+        "name": "Driver",
+        "metadata": {
+          "source": "SentinelOne Operations Center",
+          "schema_name": "Driver",
+          "extraction_date": "2025-10-21",
+          "description": "Driver event fields for S1QL 2.0 queries",
+          "field_count": 13
+        },
+        "fields": {
+          "driver.certificate.signature.algorithm": {
+            "description": "Driver Certificate Signature Algorithm is the digest algorithm (hash function) used to calculate the driver certificate signature. SHA1 or SHA256 are most commonly used.",
+            "data_type": "Numeric"
+          },
+          "driver.certificate.signature.hash": {
+            "description": "Driver Certificate Signature is a SHA1 or SHA256 hash used to identify the driver certificate",
+            "data_type": "String"
+          },
+          "driver.certificate.thumbprint": {
+            "description": "Driver Certificate Thumbprint is a SHA1 or SHA256 hash used to identify the driver certificate",
+            "data_type": "String"
+          },
+          "driver.certificate.thumbprintAlgorithm": {
+            "description": "Driver Certificate Thumbprint Algorithm is the digest algorithm (hash function) used to calculate the driver certificate thumbprint. SHA1 or SHA256 are most commonly used.",
+            "data_type": "Numeric"
+          },
+          "driver.dropper.process.storyline.id": {
+            "description": "The Storyline ID associated with the process that wrote the driver file to the disk. Used to track the storyline of the driver dropper to look for the full list of IOCs associated with the driver.",
+            "data_type": "String"
+          },
+          "driver.fileVersion": {
+            "description": "The driver image file version.",
+            "data_type": "String"
+          },
+          "driver.isLoadedBeforeMonitor": {
+            "description": "Is Loaded Before Monitor",
+            "data_type": "Boolean"
+          },
+          "driver.loadVerdict": {
+            "description": "Driver Load Verdict",
+            "data_type": "Enum"
+          },
+          "driver.peSha1": {
+            "description": "SHA1 Hash of the Driver PE File",
+            "data_type": "String"
+          },
+          "driver.peSha256": {
+            "description": "SHA256 Hash of the Driver PE File",
+            "data_type": "String"
+          },
+          "driver.registryKeyPath": {
+            "description": "The registry key path where the driver registered itself.",
+            "data_type": "String"
+          },
+          "driver.serviceName": {
+            "description": "The service name of the driver",
+            "data_type": "String"
+          },
+          "driver.startType": {
+            "description": "Driver Load Start Type determines when a driver will be loaded, either during or after the system starts.",
+            "data_type": "Numeric"
+          }
+        }
+      },
+      "files": {
+        "name": "Files",
+        "metadata": {
+          "source": "SentinelOne Operations Center",
+          "schema_name": "Files",
+          "extraction_date": "2025-10-21",
+          "description": "Files event fields for S1QL 2.0 queries",
+          "field_count": 75
+        },
+        "fields": {
+          "k8sCluster.containerId": {
+            "description": "Container ID. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.containerImage": {
+            "description": "Container image. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.containerImage.id": {
+            "description": "Container Image ID",
+            "data_type": "String"
+          },
+          "k8sCluster.containerImage.sha256": {
+            "description": "Container Image Sha256",
+            "data_type": "String"
+          },
+          "k8sCluster.containerLabels": {
+            "description": "Container labels. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.containerName": {
+            "description": "Container name. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.controllerLabels": {
+            "description": "Kubernetes controller labels. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.controllerName": {
+            "description": "Kubernetes controller name. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.controllerType": {
+            "description": "Kubernetes controller type. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.name": {
+            "description": "Kubernetes cluster name. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.namespace": {
+            "description": "Kubernetes namespace. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.namespaceLabels": {
+            "description": "Kubernetes namespace labels. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.nodeName": {
+            "description": "Kubernetes node name. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.podLabels": {
+            "description": "Kubernetes pod labels. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.podName": {
+            "description": "Kubernetes pod name. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "src.process.image.binaryIsExecutable": {
+            "description": "Is binary backing source process an executable",
+            "data_type": "Boolean"
+          },
+          "src.process.image.description": {
+            "description": "The description of the file taken from version information. For example, if the image is \"cmd.exe\", this would be \"Windows Command Processor\"",
+            "data_type": "String"
+          },
+          "src.process.image.internalName": {
+            "description": "The \"internal name\" field from the process's image resource.",
+            "data_type": "String"
+          },
+          "src.process.image.md5": {
+            "description": "MD5 signature",
+            "data_type": "String"
+          },
+          "src.process.image.originalFileName": {
+            "description": "The \"Original filename\" field taken from the process's image properties.",
+            "data_type": "String"
+          },
+          "src.process.image.productName": {
+            "description": "The \"Product Name\" field taken from the process's image properties.",
+            "data_type": "String"
+          },
+          "src.process.image.productVersion": {
+            "description": "The \"Product version\" field taken from the process's image properties.",
+            "data_type": "String"
+          },
+          "src.process.image.sha256": {
+            "description": "SHA256 signature",
+            "data_type": "String"
+          },
+          "src.process.image.type": {
+            "description": "The source process's image file type",
+            "data_type": "String"
+          },
+          "src.process.publisher": {
+            "description": "Signature sign identity",
+            "data_type": "String"
+          },
+          "src.process.reasonSignatureInvalid": {
+            "description": "Signature not verified reason",
+            "data_type": "String"
+          },
+          "src.process.rpid": {
+            "description": "Real/Relinked PID (after relinking)",
+            "data_type": "Numeric"
+          },
+          "src.process.signedStatus": {
+            "description": "Verifies the process validity and integrity. Unsigned processes may pose a security risk.",
+            "data_type": "Enum"
+          },
+          "src.process.tid": {
+            "description": "Thread id",
+            "data_type": "Numeric"
+          },
+          "src.process.verifiedStatus": {
+            "description": "Verification status of process signature",
+            "data_type": "Enum"
+          },
+          "task.cluster": {
+            "description": "Cluster name. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.ecsVersion": {
+            "description": "Task Ecs Version. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.serviceArn": {
+            "description": "Task service ARN. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.serviceName": {
+            "description": "Task service name. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.tags": {
+            "description": "Task tags. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.taskArn": {
+            "description": "Task ARN. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.taskAvailabilityZone": {
+            "description": "Task Availability Zone:. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.taskDefinitionArn": {
+            "description": "Task definition ARN. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.taskDefinitionFamily": {
+            "description": "Task definition family. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.taskDefinitionRevision": {
+            "description": "Task definition revision. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "tgt.file.convictedBy": {
+            "description": "Reputation, Static AI",
+            "data_type": "Enum"
+          },
+          "tgt.file.creationTime": {
+            "description": "Date and Time of File Creation. Format: epoch time (milliseconds since 1.1.1970), Timezone: UTC",
+            "data_type": "Numeric"
+          },
+          "tgt.file.description": {
+            "description": "Description of file",
+            "data_type": "String"
+          },
+          "tgt.file.extension": {
+            "description": "File Extension",
+            "data_type": "String"
+          },
+          "tgt.file.id": {
+            "description": "Unique ID of file",
+            "data_type": "String"
+          },
+          "tgt.file.internalName": {
+            "description": "Internal name of file",
+            "data_type": "String"
+          },
+          "tgt.file.isDirectory": {
+            "description": "Indicates whether the target file is a directory.",
+            "data_type": "Boolean"
+          },
+          "tgt.file.isExecutable": {
+            "description": "Is file executable",
+            "data_type": "Boolean"
+          },
+          "tgt.file.isSigned": {
+            "description": "Is file signed",
+            "data_type": "Enum"
+          },
+          "tgt.file.location": {
+            "description": "Location of file",
+            "data_type": "Enum"
+          },
+          "tgt.file.md5": {
+            "description": "MD5 Signature of File",
+            "data_type": "String"
+          },
+          "tgt.file.modificationTime": {
+            "description": "Date and time file was modified. Format: epoch time (milliseconds since 1.1.1970), Timezone: UTC",
+            "data_type": "Numeric"
+          },
+          "tgt.file.name": {
+            "description": "The target file name. For example, if the file path is a\\b\\c.txt then this field will be c.txt",
+            "data_type": "String"
+          },
+          "tgt.file.oldMd5": {
+            "description": "Old file MD5 before Modify",
+            "data_type": "String"
+          },
+          "tgt.file.oldPath": {
+            "description": "Old path before 'Rename'",
+            "data_type": "String"
+          },
+          "tgt.file.oldSha1": {
+            "description": "Old file SHA1 before Modify",
+            "data_type": "String"
+          },
+          "tgt.file.oldSha256": {
+            "description": "Old file SHA256 before Modify",
+            "data_type": "String"
+          },
+          "tgt.file.origin.creationMethod": {
+            "description": "Type of action that spawned the file",
+            "data_type": "Enum"
+          },
+          "tgt.file.origin.creatorProcess.name": {
+            "description": "The process name that spawned the file",
+            "data_type": "String"
+          },
+          "tgt.file.origin.creatorProcess.uid": {
+            "description": "The process UID that spawned the file",
+            "data_type": "String"
+          },
+          "tgt.file.origin.locationPath": {
+            "description": "Source path for copied files, or URL for downloaded files",
+            "data_type": "String"
+          },
+          "tgt.file.origin.locationType": {
+            "description": "If file was copied, describes the source file's location. If file was downloaded, describes which program created it",
+            "data_type": "Enum"
+          },
+          "tgt.file.originalFileName": {
+            "description": "The \"Original filename\" field taken from the file's properties.",
+            "data_type": "String"
+          },
+          "tgt.file.owner.name": {
+            "description": "The name of the process that owns this file.",
+            "data_type": "String"
+          },
+          "tgt.file.owner.userSid": {
+            "description": "The Security Descriptor (SID) of the user that the process that owns this file is using.",
+            "data_type": "String"
+          },
+          "tgt.file.path": {
+            "description": "The full path of the target file including the file name",
+            "data_type": "String"
+          },
+          "tgt.file.productName": {
+            "description": "The \"Product Name\" field from the file's properties.",
+            "data_type": "String"
+          },
+          "tgt.file.productVersion": {
+            "description": "The \"Product version\" field from the file's properties.",
+            "data_type": "String"
+          },
+          "tgt.file.publisher": {
+            "description": "The entity that signed the target file.",
+            "data_type": "String"
+          },
+          "tgt.file.sha1": {
+            "description": "SHA1 Signature of File",
+            "data_type": "String"
+          },
+          "tgt.file.sha256": {
+            "description": "SHA256 Signature of File",
+            "data_type": "String"
+          },
+          "tgt.file.signature.isValid": {
+            "description": "Indicates whether the file's digital signature is valid.",
+            "data_type": "Boolean"
+          },
+          "tgt.file.signatureInvalidReason": {
+            "description": "Indicates why the file signature was deemed invalid",
+            "data_type": "String"
+          },
+          "tgt.file.size": {
+            "description": "File Size in bytes",
+            "data_type": "Numeric"
+          },
+          "tgt.file.type": {
+            "description": "Type of file",
+            "data_type": "Enum"
+          }
+        }
+      },
+      "indicators": {
+        "name": "Indicators",
+        "metadata": {
+          "source": "SentinelOne Operations Center",
+          "schema_name": "Indicators",
+          "extraction_date": "2025-10-21",
+          "description": "Indicators event fields for S1QL 2.0 queries",
+          "field_count": 4
+        },
+        "fields": {
+          "indicator.category": {
+            "description": "Category name of the behavioral indicator. A full listing of indicator categories can be found here: https://community.sentinelone.com/s/article/000006183",
+            "data_type": "Enum"
+          },
+          "indicator.description": {
+            "description": "Description of the behavioral indicator. A full list of behavioral indicator descriptions can be found here: https://community.sentinelone.com/s/article/000006183",
+            "data_type": "String"
+          },
+          "indicator.metadata": {
+            "description": "Contains metadata information relevant to the behavioral indicator. For example, for the ServiceCreated indicator, this field contains the name of the service For Process related indicators, this field contains additional information about the process such as process name and process ID For the WmiQueryAntiVm indicator, this field contains the query",
+            "data_type": "String"
+          },
+          "indicator.name": {
+            "description": "Friendly name of the behavioral indicator. Behavioral indicator descriptions can be found here: https://community.sentinelone.com/s/article/000006183",
+            "data_type": "String"
+          }
+        }
+      },
+      "logins": {
+        "name": "Logins",
+        "metadata": {
+          "source": "SentinelOne Operations Center",
+          "schema_name": "Logins",
+          "extraction_date": "2025-10-21",
+          "description": "Logins event fields for S1QL 2.0 queries",
+          "field_count": 19
+        },
+        "fields": {
+          "event.login.accountDomain": {
+            "description": "Domain or computer name for which login attempt was performed",
+            "data_type": "String"
+          },
+          "event.login.accountName": {
+            "description": "The name of the account that reported information about the logon event. On Windows, this value is collected from logon event SubjectUserName field.",
+            "data_type": "String"
+          },
+          "event.login.accountSid": {
+            "description": "Security identifier (SID) of the account that attempted to login. The SID is a data structure of variable length that identifies the user account. Every account on a network is issued a unique SID when the account is first created.",
+            "data_type": "String"
+          },
+          "event.login.baseType": {
+            "description": "Login base type",
+            "data_type": "String"
+          },
+          "event.login.failureReason": {
+            "description": "Login failure reason",
+            "data_type": "String"
+          },
+          "event.login.isAdministratorEquivalent": {
+            "description": "Indicates login events for accounts with administrator privileges. Based on the ElevatedToken field in Windows logon events. If \"True\", then the session this event represents is elevated and has administrator privileges.",
+            "data_type": "Boolean"
+          },
+          "event.login.loginIsSuccessful": {
+            "description": "Was the login attempt successful",
+            "data_type": "Boolean"
+          },
+          "event.login.sessionId": {
+            "description": "Session ID of the successful login",
+            "data_type": "Numeric"
+          },
+          "event.login.tgt.domainName": {
+            "description": "The name of the Domain the user is associated with in the login event.",
+            "data_type": "String"
+          },
+          "event.login.tgt.user.name": {
+            "description": "The name of the user that logged in.",
+            "data_type": "String"
+          },
+          "event.login.tgt.userSid": {
+            "description": "The Security Descriptor (SID) of the user that logged in.",
+            "data_type": "String"
+          },
+          "event.login.type": {
+            "description": "Type of login which was performed. The value is based on Microsoft security logon types. Note that the logon event type NewCredentials is called NETWORK_CREDENTIALS.",
+            "data_type": "Enum"
+          },
+          "event.login.userName": {
+            "description": "The username used in login event. On Windows, this value is collected from logon event TargetUserName field.",
+            "data_type": "String"
+          },
+          "event.logout.tgt.domainName": {
+            "description": "The name of the Domain the user is associated with in the logout event.",
+            "data_type": "String"
+          },
+          "event.logout.tgt.user.name": {
+            "description": "The name of the user that logged out.",
+            "data_type": "String"
+          },
+          "event.logout.tgt.userSid": {
+            "description": "The Security Descriptor (SID) of the user that logged out.",
+            "data_type": "String"
+          },
+          "event.logout.type": {
+            "description": "The type of login which was used for the original login. The possible values are: 2 - Interactive login from the physical device. 3 - Network - a user or computer logged in from the network. 4 - Batch - logged on by a batch server, the user was likely not directly involved. 5 - Service - A service was started by the SCM, generating a login event for the service's user. 6 - doesn't exist. 7 - A locked but already logged-in computer was unlocked. 8 - NetworkCleartext - Similar to network, except the user's password was passed to the authentication package in plain text instead of passing the hash. 9 - NewCredentials - A caller cloned its current token and specified new credentials for outbound connections. The new logon session has the same local identity, but uses different credentials for other network connections. 10 - Remote Interactive - A login via Terminal Service or remote desktop (RDP). 11 - CachedInteractive - The credentials used are locally stored network credentials. The domain controller was not contacted to verify the credentials. More details on all can be found here: https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/basic-audit-logon-events",
+            "data_type": "String"
+          },
+          "src.endpoint.ip.address": {
+            "description": "IP address of the machine performing the login attempt",
+            "data_type": "String"
+          },
+          "src.endpoint.name": {
+            "description": "The name of the source machine the user is associated with in the login event.",
+            "data_type": "String"
+          }
+        }
+      },
+      "modules": {
+        "name": "Modules",
+        "metadata": {
+          "source": "SentinelOne Operations Center",
+          "schema_name": "Modules",
+          "extraction_date": "2025-10-21",
+          "description": "Modules event fields for S1QL 2.0 queries",
+          "field_count": 3
+        },
+        "fields": {
+          "module.md5": {
+            "description": "Module MD5 Signature",
+            "data_type": "String"
+          },
+          "module.path": {
+            "description": "Module Path",
+            "data_type": "String"
+          },
+          "module.sha1": {
+            "description": "Module SHA1 Signature",
+            "data_type": "String"
+          }
+        }
+      },
+      "network_actions": {
+        "name": "Network Actions",
+        "metadata": {
+          "source": "SentinelOne Operations Center",
+          "schema_name": "Network Actions",
+          "extraction_date": "2025-10-21",
+          "description": "Network Actions event fields for S1QL 2.0 queries",
+          "field_count": 32
+        },
+        "fields": {
+          "dst.ip.address": {
+            "description": "IP address of destination for the network request",
+            "data_type": "String"
+          },
+          "dst.port.number": {
+            "description": "Port number of destination of the network request",
+            "data_type": "Numeric"
+          },
+          "event.network.connectionStatus": {
+            "description": "Network event status",
+            "data_type": "Enum"
+          },
+          "event.network.direction": {
+            "description": "Direction of the network connection event. Incoming network connection direction originate from another device to the SentinelOne protected endpoint, while outgoing network connection direction originate from the SentinelOne protected endpoint to another device.",
+            "data_type": "Enum"
+          },
+          "event.network.protocolName": {
+            "description": "Protocol name per IANA well known ports distribution",
+            "data_type": "String"
+          },
+          "k8sCluster.containerId": {
+            "description": "Container ID. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.containerImage": {
+            "description": "Container image. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.containerImage.id": {
+            "description": "Container Image ID",
+            "data_type": "String"
+          },
+          "k8sCluster.containerImage.sha256": {
+            "description": "Container Image Sha256",
+            "data_type": "String"
+          },
+          "k8sCluster.containerLabels": {
+            "description": "Container labels. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.containerName": {
+            "description": "Container name. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.controllerLabels": {
+            "description": "Kubernetes controller labels. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.controllerName": {
+            "description": "Kubernetes controller name. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.controllerType": {
+            "description": "Kubernetes controller type. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.name": {
+            "description": "Kubernetes cluster name. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.namespace": {
+            "description": "Kubernetes namespace. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.namespaceLabels": {
+            "description": "Kubernetes namespace labels. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.nodeName": {
+            "description": "Kubernetes node name. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.podLabels": {
+            "description": "Kubernetes pod labels. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.podName": {
+            "description": "Kubernetes pod name. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "src.ip.address": {
+            "description": "IP address of the originator performing the network event",
+            "data_type": "String"
+          },
+          "src.port.number": {
+            "description": "Port number of traffic source",
+            "data_type": "Numeric"
+          },
+          "task.cluster": {
+            "description": "Cluster name. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.ecsVersion": {
+            "description": "Task Ecs Version. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.serviceArn": {
+            "description": "Task service ARN. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.serviceName": {
+            "description": "Task service name. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.tags": {
+            "description": "Task tags. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.taskArn": {
+            "description": "Task ARN. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.taskAvailabilityZone": {
+            "description": "Task Availability Zone:. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.taskDefinitionArn": {
+            "description": "Task definition ARN. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.taskDefinitionFamily": {
+            "description": "Task definition family. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.taskDefinitionRevision": {
+            "description": "Task definition revision. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          }
+        }
+      },
+      "processes": {
+        "name": "Processes",
+        "metadata": {
+          "source": "SentinelOne Operations Center",
+          "schema_name": "Processes",
+          "extraction_date": "2025-10-21",
+          "description": "Processes event fields for S1QL 2.0 queries",
+          "field_count": 274
+        },
+        "fields": {
+          "k8sCluster.containerId": {
+            "description": "Container ID. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.containerImage": {
+            "description": "Container image. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.containerImage.id": {
+            "description": "Container Image ID",
+            "data_type": "String"
+          },
+          "k8sCluster.containerImage.sha256": {
+            "description": "Container Image Sha256",
+            "data_type": "String"
+          },
+          "k8sCluster.containerLabels": {
+            "description": "Container labels. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.containerName": {
+            "description": "Container name. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.controllerLabels": {
+            "description": "Kubernetes controller labels. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.controllerName": {
+            "description": "Kubernetes controller name. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.controllerType": {
+            "description": "Kubernetes controller type. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.name": {
+            "description": "Kubernetes cluster name. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.namespace": {
+            "description": "Kubernetes namespace. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.namespaceLabels": {
+            "description": "Kubernetes namespace labels. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.nodeName": {
+            "description": "Kubernetes node name. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.podLabels": {
+            "description": "Kubernetes pod labels. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "k8sCluster.podName": {
+            "description": "Kubernetes pod name. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "osSrc.process.activeContent.hash": {
+            "description": "Active Content SHA1 of source process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.activeContent.id": {
+            "description": "Active Content file unique ID of source process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.activeContent.path": {
+            "description": "Active Content file path of source process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.activeContent.signedStatus": {
+            "description": "Active Content file signed status of source process (as attributed by the OS)",
+            "data_type": "Enum"
+          },
+          "osSrc.process.activeContentType": {
+            "description": "Active Content type of source process (as attributed by the OS)",
+            "data_type": "Enum"
+          },
+          "osSrc.process.childProcCount": {
+            "description": "Child process count",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.cmdline": {
+            "description": "Command arguments sent with source process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.crossProcessCount": {
+            "description": "Target Process event Count",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.crossProcessDupRemoteProcessHandleCount": {
+            "description": "Duplicate Process Handle' event count",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.crossProcessDupThreadHandleCount": {
+            "description": "Duplicate Thread Handle' Count",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.crossProcessOpenProcessCount": {
+            "description": "Open Process' Count",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.crossProcessOutOfStorylineCount": {
+            "description": "Out of Storyline' event count",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.crossProcessThreadCreateCount": {
+            "description": "Remote Thread' Count",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.displayName": {
+            "description": "Display name of source process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.dnsCount": {
+            "description": "Count of DNS requests",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.image.binaryIsExecutable": {
+            "description": "Is binary backing source process (as attributed by the OS) an executable",
+            "data_type": "Boolean"
+          },
+          "osSrc.process.image.extension": {
+            "description": "Extension of the OS source process",
+            "data_type": "String"
+          },
+          "osSrc.process.image.md5": {
+            "description": "MD5 of source process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.image.origin.creationMethod": {
+            "description": "Type of action that spawned the file",
+            "data_type": "Enum"
+          },
+          "osSrc.process.image.origin.creatorProcess.name": {
+            "description": "The process name that spawned the file",
+            "data_type": "String"
+          },
+          "osSrc.process.image.origin.creatorProcess.uid": {
+            "description": "The process UID that spawned the file",
+            "data_type": "String"
+          },
+          "osSrc.process.image.origin.locationPath": {
+            "description": "Source path for copied files, or URL for downloaded files",
+            "data_type": "String"
+          },
+          "osSrc.process.image.origin.locationType": {
+            "description": "If file was copied, describes the source file's location. If file was downloaded, describes which program created it",
+            "data_type": "Enum"
+          },
+          "osSrc.process.image.path": {
+            "description": "Full path of executable backing this process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.image.sha1": {
+            "description": "SHA1 of source process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.image.sha256": {
+            "description": "SHA256 of source process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.indicatorBootConfigurationUpdateCount": {
+            "description": "Count of indicators - Boot Configuration Update",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.indicatorEvasionCount": {
+            "description": "Count of indicators - Evasion",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.indicatorExploitationCount": {
+            "description": "Count of indicators - Exploitation",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.indicatorGeneral.count": {
+            "description": "Count of indicators - General",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.indicatorInfostealerCount": {
+            "description": "Count of indicators - Infostealer",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.indicatorInjectionCount": {
+            "description": "Count of indicators - Injection",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.indicatorPersistenceCount": {
+            "description": "Count of indicators - Persistence",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.indicatorPostExploitationCount": {
+            "description": "Count of indicators - Post Exploitation",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.indicatorRansomwareCount": {
+            "description": "Count of indicators - Ransomware",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.indicatorReconnaissanceCount": {
+            "description": "Count of indicators - Reconnaissance",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.integrityLevel": {
+            "description": "Integrity level of source process (as attributed by the OS)",
+            "data_type": "Enum"
+          },
+          "osSrc.process.isNative64Bit": {
+            "description": "Is source process (as attributed by the OS) compiled natively for 64-Bit or runs as WoW.",
+            "data_type": "Boolean"
+          },
+          "osSrc.process.isRedirectCmdProcessor": {
+            "description": "Is interpreter for source process (as attributed by the OS) with stdout redirection",
+            "data_type": "Boolean"
+          },
+          "osSrc.process.isStorylineRoot": {
+            "description": "Indicates if the source process (as attributed by the OS) is the root of Storyline",
+            "data_type": "Boolean"
+          },
+          "osSrc.process.moduleCount": {
+            "description": "Count of Modules Loaded",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.name": {
+            "description": "The file name of the source process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.netConnCount": {
+            "description": "Network connection count",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.netConnInCount": {
+            "description": "Incoming network connection count",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.netConnOutCount": {
+            "description": "Outgoing network connection count",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.parent.activeContent.hash": {
+            "description": "Active Content SHA1 for the OS source process parent (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.parent.activeContent.id": {
+            "description": "Active Content file unique ID for the OS source process parent (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.parent.activeContent.path": {
+            "description": "Active Content file path for the OS source process parent (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.parent.activeContent.signedStatus": {
+            "description": "Active Content file signed status for the OS source process parent (as attributed by the OS)",
+            "data_type": "Enum"
+          },
+          "osSrc.process.parent.activeContentType": {
+            "description": "Active Content type of the OS source process parent (as attributed by the OS)",
+            "data_type": "Enum"
+          },
+          "osSrc.process.parent.cmdline": {
+            "description": "Command arguments sent with the process that created the OS source process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.parent.displayName": {
+            "description": "Display name of process that created the OS source process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.parent.image.md5": {
+            "description": "MD5 of process that created the OS source process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.parent.image.origin.creationMethod": {
+            "description": "Type of action that spawned the file",
+            "data_type": "Enum"
+          },
+          "osSrc.process.parent.image.origin.creatorProcess.name": {
+            "description": "The process name that spawned the file",
+            "data_type": "String"
+          },
+          "osSrc.process.parent.image.origin.creatorProcess.uid": {
+            "description": "The process UID that spawned the file",
+            "data_type": "String"
+          },
+          "osSrc.process.parent.image.origin.locationPath": {
+            "description": "Source path for copied files, or URL for downloaded files",
+            "data_type": "String"
+          },
+          "osSrc.process.parent.image.origin.locationType": {
+            "description": "If file was copied, describes the source file's location. If file was downloaded, describes which program created it",
+            "data_type": "Enum"
+          },
+          "osSrc.process.parent.image.path": {
+            "description": "Full path of executable backing this process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.parent.image.sha1": {
+            "description": "SHA1 of process that created the OS source process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.parent.image.sha256": {
+            "description": "SHA256 of process that created the OS source process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.parent.image.signature.isValid": {
+            "description": "Indicates the OS parent image signature is valid",
+            "data_type": "Boolean"
+          },
+          "osSrc.process.parent.image.type": {
+            "description": "Type of OS process that created a process",
+            "data_type": "String"
+          },
+          "osSrc.process.parent.image.uid": {
+            "description": "Image UID of the OS source process parent",
+            "data_type": "String"
+          },
+          "osSrc.process.parent.integrityLevel": {
+            "description": "Integrity level of process that created the OS source process (as attributed by the OS)",
+            "data_type": "Enum"
+          },
+          "osSrc.process.parent.isNative64Bit": {
+            "description": "Was the OS source process parent (as attributed by the OS) compiled natively for 64-Bit or runs as WoW",
+            "data_type": "Boolean"
+          },
+          "osSrc.process.parent.isRedirectCmdProcessor": {
+            "description": "Does OS source process parent (as attributed by the OS) interpreter have stdout redirection",
+            "data_type": "Boolean"
+          },
+          "osSrc.process.parent.isStorylineRoot": {
+            "description": "Is OS source process parent (as attributed by the OS) root of Storyline",
+            "data_type": "Boolean"
+          },
+          "osSrc.process.parent.name": {
+            "description": "Name of the process that created the OS source process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.parent.pid": {
+            "description": "PID of process that created the OS source process (as attributed by the OS)",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.parent.publisher": {
+            "description": "Publisher that digitally signed the binary invoked as part of the process that created the OS source process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.parent.reasonSignatureInvalid": {
+            "description": "Reason process that created the OS source process signature is not valid (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.parent.sessionId": {
+            "description": "ID of terminal (cmd, shell, other) session of the process that created the OS source process (as attributed by the OS)",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.parent.signedStatus": {
+            "description": "Signature status of process that created the OS source process (as attributed by the OS)",
+            "data_type": "Enum"
+          },
+          "osSrc.process.parent.startTime": {
+            "description": "Start time of parent of the OS source process. Format: epoch time (milliseconds since 1.1.1970), Timezone: UTC",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.parent.storyline.id": {
+            "description": "Storyline ID of the process that created the OS source process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.parent.uid": {
+            "description": "Unique ID of process that created the OS source process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.parent.user": {
+            "description": "Username under which the process that created the OS source process ran (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.parent.userSid": {
+            "description": "The Security Descriptor (SID) of the user the parent process is running under.",
+            "data_type": "String"
+          },
+          "osSrc.process.pid": {
+            "description": "PID for source process (as attributed by the OS)",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.publisher": {
+            "description": "Publisher that signed binary invoked as part of the process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.reasonSignatureInvalid": {
+            "description": "Reason process (as attributed by the OS) signature invalid",
+            "data_type": "String"
+          },
+          "osSrc.process.registryChangeCount": {
+            "description": "Count of registry key changes",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.sessionId": {
+            "description": "ID of the terminal (cmd, shell, other) session of source process (as attributed by the OS)",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.signedStatus": {
+            "description": "Signature status of source process (as attributed by the OS)",
+            "data_type": "Enum"
+          },
+          "osSrc.process.startTime": {
+            "description": "Start time of source process (as attributed by the OS). Format: epoch time (milliseconds since 1.1.1970), Timezone: UTC",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.storyline.id": {
+            "description": "Storyline ID of the source process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.subsystem": {
+            "description": "Subsystem of source process (as attributed by the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.tgtFileCreationCount": {
+            "description": "Count of file creation events",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.tgtFileDeletionCount": {
+            "description": "Count of file deletion events",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.tgtFileModificationCount": {
+            "description": "Count of file modification events",
+            "data_type": "Numeric"
+          },
+          "osSrc.process.uid": {
+            "description": "Unique ID of source process (as attributed by the the OS)",
+            "data_type": "String"
+          },
+          "osSrc.process.user": {
+            "description": "Username under which source process (attributed by the OS) ran",
+            "data_type": "String"
+          },
+          "osSrc.process.userSid": {
+            "description": "The Security Decriptor (SID) of the user the process is running under. For example, a service may run as \"NT AUTHORITY\\SYSTEM\" with the SID \"S-1-5-18\"",
+            "data_type": "String"
+          },
+          "osSrc.process.verifiedStatus": {
+            "description": "Verification status of process signature (as attributed by the OS)",
+            "data_type": "Enum"
+          },
+          "src.process.activeContent.hash": {
+            "description": "Active Content SHA1 for source process",
+            "data_type": "String"
+          },
+          "src.process.activeContent.id": {
+            "description": "Active Content file unique ID for source process",
+            "data_type": "String"
+          },
+          "src.process.activeContent.path": {
+            "description": "Active Content file path for source process",
+            "data_type": "String"
+          },
+          "src.process.activeContent.signedStatus": {
+            "description": "Active Content file signed status for source process",
+            "data_type": "Enum"
+          },
+          "src.process.activeContentType": {
+            "description": "Active Content type of source process",
+            "data_type": "Enum"
+          },
+          "src.process.childProcCount": {
+            "description": "Count of the child processes as attributed by the OS.",
+            "data_type": "Numeric"
+          },
+          "src.process.cmdline": {
+            "description": "Command line arguments sent to the source process. For example: In the command line \"runc init\" the source process runc is activated. src.process.cmdline will be \"runc init\" In the command line \"C:\\Windows\\system32\\svchost.exe -k wsappx -p -s AppXSvc\" the source process svchost.exe is activated. src.process.cmdline will be \"C:\\Windows\\system32\\svchost.exe -k wsappx -p -s AppXSvc\"",
+            "data_type": "String"
+          },
+          "src.process.crossProcessCount": {
+            "description": "Target Process event Count",
+            "data_type": "Numeric"
+          },
+          "src.process.crossProcessDupRemoteProcessHandleCount": {
+            "description": "'Duplicate Process Handle' event count",
+            "data_type": "Numeric"
+          },
+          "src.process.crossProcessDupThreadHandleCount": {
+            "description": "'Duplicate Thread Handle' Count",
+            "data_type": "Numeric"
+          },
+          "src.process.crossProcessOpenProcessCount": {
+            "description": "'Open Process' Count",
+            "data_type": "Numeric"
+          },
+          "src.process.crossProcessOutOfStorylineCount": {
+            "description": "'Out of Storyline' event count",
+            "data_type": "Numeric"
+          },
+          "src.process.crossProcessThreadCreateCount": {
+            "description": "'Remote Thread' Count",
+            "data_type": "Numeric"
+          },
+          "src.process.displayName": {
+            "description": "Display name of source process",
+            "data_type": "String"
+          },
+          "src.process.dnsCount": {
+            "description": "Count of DNS requests",
+            "data_type": "Numeric"
+          },
+          "src.process.eUserName": {
+            "description": "Effective Username under which the process ran",
+            "data_type": "String"
+          },
+          "src.process.eUserUid": {
+            "description": "EUID of the account that executed the source process",
+            "data_type": "Numeric"
+          },
+          "src.process.image.md5": {
+            "description": "MD5 signature",
+            "data_type": "String"
+          },
+          "src.process.image.origin.creationMethod": {
+            "description": "Type of action that spawned the file",
+            "data_type": "Enum"
+          },
+          "src.process.image.origin.creatorProcess.name": {
+            "description": "The process name that spawned the file",
+            "data_type": "String"
+          },
+          "src.process.image.origin.creatorProcess.uid": {
+            "description": "The process UID that spawned the file",
+            "data_type": "String"
+          },
+          "src.process.image.origin.locationPath": {
+            "description": "Source path for copied files, or URL for downloaded files",
+            "data_type": "String"
+          },
+          "src.process.image.origin.locationType": {
+            "description": "If file was copied, describes the source file's location. If file was downloaded, describes which program created it",
+            "data_type": "Enum"
+          },
+          "src.process.image.path": {
+            "description": "Full path of source process",
+            "data_type": "String"
+          },
+          "src.process.image.sha1": {
+            "description": "SHA1 signature",
+            "data_type": "String"
+          },
+          "src.process.image.sha256": {
+            "description": "SHA256 signature",
+            "data_type": "String"
+          },
+          "src.process.image.size": {
+            "description": "The size of the source process's image in bytes.",
+            "data_type": "Numeric"
+          },
+          "src.process.image.uid": {
+            "description": "The process' image Uid. This is a unique identifier that is generated for each process.",
+            "data_type": "String"
+          },
+          "src.process.indicatorBootConfigurationUpdateCount": {
+            "description": "Count of indicators - Boot Configuration Update",
+            "data_type": "Numeric"
+          },
+          "src.process.indicatorEvasionCount": {
+            "description": "Count of indicators - Evasion",
+            "data_type": "Numeric"
+          },
+          "src.process.indicatorExploitationCount": {
+            "description": "Count of indicators - Exploitation",
+            "data_type": "Numeric"
+          },
+          "src.process.indicatorGeneralCount": {
+            "description": "Count of indicators - General",
+            "data_type": "Numeric"
+          },
+          "src.process.indicatorInfostealerCount": {
+            "description": "Count of indicators - Infostealer",
+            "data_type": "Numeric"
+          },
+          "src.process.indicatorInjectionCount": {
+            "description": "Count of indicators - Injection",
+            "data_type": "Numeric"
+          },
+          "src.process.indicatorPersistenceCount": {
+            "description": "Count of indicators - Persistence",
+            "data_type": "Numeric"
+          },
+          "src.process.indicatorPostExploitationCount": {
+            "description": "Count of indicators - Post Exploitation",
+            "data_type": "Numeric"
+          },
+          "src.process.indicatorRansomwareCount": {
+            "description": "Count of indicators - Ransomware",
+            "data_type": "Numeric"
+          },
+          "src.process.indicatorReconnaissanceCount": {
+            "description": "Count of indicators - Reconnaissance",
+            "data_type": "Numeric"
+          },
+          "src.process.integrityLevel": {
+            "description": "The process integrity level",
+            "data_type": "Enum"
+          },
+          "src.process.isNative64Bit": {
+            "description": "Indicates if the process is 32-bit or 64-bit",
+            "data_type": "Boolean"
+          },
+          "src.process.isRedirectCmdProcessor": {
+            "description": "Indicates if interpreter is with stdout redirection",
+            "data_type": "Boolean"
+          },
+          "src.process.isStorylineRoot": {
+            "description": "Indicates if process is the root of Storyline",
+            "data_type": "Boolean"
+          },
+          "src.process.lUserName": {
+            "description": "Login Username under which the process ran",
+            "data_type": "String"
+          },
+          "src.process.lUserUid": {
+            "description": "LUID of the account that executed the source process",
+            "data_type": "Numeric"
+          },
+          "src.process.moduleCount": {
+            "description": "Count of Modules Loaded",
+            "data_type": "Numeric"
+          },
+          "src.process.name": {
+            "description": "The file name of the process originating the event",
+            "data_type": "String"
+          },
+          "src.process.netConnCount": {
+            "description": "Count of incoming and outgoing network connections",
+            "data_type": "Numeric"
+          },
+          "src.process.netConnInCount": {
+            "description": "Count of incoming network connections",
+            "data_type": "Numeric"
+          },
+          "src.process.netConnOutCount": {
+            "description": "Count of outgoing network connections",
+            "data_type": "Numeric"
+          },
+          "src.process.parent.activeContent.hash": {
+            "description": "Active Content SHA1 for source process parent",
+            "data_type": "String"
+          },
+          "src.process.parent.activeContent.id": {
+            "description": "Active Content file unique ID for source process parent",
+            "data_type": "String"
+          },
+          "src.process.parent.activeContent.path": {
+            "description": "Active Content file path for source process parent",
+            "data_type": "String"
+          },
+          "src.process.parent.activeContent.signedStatus": {
+            "description": "Active Content file signed status for source process parent",
+            "data_type": "Enum"
+          },
+          "src.process.parent.activeContentType": {
+            "description": "Active Content type of source process parent",
+            "data_type": "Enum"
+          },
+          "src.process.parent.cmdline": {
+            "description": "Command arguments sent with the process that created this process",
+            "data_type": "String"
+          },
+          "src.process.parent.displayName": {
+            "description": "Display name of process that created this process",
+            "data_type": "String"
+          },
+          "src.process.parent.eUserName": {
+            "description": "Effective Username under which the parent process ran",
+            "data_type": "String"
+          },
+          "src.process.parent.eUserUid": {
+            "description": "EUID of the account that executed the source process parent",
+            "data_type": "Numeric"
+          },
+          "src.process.parent.image.extension": {
+            "description": "The extension of the process parent's image name. For example, if the image name is \"chrome.exe\", this would be \"exe\".",
+            "data_type": "String"
+          },
+          "src.process.parent.image.md5": {
+            "description": "MD5 of process that created this process",
+            "data_type": "String"
+          },
+          "src.process.parent.image.origin.creationMethod": {
+            "description": "Type of action that spawned the file",
+            "data_type": "Enum"
+          },
+          "src.process.parent.image.origin.creatorProcess.name": {
+            "description": "The process name that spawned the file",
+            "data_type": "String"
+          },
+          "src.process.parent.image.origin.creatorProcess.uid": {
+            "description": "The process UID that spawned the file",
+            "data_type": "String"
+          },
+          "src.process.parent.image.origin.locationPath": {
+            "description": "Source path for copied files, or URL for downloaded files",
+            "data_type": "String"
+          },
+          "src.process.parent.image.origin.locationType": {
+            "description": "If file was copied, describes the source file's location. If file was downloaded, describes which program created it",
+            "data_type": "Enum"
+          },
+          "src.process.parent.image.path": {
+            "description": "Image path of process that created this process",
+            "data_type": "String"
+          },
+          "src.process.parent.image.sha1": {
+            "description": "SHA1 of process that created this process",
+            "data_type": "String"
+          },
+          "src.process.parent.image.sha256": {
+            "description": "SHA256 of process that created this process",
+            "data_type": "String"
+          },
+          "src.process.parent.image.size": {
+            "description": "The size of the source process's parent image in bytes.",
+            "data_type": "Numeric"
+          },
+          "src.process.parent.integrityLevel": {
+            "description": "Integrity level of process that created this process",
+            "data_type": "Enum"
+          },
+          "src.process.parent.isNative64Bit": {
+            "description": "Was source process parent compiled natively for 64-Bit or runs as WoW",
+            "data_type": "Boolean"
+          },
+          "src.process.parent.isRedirectCmdProcessor": {
+            "description": "Does source process parent interpreter have stdout redirection",
+            "data_type": "Boolean"
+          },
+          "src.process.parent.isStorylineRoot": {
+            "description": "Indicates if source process parent is the root of Storyline",
+            "data_type": "Boolean"
+          },
+          "src.process.parent.lUserName": {
+            "description": "Login Username under which the parent process ran",
+            "data_type": "String"
+          },
+          "src.process.parent.lUserUid": {
+            "description": "LUID of the account that executed the source process parent",
+            "data_type": "Numeric"
+          },
+          "src.process.parent.name": {
+            "description": "Name of process that created this process",
+            "data_type": "String"
+          },
+          "src.process.parent.pid": {
+            "description": "PID of process that created this process",
+            "data_type": "Numeric"
+          },
+          "src.process.parent.publisher": {
+            "description": "Publisher that signed binary invoked as part of the process that created this process",
+            "data_type": "String"
+          },
+          "src.process.parent.rUserName": {
+            "description": "Real Username under which the parent process ran",
+            "data_type": "String"
+          },
+          "src.process.parent.rUserUid": {
+            "description": "RUID of the account that executed the source process parent",
+            "data_type": "Numeric"
+          },
+          "src.process.parent.reasonSignatureInvalid": {
+            "description": "Reason process signature is not valid",
+            "data_type": "String"
+          },
+          "src.process.parent.sessionId": {
+            "description": "ID of terminal (cmd, shell, other) session of source process",
+            "data_type": "Numeric"
+          },
+          "src.process.parent.signedStatus": {
+            "description": "Signature status of process that created this process",
+            "data_type": "Enum"
+          },
+          "src.process.parent.startTime": {
+            "description": "Start time of parent of the source process. Format: epoch time (milliseconds since 1.1.1970), Timezone: UTC",
+            "data_type": "Numeric"
+          },
+          "src.process.parent.storyline.id": {
+            "description": "Storyline ID of process that created this process",
+            "data_type": "String"
+          },
+          "src.process.parent.uid": {
+            "description": "Unique ID of process that created this process",
+            "data_type": "String"
+          },
+          "src.process.parent.user": {
+            "description": "Username under which the process that created this process ran",
+            "data_type": "String"
+          },
+          "src.process.pid": {
+            "description": "PID of source process",
+            "data_type": "Numeric"
+          },
+          "src.process.publisher": {
+            "description": "Signature sign identity",
+            "data_type": "String"
+          },
+          "src.process.rUserName": {
+            "description": "Real Username under which the process ran",
+            "data_type": "String"
+          },
+          "src.process.rUserUid": {
+            "description": "RUID of the account that executed the source process",
+            "data_type": "Numeric"
+          },
+          "src.process.reasonSignatureInvalid": {
+            "description": "Signature not verified reason",
+            "data_type": "String"
+          },
+          "src.process.registryChangeCount": {
+            "description": "Count of registry key changes",
+            "data_type": "Numeric"
+          },
+          "src.process.rpid": {
+            "description": "Real/Relinked PID (after relinking)",
+            "data_type": "Numeric"
+          },
+          "src.process.sessionId": {
+            "description": "The sessions the process runs at",
+            "data_type": "Numeric"
+          },
+          "src.process.signedStatus": {
+            "description": "Verifies the process validity and integrity. Unsigned processes may pose a security risk.",
+            "data_type": "Enum"
+          },
+          "src.process.startTime": {
+            "description": "Start time of source process. Format: epoch time (milliseconds since 1.1.1970), Timezone: UTC",
+            "data_type": "Numeric"
+          },
+          "src.process.storyline.id": {
+            "description": "Storyline ID source process",
+            "data_type": "String"
+          },
+          "src.process.subsystem": {
+            "description": "The subsystem of the process Win32/WSL",
+            "data_type": "String"
+          },
+          "src.process.tgtFileCreationCount": {
+            "description": "Count of file creation events",
+            "data_type": "Numeric"
+          },
+          "src.process.tgtFileDeletionCount": {
+            "description": "Count of file deletion events",
+            "data_type": "Numeric"
+          },
+          "src.process.tgtFileModificationCount": {
+            "description": "Count of file modification events",
+            "data_type": "Numeric"
+          },
+          "src.process.tid": {
+            "description": "Thread id",
+            "data_type": "Numeric"
+          },
+          "src.process.uid": {
+            "description": "Unique Id of the parent process",
+            "data_type": "String"
+          },
+          "src.process.user": {
+            "description": "Username under which source process ran",
+            "data_type": "String"
+          },
+          "src.process.userSid": {
+            "description": "The Security Descriptor (SID) of the user the process is running under. For example, S-1-5-18 (That's NT AUTHORITY/SYSTEM)",
+            "data_type": "String"
+          },
+          "src.process.verifiedStatus": {
+            "description": "Verification status of process signature",
+            "data_type": "Enum"
+          },
+          "task.cluster": {
+            "description": "Cluster name. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.ecsVersion": {
+            "description": "Task Ecs Version. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.serviceArn": {
+            "description": "Task service ARN. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.serviceName": {
+            "description": "Task service name. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.tags": {
+            "description": "Task tags. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.taskArn": {
+            "description": "Task ARN. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.taskAvailabilityZone": {
+            "description": "Task Availability Zone:. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.taskDefinitionArn": {
+            "description": "Task definition ARN. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.taskDefinitionFamily": {
+            "description": "Task definition family. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "task.taskDefinitionRevision": {
+            "description": "Task definition revision. Will be presented only for events triggered on K8s Agents.",
+            "data_type": "String"
+          },
+          "tgt.file.convictedBy": {
+            "description": "Reputation, Static AI",
+            "data_type": "Enum"
+          },
+          "tgt.file.sha1": {
+            "description": "SHA1 Signature of File",
+            "data_type": "String"
+          },
+          "tgt.process.accessRights": {
+            "description": "Type of access granted to process by cross process",
+            "data_type": "Numeric"
+          },
+          "tgt.process.activeContent.hash": {
+            "description": "Active Content SHA1 for target process",
+            "data_type": "String"
+          },
+          "tgt.process.activeContent.id": {
+            "description": "Active Content file unique ID for target process",
+            "data_type": "String"
+          },
+          "tgt.process.activeContent.path": {
+            "description": "Active Content file path of source process was the target of the event",
+            "data_type": "String"
+          },
+          "tgt.process.activeContent.signedStatus": {
+            "description": "Active Content file signed status for target process",
+            "data_type": "Enum"
+          },
+          "tgt.process.activeContentType": {
+            "description": "Active Content type of target process",
+            "data_type": "Enum"
+          },
+          "tgt.process.cmdline": {
+            "description": "Full command line sent with the target process",
+            "data_type": "String"
+          },
+          "tgt.process.displayName": {
+            "description": "Display name of target process",
+            "data_type": "String"
+          },
+          "tgt.process.eUserName": {
+            "description": "Effective Username under which the target process ran",
+            "data_type": "String"
+          },
+          "tgt.process.eUserUid": {
+            "description": "EUID of the account that executed the target process",
+            "data_type": "Numeric"
+          },
+          "tgt.process.image.binaryIsExecutable": {
+            "description": "Is binary backing the target process an executable",
+            "data_type": "Boolean"
+          },
+          "tgt.process.image.extension": {
+            "description": "The extension of the target process file name. For example, if the process is \"chrome.exe\", the extension will be \"exe\".",
+            "data_type": "String"
+          },
+          "tgt.process.image.md5": {
+            "description": "MD5 of target process",
+            "data_type": "String"
+          },
+          "tgt.process.image.origin.creationMethod": {
+            "description": "Type of action that spawned the file",
+            "data_type": "Enum"
+          },
+          "tgt.process.image.origin.creatorProcess.name": {
+            "description": "The process name that spawned the file",
+            "data_type": "String"
+          },
+          "tgt.process.image.origin.creatorProcess.uid": {
+            "description": "The process UID that spawned the file",
+            "data_type": "String"
+          },
+          "tgt.process.image.origin.locationPath": {
+            "description": "Source path for copied files, or URL for downloaded files",
+            "data_type": "String"
+          },
+          "tgt.process.image.origin.locationType": {
+            "description": "If file was copied, describes the source file's location. If file was downloaded, describes which program created it",
+            "data_type": "Enum"
+          },
+          "tgt.process.image.path": {
+            "description": "Image path of target process",
+            "data_type": "String"
+          },
+          "tgt.process.image.sha1": {
+            "description": "SHA1 of target process",
+            "data_type": "String"
+          },
+          "tgt.process.image.sha256": {
+            "description": "SHA256 of target process",
+            "data_type": "String"
+          },
+          "tgt.process.image.size": {
+            "description": "The size of the target process's file in bytes.",
+            "data_type": "Numeric"
+          },
+          "tgt.process.image.uid": {
+            "description": "The target process' image Uid. This is a unique identifier that is generated for each process.",
+            "data_type": "String"
+          },
+          "tgt.process.integrityLevel": {
+            "description": "Integrity level of target process",
+            "data_type": "Enum"
+          },
+          "tgt.process.isNative64Bit": {
+            "description": "Is target process compiled natively for 64-Bit or runs as WoW",
+            "data_type": "Boolean"
+          },
+          "tgt.process.isRedirectCmdProcessor": {
+            "description": "Is interpreter for target process with stdout redirection",
+            "data_type": "Boolean"
+          },
+          "tgt.process.isStorylineRoot": {
+            "description": "Indicates if the target process is the root of Storyline",
+            "data_type": "Boolean"
+          },
+          "tgt.process.lUserName": {
+            "description": "Login Username under which the target process ran",
+            "data_type": "String"
+          },
+          "tgt.process.lUserUid": {
+            "description": "LUID of the account that executed the target process",
+            "data_type": "Numeric"
+          },
+          "tgt.process.name": {
+            "description": "The file name of the target process. When process A creates process B, the target process name in the process creation event will be of process B.",
+            "data_type": "String"
+          },
+          "tgt.process.parent.image.type": {
+            "description": "The target process parents' file type, such as PE, LNK, PYTHON, JS, PDF, etc.",
+            "data_type": "String"
+          },
+          "tgt.process.pid": {
+            "description": "PID for target process",
+            "data_type": "Numeric"
+          },
+          "tgt.process.publisher": {
+            "description": "Publisher that digitally signed the binary being invoked as part of the target process",
+            "data_type": "String"
+          },
+          "tgt.process.rUserName": {
+            "description": "Real Username under which the target process ran",
+            "data_type": "String"
+          },
+          "tgt.process.rUserUid": {
+            "description": "RUID of the account that executed the target process",
+            "data_type": "Numeric"
+          },
+          "tgt.process.reasonSignatureInvalid": {
+            "description": "Indicates the reason the target process signature is not valid",
+            "data_type": "String"
+          },
+          "tgt.process.sessionId": {
+            "description": "ID of the terminal (cmd, shell, other) session of target process",
+            "data_type": "Numeric"
+          },
+          "tgt.process.signedStatus": {
+            "description": "Signature status of target process",
+            "data_type": "Enum"
+          },
+          "tgt.process.startTime": {
+            "description": "Start time of target process. Format: epoch time (milliseconds since 1.1.1970), Timezone: UTC",
+            "data_type": "Numeric"
+          },
+          "tgt.process.storyline.id": {
+            "description": "Storyline ID of target event",
+            "data_type": "String"
+          },
+          "tgt.process.subsystem": {
+            "description": "Subsystem of target process",
+            "data_type": "String"
+          },
+          "tgt.process.uid": {
+            "description": "Unique ID of target process",
+            "data_type": "String"
+          },
+          "tgt.process.user": {
+            "description": "Username under which target process ran",
+            "data_type": "String"
+          },
+          "tgt.process.userSid": {
+            "description": "The Security Descriptor (SID) of the user that was used to execute the process.",
+            "data_type": "String"
+          },
+          "tgt.process.verifiedStatus": {
+            "description": "Verification status of signature of the target process",
+            "data_type": "Enum"
+          }
+        }
+      },
+      "registry": {
+        "name": "Registry",
+        "metadata": {
+          "source": "SentinelOne Operations Center",
+          "schema_name": "Registry",
+          "extraction_date": "2025-10-21",
+          "description": "Registry event fields for S1QL 2.0 queries",
+          "field_count": 13
+        },
+        "fields": {
+          "registry.export.path": {
+            "description": "The path to which a registry key was exported.",
+            "data_type": "String"
+          },
+          "registry.import.path": {
+            "description": "The path from which the registry key was imported.",
+            "data_type": "String"
+          },
+          "registry.keyPath": {
+            "description": "Full path location of the Registry Key entry",
+            "data_type": "String"
+          },
+          "registry.keyUid": {
+            "description": "Unique ID of registry key (as assigned by SentinelOne)",
+            "data_type": "String"
+          },
+          "registry.oldValue": {
+            "description": "Registry previous value (in case of modification)",
+            "data_type": "String"
+          },
+          "registry.oldValueFullSize": {
+            "description": "Registry previous full size (in case of modification)",
+            "data_type": "Numeric"
+          },
+          "registry.oldValueIsComplete": {
+            "description": "Was the previous registry value full size or was it truncated (in case of modification)",
+            "data_type": "Boolean"
+          },
+          "registry.oldValueType": {
+            "description": "Registry previous value type (in case of modification)",
+            "data_type": "Enum"
+          },
+          "registry.owner.userSid": {
+            "description": "The Security Descriptor (SID) of the user/user group that owns the registry key.",
+            "data_type": "String"
+          },
+          "registry.value": {
+            "description": "Registry Value",
+            "data_type": "String"
+          },
+          "registry.valueFullSize": {
+            "description": "Full size of registry value (in case it was truncated)",
+            "data_type": "Numeric"
+          },
+          "registry.valueIsComplete": {
+            "description": "Is the registry value full size or is it truncated",
+            "data_type": "Boolean"
+          },
+          "registry.valueType": {
+            "description": "Type of registry value",
+            "data_type": "Enum"
+          }
+        }
+      },
+      "scheduled_tasks": {
+        "name": "Scheduled Tasks",
+        "metadata": {
+          "source": "SentinelOne Operations Center",
+          "schema_name": "Scheduled Tasks",
+          "extraction_date": "2025-10-21",
+          "description": "Scheduled Tasks event fields for S1QL 2.0 queries",
+          "field_count": 3
+        },
+        "fields": {
+          "task.name": {
+            "description": "Name of a scheduled task, as generated by the Host",
+            "data_type": "String"
+          },
+          "task.path": {
+            "description": "Full path location of a scheduled task",
+            "data_type": "String"
+          },
+          "task.triggerType": {
+            "description": "The reason this task was executed. 0 is Unknown. 1 means this is a recurring task executed every X time. 2 means the event this task waits on has happened. 3 means this is a task that was scheduled to be executed immediately after its creation. 5 means this task was triggered because the system was idle. 6 means it was executed on boot. 7 means the tasks is wired to trigger on user logon. 8 means \"other\" reason, similar to 0.",
+            "data_type": "Numeric"
+          }
+        }
+      },
+      "url": {
+        "name": "URL",
+        "metadata": {
+          "source": "SentinelOne Operations Center",
+          "schema_name": "URL",
+          "extraction_date": "2025-10-21",
+          "description": "URL event fields for S1QL 2.0 queries",
+          "field_count": 2
+        },
+        "fields": {
+          "event.url.action": {
+            "description": "URL action of process",
+            "data_type": "Enum"
+          },
+          "url.address": {
+            "description": "The full URL address accessed in the URL event",
+            "data_type": "String"
+          }
+        }
+      }
+    },
+    "common_fields": {
+      "account.id": {
+        "description": "SentinelOne Account ID",
+        "data_type": "String"
+      },
+      "account.name": {
+        "description": "SentinelOne Account Name",
+        "data_type": "String"
+      },
+      "agent.uuid": {
+        "description": "Unique Identifier of the SentinelOne agent",
+        "data_type": "String"
+      },
+      "agent.version": {
+        "description": "Version of SentinelOne Agent",
+        "data_type": "String"
+      },
+      "cloud.accountId": {
+        "description": "Cloud Account ID",
+        "data_type": "String"
+      },
+      "cloud.image": {
+        "description": "Cloud Image / AMI ID",
+        "data_type": "String"
+      },
+      "cloud.instanceId": {
+        "description": "Cloud Instance ID",
+        "data_type": "String"
+      },
+      "cloud.region": {
+        "description": "Cloud Region",
+        "data_type": "String"
+      },
+      "cloud.roleName": {
+        "description": "Cloud Role Name",
+        "data_type": "String"
+      },
+      "cloud.securityGroup": {
+        "description": "Cloud Security Groups",
+        "data_type": "String"
+      },
+      "cloud.serviceProvider": {
+        "description": "Cloud Service Provider",
+        "data_type": "String"
+      },
+      "cloud.subnetIds": {
+        "description": "Cloud Subnet IDs",
+        "data_type": "String"
+      },
+      "cloud.tags": {
+        "description": "Cloud Tags",
+        "data_type": "String"
+      },
+      "cloud.vpcId": {
+        "description": "Cloud VPC ID",
+        "data_type": "String"
+      },
+      "endpoint.name": {
+        "description": "Hostname of endpoint",
+        "data_type": "String"
+      },
+      "endpoint.os": {
+        "description": "Endpoint operating system family name",
+        "data_type": "Enum"
+      },
+      "endpoint.type": {
+        "description": "Machine type: server, laptop, desktop, Kubernetes Node",
+        "data_type": "Enum"
+      },
+      "event.category": {
+        "description": "Event category groups event types related to a common object such as a process, file, driver, task, indicator, IP. For example, filtering on event.category = 'process' yields all events relating to process activity.",
+        "data_type": "Enum"
+      },
+      "event.id": {
+        "description": "Unique SentinelOne identifier for the event",
+        "data_type": "String"
+      },
+      "event.repetitionCount": {
+        "description": "Count of Concurrent Identical Events",
+        "data_type": "Numeric"
+      },
+      "event.time": {
+        "description": "The time the event was created. Format: epoch time (milliseconds since 1.1.1970), Timezone: UTC",
+        "data_type": "Numeric"
+      },
+      "event.type": {
+        "description": "Type of operating system, application, network or user activity observed by the agent on the endpoint. Event types can include for example: Process events such as process creation or process termination Memory events such as memory read or write Driver events such as driver creation Registry events such as registry key renaming File events such as file creation, modification or deletion Network events such as IP connect, DNS resolved or URL Post Profile events such as Profile addition or removal. Event types are categorized to different groups by event.category",
+        "data_type": "Enum"
+      },
+      "metric.name": {
+        "description": "Metrics",
+        "data_type": "String"
+      },
+      "metric.value": {
+        "description": "Metrics",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.activeContent.hash": {
+        "description": "Active Content SHA1 of source process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.activeContent.id": {
+        "description": "Active Content file unique ID of source process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.activeContent.path": {
+        "description": "Active Content file path of source process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.activeContent.signedStatus": {
+        "description": "Active Content file signed status of source process (as attributed by the OS)",
+        "data_type": "Enum"
+      },
+      "osSrc.process.activeContentType": {
+        "description": "Active Content type of source process (as attributed by the OS)",
+        "data_type": "Enum"
+      },
+      "osSrc.process.childProcCount": {
+        "description": "Child process count",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.cmdline": {
+        "description": "Command arguments sent with source process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.crossProcessCount": {
+        "description": "Target Process event Count",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.crossProcessDupRemoteProcessHandleCount": {
+        "description": "Duplicate Process Handle' event count",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.crossProcessDupThreadHandleCount": {
+        "description": "Duplicate Thread Handle' Count",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.crossProcessOpenProcessCount": {
+        "description": "Open Process' Count",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.crossProcessOutOfStorylineCount": {
+        "description": "Out of Storyline' event count",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.crossProcessThreadCreateCount": {
+        "description": "Remote Thread' Count",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.displayName": {
+        "description": "Display name of source process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.dnsCount": {
+        "description": "Count of DNS requests",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.image.binaryIsExecutable": {
+        "description": "Is binary backing source process (as attributed by the OS) an executable",
+        "data_type": "Boolean"
+      },
+      "osSrc.process.image.extension": {
+        "description": "Extension of the OS source process",
+        "data_type": "String"
+      },
+      "osSrc.process.image.md5": {
+        "description": "MD5 of source process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.image.origin.creationMethod": {
+        "description": "Type of action that spawned the file",
+        "data_type": "Enum"
+      },
+      "osSrc.process.image.origin.creatorProcess.name": {
+        "description": "The process name that spawned the file",
+        "data_type": "String"
+      },
+      "osSrc.process.image.origin.creatorProcess.uid": {
+        "description": "The process UID that spawned the file",
+        "data_type": "String"
+      },
+      "osSrc.process.image.origin.locationPath": {
+        "description": "Source path for copied files, or URL for downloaded files",
+        "data_type": "String"
+      },
+      "osSrc.process.image.origin.locationType": {
+        "description": "If file was copied, describes the source file's location. If file was downloaded, describes which program created it",
+        "data_type": "Enum"
+      },
+      "osSrc.process.image.path": {
+        "description": "Full path of executable backing this process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.image.sha1": {
+        "description": "SHA1 of source process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.image.sha256": {
+        "description": "SHA256 of source process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.indicatorBootConfigurationUpdateCount": {
+        "description": "Count of indicators - Boot Configuration Update",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.indicatorEvasionCount": {
+        "description": "Count of indicators - Evasion",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.indicatorExploitationCount": {
+        "description": "Count of indicators - Exploitation",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.indicatorGeneral.count": {
+        "description": "Count of indicators - General",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.indicatorInfostealerCount": {
+        "description": "Count of indicators - Infostealer",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.indicatorInjectionCount": {
+        "description": "Count of indicators - Injection",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.indicatorPersistenceCount": {
+        "description": "Count of indicators - Persistence",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.indicatorPostExploitationCount": {
+        "description": "Count of indicators - Post Exploitation",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.indicatorRansomwareCount": {
+        "description": "Count of indicators - Ransomware",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.indicatorReconnaissanceCount": {
+        "description": "Count of indicators - Reconnaissance",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.integrityLevel": {
+        "description": "Integrity level of source process (as attributed by the OS)",
+        "data_type": "Enum"
+      },
+      "osSrc.process.isNative64Bit": {
+        "description": "Is source process (as attributed by the OS) compiled natively for 64-Bit or runs as WoW.",
+        "data_type": "Boolean"
+      },
+      "osSrc.process.isRedirectCmdProcessor": {
+        "description": "Is interpreter for source process (as attributed by the OS) with stdout redirection",
+        "data_type": "Boolean"
+      },
+      "osSrc.process.isStorylineRoot": {
+        "description": "Indicates if the source process (as attributed by the OS) is the root of Storyline",
+        "data_type": "Boolean"
+      },
+      "osSrc.process.moduleCount": {
+        "description": "Count of Modules Loaded",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.name": {
+        "description": "The file name of the source process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.netConnCount": {
+        "description": "Network connection count",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.netConnInCount": {
+        "description": "Incoming network connection count",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.netConnOutCount": {
+        "description": "Outgoing network connection count",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.parent.activeContent.hash": {
+        "description": "Active Content SHA1 for the OS source process parent (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.parent.activeContent.id": {
+        "description": "Active Content file unique ID for the OS source process parent (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.parent.activeContent.path": {
+        "description": "Active Content file path for the OS source process parent (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.parent.activeContent.signedStatus": {
+        "description": "Active Content file signed status for the OS source process parent (as attributed by the OS)",
+        "data_type": "Enum"
+      },
+      "osSrc.process.parent.activeContentType": {
+        "description": "Active Content type of the OS source process parent (as attributed by the OS)",
+        "data_type": "Enum"
+      },
+      "osSrc.process.parent.cmdline": {
+        "description": "Command arguments sent with the process that created the OS source process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.parent.displayName": {
+        "description": "Display name of process that created the OS source process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.parent.image.md5": {
+        "description": "MD5 of process that created the OS source process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.parent.image.origin.creationMethod": {
+        "description": "Type of action that spawned the file",
+        "data_type": "Enum"
+      },
+      "osSrc.process.parent.image.origin.creatorProcess.name": {
+        "description": "The process name that spawned the file",
+        "data_type": "String"
+      },
+      "osSrc.process.parent.image.origin.creatorProcess.uid": {
+        "description": "The process UID that spawned the file",
+        "data_type": "String"
+      },
+      "osSrc.process.parent.image.origin.locationPath": {
+        "description": "Source path for copied files, or URL for downloaded files",
+        "data_type": "String"
+      },
+      "osSrc.process.parent.image.origin.locationType": {
+        "description": "If file was copied, describes the source file's location. If file was downloaded, describes which program created it",
+        "data_type": "Enum"
+      },
+      "osSrc.process.parent.image.path": {
+        "description": "Full path of executable backing this process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.parent.image.sha1": {
+        "description": "SHA1 of process that created the OS source process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.parent.image.sha256": {
+        "description": "SHA256 of process that created the OS source process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.parent.image.signature.isValid": {
+        "description": "Indicates the OS parent image signature is valid",
+        "data_type": "Boolean"
+      },
+      "osSrc.process.parent.image.type": {
+        "description": "Type of OS process that created a process",
+        "data_type": "String"
+      },
+      "osSrc.process.parent.image.uid": {
+        "description": "Image UID of the OS source process parent",
+        "data_type": "String"
+      },
+      "osSrc.process.parent.integrityLevel": {
+        "description": "Integrity level of process that created the OS source process (as attributed by the OS)",
+        "data_type": "Enum"
+      },
+      "osSrc.process.parent.isNative64Bit": {
+        "description": "Was the OS source process parent (as attributed by the OS) compiled natively for 64-Bit or runs as WoW",
+        "data_type": "Boolean"
+      },
+      "osSrc.process.parent.isRedirectCmdProcessor": {
+        "description": "Does OS source process parent (as attributed by the OS) interpreter have stdout redirection",
+        "data_type": "Boolean"
+      },
+      "osSrc.process.parent.isStorylineRoot": {
+        "description": "Is OS source process parent (as attributed by the OS) root of Storyline",
+        "data_type": "Boolean"
+      },
+      "osSrc.process.parent.name": {
+        "description": "Name of the process that created the OS source process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.parent.pid": {
+        "description": "PID of process that created the OS source process (as attributed by the OS)",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.parent.publisher": {
+        "description": "Publisher that digitally signed the binary invoked as part of the process that created the OS source process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.parent.reasonSignatureInvalid": {
+        "description": "Reason process that created the OS source process signature is not valid (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.parent.sessionId": {
+        "description": "ID of terminal (cmd, shell, other) session of the process that created the OS source process (as attributed by the OS)",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.parent.signedStatus": {
+        "description": "Signature status of process that created the OS source process (as attributed by the OS)",
+        "data_type": "Enum"
+      },
+      "osSrc.process.parent.startTime": {
+        "description": "Start time of parent of the OS source process. Format: epoch time (milliseconds since 1.1.1970), Timezone: UTC",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.parent.storyline.id": {
+        "description": "Storyline ID of the process that created the OS source process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.parent.uid": {
+        "description": "Unique ID of process that created the OS source process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.parent.user": {
+        "description": "Username under which the process that created the OS source process ran (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.parent.userSid": {
+        "description": "The Security Descriptor (SID) of the user the parent process is running under.",
+        "data_type": "String"
+      },
+      "osSrc.process.pid": {
+        "description": "PID for source process (as attributed by the OS)",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.publisher": {
+        "description": "Publisher that signed binary invoked as part of the process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.reasonSignatureInvalid": {
+        "description": "Reason process (as attributed by the OS) signature invalid",
+        "data_type": "String"
+      },
+      "osSrc.process.registryChangeCount": {
+        "description": "Count of registry key changes",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.sessionId": {
+        "description": "ID of the terminal (cmd, shell, other) session of source process (as attributed by the OS)",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.signedStatus": {
+        "description": "Signature status of source process (as attributed by the OS)",
+        "data_type": "Enum"
+      },
+      "osSrc.process.startTime": {
+        "description": "Start time of source process (as attributed by the OS). Format: epoch time (milliseconds since 1.1.1970), Timezone: UTC",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.storyline.id": {
+        "description": "Storyline ID of the source process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.subsystem": {
+        "description": "Subsystem of source process (as attributed by the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.tgtFileCreationCount": {
+        "description": "Count of file creation events",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.tgtFileDeletionCount": {
+        "description": "Count of file deletion events",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.tgtFileModificationCount": {
+        "description": "Count of file modification events",
+        "data_type": "Numeric"
+      },
+      "osSrc.process.uid": {
+        "description": "Unique ID of source process (as attributed by the the OS)",
+        "data_type": "String"
+      },
+      "osSrc.process.user": {
+        "description": "Username under which source process (attributed by the OS) ran",
+        "data_type": "String"
+      },
+      "osSrc.process.userSid": {
+        "description": "The Security Decriptor (SID) of the user the process is running under. For example, a service may run as \"NT AUTHORITY\\SYSTEM\" with the SID \"S-1-5-18\"",
+        "data_type": "String"
+      },
+      "osSrc.process.verifiedStatus": {
+        "description": "Verification status of process signature (as attributed by the OS)",
+        "data_type": "Enum"
+      },
+      "site.id": {
+        "description": "SentinelOne Site ID",
+        "data_type": "String"
+      },
+      "site.name": {
+        "description": "SentinelOne Site name",
+        "data_type": "String"
+      },
+      "src.process.activeContent.hash": {
+        "description": "Active Content SHA1 for source process",
+        "data_type": "String"
+      },
+      "src.process.activeContent.id": {
+        "description": "Active Content file unique ID for source process",
+        "data_type": "String"
+      },
+      "src.process.activeContent.path": {
+        "description": "Active Content file path for source process",
+        "data_type": "String"
+      },
+      "src.process.activeContent.signedStatus": {
+        "description": "Active Content file signed status for source process",
+        "data_type": "Enum"
+      },
+      "src.process.activeContentType": {
+        "description": "Active Content type of source process",
+        "data_type": "Enum"
+      },
+      "src.process.childProcCount": {
+        "description": "Count of the child processes as attributed by the OS.",
+        "data_type": "Numeric"
+      },
+      "src.process.crossProcessCount": {
+        "description": "Target Process event Count",
+        "data_type": "Numeric"
+      },
+      "src.process.crossProcessDupRemoteProcessHandleCount": {
+        "description": "'Duplicate Process Handle' event count",
+        "data_type": "Numeric"
+      },
+      "src.process.crossProcessDupThreadHandleCount": {
+        "description": "'Duplicate Thread Handle' Count",
+        "data_type": "Numeric"
+      },
+      "src.process.crossProcessOpenProcessCount": {
+        "description": "'Open Process' Count",
+        "data_type": "Numeric"
+      },
+      "src.process.crossProcessOutOfStorylineCount": {
+        "description": "'Out of Storyline' event count",
+        "data_type": "Numeric"
+      },
+      "src.process.crossProcessThreadCreateCount": {
+        "description": "'Remote Thread' Count",
+        "data_type": "Numeric"
+      },
+      "src.process.displayName": {
+        "description": "Display name of source process",
+        "data_type": "String"
+      },
+      "src.process.dnsCount": {
+        "description": "Count of DNS requests",
+        "data_type": "Numeric"
+      },
+      "src.process.eUserName": {
+        "description": "Effective Username under which the process ran",
+        "data_type": "String"
+      },
+      "src.process.eUserUid": {
+        "description": "EUID of the account that executed the source process",
+        "data_type": "Numeric"
+      },
+      "src.process.image.origin.creationMethod": {
+        "description": "Type of action that spawned the file",
+        "data_type": "Enum"
+      },
+      "src.process.image.origin.creatorProcess.name": {
+        "description": "The process name that spawned the file",
+        "data_type": "String"
+      },
+      "src.process.image.origin.creatorProcess.uid": {
+        "description": "The process UID that spawned the file",
+        "data_type": "String"
+      },
+      "src.process.image.origin.locationPath": {
+        "description": "Source path for copied files, or URL for downloaded files",
+        "data_type": "String"
+      },
+      "src.process.image.origin.locationType": {
+        "description": "If file was copied, describes the source file's location. If file was downloaded, describes which program created it",
+        "data_type": "Enum"
+      },
+      "src.process.image.size": {
+        "description": "The size of the source process's image in bytes.",
+        "data_type": "Numeric"
+      },
+      "src.process.image.uid": {
+        "description": "The process' image Uid. This is a unique identifier that is generated for each process.",
+        "data_type": "String"
+      },
+      "src.process.indicatorBootConfigurationUpdateCount": {
+        "description": "Count of indicators - Boot Configuration Update",
+        "data_type": "Numeric"
+      },
+      "src.process.indicatorEvasionCount": {
+        "description": "Count of indicators - Evasion",
+        "data_type": "Numeric"
+      },
+      "src.process.indicatorExploitationCount": {
+        "description": "Count of indicators - Exploitation",
+        "data_type": "Numeric"
+      },
+      "src.process.indicatorGeneralCount": {
+        "description": "Count of indicators - General",
+        "data_type": "Numeric"
+      },
+      "src.process.indicatorInfostealerCount": {
+        "description": "Count of indicators - Infostealer",
+        "data_type": "Numeric"
+      },
+      "src.process.indicatorInjectionCount": {
+        "description": "Count of indicators - Injection",
+        "data_type": "Numeric"
+      },
+      "src.process.indicatorPersistenceCount": {
+        "description": "Count of indicators - Persistence",
+        "data_type": "Numeric"
+      },
+      "src.process.indicatorPostExploitationCount": {
+        "description": "Count of indicators - Post Exploitation",
+        "data_type": "Numeric"
+      },
+      "src.process.indicatorRansomwareCount": {
+        "description": "Count of indicators - Ransomware",
+        "data_type": "Numeric"
+      },
+      "src.process.indicatorReconnaissanceCount": {
+        "description": "Count of indicators - Reconnaissance",
+        "data_type": "Numeric"
+      },
+      "src.process.lUserName": {
+        "description": "Login Username under which the process ran",
+        "data_type": "String"
+      },
+      "src.process.lUserUid": {
+        "description": "LUID of the account that executed the source process",
+        "data_type": "Numeric"
+      },
+      "src.process.moduleCount": {
+        "description": "Count of Modules Loaded",
+        "data_type": "Numeric"
+      },
+      "src.process.name": {
+        "description": "The file name of the process originating the event",
+        "data_type": "String"
+      },
+      "src.process.netConnCount": {
+        "description": "Count of incoming and outgoing network connections",
+        "data_type": "Numeric"
+      },
+      "src.process.netConnInCount": {
+        "description": "Count of incoming network connections",
+        "data_type": "Numeric"
+      },
+      "src.process.netConnOutCount": {
+        "description": "Count of outgoing network connections",
+        "data_type": "Numeric"
+      },
+      "src.process.parent.activeContent.hash": {
+        "description": "Active Content SHA1 for source process parent",
+        "data_type": "String"
+      },
+      "src.process.parent.activeContent.id": {
+        "description": "Active Content file unique ID for source process parent",
+        "data_type": "String"
+      },
+      "src.process.parent.activeContent.path": {
+        "description": "Active Content file path for source process parent",
+        "data_type": "String"
+      },
+      "src.process.parent.activeContent.signedStatus": {
+        "description": "Active Content file signed status for source process parent",
+        "data_type": "Enum"
+      },
+      "src.process.parent.activeContentType": {
+        "description": "Active Content type of source process parent",
+        "data_type": "Enum"
+      },
+      "src.process.parent.cmdline": {
+        "description": "Command arguments sent with the process that created this process",
+        "data_type": "String"
+      },
+      "src.process.parent.displayName": {
+        "description": "Display name of process that created this process",
+        "data_type": "String"
+      },
+      "src.process.parent.eUserName": {
+        "description": "Effective Username under which the parent process ran",
+        "data_type": "String"
+      },
+      "src.process.parent.eUserUid": {
+        "description": "EUID of the account that executed the source process parent",
+        "data_type": "Numeric"
+      },
+      "src.process.parent.image.extension": {
+        "description": "The extension of the process parent's image name. For example, if the image name is \"chrome.exe\", this would be \"exe\".",
+        "data_type": "String"
+      },
+      "src.process.parent.image.md5": {
+        "description": "MD5 of process that created this process",
+        "data_type": "String"
+      },
+      "src.process.parent.image.origin.creationMethod": {
+        "description": "Type of action that spawned the file",
+        "data_type": "Enum"
+      },
+      "src.process.parent.image.origin.creatorProcess.name": {
+        "description": "The process name that spawned the file",
+        "data_type": "String"
+      },
+      "src.process.parent.image.origin.creatorProcess.uid": {
+        "description": "The process UID that spawned the file",
+        "data_type": "String"
+      },
+      "src.process.parent.image.origin.locationPath": {
+        "description": "Source path for copied files, or URL for downloaded files",
+        "data_type": "String"
+      },
+      "src.process.parent.image.origin.locationType": {
+        "description": "If file was copied, describes the source file's location. If file was downloaded, describes which program created it",
+        "data_type": "Enum"
+      },
+      "src.process.parent.image.path": {
+        "description": "Image path of process that created this process",
+        "data_type": "String"
+      },
+      "src.process.parent.image.sha1": {
+        "description": "SHA1 of process that created this process",
+        "data_type": "String"
+      },
+      "src.process.parent.image.sha256": {
+        "description": "SHA256 of process that created this process",
+        "data_type": "String"
+      },
+      "src.process.parent.image.size": {
+        "description": "The size of the source process's parent image in bytes.",
+        "data_type": "Numeric"
+      },
+      "src.process.parent.integrityLevel": {
+        "description": "Integrity level of process that created this process",
+        "data_type": "Enum"
+      },
+      "src.process.parent.isNative64Bit": {
+        "description": "Was source process parent compiled natively for 64-Bit or runs as WoW",
+        "data_type": "Boolean"
+      },
+      "src.process.parent.isRedirectCmdProcessor": {
+        "description": "Does source process parent interpreter have stdout redirection",
+        "data_type": "Boolean"
+      },
+      "src.process.parent.isStorylineRoot": {
+        "description": "Indicates if source process parent is the root of Storyline",
+        "data_type": "Boolean"
+      },
+      "src.process.parent.lUserName": {
+        "description": "Login Username under which the parent process ran",
+        "data_type": "String"
+      },
+      "src.process.parent.lUserUid": {
+        "description": "LUID of the account that executed the source process parent",
+        "data_type": "Numeric"
+      },
+      "src.process.parent.name": {
+        "description": "Name of process that created this process",
+        "data_type": "String"
+      },
+      "src.process.parent.pid": {
+        "description": "PID of process that created this process",
+        "data_type": "Numeric"
+      },
+      "src.process.parent.publisher": {
+        "description": "Publisher that signed binary invoked as part of the process that created this process",
+        "data_type": "String"
+      },
+      "src.process.parent.rUserName": {
+        "description": "Real Username under which the parent process ran",
+        "data_type": "String"
+      },
+      "src.process.parent.rUserUid": {
+        "description": "RUID of the account that executed the source process parent",
+        "data_type": "Numeric"
+      },
+      "src.process.parent.reasonSignatureInvalid": {
+        "description": "Reason process signature is not valid",
+        "data_type": "String"
+      },
+      "src.process.parent.sessionId": {
+        "description": "ID of terminal (cmd, shell, other) session of source process",
+        "data_type": "Numeric"
+      },
+      "src.process.parent.signedStatus": {
+        "description": "Signature status of process that created this process",
+        "data_type": "Enum"
+      },
+      "src.process.parent.startTime": {
+        "description": "Start time of parent of the source process. Format: epoch time (milliseconds since 1.1.1970), Timezone: UTC",
+        "data_type": "Numeric"
+      },
+      "src.process.parent.storyline.id": {
+        "description": "Storyline ID of process that created this process",
+        "data_type": "String"
+      },
+      "src.process.parent.uid": {
+        "description": "Unique ID of process that created this process",
+        "data_type": "String"
+      },
+      "src.process.parent.user": {
+        "description": "Username under which the process that created this process ran",
+        "data_type": "String"
+      },
+      "src.process.pid": {
+        "description": "PID of source process",
+        "data_type": "Numeric"
+      },
+      "src.process.rUserName": {
+        "description": "Real Username under which the process ran",
+        "data_type": "String"
+      },
+      "src.process.rUserUid": {
+        "description": "RUID of the account that executed the source process",
+        "data_type": "Numeric"
+      },
+      "src.process.registryChangeCount": {
+        "description": "Count of registry key changes",
+        "data_type": "Numeric"
+      },
+      "src.process.startTime": {
+        "description": "Start time of source process. Format: epoch time (milliseconds since 1.1.1970), Timezone: UTC",
+        "data_type": "Numeric"
+      },
+      "src.process.storyline.id": {
+        "description": "Storyline ID source process",
+        "data_type": "String"
+      },
+      "src.process.tgtFileCreationCount": {
+        "description": "Count of file creation events",
+        "data_type": "Numeric"
+      },
+      "src.process.tgtFileDeletionCount": {
+        "description": "Count of file deletion events",
+        "data_type": "Numeric"
+      },
+      "src.process.tgtFileModificationCount": {
+        "description": "Count of file modification events",
+        "data_type": "Numeric"
+      },
+      "src.process.user": {
+        "description": "Username under which source process ran",
+        "data_type": "String"
+      },
+      "src.process.userSid": {
+        "description": "The Security Descriptor (SID) of the user the process is running under. For example, S-1-5-18 (That's NT AUTHORITY/SYSTEM)",
+        "data_type": "String"
+      },
+      "tgt.process.eUserName": {
+        "description": "Effective Username under which the target process ran",
+        "data_type": "String"
+      },
+      "tgt.process.eUserUid": {
+        "description": "EUID of the account that executed the target process",
+        "data_type": "Numeric"
+      },
+      "tgt.process.image.extension": {
+        "description": "The extension of the target process file name. For example, if the process is \"chrome.exe\", the extension will be \"exe\".",
+        "data_type": "String"
+      },
+      "tgt.process.image.origin.creationMethod": {
+        "description": "Type of action that spawned the file",
+        "data_type": "Enum"
+      },
+      "tgt.process.image.origin.creatorProcess.name": {
+        "description": "The process name that spawned the file",
+        "data_type": "String"
+      },
+      "tgt.process.image.origin.creatorProcess.uid": {
+        "description": "The process UID that spawned the file",
+        "data_type": "String"
+      },
+      "tgt.process.image.origin.locationPath": {
+        "description": "Source path for copied files, or URL for downloaded files",
+        "data_type": "String"
+      },
+      "tgt.process.image.origin.locationType": {
+        "description": "If file was copied, describes the source file's location. If file was downloaded, describes which program created it",
+        "data_type": "Enum"
+      },
+      "tgt.process.image.size": {
+        "description": "The size of the target process's file in bytes.",
+        "data_type": "Numeric"
+      },
+      "tgt.process.image.uid": {
+        "description": "The target process' image Uid. This is a unique identifier that is generated for each process.",
+        "data_type": "String"
+      },
+      "tgt.process.lUserName": {
+        "description": "Login Username under which the target process ran",
+        "data_type": "String"
+      },
+      "tgt.process.lUserUid": {
+        "description": "LUID of the account that executed the target process",
+        "data_type": "Numeric"
+      },
+      "tgt.process.parent.image.type": {
+        "description": "The target process parents' file type, such as PE, LNK, PYTHON, JS, PDF, etc.",
+        "data_type": "String"
+      },
+      "tgt.process.rUserName": {
+        "description": "Real Username under which the target process ran",
+        "data_type": "String"
+      },
+      "tgt.process.rUserUid": {
+        "description": "RUID of the account that executed the target process",
+        "data_type": "Numeric"
+      },
+      "tgt.process.userSid": {
+        "description": "The Security Descriptor (SID) of the user that was used to execute the process.",
+        "data_type": "String"
+      },
+      "meta.event.name": {
+        "description": "Event name (PROCESSCREATION, FILECREATION, etc.) used for dataset filters",
+        "data_type": "String"
+      }
+    },
+    "operators": {
+      "metadata": {
+        "source": "SentinelOne Operations Center",
+        "version": "16 October 2025",
+        "extraction_date": "2025-10-21",
+        "description": "Complete query operators reference for SentinelOne Search and PowerQuery",
+        "documentation_url": "https://community.sentinelone.com"
+      },
+      "field_categories": {
+        "process": [
+          "src.process.name",
+          "src.process.cmdline",
+          "src.process.signedStatus",
+          "src.process.crossProcessCount",
+          "src.process.parent.storyline.id",
+          "src.process.storyline.id",
+          "osSrc.process.parent.storyline.id",
+          "osSrc.process.storyline.id",
+          "tgt.process.storyline.id"
+        ],
+        "event": [
+          "event.type",
+          "event.login.loginIsSuccessful"
+        ],
+        "indicator": [
+          "indicator.category",
+          "indicator.name",
+          "indicator.description"
+        ],
+        "file": [
+          "tgt.file.size",
+          "registry.keyPath"
+        ],
+        "log_analytics": [
+          "logfile",
+          "uriPath",
+          "status",
+          "client",
+          "httpStatus",
+          "error",
+          "path"
+        ],
+        "hash": [
+          "md5",
+          "sha1",
+          "sha256"
+        ]
+      },
+      "operators": [
+        {
+          "name": "AND",
+          "category": "logical",
+          "symbols": [
+            "AND",
+            "&&"
+          ],
+          "description": "Combines query terms requiring all terms to match",
+          "syntax": "term1 AND term2",
+          "case_sensitivity": "n/a",
+          "data_types": [
+            "all"
+          ],
+          "example_queries": [
+            {
+              "query": "event.type = 'Process Creation' src.process.name = 'svchost.exe'",
+              "description": "Implicit AND"
+            }
+          ]
+        },
+        {
+          "name": "OR",
+          "category": "logical",
+          "symbols": [
+            "OR",
+            "||"
+          ],
+          "description": "Combines query terms where at least one must match",
+          "syntax": "term1 OR term2",
+          "case_sensitivity": "n/a",
+          "data_types": [
+            "all"
+          ],
+          "example_queries": [
+            {
+              "query": "indicator.category = 'InfoStealer' or indicator.category = 'Evasion'",
+              "description": "Match either category"
+            }
+          ]
+        },
+        {
+          "name": "NOT",
+          "category": "logical",
+          "symbols": [
+            "NOT",
+            "!"
+          ],
+          "description": "Excludes events matching the specified term",
+          "syntax": "NOT term",
+          "case_sensitivity": "n/a",
+          "data_types": [
+            "all"
+          ],
+          "example_queries": [
+            {
+              "query": "src.process.signedStatus='unsigned' && !(src.process.name='svchost.exe')",
+              "description": "NOT with ! symbol"
+            }
+          ]
+        },
+        {
+          "name": "contains",
+          "category": "text_search",
+          "symbols": [
+            "contains"
+          ],
+          "description": "Retrieves events containing the search term (case-insensitive by default)",
+          "syntax": "fieldname contains 'search-term'",
+          "case_sensitivity": "case-insensitive by default",
+          "data_types": [
+            "string",
+            "text"
+          ],
+          "modifiers": [
+            {
+              "name": "matchcase",
+              "syntax": "fieldname contains:matchcase 'term'"
+            }
+          ],
+          "example_queries": [
+            {
+              "query": "logfile contains 'access_log'",
+              "description": "Basic contains search"
+            }
+          ],
+          "limitations": [
+            "* contains cannot be used in Alerts",
+            "Not optimized for Dashboards"
+          ]
+        },
+        {
+          "name": "matches",
+          "category": "text_search",
+          "symbols": [
+            "matches",
+            "$"
+          ],
+          "description": "Searches a field using regular expressions",
+          "syntax": "fieldname matches 'regex'",
+          "case_sensitivity": "case-insensitive by default",
+          "data_types": [
+            "string",
+            "text"
+          ],
+          "modifiers": [
+            {
+              "name": "matchcase",
+              "syntax": "fieldname matches:matchcase 'Regex'"
+            }
+          ],
+          "example_queries": [
+            {
+              "query": "registry.keyPath matches '\\\\.*\\\\VSS'",
+              "description": "Regex with double-escaping"
+            }
+          ],
+          "limitations": [
+            "Double-escaping required",
+            "Regex cannot exceed 1000 bytes"
+          ]
+        },
+        {
+          "name": "equals",
+          "category": "comparison",
+          "symbols": [
+            "==",
+            "="
+          ],
+          "description": "Selects events with a particular value",
+          "syntax": "fieldname == value",
+          "case_sensitivity": "case-sensitive for strings",
+          "data_types": [
+            "string",
+            "numeric",
+            "boolean"
+          ],
+          "example_queries": [
+            {
+              "query": "status == 404",
+              "description": "Numeric exact match"
+            }
+          ]
+        },
+        {
+          "name": "not_equals",
+          "category": "comparison",
+          "symbols": [
+            "!="
+          ],
+          "description": "Selects events that do not have a particular value",
+          "syntax": "fieldname != value",
+          "case_sensitivity": "case-sensitive for strings",
+          "data_types": [
+            "string",
+            "numeric",
+            "boolean"
+          ],
+          "example_queries": [
+            {
+              "query": "indicator.name != 'RawVolumeAccess'",
+              "description": "Exclude specific value"
+            }
+          ]
+        },
+        {
+          "name": "greater_than",
+          "category": "comparison",
+          "symbols": [
+            ">"
+          ],
+          "description": "Field value greater than specified value",
+          "syntax": "fieldname > value",
+          "case_sensitivity": "n/a",
+          "data_types": [
+            "numeric"
+          ],
+          "example_queries": [
+            {
+              "query": "src.process.crossProcessCount > 0",
+              "description": "Numeric comparison"
+            }
+          ]
+        },
+        {
+          "name": "greater_than_or_equal",
+          "category": "comparison",
+          "symbols": [
+            ">="
+          ],
+          "description": "Field value greater than or equal to specified value",
+          "syntax": "fieldname >= value",
+          "case_sensitivity": "n/a",
+          "data_types": [
+            "numeric"
+          ],
+          "example_queries": [
+            {
+              "query": "status >= 400",
+              "description": "HTTP status range"
+            }
+          ]
+        },
+        {
+          "name": "less_than",
+          "category": "comparison",
+          "symbols": [
+            "<"
+          ],
+          "description": "Field value less than specified value",
+          "syntax": "fieldname < value",
+          "case_sensitivity": "n/a",
+          "data_types": [
+            "numeric"
+          ],
+          "example_queries": [
+            {
+              "query": "tgt.file.size < 65536",
+              "description": "File size limit"
+            }
+          ]
+        },
+        {
+          "name": "less_than_or_equal",
+          "category": "comparison",
+          "symbols": [
+            "<="
+          ],
+          "description": "Field value less than or equal to specified value",
+          "syntax": "fieldname <= value",
+          "case_sensitivity": "n/a",
+          "data_types": [
+            "numeric"
+          ],
+          "example_queries": [
+            {
+              "query": "status <= 499",
+              "description": "Upper bound"
+            }
+          ]
+        },
+        {
+          "name": "wildcard",
+          "category": "special",
+          "symbols": [
+            "*"
+          ],
+          "description": "Match events with any value in a field, or search all fields",
+          "syntax": "fieldname = *",
+          "case_sensitivity": "n/a",
+          "data_types": [
+            "all"
+          ],
+          "example_queries": [
+            {
+              "query": "indicator.description = *",
+              "description": "Any value"
+            },
+            {
+              "query": "* contains 'search term'",
+              "description": "All fields"
+            }
+          ],
+          "limitations": [
+            "* contains and * matches limited to PowerQuery initial filters"
+          ]
+        },
+        {
+          "name": "in",
+          "category": "special",
+          "symbols": [
+            "in"
+          ],
+          "description": "Search for numeric, boolean, and text values in a field",
+          "syntax": "fieldname in (value1, value2, value3)",
+          "case_sensitivity": "case-sensitive by default",
+          "data_types": [
+            "string",
+            "numeric",
+            "boolean"
+          ],
+          "modifiers": [
+            {
+              "name": "matchcase",
+              "syntax": "fieldname contains:matchcase (values)"
+            }
+          ],
+          "example_queries": [
+            {
+              "query": "httpStatus in (404)",
+              "description": "Single value"
+            },
+            {
+              "query": "fieldname in (\"aaa\", 111, false)",
+              "description": "Multiple types"
+            }
+          ],
+          "limitations": [
+            "Cannot match null or missing fields",
+            "Quote text values, don't quote numeric/boolean"
+          ]
+        }
+      ],
+      "shortcuts": [
+        {
+          "shortcut": "cmdline",
+          "symbol": "#cmdline",
+          "description": "All Processes CmdLine Arguments",
+          "use_case": "Quick search across all command line fields"
+        },
+        {
+          "shortcut": "dns",
+          "symbol": "#dns",
+          "description": "All DNS requests and responses",
+          "use_case": "Search all DNS-related fields"
+        },
+        {
+          "shortcut": "filepath",
+          "symbol": "#filepath",
+          "description": "All Paths",
+          "use_case": "Search all file path fields"
+        },
+        {
+          "shortcut": "hash",
+          "symbol": "#hash",
+          "description": "any MD5, SHA1, or SHA256 field",
+          "use_case": "Search all hash fields at once"
+        },
+        {
+          "shortcut": "ip",
+          "symbol": "#ip",
+          "description": "All IPs",
+          "use_case": "Search all IP address fields"
+        },
+        {
+          "shortcut": "md5",
+          "symbol": "#md5",
+          "description": "All Md5",
+          "use_case": "Search all MD5 hash fields"
+        },
+        {
+          "shortcut": "name",
+          "symbol": "#name",
+          "description": "All Processes Names",
+          "use_case": "Search all process name fields"
+        },
+        {
+          "shortcut": "sha1",
+          "symbol": "#sha1",
+          "description": "All Sha1",
+          "use_case": "Search all SHA1 hash fields"
+        },
+        {
+          "shortcut": "sha256",
+          "symbol": "#sha256",
+          "description": "All Sha256",
+          "use_case": "Search all SHA256 hash fields"
+        },
+        {
+          "shortcut": "storylineid",
+          "symbol": "#storylineid",
+          "description": "All Storyline Ids",
+          "searches_fields": [
+            "osSrc.process.parent.storyline.id",
+            "osSrc.process.storyline.id",
+            "src.process.parent.storyline.id",
+            "src.process.storyline.id",
+            "tgt.process.storyline.id"
+          ],
+          "example": "#storylineid = 'bba6fccd-a1e8-9561-b397-33bae4194c75'",
+          "use_case": "Quick search across all storyline ID fields"
+        },
+        {
+          "shortcut": "uid",
+          "symbol": "#uid",
+          "description": "All UIDs",
+          "use_case": "Search all UID fields"
+        },
+        {
+          "shortcut": "username",
+          "symbol": "#username",
+          "description": "All Processes Users",
+          "use_case": "Search all user/username fields"
+        }
+      ]
+    },
+    "operator_variants": {
+      "operators": [
+        {
+          "name": "AND",
+          "category": "logical",
+          "symbols": [
+            "AND",
+            "&&"
+          ],
+          "description": "Combines query terms requiring all terms to match",
+          "syntax": "term1 AND term2",
+          "case_sensitivity": "n/a",
+          "data_types": [
+            "all"
+          ],
+          "example_queries": [
+            {
+              "query": "event.type = 'Process Creation' src.process.name = 'svchost.exe'",
+              "description": "Implicit AND"
+            }
+          ]
+        },
+        {
+          "name": "OR",
+          "category": "logical",
+          "symbols": [
+            "OR",
+            "||"
+          ],
+          "description": "Combines query terms where at least one must match",
+          "syntax": "term1 OR term2",
+          "case_sensitivity": "n/a",
+          "data_types": [
+            "all"
+          ],
+          "example_queries": [
+            {
+              "query": "indicator.category = 'InfoStealer' or indicator.category = 'Evasion'",
+              "description": "Match either category"
+            }
+          ]
+        },
+        {
+          "name": "NOT",
+          "category": "logical",
+          "symbols": [
+            "NOT",
+            "!"
+          ],
+          "description": "Excludes events matching the specified term",
+          "syntax": "NOT term",
+          "case_sensitivity": "n/a",
+          "data_types": [
+            "all"
+          ],
+          "example_queries": [
+            {
+              "query": "src.process.signedStatus='unsigned' && !(src.process.name='svchost.exe')",
+              "description": "NOT with ! symbol"
+            }
+          ]
+        },
+        {
+          "name": "contains",
+          "category": "text_search",
+          "symbols": [
+            "contains"
+          ],
+          "description": "Retrieves events containing the search term (case-insensitive by default)",
+          "syntax": "fieldname contains 'search-term'",
+          "case_sensitivity": "case-insensitive by default",
+          "data_types": [
+            "string",
+            "text"
+          ],
+          "modifiers": [
+            {
+              "name": "matchcase",
+              "syntax": "fieldname contains:matchcase 'term'"
+            }
+          ],
+          "example_queries": [
+            {
+              "query": "logfile contains 'access_log'",
+              "description": "Basic contains search"
+            }
+          ],
+          "limitations": [
+            "* contains cannot be used in Alerts",
+            "Not optimized for Dashboards"
+          ]
+        },
+        {
+          "name": "matches",
+          "category": "text_search",
+          "symbols": [
+            "matches",
+            "$"
+          ],
+          "description": "Searches a field using regular expressions",
+          "syntax": "fieldname matches 'regex'",
+          "case_sensitivity": "case-insensitive by default",
+          "data_types": [
+            "string",
+            "text"
+          ],
+          "modifiers": [
+            {
+              "name": "matchcase",
+              "syntax": "fieldname matches:matchcase 'Regex'"
+            }
+          ],
+          "example_queries": [
+            {
+              "query": "registry.keyPath matches '\\\\.*\\\\VSS'",
+              "description": "Regex with double-escaping"
+            }
+          ],
+          "limitations": [
+            "Double-escaping required",
+            "Regex cannot exceed 1000 bytes"
+          ]
+        },
+        {
+          "name": "equals",
+          "category": "comparison",
+          "symbols": [
+            "==",
+            "="
+          ],
+          "description": "Selects events with a particular value",
+          "syntax": "fieldname == value",
+          "case_sensitivity": "case-sensitive for strings",
+          "data_types": [
+            "string",
+            "numeric",
+            "boolean"
+          ],
+          "example_queries": [
+            {
+              "query": "status == 404",
+              "description": "Numeric exact match"
+            }
+          ]
+        },
+        {
+          "name": "not_equals",
+          "category": "comparison",
+          "symbols": [
+            "!="
+          ],
+          "description": "Selects events that do not have a particular value",
+          "syntax": "fieldname != value",
+          "case_sensitivity": "case-sensitive for strings",
+          "data_types": [
+            "string",
+            "numeric",
+            "boolean"
+          ],
+          "example_queries": [
+            {
+              "query": "indicator.name != 'RawVolumeAccess'",
+              "description": "Exclude specific value"
+            }
+          ]
+        },
+        {
+          "name": "greater_than",
+          "category": "comparison",
+          "symbols": [
+            ">"
+          ],
+          "description": "Field value greater than specified value",
+          "syntax": "fieldname > value",
+          "case_sensitivity": "n/a",
+          "data_types": [
+            "numeric"
+          ],
+          "example_queries": [
+            {
+              "query": "src.process.crossProcessCount > 0",
+              "description": "Numeric comparison"
+            }
+          ]
+        },
+        {
+          "name": "greater_than_or_equal",
+          "category": "comparison",
+          "symbols": [
+            ">="
+          ],
+          "description": "Field value greater than or equal to specified value",
+          "syntax": "fieldname >= value",
+          "case_sensitivity": "n/a",
+          "data_types": [
+            "numeric"
+          ],
+          "example_queries": [
+            {
+              "query": "status >= 400",
+              "description": "HTTP status range"
+            }
+          ]
+        },
+        {
+          "name": "less_than",
+          "category": "comparison",
+          "symbols": [
+            "<"
+          ],
+          "description": "Field value less than specified value",
+          "syntax": "fieldname < value",
+          "case_sensitivity": "n/a",
+          "data_types": [
+            "numeric"
+          ],
+          "example_queries": [
+            {
+              "query": "tgt.file.size < 65536",
+              "description": "File size limit"
+            }
+          ]
+        },
+        {
+          "name": "less_than_or_equal",
+          "category": "comparison",
+          "symbols": [
+            "<="
+          ],
+          "description": "Field value less than or equal to specified value",
+          "syntax": "fieldname <= value",
+          "case_sensitivity": "n/a",
+          "data_types": [
+            "numeric"
+          ],
+          "example_queries": [
+            {
+              "query": "status <= 499",
+              "description": "Upper bound"
+            }
+          ]
+        },
+        {
+          "name": "wildcard",
+          "category": "special",
+          "symbols": [
+            "*"
+          ],
+          "description": "Match events with any value in a field, or search all fields",
+          "syntax": "fieldname = *",
+          "case_sensitivity": "n/a",
+          "data_types": [
+            "all"
+          ],
+          "example_queries": [
+            {
+              "query": "indicator.description = *",
+              "description": "Any value"
+            },
+            {
+              "query": "* contains 'search term'",
+              "description": "All fields"
+            }
+          ],
+          "limitations": [
+            "* contains and * matches limited to PowerQuery initial filters"
+          ]
+        },
+        {
+          "name": "in",
+          "category": "special",
+          "symbols": [
+            "in"
+          ],
+          "description": "Search for numeric, boolean, and text values in a field",
+          "syntax": "fieldname in (value1, value2, value3)",
+          "case_sensitivity": "case-sensitive by default",
+          "data_types": [
+            "string",
+            "numeric",
+            "boolean"
+          ],
+          "modifiers": [
+            {
+              "name": "anycase",
+              "syntax": "fieldname contains (values)"
+            }
+          ],
+          "example_queries": [
+            {
+              "query": "httpStatus in (404)",
+              "description": "Single value"
+            },
+            {
+              "query": "fieldname in (\"aaa\", 111, false)",
+              "description": "Multiple types"
+            }
+          ],
+          "limitations": [
+            "Cannot match null or missing fields",
+            "Quote text values, don't quote numeric/boolean"
+          ]
+        }
+      ],
+      "operators_boolean": [
+        {
+          "operator": "Is true",
+          "description": "Check if a boolean field is set as true",
+          "data_type": "Boolean",
+          "syntax": "fieldname Is true",
+          "case_sensitive": false,
+          "category": "boolean_check"
+        },
+        {
+          "operator": "Is false",
+          "description": "Check if a boolean field is set as false",
+          "data_type": "Boolean",
+          "syntax": "fieldname Is false",
+          "case_sensitive": false,
+          "category": "boolean_check"
+        },
+        {
+          "operator": "Not fieldname Is True",
+          "description": "Negation of boolean true check",
+          "data_type": "Boolean",
+          "syntax": "Not fieldname Is True",
+          "case_sensitive": false,
+          "category": "boolean_negation"
+        },
+        {
+          "operator": "Not fieldname Is False",
+          "description": "Negation of boolean false check",
+          "data_type": "Boolean",
+          "syntax": "Not fieldname Is False",
+          "case_sensitive": false,
+          "category": "boolean_negation"
+        }
+      ],
+      "operators_enum": [
+        {
+          "operator": "in",
+          "description": "Case sensitive compare string with list - string should match exactly one value in list",
+          "data_type": "ENUM",
+          "syntax": "fieldname in (value1, value2, value3)",
+          "case_sensitive": true,
+          "category": "list_comparison"
+        },
+        {
+          "operator": "not in",
+          "description": "Negative compare string with list - string should match none of values in list",
+          "data_type": "ENUM",
+          "syntax": "fieldname not in (value1, value2, value3)",
+          "case_sensitive": true,
+          "category": "list_comparison"
+        },
+        {
+          "operator": "!=",
+          "description": "Negative string comparison",
+          "data_type": "ENUM",
+          "syntax": "fieldname != value",
+          "case_sensitive": true,
+          "category": "equality"
+        },
+        {
+          "operator": "=",
+          "description": "Equal to",
+          "data_type": "ENUM",
+          "syntax": "fieldname = value",
+          "case_sensitive": true,
+          "category": "equality"
+        }
+      ],
+      "operators_numeric": [
+        {
+          "operator": "!=",
+          "description": "Negative string comparison",
+          "data_type": "Numeric",
+          "syntax": "fieldname != value",
+          "case_sensitive": false,
+          "category": "equality"
+        },
+        {
+          "operator": ">=",
+          "description": "Greater than or equal to",
+          "data_type": "Numeric",
+          "syntax": "fieldname >= value",
+          "case_sensitive": false,
+          "category": "comparison"
+        },
+        {
+          "operator": "<=",
+          "description": "Less than or equal to",
+          "data_type": "Numeric",
+          "syntax": "fieldname <= value",
+          "case_sensitive": false,
+          "category": "comparison"
+        },
+        {
+          "operator": "=",
+          "description": "Equal to",
+          "data_type": "Numeric",
+          "syntax": "fieldname = value",
+          "case_sensitive": false,
+          "category": "equality"
+        },
+        {
+          "operator": ">",
+          "description": "Greater than",
+          "data_type": "Numeric",
+          "syntax": "fieldname > value",
+          "case_sensitive": false,
+          "category": "comparison"
+        },
+        {
+          "operator": "<",
+          "description": "Less than",
+          "data_type": "Numeric",
+          "syntax": "fieldname < value",
+          "case_sensitive": false,
+          "category": "comparison"
+        },
+        {
+          "operator": "between",
+          "description": "Range for dates and numbers",
+          "data_type": "Numeric",
+          "syntax": "fieldname between value1 and value2",
+          "case_sensitive": false,
+          "category": "range"
+        }
+      ],
+      "operators_string": [
+        {
+          "operator": "contains",
+          "description": "Case sensitive contains function for comparing single value to single value",
+          "data_type": "String",
+          "syntax": "fieldname contains 'value'",
+          "case_sensitive": true,
+          "category": "substring_search"
+        },
+        {
+          "operator": "contains anycase",
+          "description": "Case insensitive contains function for comparing single value to single value",
+          "data_type": "String",
+          "syntax": "fieldname contains anycase 'value'",
+          "case_sensitive": false,
+          "category": "substring_search"
+        },
+        {
+          "operator": "containscis",
+          "description": "Case insensitive contains function for comparing single value to single value",
+          "data_type": "String",
+          "syntax": "fieldname containscis 'value'",
+          "case_sensitive": false,
+          "category": "substring_search"
+        },
+        {
+          "operator": "not fieldname contains",
+          "description": "Negative case sensitive contains function for comparing single value to single value",
+          "data_type": "String",
+          "syntax": "not fieldname contains 'value'",
+          "case_sensitive": true,
+          "category": "substring_search"
+        },
+        {
+          "operator": "does not contain",
+          "description": "Negative case sensitive contains function for comparing single value to single value",
+          "data_type": "String",
+          "syntax": "fieldname does not contain 'value'",
+          "case_sensitive": true,
+          "category": "substring_search"
+        },
+        {
+          "operator": "not fieldname contains anycase",
+          "description": "Negative case insensitive contains function for comparing single value to single value",
+          "data_type": "String",
+          "syntax": "not fieldname contains anycase 'value'",
+          "case_sensitive": false,
+          "category": "substring_search"
+        },
+        {
+          "operator": "does not containcis",
+          "description": "Negative case insensitive contains function for comparing single value to single value",
+          "data_type": "String",
+          "syntax": "fieldname does not containcis 'value'",
+          "case_sensitive": false,
+          "category": "substring_search"
+        },
+        {
+          "operator": "startswith",
+          "description": "Case sensitive - single value string should start with string",
+          "data_type": "String",
+          "syntax": "fieldname startswith 'value'",
+          "case_sensitive": true,
+          "category": "prefix_search"
+        },
+        {
+          "operator": "startswith anycase",
+          "description": "Case insensitive - single value string should start with string",
+          "data_type": "String",
+          "syntax": "fieldname startswith anycase 'value'",
+          "case_sensitive": false,
+          "category": "prefix_search"
+        },
+        {
+          "operator": "startswithcis",
+          "description": "Case insensitive - single value string should start with string",
+          "data_type": "String",
+          "syntax": "fieldname startswithcis 'value'",
+          "case_sensitive": false,
+          "category": "prefix_search"
+        },
+        {
+          "operator": "endswith",
+          "description": "Case sensitive - single value string should end with string",
+          "data_type": "String",
+          "syntax": "fieldname endswith 'value'",
+          "case_sensitive": true,
+          "category": "suffix_search"
+        },
+        {
+          "operator": "endswith anycase",
+          "description": "Case insensitive - single value string should end with string",
+          "data_type": "String",
+          "syntax": "fieldname endswith anycase 'value'",
+          "case_sensitive": false,
+          "category": "suffix_search"
+        },
+        {
+          "operator": "endswithcis",
+          "description": "Case insensitive - single value string should end with string",
+          "data_type": "String",
+          "syntax": "fieldname endswithcis 'value'",
+          "case_sensitive": false,
+          "category": "suffix_search"
+        },
+        {
+          "operator": "not fieldname startswith",
+          "description": "Negative case sensitive - single value string should not start with string",
+          "data_type": "String",
+          "syntax": "not fieldname startswith 'value'",
+          "case_sensitive": true,
+          "category": "prefix_search"
+        },
+        {
+          "operator": "not fieldname startswith anycase",
+          "description": "Negative case insensitive - single value string should not start with string",
+          "data_type": "String",
+          "syntax": "not fieldname startswith anycase 'value'",
+          "case_sensitive": false,
+          "category": "prefix_search"
+        },
+        {
+          "operator": "Not fieldname endswith",
+          "description": "Negative case sensitive - single value string should not end with string",
+          "data_type": "String",
+          "syntax": "Not fieldname endswith 'value'",
+          "case_sensitive": true,
+          "category": "suffix_search"
+        },
+        {
+          "operator": "not fieldname endswith anycase",
+          "description": "Negative case insensitive - single value string should not end with string",
+          "data_type": "String",
+          "syntax": "not fieldname endswith anycase 'value'",
+          "case_sensitive": false,
+          "category": "suffix_search"
+        },
+        {
+          "operator": "regexp",
+          "description": "Regexp comparison - full string should match regexp expression",
+          "data_type": "String",
+          "syntax": "fieldname regexp 'pattern'",
+          "case_sensitive": true,
+          "category": "regex"
+        },
+        {
+          "operator": "not fieldname regexp",
+          "description": "Not regexp comparison - string should match not regexp expression",
+          "data_type": "String",
+          "syntax": "not fieldname regexp 'pattern'",
+          "case_sensitive": true,
+          "category": "regex"
+        },
+        {
+          "operator": "in",
+          "description": "Case sensitive compare string with list - string should match exactly one value in list",
+          "data_type": "String",
+          "syntax": "fieldname in ('value1', 'value2', 'value3')",
+          "case_sensitive": true,
+          "category": "list_comparison"
+        },
+        {
+          "operator": "not in",
+          "description": "Negative compare string with list - string should match none of values in list",
+          "data_type": "String",
+          "syntax": "fieldname not in ('value1', 'value2', 'value3')",
+          "case_sensitive": true,
+          "category": "list_comparison"
+        },
+        {
+          "operator": "in contains",
+          "description": "Case sensitive compare string with list - string should be contained within at least one value in list",
+          "data_type": "String",
+          "syntax": "fieldname in contains ('value1', 'value2', 'value3')",
+          "case_sensitive": true,
+          "category": "list_comparison"
+        },
+        {
+          "operator": "not fieldname in contains",
+          "description": "Negative case sensitive compare string with list - string should be contained in none of the values in the list",
+          "data_type": "String",
+          "syntax": "not fieldname in contains ('value1', 'value2', 'value3')",
+          "case_sensitive": true,
+          "category": "list_comparison"
+        },
+        {
+          "operator": "contains",
+          "description": "Case insensitive compare string with list - string should match one value in list",
+          "data_type": "String",
+          "syntax": "fieldname contains ('value1', 'value2', 'value3')",
+          "case_sensitive": false,
+          "category": "list_comparison"
+        },
+        {
+          "operator": "not fieldname contains",
+          "description": "Negative case insensitive compare string with list - string should match none of values in list",
+          "data_type": "String",
+          "syntax": "not fieldname contains ('value1', 'value2', 'value3')",
+          "case_sensitive": false,
+          "category": "list_comparison"
+        },
+        {
+          "operator": "contains",
+          "description": "Case insensitive compare string with list - string should be contained with at least one value in list",
+          "data_type": "String",
+          "syntax": "fieldname contains ('value1', 'value2', 'value3')",
+          "case_sensitive": false,
+          "category": "list_comparison"
+        },
+        {
+          "operator": "not fieldname contains",
+          "description": "Negative case insensitive compare string with list - string should be contained in none of the values in the list",
+          "data_type": "String",
+          "syntax": "not fieldname contains ('value1', 'value2', 'value3')",
+          "case_sensitive": false,
+          "category": "list_comparison"
+        },
+        {
+          "operator": "!=",
+          "description": "Negative string comparison",
+          "data_type": "String",
+          "syntax": "fieldname != 'value'",
+          "case_sensitive": true,
+          "category": "equality"
+        },
+        {
+          "operator": "=",
+          "description": "Equal to",
+          "data_type": "String",
+          "syntax": "fieldname = 'value'",
+          "case_sensitive": true,
+          "category": "equality"
+        },
+        {
+          "operator": "~",
+          "description": "Partial string comparison - contains case sensitive",
+          "data_type": "String",
+          "syntax": "fieldname ~ 'value'",
+          "case_sensitive": true,
+          "category": "substring_search"
+        },
+        {
+          "operator": "!~",
+          "description": "Negation of the binding operator =~",
+          "data_type": "String",
+          "syntax": "fieldname !~ 'value'",
+          "case_sensitive": true,
+          "category": "substring_search"
+        },
+        {
+          "operator": "exists",
+          "description": "Check if a field exists",
+          "data_type": "String",
+          "syntax": "fieldname exists",
+          "case_sensitive": false,
+          "category": "existence"
+        },
+        {
+          "operator": "is empty",
+          "description": "Check if a field is empty",
+          "data_type": "String",
+          "syntax": "fieldname is empty",
+          "case_sensitive": false,
+          "category": "existence"
+        },
+        {
+          "operator": "not fieldname exists",
+          "description": "Check if a field does not exist",
+          "data_type": "String",
+          "syntax": "not fieldname exists",
+          "case_sensitive": false,
+          "category": "existence"
+        },
+        {
+          "operator": "IS NOT EMPTY",
+          "description": "Check if a field is not empty",
+          "data_type": "String",
+          "syntax": "fieldname IS NOT EMPTY",
+          "case_sensitive": false,
+          "category": "existence"
+        }
+      ]
+    },
+    "shortcuts": [
+      {
+        "s1ql_shortcut": "#cmdline",
+        "description": "All Processes CmdLine Arguments"
+      },
+      {
+        "s1ql_shortcut": "#dns",
+        "description": "All DNS requests and responses"
+      },
+      {
+        "s1ql_shortcut": "#filepath",
+        "description": "All Paths"
+      },
+      {
+        "s1ql_shortcut": "#hash",
+        "description": "any MD5, SHA1, or SHA256 field"
+      },
+      {
+        "s1ql_shortcut": "#ip",
+        "description": "All IPs"
+      },
+      {
+        "s1ql_shortcut": "#md5",
+        "description": "All Md5"
+      },
+      {
+        "s1ql_shortcut": "#name",
+        "description": "All Processes Names"
+      },
+      {
+        "s1ql_shortcut": "#sha1",
+        "description": "All Sha1"
+      },
+      {
+        "s1ql_shortcut": "#sha256",
+        "description": "All Sha256"
+      },
+      {
+        "s1ql_shortcut": "#storylineid",
+        "description": "All Storyline Ids"
+      },
+      {
+        "s1ql_shortcut": "#uid",
+        "description": "All UIDs"
+      },
+      {
+        "s1ql_shortcut": "#username",
+        "description": "All Processes Users"
+      }
+    ],
+    "regex_reference": {
+      "metadata": {
+        "source": "SentinelOne Operations Center",
+        "extraction_date": "2025-10-21",
+        "description": "Regular expressions reference for S1QL queries - compatible with traditional Java and Python libraries",
+        "documentation_url": "https://community.sentinelone.com"
+      },
+      "conventions": {
+        "regex_library": "java.util.regex",
+        "python_library": "re",
+        "case_sensitivity": "Case-insensitive by default ([A-Z] = [a-z])",
+        "group_naming": "Not supported",
+        "back_reference_syntax": {
+          "collector_redaction_rules": "\\1 and \\2",
+          "parsers": "$1 and $2 (also supports $0)"
+        },
+        "escaping_rules": {
+          "general": "Double escaping required everywhere except $\"regex\" syntax in Search and PowerQueries",
+          "shorthand_format": "Regex does not need to be escaped. Example: $\"\\d+\\.\\d+\\.\\d+\\.\\d+\"",
+          "full_syntax": "Regex must be escaped. Example: dst.ip.address matches \"\\\\d+\\\\.\\\\d+\\\\.\\\\d+\\\\.\\\\d+\"",
+          "four_backslashes": "In some cases, four backslashes (\\\\\\\\) are needed to properly escape. First backslash is the character (\\), second escapes first, last two denote special character"
+        },
+        "max_regex_size": "1000 bytes",
+        "restrictions": {
+          "lookaheads": "Positive and negative look aheads are restricted due to performance issues",
+          "lookbehinds": "Positive and negative look behinds are restricted due to performance issues"
+        }
+      },
+      "characters": [
+        {
+          "character": "\\d",
+          "legend": "One digit from 0 to 9",
+          "example": "log_\\\\d\\\\d",
+          "sample_match": "log_25"
+        },
+        {
+          "character": "\\w",
+          "legend": "Word character: ASCII letter, digit or underscore",
+          "example": "\\\\w-\\\\w\\\\w\\\\w",
+          "sample_match": "A-b_1"
+        },
+        {
+          "character": "\\s",
+          "legend": "Whitespace character: space, tab, newline, carriage return, vertical tab",
+          "example": "a\\\\sb\\\\sc",
+          "sample_match": "a bc"
+        },
+        {
+          "character": "\\D",
+          "legend": "One character that is not a digit as defined by \\d",
+          "example": "\\\\D\\\\D\\\\D",
+          "sample_match": "ABC"
+        },
+        {
+          "character": "\\W",
+          "legend": "One character that is not a word character as defined by \\w",
+          "example": "\\\\W\\\\W\\\\W\\\\W\\\\W",
+          "sample_match": "*-+=)"
+        },
+        {
+          "character": "\\S",
+          "legend": "One character that is not a whitespace character as defined by \\s",
+          "example": "\\\\S\\\\S\\\\S\\\\S",
+          "sample_match": "Yoyo"
+        },
+        {
+          "character": "\\u\\X",
+          "legend": "Match specific or ranges of unicode characters",
+          "example": ".*[\\u00A8]",
+          "sample_match": "\u2030p \u00f2\u2020\u2026\u00a82020-08-28T20:28:34.343-0500"
+        },
+        {
+          "character": ".",
+          "legend": "Any character except line break",
+          "example": "a.c",
+          "sample_match": "abc"
+        },
+        {
+          "character": ".*",
+          "legend": "Any character except line break (zero or more times)",
+          "example": ".*",
+          "sample_match": "whatever, man."
+        },
+        {
+          "character": "\\.",
+          "legend": "A period (special character: needs to be escaped by backslash)",
+          "example": "a\\\\.c",
+          "sample_match": "a.c"
+        },
+        {
+          "character": "\\",
+          "legend": "Escapes a special character",
+          "example": "\\\\.\\\\*\\\\+\\\\? \\\\$\\\\^\\\\/\\\\\\\\",
+          "sample_match": ".*+? $^\\/\\"
+        },
+        {
+          "character": "\\[\\{\\(\\)\\}\\]",
+          "legend": "Escapes bracket characters",
+          "example": "\\\\[\\\\{\\\\(\\\\)\\\\}\\\\]",
+          "sample_match": "[{()}]"
+        }
+      ],
+      "quantifiers": [
+        {
+          "character": "+",
+          "legend": "One or more",
+          "example": "Version \\\\w-\\\\w+",
+          "sample_match": "Version A-b1_1",
+          "greedy": true
+        },
+        {
+          "character": "{3}",
+          "legend": "Exactly three times",
+          "example": "\\\\D{3}",
+          "sample_match": "ABC"
+        },
+        {
+          "character": "{2,4}",
+          "legend": "Two to four times",
+          "example": "\\\\d{2,4}",
+          "sample_match": "156"
+        },
+        {
+          "character": "{3,}",
+          "legend": "Three or more times",
+          "example": "\\\\w{3,}",
+          "sample_match": "regex_tutorial"
+        },
+        {
+          "character": "*",
+          "legend": "Zero or more times",
+          "example": "A*B*C*",
+          "sample_match": "AAACC",
+          "greedy": true
+        },
+        {
+          "character": "?",
+          "legend": "Once or none",
+          "example": "plurals?",
+          "sample_match": "plural"
+        },
+        {
+          "character": "+?",
+          "legend": "Makes + quantifier lazy (one or more)",
+          "example": "\\\\d+?",
+          "sample_match": "1 in 12345",
+          "greedy": false
+        },
+        {
+          "character": "*?",
+          "legend": "Makes * quantifier lazy (zero or more)",
+          "example": "A*?",
+          "sample_match": "empty in AAA",
+          "greedy": false
+        },
+        {
+          "character": "{2,4}?",
+          "legend": "Makes range quantifier lazy",
+          "example": "\\\\w{2,4}?",
+          "sample_match": "ab in abcd",
+          "greedy": false
+        }
+      ],
+      "logic": [
+        {
+          "character": "|",
+          "legend": "Alternation / OR operand",
+          "example": "22|33",
+          "sample_match": "33"
+        },
+        {
+          "character": "( \u2026 )",
+          "legend": "Capturing group",
+          "example": "A(nt|pple)",
+          "sample_match": "Apple (captures \"pple\")"
+        },
+        {
+          "character": "\\1 or $1",
+          "legend": "Contents of Group 1",
+          "example": "parser: r(\\\\w)g$1x | agent: r(\\\\w)g\\\\1x",
+          "sample_match": "regex"
+        },
+        {
+          "character": "\\2 or $2",
+          "legend": "Contents of Group 2",
+          "example": "parser: r(\\\\w)g$1x2 | agent: r(\\\\w)g\\\\1x2",
+          "sample_match": "regex2"
+        }
+      ],
+      "whitespace": [
+        {
+          "character": "\\n",
+          "legend": "New line",
+          "example": "stack trace\\\\ntrace",
+          "sample_match": "stack trace\ntrace"
+        }
+      ],
+      "character_classes": [
+        {
+          "character": "[ \u2026 ]",
+          "legend": "One of the characters in the brackets",
+          "example": "[AEIOU]",
+          "sample_match": "One uppercase vowel"
+        },
+        {
+          "character": "[ao]",
+          "legend": "One of the characters in the brackets",
+          "example": "T[ao]p",
+          "sample_match": "Tap or Top"
+        },
+        {
+          "character": "-",
+          "legend": "Range indicator",
+          "example": "[a-z]",
+          "sample_match": "One lowercase letter"
+        },
+        {
+          "character": "[x-y]",
+          "legend": "One of the characters in the range from x to y",
+          "example": "[A-Z]+",
+          "sample_match": "GREAT"
+        },
+        {
+          "character": "[AB1-5w-z]",
+          "legend": "One of the characters in multiple ranges",
+          "example": "[AB1-5w-z]",
+          "sample_match": "One of either: A,B,1,2,3,4,5,w,x,y,z"
+        },
+        {
+          "character": "[ -~]",
+          "legend": "Characters in the printable section of ASCII table",
+          "example": "[ -~]+",
+          "sample_match": "Characters in the printable section of the ASCII table"
+        },
+        {
+          "character": "[^x]",
+          "legend": "One character that is not x",
+          "example": "[^a-z]{3}",
+          "sample_match": "A1!"
+        },
+        {
+          "character": "[^x-y]",
+          "legend": "One of the characters not in the range from x to y",
+          "example": "[^ -~]+",
+          "sample_match": "Characters not in printable ASCII"
+        },
+        {
+          "character": "[\\d\\D]",
+          "legend": "One character that is a digit or a non-digit",
+          "example": "[\\\\d\\\\D]+",
+          "sample_match": "Any characters, including new lines, which the regular dot doesn't match"
+        }
+      ],
+      "anchors_and_boundaries": [
+        {
+          "character": "^ or \"regex\" in parser",
+          "legend": "Start of string or start of line depending on multiline mode (But when [^inside brackets], it means \"not\")",
+          "example": "^start.*end$ or \"start.*the end\"",
+          "sample_match": "abc (line start)"
+        },
+        {
+          "character": "$ or \"regex\" in parser",
+          "legend": "End of string or end of line depending on multiline mode",
+          "example": ".*? the end$ OR \".*the end\"",
+          "sample_match": "this is the end"
+        }
+      ],
+      "usage_in_search": {
+        "shorthand_syntax": {
+          "format": "$\"regex\"",
+          "description": "Searches the message field for logs ingested by Collector",
+          "example": "$\"tomcat\"",
+          "equivalent_to": "message matches \"regex\"",
+          "escaping_required": false
+        },
+        "full_syntax": {
+          "format": "fieldname matches \"regex\"",
+          "example": "dst.ip.address matches \"\\\\d+\\\\.\\\\d+\\\\.\\\\d+\\\\.\\\\d+\"",
+          "escaping_required": true
+        }
+      },
+      "testing_tools": {
+        "free_text_parser": {
+          "description": "Paste in log data and confirm that your parser works as expected",
+          "video_url": "https://youtu.be/uNOiu8CVnJU?t=72"
+        },
+        "live_data_parser": {
+          "description": "Debug the workings of your format statements using live data",
+          "access_methods": [
+            "User menu > Parsers > Edit or Create buttons",
+            "Search view > Select log line > Inspect Fields > Edit Parser"
+          ],
+          "video_url": "https://youtu.be/uNOiu8CVnJU?t=161"
+        }
+      },
+      "examples": {
+        "ip_address": {
+          "shorthand": "$\"\\\\d+\\\\.\\\\d+\\\\.\\\\d+\\\\.\\\\d+\"",
+          "full_syntax": "dst.ip.address matches \"\\\\d+\\\\.\\\\d+\\\\.\\\\d+\\\\.\\\\d+\""
+        },
+        "windows_temp_path": {
+          "description": "Searching for target file path in Windows temp directory",
+          "example": "tgt.file.path matches '^C:\\\\\\\\Windows\\\\\\\\Temp\\\\\\\\[a-z]{8}\\\\.tmp$'"
+        }
+      }
+    }
+  },
+  "signature": "62f2c522e35683bd39795a1d24b134fa",
+  "version": 1
+}

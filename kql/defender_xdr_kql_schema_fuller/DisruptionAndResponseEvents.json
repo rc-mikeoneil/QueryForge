@@ -1,0 +1,194 @@
+{
+  "table": "disruptionandresponseevents",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-disruptionandresponseevents-table",
+  "page_date": "2025-10-03",
+  "columns": [
+    {
+      "name": "Timestamp",
+      "type": "datetime",
+      "description": "Date and time when the event was recorded"
+    },
+    {
+      "name": "ActionType",
+      "type": "string",
+      "description": "Type of disruption action taken, for example: ContainedUserLogonBlocked, ContainedUserSmbFileOpenBlocked, SafeBootGuardApplied"
+    },
+    {
+      "name": "DeviceId",
+      "type": "string",
+      "description": "Unique identifier for the device that reported the event; the reporting device can be the one that blocked the access, the compromised device itself, or even a different device that is aware of the attack"
+    },
+    {
+      "name": "SourceDeviceId",
+      "type": "string",
+      "description": "Unique identifier for the device that the attack originated from"
+    },
+    {
+      "name": "TargetDeviceId",
+      "type": "string",
+      "description": "Unique identifier for the device that was targeted or attacked"
+    },
+    {
+      "name": "TargetDeviceName",
+      "type": "string",
+      "description": "Name of the device that was targeted or attacked"
+    },
+    {
+      "name": "TargetDomainName",
+      "type": "string",
+      "description": "Domain name of the device that was targeted or attacked"
+    },
+    {
+      "name": "DeviceName",
+      "type": "string",
+      "description": "Name of the device that reported the event; the reporting device can be the one that blocked the access, the compromised device itself, or even a different device that is aware of the attack"
+    },
+    {
+      "name": "DomainName",
+      "type": "string",
+      "description": "Domain name that the device that reported the event is joined to; the reporting device can be the one that blocked the access, the compromised device itself, or even a different device that is aware of the attack"
+    },
+    {
+      "name": "InitiatingProcessId",
+      "type": "integer",
+      "description": "Process ID (PID) of the process that triggered that block action, based on the perspective of the reporting device"
+    },
+    {
+      "name": "InitiatingProcessFileName",
+      "type": "string",
+      "description": "Name of the process that triggered the block action, based on the perspective of the reporting device"
+    },
+    {
+      "name": "SourceUserSid",
+      "type": "string",
+      "description": "The security identifier of the account conducting the malicious activity"
+    },
+    {
+      "name": "SourceUserName",
+      "type": "string",
+      "description": "The user name of the account conducting the malicious activity"
+    },
+    {
+      "name": "SourceUserDomainName",
+      "type": "string",
+      "description": "The domain name of the account conducting the malicious activity"
+    },
+    {
+      "name": "SourceIPAddress",
+      "type": "string",
+      "description": "IP address where the attacker communication originated from and was blocked by automatic attack disruption"
+    },
+    {
+      "name": "SourcePort",
+      "type": "integer",
+      "description": "Port where the attacker communication originated from"
+    },
+    {
+      "name": "IPAddress",
+      "type": "string",
+      "description": "IP address that the attacker attempted to access"
+    },
+    {
+      "name": "Port",
+      "type": "string",
+      "description": "Port that the attacker attempted to access"
+    },
+    {
+      "name": "SourceDeviceName",
+      "type": "string",
+      "description": "Host name of the device where the attack originated from"
+    },
+    {
+      "name": "SourceDomainName",
+      "type": "string",
+      "description": "Domain name of the device where the attack originated from"
+    },
+    {
+      "name": "AuthenticationProtocol",
+      "type": "string",
+      "description": "Authentication protocol that the compromised user used to sign in; possible values: Undefined, NTLM, Kerberos"
+    },
+    {
+      "name": "Service",
+      "type": "string",
+      "description": "Name of the service the attacker attempted to use, if the attacker signed in using Kerberos or NTLM; for example: SMB, HTTP, cifs, SMB, host, ldap, SMB, krbtgt"
+    },
+    {
+      "name": "InterfaceUuidSourceDomainName",
+      "type": "string",
+      "description": "Unique identifier (UUID) for the Remote Procedure Call (RPC) interface that the attacker attempted to access"
+    },
+    {
+      "name": "InterfaceFriendlyName",
+      "type": "string",
+      "description": "Friendly name of the interface represented by the interface UUID"
+    },
+    {
+      "name": "FileName",
+      "type": "string",
+      "description": "Name of the file that the attacker attempted to access"
+    },
+    {
+      "name": "ShareName",
+      "type": "string",
+      "description": "Name of the share location that the attacker attempted to access"
+    },
+    {
+      "name": "LogonType",
+      "type": "string",
+      "description": "Type of logon session the user attempted; possible values: interactive, remote interactive (RDP), network, batch job, service"
+    },
+    {
+      "name": "LogonId",
+      "type": "long",
+      "description": "Identifier for a logon session; this is unique on the same device only between restarts"
+    },
+    {
+      "name": "SessionId",
+      "type": "long",
+      "description": "Unique number assigned to a user by a website's server for the duration of the visit or session"
+    },
+    {
+      "name": "CompromisedAccountCount",
+      "type": "integer",
+      "description": "Number of compromised accounts that are part of the policy"
+    },
+    {
+      "name": "PolicyId",
+      "type": "string",
+      "description": "Unique identifier for the policy"
+    },
+    {
+      "name": "PolicyName",
+      "type": "string",
+      "description": "Name of the policy"
+    },
+    {
+      "name": "PolicyVersion",
+      "type": "string",
+      "description": "Version of the policy"
+    },
+    {
+      "name": "PolicyHash",
+      "type": "string",
+      "description": "Unique hash of the policy"
+    },
+    {
+      "name": "DataSources",
+      "type": "array",
+      "description": "Products or services that provided information for the event; for example: Microsoft Defender for Endpoint"
+    },
+    {
+      "name": "IsPolicyOn",
+      "type": "boolean",
+      "description": "Indicates the current state of the policy on the device at the time of the disruption event; possible values: true (the policy is on, therefore it was applied or enforced), false (the policy was turned off or revoked from the device)"
+    },
+    {
+      "name": "ReportType",
+      "type": "string",
+      "description": "The nature and impact level of the reported event; possible values: Prevented (the action, such as a connection or authentication attempt, was fully blocked before execution), Blocked (an active connection or session was forcibly terminated, with partial impact on the device), PolicyUpdated (the client received and possibly applied a new policy)"
+    }
+  ],
+  "col_count": 37,
+  "generated_at": "2025-10-03T02:10:28.073531Z"
+}

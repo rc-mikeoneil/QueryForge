@@ -1,0 +1,99 @@
+{
+  "table": "DeviceNetworkInfo",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-devicenetworkinfo-table",
+  "page_date": "2025-06-11",
+  "columns": [
+    {
+      "name": "Timestamp",
+      "type": "datetime",
+      "description": "Date and time when the event was recorded"
+    },
+    {
+      "name": "DeviceId",
+      "type": "string",
+      "description": "Unique identifier for the device in the service"
+    },
+    {
+      "name": "DeviceName",
+      "type": "string",
+      "description": "Fully qualified domain name (FQDN) of the device"
+    },
+    {
+      "name": "NetworkAdapterName",
+      "type": "string",
+      "description": "Name of the network adapter"
+    },
+    {
+      "name": "MacAddress",
+      "type": "string",
+      "description": "MAC address of the network adapter"
+    },
+    {
+      "name": "NetworkAdapterType",
+      "type": "string",
+      "description": "Network adapter type"
+    },
+    {
+      "name": "NetworkAdapterStatus",
+      "type": "string",
+      "description": "Operational status of the network adapter"
+    },
+    {
+      "name": "TunnelType",
+      "type": "string",
+      "description": "Tunneling protocol, if the interface is used for this purpose"
+    },
+    {
+      "name": "ConnectedNetworks",
+      "type": "string",
+      "description": "Networks that the adapter is connected to (JSON array)"
+    },
+    {
+      "name": "DnsAddresses",
+      "type": "string",
+      "description": "DNS server addresses (JSON array)"
+    },
+    {
+      "name": "IPv4Dhcp",
+      "type": "string",
+      "description": "IPv4 address of DHCP server"
+    },
+    {
+      "name": "IPv6Dhcp",
+      "type": "string",
+      "description": "IPv6 address of DHCP server"
+    },
+    {
+      "name": "DefaultGateways",
+      "type": "string",
+      "description": "Default gateway addresses (JSON array)"
+    },
+    {
+      "name": "IPAddresses",
+      "type": "string",
+      "description": "All IP addresses assigned to the adapter (JSON array)"
+    },
+    {
+      "name": "ReportId",
+      "type": "long",
+      "description": "Event identifier based on a repeating counter..."
+    },
+    {
+      "name": "NetworkAdapterVendor",
+      "type": "string",
+      "description": "Manufacturer or vendor of the network adapter"
+    },
+    {
+      "name": "OnboardingStatus",
+      "type": "string",
+      "description": "Whether the device is onboarded to Defender for Endpoint or not"
+    },
+    {
+      "name": "NetworkAdapterDnsSuffix",
+      "type": "string",
+      "description": "Domain suffix assigned to the device’s network adapter"
+    }
+  ],
+  "col_count": 18,
+  "generated_at": "2025-09-19T07:36:37.414199Z"
+}

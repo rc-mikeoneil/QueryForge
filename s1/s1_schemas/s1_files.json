@@ -1,0 +1,386 @@
+{
+  "metadata": {
+    "source": "SentinelOne Operations Center",
+    "schema_name": "Files",
+    "extraction_date": "2025-10-21",
+    "description": "Files event fields for S1QL 2.0 queries",
+    "field_count": 75
+  },
+  "fields": [
+    {
+      "s1ql_field": "k8sCluster.containerId",
+      "description": "Container ID. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.containerImage",
+      "description": "Container image. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.containerImage.id",
+      "description": "Container Image ID",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.containerImage.sha256",
+      "description": "Container Image Sha256",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.containerLabels",
+      "description": "Container labels. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.containerName",
+      "description": "Container name. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.controllerLabels",
+      "description": "Kubernetes controller labels. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.controllerName",
+      "description": "Kubernetes controller name. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.controllerType",
+      "description": "Kubernetes controller type. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.name",
+      "description": "Kubernetes cluster name. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.namespace",
+      "description": "Kubernetes namespace. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.namespaceLabels",
+      "description": "Kubernetes namespace labels. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.nodeName",
+      "description": "Kubernetes node name. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.podLabels",
+      "description": "Kubernetes pod labels. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.podName",
+      "description": "Kubernetes pod name. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.image.binaryIsExecutable",
+      "description": "Is binary backing source process an executable",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "src.process.image.description",
+      "description": "The description of the file taken from version information. For example, if the image is \"cmd.exe\", this would be \"Windows Command Processor\"",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.image.internalName",
+      "description": "The \"internal name\" field from the process's image resource.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.image.md5",
+      "description": "MD5 signature",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.image.originalFileName",
+      "description": "The \"Original filename\" field taken from the process's image properties.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.image.productName",
+      "description": "The \"Product Name\" field taken from the process's image properties.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.image.productVersion",
+      "description": "The \"Product version\" field taken from the process's image properties.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.image.sha256",
+      "description": "SHA256 signature",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.image.type",
+      "description": "The source process's image file type",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.publisher",
+      "description": "Signature sign identity",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.reasonSignatureInvalid",
+      "description": "Signature not verified reason",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.rpid",
+      "description": "Real/Relinked PID (after relinking)",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.signedStatus",
+      "description": "Verifies the process validity and integrity. Unsigned processes may pose a security risk.",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "src.process.tid",
+      "description": "Thread id",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.verifiedStatus",
+      "description": "Verification status of process signature",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "task.cluster",
+      "description": "Cluster name. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "task.ecsVersion",
+      "description": "Task Ecs Version. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "task.serviceArn",
+      "description": "Task service ARN. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "task.serviceName",
+      "description": "Task service name. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "task.tags",
+      "description": "Task tags. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "task.taskArn",
+      "description": "Task ARN. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "task.taskAvailabilityZone",
+      "description": "Task Availability Zone:. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "task.taskDefinitionArn",
+      "description": "Task definition ARN. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "task.taskDefinitionFamily",
+      "description": "Task definition family. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "task.taskDefinitionRevision",
+      "description": "Task definition revision. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.convictedBy",
+      "description": "Reputation, Static AI",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "tgt.file.creationTime",
+      "description": "Date and Time of File Creation. Format: epoch time (milliseconds since 1.1.1970), Timezone: UTC",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "tgt.file.description",
+      "description": "Description of file",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.extension",
+      "description": "File Extension",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.id",
+      "description": "Unique ID of file",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.internalName",
+      "description": "Internal name of file",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.isDirectory",
+      "description": "Indicates whether the target file is a directory.",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "tgt.file.isExecutable",
+      "description": "Is file executable",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "tgt.file.isSigned",
+      "description": "Is file signed",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "tgt.file.location",
+      "description": "Location of file",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "tgt.file.md5",
+      "description": "MD5 Signature of File",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.modificationTime",
+      "description": "Date and time file was modified. Format: epoch time (milliseconds since 1.1.1970), Timezone: UTC",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "tgt.file.name",
+      "description": "The target file name. For example, if the file path is a\\b\\c.txt then this field will be c.txt",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.oldMd5",
+      "description": "Old file MD5 before Modify",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.oldPath",
+      "description": "Old path before 'Rename'",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.oldSha1",
+      "description": "Old file SHA1 before Modify",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.oldSha256",
+      "description": "Old file SHA256 before Modify",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.origin.creationMethod",
+      "description": "Type of action that spawned the file",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "tgt.file.origin.creatorProcess.name",
+      "description": "The process name that spawned the file",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.origin.creatorProcess.uid",
+      "description": "The process UID that spawned the file",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.origin.locationPath",
+      "description": "Source path for copied files, or URL for downloaded files",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.origin.locationType",
+      "description": "If file was copied, describes the source file's location. If file was downloaded, describes which program created it",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "tgt.file.originalFileName",
+      "description": "The \"Original filename\" field taken from the file's properties.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.owner.name",
+      "description": "The name of the process that owns this file.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.owner.userSid",
+      "description": "The Security Descriptor (SID) of the user that the process that owns this file is using.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.path",
+      "description": "The full path of the target file including the file name",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.productName",
+      "description": "The \"Product Name\" field from the file's properties.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.productVersion",
+      "description": "The \"Product version\" field from the file's properties.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.publisher",
+      "description": "The entity that signed the target file.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.sha1",
+      "description": "SHA1 Signature of File",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.sha256",
+      "description": "SHA256 Signature of File",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.signature.isValid",
+      "description": "Indicates whether the file's digital signature is valid.",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "tgt.file.signatureInvalidReason",
+      "description": "Indicates why the file signature was deemed invalid",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.size",
+      "description": "File Size in bytes",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "tgt.file.type",
+      "description": "Type of file",
+      "data_type": "Enum"
+    }
+  ]
+}

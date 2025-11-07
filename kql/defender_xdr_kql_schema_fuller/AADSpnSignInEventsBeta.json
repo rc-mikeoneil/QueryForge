@@ -1,0 +1,104 @@
+{
+  "table": "aadspnsignineventsbeta",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-aadspnsignineventsbeta-table",
+  "page_date": "2025-10-03",
+  "columns": [
+    {
+      "name": "Timestamp",
+      "type": "datetime",
+      "description": "Date and time when the record was generated"
+    },
+    {
+      "name": "Application",
+      "type": "string",
+      "description": "Application that performed the recorded action"
+    },
+    {
+      "name": "ApplicationId",
+      "type": "string",
+      "description": "Unique identifier for the application"
+    },
+    {
+      "name": "IsManagedIdentity",
+      "type": "boolean",
+      "description": "Indicates whether the sign-in was initiated by a managed identity"
+    },
+    {
+      "name": "ErrorCode",
+      "type": "int",
+      "description": "Contains the error code if a sign-in error occurs. To find a description of a specific error code, visithttps://aka.ms/AADsigninsErrorCodes."
+    },
+    {
+      "name": "CorrelationId",
+      "type": "string",
+      "description": "Unique identifier of the sign-in event"
+    },
+    {
+      "name": "ServicePrincipalName",
+      "type": "string",
+      "description": "Name of the service principal that initiated the sign-in"
+    },
+    {
+      "name": "ServicePrincipalId",
+      "type": "string",
+      "description": "Unique identifier of the service principal that initiated the sign-in"
+    },
+    {
+      "name": "ResourceDisplayName",
+      "type": "string",
+      "description": "Display name of the resource accessed. The display name can contain any character."
+    },
+    {
+      "name": "ResourceId",
+      "type": "string",
+      "description": "Unique identifier of the resource accessed"
+    },
+    {
+      "name": "ResourceTenantId",
+      "type": "string",
+      "description": "Unique identifier of the tenant of the resource accessed"
+    },
+    {
+      "name": "IPAddress",
+      "type": "string",
+      "description": "IP address assigned to the endpoint and used during related network communications"
+    },
+    {
+      "name": "Country",
+      "type": "string",
+      "description": "Two-letter code indicating the country where the client IP address is geolocated"
+    },
+    {
+      "name": "State",
+      "type": "string",
+      "description": "State where the sign-in occurred, if available"
+    },
+    {
+      "name": "City",
+      "type": "string",
+      "description": "City where the account user is located"
+    },
+    {
+      "name": "Latitude",
+      "type": "string",
+      "description": "The north to south coordinates of the sign-in location"
+    },
+    {
+      "name": "Longitude",
+      "type": "string",
+      "description": "The east to west coordinates of the sign-in location"
+    },
+    {
+      "name": "RequestId",
+      "type": "string",
+      "description": "Unique identifier of the request"
+    },
+    {
+      "name": "ReportId",
+      "type": "string",
+      "description": "Unique identifier for the event"
+    }
+  ],
+  "col_count": 19,
+  "generated_at": "2025-10-03T02:10:00.022478Z"
+}

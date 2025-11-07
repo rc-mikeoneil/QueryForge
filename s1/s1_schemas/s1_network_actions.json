@@ -1,0 +1,171 @@
+{
+  "metadata": {
+    "source": "SentinelOne Operations Center",
+    "schema_name": "Network Actions",
+    "extraction_date": "2025-10-21",
+    "description": "Network Actions event fields for S1QL 2.0 queries",
+    "field_count": 32
+  },
+  "fields": [
+    {
+      "s1ql_field": "dst.ip.address",
+      "description": "IP address of destination for the network request",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "dst.port.number",
+      "description": "Port number of destination of the network request",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "event.network.connectionStatus",
+      "description": "Network event status",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "event.network.direction",
+      "description": "Direction of the network connection event. Incoming network connection direction originate from another device to the SentinelOne protected endpoint, while outgoing network connection direction originate from the SentinelOne protected endpoint to another device.",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "event.network.protocolName",
+      "description": "Protocol name per IANA well known ports distribution",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.containerId",
+      "description": "Container ID. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.containerImage",
+      "description": "Container image. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.containerImage.id",
+      "description": "Container Image ID",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.containerImage.sha256",
+      "description": "Container Image Sha256",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.containerLabels",
+      "description": "Container labels. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.containerName",
+      "description": "Container name. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.controllerLabels",
+      "description": "Kubernetes controller labels. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.controllerName",
+      "description": "Kubernetes controller name. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.controllerType",
+      "description": "Kubernetes controller type. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.name",
+      "description": "Kubernetes cluster name. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.namespace",
+      "description": "Kubernetes namespace. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.namespaceLabels",
+      "description": "Kubernetes namespace labels. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.nodeName",
+      "description": "Kubernetes node name. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.podLabels",
+      "description": "Kubernetes pod labels. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.podName",
+      "description": "Kubernetes pod name. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.ip.address",
+      "description": "IP address of the originator performing the network event",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.port.number",
+      "description": "Port number of traffic source",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "task.cluster",
+      "description": "Cluster name. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "task.ecsVersion",
+      "description": "Task Ecs Version. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "task.serviceArn",
+      "description": "Task service ARN. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "task.serviceName",
+      "description": "Task service name. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "task.tags",
+      "description": "Task tags. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "task.taskArn",
+      "description": "Task ARN. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "task.taskAvailabilityZone",
+      "description": "Task Availability Zone:. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "task.taskDefinitionArn",
+      "description": "Task definition ARN. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "task.taskDefinitionFamily",
+      "description": "Task definition family. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "task.taskDefinitionRevision",
+      "description": "Task definition revision. Will be presented only for events triggered on K8s Agents.",
+      "data_type": "String"
+    }
+  ]
+}

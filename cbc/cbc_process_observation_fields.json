@@ -1,0 +1,18 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_observation_fields": {
+      "observation_description": {
+        "type": "keyword",
+        "description": "Searchable. Description of the activity that generated the observation"
+      },
+      "observation_id": {
+        "type": "keyword",
+        "description": "Searchable. Unique ID of the observation"
+      },
+      "observation_type": {
+        "type": "keyword",
+        "description": "Searchable. Type of observation generated"
+      }
+    }
+  }
+}

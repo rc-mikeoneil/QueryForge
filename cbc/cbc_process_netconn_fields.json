@@ -1,0 +1,258 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_netconn_fields": {
+      "netconn_action": {
+        "type": "keyword",
+        "description": "Deprecated. Use netconn_actions"
+      },
+      "netconn_actions": {
+        "type": "keyword",
+        "description": "Searchable. Netconn operation actions such as ACTION_CONNECTION_CREATE, plus XDR actions like ACTION_HTTP",
+        "array": true
+      },
+      "netconn_application_protocol": {
+        "type": "keyword",
+        "description": "Searchable. Protocol detected in the application layer of the network session; does not necessarily correspond to the port listed in IANA service registry.  Requires XDR"
+      },
+      "netconn_bytes_received": {
+        "type": "integer",
+        "description": "Searchable. Final byte count for all traffic received by the sensors endpoint during the netconn session.  Requires XDR"
+      },
+      "netconn_bytes_sent": {
+        "type": "integer",
+        "description": "Searchable. Final byte count for all traffic sent by the sensors endpoint during the netconn session.  Requires XDR"
+      },
+      "netconn_community_id": {
+        "type": "keyword",
+        "description": "Searchable. Community ID of the network session, calculated according to the convention documented in https://github.com/corelight/community-id-spec.  Requires Enterprise EDR"
+      },
+      "netconn_count": {
+        "type": "integer",
+        "description": "Searchable. Count of netconn events reported by the sensor since last initialization"
+      },
+      "netconn_dns_answer_class": {
+        "type": "keyword",
+        "description": "Searchable. The set of resource class in the query answer (aka answer_class).  Requires Windows sensor 4.0 or later and XDR add-on.",
+        "array": true
+      },
+      "netconn_dns_answer_count": {
+        "type": "integer",
+        "description": "Searchable. The total number of resource records in a reply messages answer section.  Requires Windows sensor 4.0 or later and XDR add-on."
+      },
+      "netconn_dns_answer_data": {
+        "type": "keyword",
+        "description": "Searchable. The set of data in the query answer.  Requires Windows sensor 4.0 or later and XDR add-on.",
+        "array": true
+      },
+      "netconn_dns_answer_data_length": {
+        "type": "integer",
+        "description": "Searchable. The length of the data in a reply messages answer section.  Requires Windows sensor 4.0 or later and XDR add-on.",
+        "array": true
+      },
+      "netconn_dns_answer_name": {
+        "type": "keyword",
+        "description": "Searchable. The set of resource descriptions in the query answer (aka answer_name).  Requires Windows sensor 4.0 or later and XDR add-on.",
+        "array": true
+      },
+      "netconn_dns_answer_ttl": {
+        "type": "long",
+        "description": "Searchable. The set of resource ttl in the query answer.  Requires Windows sensor 4.0 or later and XDR add-on.",
+        "array": true
+      },
+      "netconn_dns_answer_type": {
+        "type": "keyword",
+        "description": "Searchable. The set of resource type in the query answer (aka answer_type).  Requires Windows sensor 4.0 or later and XDR add-on.",
+        "array": true
+      },
+      "netconn_dns_flags": {
+        "type": "keyword",
+        "description": "Searchable. A set of DNS flags.  Requires Windows sensor 4.0 or later and XDR add-on.",
+        "array": true
+      },
+      "netconn_dns_query_class": {
+        "type": "keyword",
+        "description": "Searchable. A descriptive name for the class of the query.  Requires Windows sensor 4.0 or later and XDR add-on."
+      },
+      "netconn_dns_query_name": {
+        "type": "keyword",
+        "description": "Searchable. The domain name that is the subject of the DNS query.  Requires Windows sensor 4.0 or later and XDR add-on."
+      },
+      "netconn_dns_query_type": {
+        "type": "keyword",
+        "description": "Searchable. A descriptive name for the type of the query.  Requires Windows sensor 4.0 or later and XDR add-on."
+      },
+      "netconn_dns_response_code": {
+        "type": "integer",
+        "description": "Searchable. DNS response code.  Requires Windows sensor 4.0 or later and XDR add-on."
+      },
+      "netconn_domain": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Domain name (FQDN) associated with the remote end of the network connection, if available  Note: 'netconn_domain' is searchable for PROCESSES but not returnable."
+      },
+      "netconn_excluded_count": {
+        "type": "integer",
+        "description": "Count of excluded netconn events, as reported by the sensor since last initialization"
+      },
+      "netconn_failed": {
+        "type": "bool",
+        "description": "Searchable. True if the outbound network connection attempt failed; if successful, the field is not set"
+      },
+      "netconn_first_packet_timestamp": {
+        "type": "datetime",
+        "description": "Searchable. Timestamp when the sensor detected the first packet in the network session (ISO 8601 format, in UTC).  Requires XDR"
+      },
+      "netconn_inbound": {
+        "type": "bool",
+        "description": "Searchable. True if the network connection was inbound; false if outbound"
+      },
+      "netconn_ipv4": {
+        "type": "ipaddr",
+        "description": "Searchable. Value-Searchable. IPv4 address of the remote side of the network connection; stored as integer (not dotted decimal); searchable using either format"
+      },
+      "netconn_ipv6": {
+        "type": "ipv6addr",
+        "description": "Searchable. Value-Searchable. IPv6 address of the remote side of the network connection; stored as a String without octet-separating colon characters"
+      },
+      "netconn_ja3_local_fingerprint": {
+        "type": "keyword",
+        "description": "Searchable. JA3 hash of the client side of the TLS session; can be JA3 or JA3S depending on which side initiated the TLS session.  Requires XDR"
+      },
+      "netconn_ja3_local_fingerprint_fields": {
+        "type": "keyword",
+        "description": "Searchable. Decimal values of the bytes used to calculate the JA3 hash for the local side of the TLS session.  Requires XDR"
+      },
+      "netconn_ja3_remote_fingerprint": {
+        "type": "keyword",
+        "description": "Searchable. JA3 hash of the remote side of the TLS session; can be JA3 or JA3S depending on which side initiated the TLS session.  Requires XDR"
+      },
+      "netconn_ja3_remote_fingerprint_fields": {
+        "type": "keyword",
+        "description": "Searchable. Decimal values of the bytes used to calculate the JA3 hash for the remote side of the TLS session.  Requires XDR"
+      },
+      "netconn_last_packet_timestamp": {
+        "type": "datetime",
+        "description": "Searchable. Timestamp when the sensor detected the last packet in the network session.  Requires XDR"
+      },
+      "netconn_listen": {
+        "type": "bool",
+        "description": "True if the process opened a socket to listen for incoming connections (i.e. where netconn_action = ACTION_CONNECTION_LISTEN); not present if false"
+      },
+      "netconn_local_ipv4": {
+        "type": "ipaddr",
+        "description": "Searchable. Value-Searchable. IPv4 address of the local side of the network connection; stored as an integer (not dotted decimal); searchable by either format"
+      },
+      "netconn_local_ipv6": {
+        "type": "ipv6addr",
+        "description": "Searchable. Value-Searchable. IPv6 address of the local side of the network connection; stored as a String without octet-separating colon characters"
+      },
+      "netconn_local_location": {
+        "type": "keyword",
+        "description": "Geolocation of the local side of the network connection"
+      },
+      "netconn_local_port": {
+        "type": "integer",
+        "description": "TCP or UDP port used by the local side of the network connection"
+      },
+      "netconn_location": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Geolocation of the remote side of the network connection; same as netconn_remote_location"
+      },
+      "netconn_port": {
+        "type": "integer",
+        "description": "Searchable. TCP or UDP port used by the interesting side of the network connection (when netconn_inbound = true, this represents the local port; otherwise, this represents the port on the remote side of the network connection); compare with netconn_remote_port, event_network_remote_port and event_network_local_port"
+      },
+      "netconn_protocol": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Network protocol of the network connection"
+      },
+      "netconn_proxy_domain": {
+        "type": "keyword",
+        "description": "Searchable. Domain name (FQDN) associated with the remote side of the connection with an intermediary HTTP network device, usually a proxy server  Requires Windows sensor and Enterprise EDR  Unencrypted intermediary network devices only"
+      },
+      "netconn_proxy_ipv4": {
+        "type": "ipaddr",
+        "description": "Searchable. IPv4 address of the remote side of the connection with an intermediary HTTP network device, usually a proxy server. Stored as integer not dotted decimal, but searchable using either format  Requires Windows sensor and Enterprise EDR  Unencrypted intermediary network devices only"
+      },
+      "netconn_proxy_ipv6": {
+        "type": "ipv6addr",
+        "description": "Searchable. IPv6 address of the remote side of the connection with an intermediary HTTP network device, usually a proxy server; stored as String without octet-separating colon characters  Requires Windows sensor and Enterprise EDR  Unencrypted intermediary network devices only"
+      },
+      "netconn_proxy_port": {
+        "type": "integer",
+        "description": "Searchable. TCP or UDP port used by the remote side of the connection with an intermediary HTTP network device, usually a proxy server  Requires Windows sensor and Enterprise EDR  Unencrypted intermediary network devices only"
+      },
+      "netconn_remote_device_id": {
+        "type": "integer",
+        "description": "Searchable. The device_id of the remote side of the network session, if a Carbon Black Cloud sensor is installed on the remote asset.  Requires XDR"
+      },
+      "netconn_remote_device_name": {
+        "type": "keyword",
+        "description": "Searchable. The device_name of the remote side of the network session, if a Carbon Black Cloud sensor is installed on the remote asset.  Requires XDR"
+      },
+      "netconn_remote_ipv4": {
+        "type": "ipaddr",
+        "description": "Searchable. IPv4 address of the remote side of the network connection; stored as integer, not dotted decimal, but searchable as either"
+      },
+      "netconn_remote_ipv6": {
+        "type": "ipv6addr",
+        "description": "Searchable. IPv6 address of the remote side of the network connection; stored as String without octet-separating colon characters"
+      },
+      "netconn_remote_location": {
+        "type": "keyword",
+        "description": "Geolocation of the remote side of the network connection"
+      },
+      "netconn_remote_port": {
+        "type": "integer",
+        "description": "Searchable. TCP or UDP port used by the remote side of the network connection; same as netconn_port and event_network_remote_port"
+      },
+      "netconn_request_headers": {
+        "type": "keyword",
+        "description": "Searchable. List of HTTP request headers captured from the start of the HTTP session. Represented as key:value pairs for each header.  Requires XDR"
+      },
+      "netconn_request_method": {
+        "type": "keyword",
+        "description": "Searchable. HTTP request method submitted as part of the HTTP session request.  Requires XDR"
+      },
+      "netconn_request_url": {
+        "type": "keyword",
+        "description": "Searchable. The URL path and HTTP version requested in the HTTP session.  Requires XDR"
+      },
+      "netconn_response_headers": {
+        "type": "keyword",
+        "description": "Searchable. List of HTTP response headers captured from the start of the HTTP session. Represented as key:value pairs for each header.  Requires XDR"
+      },
+      "netconn_response_status_code": {
+        "type": "integer",
+        "description": "Searchable. The numeric code included in the HTTP response, signifying status of the requested operation.  Requires XDR"
+      },
+      "netconn_server_name_indication": {
+        "type": "keyword",
+        "description": "Searchable. Hostname requested by the TLS client, used to help server distinguish between multiple TLS-protected services listening on the same IP:port binding.  Requires XDR"
+      },
+      "netconn_tls_certificate_issuer_name": {
+        "type": "keyword",
+        "description": "Searchable. Name reported in the TLS certificate for the entity which issued the TLS certificate.  Requires XDR"
+      },
+      "netconn_tls_certificate_subject_name": {
+        "type": "keyword",
+        "description": "Searchable. Name reported in the TLS certificate for the entity to which the TLS certificate was issued.  Requires XDR"
+      },
+      "netconn_tls_certificate_subject_not_valid_after": {
+        "type": "datetime",
+        "description": "Searchable. Timestamp after which the TLS certificate asserts it is no longer valid.  Requires XDR"
+      },
+      "netconn_tls_certificate_subject_not_valid_before": {
+        "type": "datetime",
+        "description": "Searchable. Timestamp before which the TLS certificate asserts it is not yet valid.  Requires XDR"
+      },
+      "netconn_tls_cipher": {
+        "type": "keyword",
+        "description": "Searchable. Netconn TLS cipher suite (see the IANA TLS cipher suites registry for the full list of possible values TLS Cipher Suites)"
+      },
+      "netconn_tls_version": {
+        "type": "keyword",
+        "description": "Searchable. TLS protocol version used in this session  Requires XDR"
+      }
+    }
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "last_updated": "2025-10-27",
+    "total_queries": 18,
+    "description": "Example threat hunting queries for SentinelOne Deep Visibility"
+  },
+  "queries": [
+    {
+      "title": "Potential Code Execution via Web Server",
+      "description": "detects cases where a web-facing service or application server process (such as Apache, Nginx, Tomcat, or PHP-FPM) spawns a shell process with encoded content.",
+      "query": "dataSource.name = 'SentinelOne' and endpoint.os = 'linux' and event.type = 'Process Creation' and (src.process.name contains ('tomcat', 'apache', 'httpd', 'php-') OR (src.process.name = 'java' and src.process.cmdline matches '(apache|tomcat).*start$')) and tgt.process.displayName = 'bash' and (tgt.process.cmdline matches '(echo|eval) ' AND tgt.process.cmdline contains 'base64 -d')"
+    },
+    {
+      "title": "WSUS Server Exploitation Activity",
+      "description": "Detects activity consistent with exploitation of Windows Server Update Services. The rule looks for anomalous WSUS behaviors indicative of abuse of the update distribution channel, which could enable unauthorized code delivery to managed endpoints and lateral impact across the environment.",
+      "query": "dataSource.name = 'SentinelOne' and endpoint.os = 'windows' and event.type = 'Process Creation' and src.process.name contains ('wsusservice.exe') and not (tgt.process.name contains ('csc.exe', 'werfault.exe', 'taskhostw.exe'))"
+    },
+    {
+      "title": "Potential WSUS Exploitation via IIS",
+      "description": "Detects the IIS Worker Process (w3wp.exe) for the WSUS Application Pool launching a command shell or reconnaissance tool.",
+      "query": "ddataSource.name = 'SentinelOne' and endpoint.os = 'windows' and event.type = 'Process Creation' and (src.process.name contains 'w3wp.exe' or src.process.displayName contains 'IIS Worker Process' or src.process.image.originalFileName contains 'w3wp.exe' or src.process.image.internalName contains 'w3wp.exe') and src.process.cmdline contains 'WsusPool' and tgt.process.name contains ('cmd.exe', 'powershell.exe', 'pwsh.exe', 'quser.exe', 'ipconfig.exe', 'whoami.exe', 'net.exe', 'tasklist.exe', 'taskkill.exe', 'reg.exe', 'netstat.exe', 'systeminfo.exe', 'hostname.exe', 'query.exe', 'arp.exe', 'route.exe', 'ping.exe', 'curl.exe')"
+    },
+    {
+      "title":"GoAnywhere MFT Unusual File Write Activity",
+      "description": "Detects unusual file write activity by the GoAnywhere MFT application, which may indicate a potential data exfiltration attempt.",
+      "query": "dataSource.name = 'SentinelOne' and endpoint.os = 'windows' and event.type = 'File Creation' and src.process.name contains ('java', 'tomcat') and tgt.file.path contains '\\GoAnywhere\\' and (tgt.file.extension contains ('jsp', 'jspx', 'war', 'do', 'class') or tgt.file.name contains ('meshagent', 'simple', 'anydesk', 'splashtop', 'screenconnect', 'rustdesk')) and not (tgt.file.name contains ('ga_upgrade.jar', 'index.jsp', 'index_jsp.class'))"
+    },
+    {
+      "title":"Explorer-Launched Script Chaining Hidden File Operations and Process Launches",
+      "description": "DDetects a command script launched from the Windows Explorer shell that chains native utilities to hide files, move content, and spawn subsequent processes.",
+      "query": "dataSource.name = 'SentinelOne' and endpoint.os = 'windows' and event.type = 'Process Creation' and (src.process.parent.name contains ('explorer.exe') or src.process.parent.displayName = 'Windows Explorer') and (src.process.name contains ('cmd.exe') or src.process.displayName = 'Windows Command Processor') and src.process.cmdline contains 'cd' and src.process.cmdline contains 'attrib' and src.process.cmdline contains 'xcopy' and src.process.cmdline contains 'start' and src.process.cmdline contains 'exit'"
+    },
+    {
+      "title": "Command Chain Spawning VBScript Execution",
+      "description": "Detects a chain of commands that subsequently launches the VBScript engine.",
+      "query": "DataSource.name = 'SentinelOne' and endpoint.os = 'windows' and event.type = 'Process Creation' and (src.process.parent.name contains ('explorer.exe') or src.process.parent.displayName = 'Windows Explorer') and (src.process.name contains ('cmd.exe', 'cscript.exe', 'wscript.exe') or src.process.displayName in ('Windows Command Processor', 'Microsoft ® Console Based Script Host', 'Windows Based Script Host')) and src.process.cmdline contains 'start' and src.process.cmdline contains 'exit' and src.process.cmdline contains ('.vbs', '.vbe', 'VBScript.Encode') and src.process.cmdline contains ('&', 'appdata', 'roaming', 'temp', 'attrib', 'xcopy')"
+    },
+    {
+      "title":"Calendaromatic API Access via Homoglyph Domain Suggesting Covert C2",
+      "description": "Detects access to the Calendaromatic API via a homoglyph domain, which may indicate a covert command and control (C2) infrastructure.",
+      "query": "dataSource.name = 'SentinelOne' and endpoint.os = 'windows' and (url.address contains ('/api/calendar', '/health') and url.address contains 'calendaromatic')"
+    },
+    {
+      "title":"TamperedChef Registry-Based Startup Persistence",
+      "description": "Detects creation of a registry startup value associated with 'TamperedChef' to establish auto-start persistence.",
+      "query": "dataSource.name = 'SentinelOne' and endpoint.os = 'windows' and event.type = 'Registry Value Create' and registry.keyPath matches 'Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\(Run|RunOnce)\\\\sys_compatibility_check'"
+    },
+    {
+      "title": "Msiexec Launch of Abnormal File Type",
+      "description": "Detects the launch of msiexec.exe with an unusual file type, which may indicate a potential attack.",
+      "query": "dataSource.name = 'SentinelOne' and src.process.name contains ('msiexec.exe') and event.type in ('Process Creation', 'Named Pipe Connection') and src.process.cmdline matches '/i.*\\.(bmp|htm|html|json|pdf|rtf|eml|exe|dll|ini|js|scr|vbs|ps1|bat|cmd|hta|jpg|jpeg|js|jse|png|gif|doc|docx|xls|xlsx|ppt|pptx)(\\s|$|[^a-zA-Z0-9.])' and not (src.process.cmdline matches '\\.(msi|msu|msp|exe)(\\s|$|[^a-zA-Z0-9.])')"
+    },
+    {
+      "title":"Python Execution Indicative of RPC Authentication Coercion",
+      "description": "Detects Python interpreter execution patterns associated with coercing remote systems to authenticate over RPC-based protocols. This activity is often used to facilitate NTLM relay attacks, enabling credential capture or lateral movement by abusing implicit trust relationships.",
+      "query": "dataSource.name = 'SentinelOne' and endpoint.os = 'windows' and event.type = 'Process Creation' and (src.process.name contains ('python', 'python3') or src.process.displayName contains 'python') and src.process.cmdline matches:matchcase ('(?:\\s|^)\\-dc-ip(?:\\s|$)', '(?:\\s|^)\\-target-ip(?:\\s|$)')"
+    },
+    {
+      "title":"IIS PHP Execution Indicative of Web Shell File Writing",
+      "description":"Detects PHP execution within IIS environments indicative of potential web shell file creation or malicious file writing operations.",
+      "query":"dataSource.name = 'SentinelOne' and endpoint.os = 'windows' and event.type in ('Process Creation', 'Command Script') and (src.process.parent.name contains ('w3wp.exe') or src.process.parent.displayName = 'IIS Worker Process') and (tgt.process.cmdline contains 'php' or cmdScript.content contains 'php') and (tgt.process.cmdline matches '\\s*-r\\s*' or cmdScript.content matches '\\s*-r\\s*') and (tgt.process.cmdline contains 'file_put_contents' or cmdScript.content contains 'file_put_contents')"
+    },
+    {
+      "title":"Suspicious File Download via PowerShell Executed by Mshta",
+      "description":"Detects instances where PowerShell downloads a file to a temporary folder, followed by its execution using mshta.exe. An adversary can abuse this technique to deliver and execute malicious scripts or binaries, leveraging legitimate system utilities to bypass endpoint detection mechanisms and establish a foothold on the system.",
+      "query":"dataSource.name = 'SentinelOne' and endpoint.os = 'windows' and event.type = 'Process Creation' and (src.process.name contains ('powershell.exe', 'pwsh.exe') or src.process.displayName contains ('Windows PowerShell', 'pwsh')) and src.process.cmdline contains ('-Uri', 'Invoke-WebRequest', 'IWR ', 'Invoke-RestMethod', 'IRM ') and src.process.cmdline contains '-OutFile' and src.process.cmdline contains ('Invoke-Expression', 'IEX ', 'Start-Process') and tgt.process.cmdline contains '\\temp\\' and (tgt.process.displayName = 'Microsoft (R) HTML Application host' or tgt.process.name contains ('mshta.exe'))"
+    },
+    {
+      "title":"PowerShell Reverse Shell",
+      "description":"Detects the execution of generic PowerShell reverse shell patterns, which are commonly leveraged by adversaries to gain unauthorized remote access to Windows systems.",
+      "query":"dataSource.name = 'SentinelOne' and endpoint.os = 'windows' and cmdScript.content contains 'New-Object Net.Sockets.TCPClient' and (cmdScript.content contains 'Invoke-Expression' or cmdScript.content contains 'iex') and (cmdScript.content contains 'StreamReader' or cmdScript.content contains 'StreamWriter')"
+    },
+    {
+      "title":"Masquerading via Renamed System Binaries",
+      "description":"Detects potential bypass of security controls by renaming highly relevant binaries.",
+      "query":"dataSource.name = 'SentinelOne' and event.type = 'Behavioral Indicators' and indicator.name = 'DifferentOriginalFilename' and src.process.displayName in ('Microsoft (R) HTML Application host', 'Microsoft ® Console Based Script Host', 'Microsoft ® Windows Based Script Host', 'CertUtil.exe', 'Microsoft Connection Manager Profile Installer', 'IE Per-User Initialization Utility', 'msxsl.exe', 'Execute processes remotely', 'Registry Console Tool', 'Microsoft(C) Register Server', 'Windows host process (Rundll32)', 'Windows Problem Reporting', 'WMI Commandline Utility') and not (src.process.name contains ('mshta.exe', 'cscript.exe', 'wscript.exe', 'certutil.exe', 'cmstp.exe', 'IE4UINIT.EXE', 'msxsl.exe', 'psexec.exe', 'psexec.c', 'psexec64.exe', 'reg.exe', 'regsvr32.exe', 'upwreg.exe', 'rundll32.exe', 'wermgr.exe', 'WerFault.exe', 'wmic.exe', 'UCPD-fix.exe', 'bssafe.exe')) and not (src.process.name matches '^\\$\\$DeleteMe.*$|^cscript-|^jmsagent-|^MSI[A-Za-z0-9]+\\.tmp')"
+    },
+    {
+      "title":"Keychain Dump via Security Utility",
+      "description":"Detects execution of the macOS security utility with the dump-keychain or -d arguments, which are used to extract sensitive contents from the system keychain.",
+      "query":"dataSource.name = 'SentinelOne' and endpoint.os = 'osx' and event.type = 'Process Creation' and (tgt.process.cmdline contains 'dump-keychain' and tgt.process.cmdline matches:matchcase '\\-d') and not (src.process.name = 'ShareFile')"
+    },
+    {
+      "title":"Potential NTLM Relay Attack via RunDLL32 (Wav/Msg)",
+      "description":"Detects attempts to coerce a local NTLM authentication using rundll32.exe. This activity is associated with CVE-2023-23397, where the DavSetCookie function in rundll32.exe is used to access a .WAV file on a remote server, triggering the victim machine to authenticate and supply an NTLM hash.",
+      "query":"dataSource.name = 'SentinelOne' and (src.process.parent.name contains ('svchost.exe') or src.process.parent.displayName = 'Host Process for Windows Services') and (src.process.name contains ('rundll32.exe') or src.process.displayName = 'Windows host process (Rundll32)') and src.process.cmdline contains ('davsetcookie', 'http') and src.process.cmdline matches '\\.[a-zA-Z0-9]{3}$' and src.process.cmdline matches '(?<!\\d)(?!10\\.|192\\.168\\.|172\\.(1[6-9]|2[0-9]|3[0-1])\\.|127\\.|0\\.|255\\.)\\b(?:[0-9]{1,3}\\.){3}[0-9]{1,3}\\b(?!\\d)' and not (src.process.user contains ('SYSTEM', 'AUTORITE NT', 'SISTEMA')) and (src.process.cmdline matches ('\\.wav$', '\\.msg$'))"
+    },
+    {
+      "title":"Service Control Manager Exploitation",
+      "description":"Detects exploitation of the Service Control Manager by a compromised privileged account to grant arbitrary non-administrative users persistent full SYSTEM permissions on a machine. This is accomplished by modifying the Access Control List (ACL) for the Service Control Manager using the sdset command. Such actions may enable adversaries to maintain persistence, escalate privileges, and execute malicious operations with SYSTEM-level access, posing a critical threat to system security.",
+      "query":"dataSource.name = 'SentinelOne' AND endpoint.os = 'windows' AND event.type = 'Process Creation' AND (src.process.name contains ('sc.exe') or src.process.displayName = 'Service Control Manager Configuration Tool') AND src.process.cmdline contains 'sdset' AND src.process.cmdline contains 'scmanager' AND src.process.cmdline contains 'D:(A;;KA;;;WD)'"
+    },
+    {
+      "title":"Data Exfiltration via Curl Utility",
+      "description":"Detects data exfiltration using the curl utility with a POST request to send data to an external server.",
+      "query":"dataSource.name = 'SentinelOne' and endpoint.os = 'linux' and tgt.process.name contains ('curl') and tgt.process.cmdline contains '-X' and tgt.process.cmdline contains 'POST' and tgt.process.cmdline contains 'paste' and tgt.process.cmdline contains 'pastebin.com'"
+    }
+]
+}

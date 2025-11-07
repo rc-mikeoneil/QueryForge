@@ -1,0 +1,117 @@
+{
+  "cortex_xdr_query_schema": {
+    "common_use_cases": {
+      "malware_detection": {
+        "description": "Detecting malware execution and behavior",
+        "indicators": [
+          "Unsigned or untrusted binaries",
+          "Execution from temp/download directories",
+          "Suspicious process relationships",
+          "Known malicious hashes"
+        ],
+        "key_fields": [
+          "actor_process_image_name",
+          "action_file_path",
+          "action_file_signature_status",
+          "action_file_md5",
+          "action_file_sha256"
+        ]
+      },
+      "lateral_movement": {
+        "description": "Detecting lateral movement across the network",
+        "indicators": [
+          "Remote process execution (PsExec, WMI)",
+          "Unusual authentication patterns",
+          "SMB file sharing activity",
+          "Remote desktop connections"
+        ],
+        "key_fields": [
+          "actor_process_image_name",
+          "action_remote_ip",
+          "auth_identity",
+          "action_evtlog_event_id"
+        ],
+        "example_queries": [
+          {
+            "description": "Detect PsExec usage",
+            "query": "dataset = xdr_data | filter event_type = ENUM.PROCESS | filter actor_process_image_name = 'psexec.exe' | fields agent_hostname, action_process_image_command_line, _time"
+          }
+        ]
+      },
+      "data_exfiltration": {
+        "description": "Detecting potential data exfiltration",
+        "indicators": [
+          "Large volume data uploads",
+          "Connections to cloud storage services",
+          "Compression/archiving tools",
+          "Unusual outbound traffic patterns"
+        ],
+        "key_fields": [
+          "action_upload",
+          "action_remote_ip",
+          "action_external_hostname",
+          "actor_process_image_name",
+          "action_file_extension"
+        ],
+        "example_queries": [
+          {
+            "description": "High volume uploads by process",
+            "query": "dataset = xdr_data | filter event_type = ENUM.NETWORK | comp sum(action_upload) as total_upload by actor_process_image_name, action_remote_ip | filter total_upload > 10000000 | sort desc total_upload"
+          }
+        ]
+      },
+      "persistence": {
+        "description": "Detecting persistence mechanisms",
+        "indicators": [
+          "Registry Run key modifications",
+          "Startup folder file creation",
+          "Scheduled task creation",
+          "Service installation"
+        ],
+        "key_fields": [
+          "action_registry_key_name",
+          "action_file_path",
+          "action_evtlog_event_id",
+          "actor_process_image_name"
+        ],
+        "example_queries": [
+          {
+            "description": "Registry Run key changes",
+            "query": "dataset = xdr_data | filter event_type = ENUM.REGISTRY | filter action_registry_key_name contains 'run' | fields agent_hostname, action_registry_key_name, actor_process_image_name, _time"
+          }
+        ]
+      },
+      "privilege_escalation": {
+        "description": "Detecting privilege escalation attempts",
+        "indicators": [
+          "Token manipulation",
+          "Credential dumping",
+          "Exploits targeting system processes",
+          "UAC bypass techniques"
+        ],
+        "key_fields": [
+          "event_type",
+          "event_sub_type",
+          "actor_process_image_name",
+          "action_process_image_name"
+        ]
+      },
+      "credential_access": {
+        "description": "Detecting credential theft attempts",
+        "indicators": [
+          "LSASS memory access",
+          "SAM/SYSTEM registry access",
+          "Credential dumping tools",
+          "Kerberos ticket requests"
+        ],
+        "key_fields": [
+          "actor_process_image_name",
+          "action_registry_key_name",
+          "action_file_path",
+          "krb_tgs_data",
+          "krb_tgt_data"
+        ]
+      }
+    }
+  }
+}

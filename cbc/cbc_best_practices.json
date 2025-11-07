@@ -1,0 +1,27 @@
+{
+  "carbonblack_edr_query_schema": {
+    "best_practices": {
+      "performance": [
+        "Avoid leading wildcards - they carry significant performance penalty",
+        "Use specific fields instead of searching all default fields",
+        "Use binary joins sparingly as they can be resource-intensive",
+        "Prefer exact matches over wildcards when possible",
+        "Use date ranges to limit search scope"
+      ],
+      "query_construction": [
+        "Multiple terms without operators are connected with AND by default",
+        "Terms not preceded by fields search all default fields",
+        "Use quotes for terms with whitespace",
+        "Escape special characters with backslash when needed",
+        "Use parentheses for complex nested queries"
+      ],
+      "special_considerations": [
+        "For regmod searches: replace controlset001/002 with currentcontrolset",
+        "For regmod searches: omit leading backslash",
+        "For modload searches: omit leading slash (optional but recommended)",
+        "For IP addresses in bulk search: must use 'ipaddr:' prefix",
+        "For domain searches: dot placement affects position matching"
+      ]
+    }
+  }
+}

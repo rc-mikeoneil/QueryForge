@@ -1,0 +1,26 @@
+{
+  "carbonblack_edr_query_schema": {
+    "version": "platform-search-1.0",
+    "description": "Carbon Black Cloud Platform Search field schema converted from CSV",
+    "search_types": {
+      "process_search": {
+        "description": "Search for process execution events",
+        "applicable_to": [
+          "processes"
+        ]
+      },
+      "alert_search": {
+        "description": "Search for security alerts",
+        "applicable_to": [
+          "alerts"
+        ]
+      },
+      "binary_search": {
+        "description": "Search for binaries and file metadata",
+        "applicable_to": [
+          "binaries"
+        ]
+      }
+    }
+  }
+}

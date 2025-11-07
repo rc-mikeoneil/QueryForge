@@ -1,0 +1,125 @@
+{
+  "cortex_xdr_query_schema": {
+    "version": "1.0",
+    "description": "Cortex XDR query language reference and field definitions",
+    "last_updated": "2024-10-30",
+    "datasets": {
+      "xdr_data": {
+        "description": "Primary XDR dataset containing all endpoint and network event data",
+        "use_cases": [
+          "Endpoint security monitoring",
+          "Network traffic analysis",
+          "Process execution tracking",
+          "File system monitoring"
+        ],
+        "performance_notes": "Best performance with time-based filters and specific event types"
+      },
+      "network_story": {
+        "description": "Network connection and communication story data",
+        "use_cases": [
+          "Network flow analysis",
+          "Communication pattern detection",
+          "Lateral movement tracking"
+        ]
+      },
+      "process_tree": {
+        "description": "Process hierarchy and execution chain data",
+        "use_cases": [
+          "Process genealogy tracking",
+          "Attack chain reconstruction",
+          "Parent-child process relationships"
+        ]
+      },
+      "causality_analytics": {
+        "description": "Causality chain and analytics data",
+        "use_cases": [
+          "Root cause analysis",
+          "Attack path reconstruction",
+          "Impact assessment"
+        ]
+      },
+      "file_story": {
+        "description": "File operation and lifecycle story data",
+        "use_cases": [
+          "File modification tracking",
+          "Data exfiltration detection",
+          "Malware propagation analysis"
+        ]
+      }
+    },
+    "field_types": {
+      "STRING": {
+        "description": "Text string values",
+        "operators": ["=", "!=", "contains", "startswith", "endswith", "in", "not in"],
+        "examples": ["filename", "process_name", "user_name"]
+      },
+      "INTEGER": {
+        "description": "Numeric integer values",
+        "operators": ["=", "!=", ">", "<", ">=", "<=", "in", "not in"],
+        "examples": ["process_id", "file_size", "port_number"]
+      },
+      "RECORD": {
+        "description": "Nested JSON object containing multiple fields",
+        "operators": ["contains", "extract"],
+        "examples": ["_raw_json", "additional_data"]
+      },
+      "ARRAY": {
+        "description": "List of values of the same type",
+        "operators": ["contains", "in", "not in", "array_length"],
+        "examples": ["ip_addresses", "file_hashes"]
+      },
+      "BOOLEAN": {
+        "description": "True/false values",
+        "operators": ["=", "!="],
+        "examples": ["is_signed", "is_malicious"]
+      },
+      "FLOAT": {
+        "description": "Floating-point numeric values",
+        "operators": ["=", "!=", ">", "<", ">=", "<="],
+        "examples": ["confidence_score", "risk_rating"]
+      },
+      "TIMESTAMP": {
+        "description": "Date and time values in Unix timestamp format",
+        "operators": ["=", "!=", ">", "<", ">=", "<=", "between"],
+        "examples": ["_time", "event_timestamp", "file_create_time"]
+      }
+    },
+    "field_groups": {
+      "system_fields": {
+        "description": "System-generated metadata fields",
+        "prefix": "_",
+        "fields": ["_time", "_insert_time", "_product", "_vendor", "_raw_json", "_raw_log"]
+      },
+      "agent_fields": {
+        "description": "Endpoint agent information and metadata",
+        "prefix": "agent_",
+        "fields": ["agent_hostname", "agent_id", "agent_ip_addresses", "agent_version", "agent_os_type"]
+      },
+      "event_fields": {
+        "description": "Event classification and identification",
+        "prefix": "event_",
+        "fields": ["event_id", "event_type", "event_sub_type", "event_timestamp"]
+      },
+      "action_fields": {
+        "description": "Action and operation details",
+        "prefix": "action_",
+        "key_fields": ["action_type", "action_result", "action_details"]
+      },
+      "actor_fields": {
+        "description": "User and process actor information",
+        "prefix": "actor_",
+        "key_fields": ["actor_process_id", "actor_process_name", "actor_user"]
+      },
+      "causality_fields": {
+        "description": "Causality and correlation information",
+        "prefix": "causality_",
+        "key_fields": ["causality_id", "causality_actor", "causality_chain"]
+      },
+      "network_fields": {
+        "description": "Network communication and connection data",
+        "prefix": "dst_|src_|local_|remote_",
+        "key_fields": ["dst_ip", "src_ip", "dst_port", "src_port", "protocol"]
+      }
+    }
+  }
+}

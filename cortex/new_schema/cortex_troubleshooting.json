@@ -1,0 +1,40 @@
+{
+  "cortex_xdr_query_schema": {
+    "troubleshooting": {
+      "no_results": [
+        "Verify time range includes expected data",
+        "Check event_type filter is using correct ENUM value",
+        "Ensure field names are spelled correctly",
+        "Verify agent_id or agent_hostname exists in your environment",
+        "Check if filters are too restrictive when combined"
+      ],
+      "too_many_results": [
+        "Add more specific time range filter",
+        "Include event_type and event_sub_type filters",
+        "Add agent_hostname or agent_id filter to scope to specific endpoints",
+        "Use comp to aggregate before reviewing details",
+        "Add | limit to prevent overwhelming results"
+      ],
+      "syntax_errors": [
+        "Ensure dataset is specified first",
+        "Check all pipes (|) are properly placed between stages",
+        "Verify ENUM values are capitalized (ENUM.PROCESS not enum.process)",
+        "Ensure nested field access uses -> or json_extract correctly",
+        "Check for unmatched quotes or parentheses"
+      ],
+      "performance_issues": [
+        "Always include _time filter to limit data scanned",
+        "Filter on event_type first as it's highly indexed",
+        "Avoid leading wildcards in regex patterns",
+        "Use comp to reduce data volume before complex operations",
+        "Consider breaking complex queries into multiple simpler queries"
+      ],
+      "null_values": [
+        "Many fields are NULLABLE - check with '!= null' before filtering",
+        "Use coalesce() to provide default values for nulls",
+        "Use replacenull() to replace null with specific value",
+        "Remember REPEATED fields may be empty arrays, not null"
+      ]
+    }
+  }
+}

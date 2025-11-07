@@ -1,0 +1,49 @@
+{
+  "carbonblack_edr_query_schema": {
+    "documentation": {
+      "notes": [
+        "Note: 'field_types' are normalized type descriptors (e.g., keyword, text, path, domain, ipaddr, ipv6addr, datetime, bool, md5, sha256) derived from the CSV and CBC docs to standardize search behavior. They are NOT queryable field names. Always use actual field names from this schema (e.g., netconn_ipv4, netconn_ipv6, netconn_domain, process_name, regmod_name, process_start_time) when constructing queries.",
+        "Specifically for the Linux sensor, parent_hash and process_hash are only calculated for events resulting from such activity as process exec and process fork, as well as discovering or blocking processes, plus module loads, file create & write (for known binary file formats), file scan (for known binary file formats and shell scripts) and file read (for shell scripts).",
+        "Limitations",
+        "As with standard AND queries when searching for field_1 = X and field_2 = Y, an event with only one field populated will not be returned.",
+        "A special case of this is when searching across both Endpoint Standard and Enterprise EDR data; if you combine any fields that are each available in only one product, you will receive zero results. For example:",
+        "If you search event_attack_stage:BREACH you will get results on both the Enriched Events and Processes search endpoints (requires Endpoint Standard)",
+        "If you search netconn_count:[1 TO *], you will only get results on Processes search endpoint (requires Enterprise EDR)",
+        "If you perform the search event_attack_stage:BREACH AND netconn_count:[1 TO *], you will get no results because NO events have both Endpoint Standard-only event_attack_stage and Enterprise EDR-only netconn_count fields",
+        "Any field can be searched on individually",
+        "Data Conversions",
+        "IPv6 data format to standard IPv6 notation",
+        "Use this if you are migrating from Endpoint Standard fields (used in integrationServices API routes) to Platform Search fields (including Process, Process Events and Enriched Event searches). The IPv6 netconn fields in Platform Search do not return in API responses using a standard IPv6 notation (it does not include colons) in order to make it easier to sort, use the big integer library, and perform subnet searches.",
+        "Example return value for fields like netconn_ipv6, netconn_remote_ipv6, netconn_local_ipv6: FF0200000000000000000000000000FB",
+        "To convert the notation to standard IPv6, you must insert a colon character between every four alphanumeric characters, or run the following function:",
+        "const StringIP = d.replace(/(.{4})/g, '$1:').slice(0, -1);",
+        "Result: FF02:0000:0000:0000:0000:0000:0000:00FB",
+        "However, when searching on these IPv6 fields, you must use escaped colon-separated notation e.g. netconn_ipv6:\"2607:F8B0:4006:081B:0000:0000:0000:200E\"",
+        "IPv4 integer format to dotted decimal notation",
+        "IPv4 netconn fields return their value in integer format rather than the more common dotted decimal notation.",
+        "The conversion from IPv4 integers to dotted decimal is common and can be validated with tools like this converter",
+        "Example: If you received netconn_remote_ipv4 = 911598478, the dotted decimal equivalent would be 54.85.227.142",
+        "Special Tokenizations",
+        "Some fields are tokenized to allow more efficient searches",
+        "File Path Tokenization",
+        "Fields: process_name, parent_name, filemod_name, childproc_name, crossproc_name, modload_name, scriptload_name, regmod_name",
+        "Search for path hierarchies. Use slash (/) character or escaped backslash (\\\\) characters and enclose in double quotes if path contains colon or space characters. Exclude any leading path separator. File extension searching also supported.",
+        "Search examples: process_name:\"c:/windows/system32/cmd.exe\" filemod_name:.wcry regmod_name:myregkey/myregvalue modload_name:downloads\\\\myfile.exe parent_name:\"c:/program files\"",
+        "Domain name Tokenization",
+        "Fields: netconn_domain",
+        "Search for any part of the domain. Start or end with ‘. to only look for a prefix or suffix.",
+        "Search examples: netconn_domain:.google.com netconn_domain:.ru netconn_domain:www.google.com",
+        "IPv4 Address Tokenization",
+        "Fields: netconn_ipv4",
+        "Search examples: netconn_ipv4:192.168.0.10 netconn_ipv4:192.168.0.0/24",
+        "IPv6 Address Tokenization",
+        "Fields: netconn_ipv6",
+        "Search examples: netconn_ipv6:\"2001:0db8:85a3:0000:0000:8a2e:0370:7334\" netconn_ipv6:\"2001:db8::/127\"",
+        "Command Line Tokenization",
+        "Fields: process_cmdline",
+        "Words in the command line can be searched, along with switches (-x /x) and file extensions.",
+        "Search examples: process_cmdline:\"d:/path/myprogram.vbs /v\" process_cmdline:\"d:\" process_cmdline:.vbs process_cmdline:\"/v\""
+      ]
+    }
+  }
+}

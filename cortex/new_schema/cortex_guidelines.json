@@ -1,0 +1,62 @@
+{
+  "cortex_xdr_query_schema": {
+    "query_building_guidelines": {
+      "step_1_identify_intent": {
+        "description": "Understand what data you're searching for",
+        "questions": [
+          "What type of activity? (process, network, file, authentication)",
+          "What specific indicators? (IP, hash, filename, user)",
+          "What time frame is relevant?",
+          "What output fields are needed for analysis?"
+        ]
+      },
+      "step_2_select_dataset": {
+        "description": "Choose the appropriate data source",
+        "decision_tree": {
+          "endpoint_activity": "xdr_data",
+          "network_firewall": "firewall_logs",
+          "asset_inventory": "endpoints",
+          "user_identity": "ad_users",
+          "computer_identity": "ad_computers"
+        },
+        "considerations": [
+          "xdr_data contains most endpoint and network telemetry",
+          "Consider data retention periods",
+          "Plan joins early if correlating multiple datasets"
+        ]
+      },
+      "step_3_define_filters": {
+        "description": "Build filtering logic",
+        "rules": [
+          "Start with event_type filter for xdr_data",
+          "Add time range filter (_time)",
+          "Apply specific field filters (agent_hostname, process names, etc.)",
+          "Use contains for substring matching, ~= for regex",
+          "Combine with AND/OR as needed"
+        ]
+      },
+      "step_4_add_stages": {
+        "description": "Apply XQL functions for transformation and output",
+        "stages": [
+          "| alter - Create computed fields or extract nested data",
+          "| comp - Aggregate data (count, sum, etc.)",
+          "| join - Combine with other datasets",
+          "| fields - Select output columns",
+          "| sort - Order results",
+          "| limit - Restrict result count"
+        ]
+      },
+      "step_5_validate": {
+        "description": "Check query syntax and logic",
+        "validations": [
+          "Dataset is specified first",
+          "All field names are spelled correctly",
+          "ENUM values are used where appropriate",
+          "Nested field access uses correct syntax",
+          "Aggregations have proper grouping",
+          "Time filters are correctly formatted"
+        ]
+      }
+    }
+  }
+}

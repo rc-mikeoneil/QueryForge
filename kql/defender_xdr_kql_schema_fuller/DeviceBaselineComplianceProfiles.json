@@ -1,0 +1,74 @@
+{
+  "table": "devicebaselinecomplianceprofiles",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-devicebaselinecomplianceprofiles-table",
+  "page_date": "2025-10-03",
+  "columns": [
+    {
+      "name": "ProfileId",
+      "type": "string",
+      "description": "Unique identifier for the profile"
+    },
+    {
+      "name": "ProfileName",
+      "type": "string",
+      "description": "Display name of the profile"
+    },
+    {
+      "name": "ProfileDescription",
+      "type": "string",
+      "description": "Optional description providing additional information related to the profile"
+    },
+    {
+      "name": "OSPlatform",
+      "type": "dynamic",
+      "description": "Platform of the operating system running on the device. This indicates specific operating systems, including variations within the same family, such as Windows 11, Windows 10 and Windows 7."
+    },
+    {
+      "name": "OSVersion",
+      "type": "string",
+      "description": "Version of the operating system running on the device"
+    },
+    {
+      "name": "BaseBenchmark",
+      "type": "string",
+      "description": "Industry benchmark on top of which the profile was created"
+    },
+    {
+      "name": "BenchmarkVersion",
+      "type": "string",
+      "description": "Version of the industry benchmark on top of which the profile was created"
+    },
+    {
+      "name": "BenchmarkProfileLevel",
+      "type": "string",
+      "description": "Benchmark compliance level set for the profile"
+    },
+    {
+      "name": "Status",
+      "type": "boolean",
+      "description": "Indicator of the profile status - can be Enabled or Disabled"
+    },
+    {
+      "name": "CreatedBy",
+      "type": "string",
+      "description": "Identity of the user account who created the profile"
+    },
+    {
+      "name": "CreatedOn",
+      "type": "datetime",
+      "description": "Date and time when the profile was created"
+    },
+    {
+      "name": "LastUpdatedBy",
+      "type": "string",
+      "description": "Identity of the user account who last updated the profile"
+    },
+    {
+      "name": "LastUpdatedOn",
+      "type": "datetime",
+      "description": "Date and time when the profile was last updated"
+    }
+  ],
+  "col_count": 13,
+  "generated_at": "2025-10-03T02:10:11.466971Z"
+}

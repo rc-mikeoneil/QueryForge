@@ -1,0 +1,139 @@
+{
+  "table": "IdentityLogonEvents",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-identitylogonevents-table",
+  "page_date": "2025-06-20",
+  "columns": [
+    {
+      "name": "Timestamp",
+      "type": "datetime",
+      "description": "Date and time when the event was recorded"
+    },
+    {
+      "name": "ActionType",
+      "type": "string",
+      "description": "Type of activity that triggered the event"
+    },
+    {
+      "name": "Application",
+      "type": "string",
+      "description": "Application that performed the recorded action"
+    },
+    {
+      "name": "LogonType",
+      "type": "string",
+      "description": "Type of logon session"
+    },
+    {
+      "name": "Protocol",
+      "type": "string",
+      "description": "Network protocol used"
+    },
+    {
+      "name": "FailureReason",
+      "type": "string",
+      "description": "Information explaining why the recorded action failed"
+    },
+    {
+      "name": "AccountName",
+      "type": "string",
+      "description": "User name of the account"
+    },
+    {
+      "name": "AccountDomain",
+      "type": "string",
+      "description": "Domain of the account"
+    },
+    {
+      "name": "AccountUpn",
+      "type": "string",
+      "description": "UPN of the account"
+    },
+    {
+      "name": "AccountSid",
+      "type": "string",
+      "description": "Security Identifier (SID) of the account"
+    },
+    {
+      "name": "AccountObjectId",
+      "type": "string",
+      "description": "Unique identifier for the account in Microsoft Entra ID"
+    },
+    {
+      "name": "AccountDisplayName",
+      "type": "string",
+      "description": "Display name of the account user"
+    },
+    {
+      "name": "DeviceName",
+      "type": "string",
+      "description": "FQDN of the device"
+    },
+    {
+      "name": "DeviceType",
+      "type": "string",
+      "description": "Type of device"
+    },
+    {
+      "name": "OSPlatform",
+      "type": "string",
+      "description": "Platform of the operating system running on the device"
+    },
+    {
+      "name": "IPAddress",
+      "type": "string",
+      "description": "IP address assigned to the endpoint"
+    },
+    {
+      "name": "Port",
+      "type": "int",
+      "description": "TCP port used during communication"
+    },
+    {
+      "name": "DestinationDeviceName",
+      "type": "string",
+      "description": "Name of the server-side device that processed the recorded action"
+    },
+    {
+      "name": "DestinationIPAddress",
+      "type": "string",
+      "description": "IP address of the device running the server application"
+    },
+    {
+      "name": "DestinationPort",
+      "type": "int",
+      "description": "Destination port of related network communications"
+    },
+    {
+      "name": "TargetDeviceName",
+      "type": "string",
+      "description": "FQDN of the device the action was applied to"
+    },
+    {
+      "name": "TargetAccountDisplayName",
+      "type": "string",
+      "description": "Display name of the account that the action was applied to"
+    },
+    {
+      "name": "Location",
+      "type": "string",
+      "description": "City/country or other geographic location associated with the event"
+    },
+    {
+      "name": "Isp",
+      "type": "string",
+      "description": "Internet service provider (ISP) associated with the endpoint IP"
+    },
+    {
+      "name": "ReportId",
+      "type": "string",
+      "description": "Unique identifier for the event"
+    },
+    {
+      "name": "AdditionalFields",
+      "type": "dynamic",
+      "description": "Additional information about the entity or event"
+    }
+  ],
+  "col_count": 26,
+  "generated_at": "2025-09-19T07:36:37.418146Z"
+}

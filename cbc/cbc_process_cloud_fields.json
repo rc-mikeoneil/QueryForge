@@ -1,0 +1,22 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_cloud_fields": {
+      "cloud_provider_account_id": {
+        "type": "keyword",
+        "description": "Searchable. The account ID with the cloud provider."
+      },
+      "cloud_provider_resource_id": {
+        "type": "keyword",
+        "description": "Searchable. The resource ID with the cloud provider."
+      },
+      "cloud_provider_scale_group": {
+        "type": "keyword",
+        "description": "Searchable. The automatic scaling group name within the cloud provider."
+      },
+      "cloud_provider_tags": {
+        "type": "keyword",
+        "description": "Searchable. Tags used for the cloud provider."
+      }
+    }
+  }
+}

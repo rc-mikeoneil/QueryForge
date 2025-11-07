@@ -1,0 +1,89 @@
+{
+  "table": "oauthappinfo",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-oauthappinfo-table",
+  "page_date": "2025-10-03",
+  "columns": [
+    {
+      "name": "ReportId",
+      "type": "string",
+      "description": "Unique identifier for the record"
+    },
+    {
+      "name": "Timestamp",
+      "type": "string",
+      "description": "Date and time when the record was created"
+    },
+    {
+      "name": "OAuthAppId",
+      "type": "string",
+      "description": "The unique  identifier for the app as assigned by Microsoft Entra ID"
+    },
+    {
+      "name": "ServicePrincipalId",
+      "type": "string",
+      "description": "The unique identifier for the service principal instance of the application in the tenant"
+    },
+    {
+      "name": "AppName",
+      "type": "string",
+      "description": "The application's display name as exposed by the associated service principal"
+    },
+    {
+      "name": "AddedOnTime",
+      "type": "datetime",
+      "description": "Date and time when the application was registered"
+    },
+    {
+      "name": "LastModifiedTime",
+      "type": "datetime",
+      "description": "Timestamp when the app was last modified"
+    },
+    {
+      "name": "AppStatus",
+      "type": "string",
+      "description": "Status of the app; can be: Enabled, DisabledByMicrosoft, DisabledByAppGovernancePolicy, DisabledByUser, Deleted (information for apps with Deleted status is only available for 30 days since the app was deleted)"
+    },
+    {
+      "name": "VerifiedPublisher",
+      "type": "dynamic",
+      "description": "Specifies details about the verified publisher of the application which this service principal represents. It includes information such as: DisplayName, VerifiedPublisherId, AddedDateTime"
+    },
+    {
+      "name": "PrivilegeLevel",
+      "type": "string",
+      "description": "The privilege level of the app based on the highest classified permission granted to the app"
+    },
+    {
+      "name": "Permissions",
+      "type": "dynamic",
+      "description": "Contains an array of permission objects; each permission object includes PermissionName, TargetAppId, TargetAppDisplayName, PermissionType, PrivilegeLevel, UsageStatus"
+    },
+    {
+      "name": "ConsentedUsersCount",
+      "type": "integer",
+      "description": "Count of users who have consented to the app; this information is only available when the app isn't admin consented"
+    },
+    {
+      "name": "IsAdminConsented",
+      "type": "boolean",
+      "description": "Value is True if a user has provided admin consent to the app on behalf of all the users in the org, otherwise the value is False"
+    },
+    {
+      "name": "AppOrigin",
+      "type": "string",
+      "description": "Specifies whether the app is internal to the organization or registered in an external tenant"
+    },
+    {
+      "name": "LastUsedTime",
+      "type": "datetime",
+      "description": "Date and time when the app was last used"
+    },
+    {
+      "name": "AppOwnerTenantId",
+      "type": "string",
+      "description": "Specifies the ID of the tenant where the app was registered"
+    }
+  ],
+  "col_count": 16,
+  "generated_at": "2025-10-03T02:10:39.537841Z"
+}

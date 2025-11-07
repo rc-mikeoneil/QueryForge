@@ -1,0 +1,291 @@
+{
+  "metadata": {
+    "source": "SentinelOne Operations Center",
+    "data_type": "String",
+    "extraction_date": "2025-10-21",
+    "description": "Operators available for String data type fields in S1QL queries",
+    "operator_count": 38
+  },
+  "operators": [
+    {
+      "operator": "contains",
+      "description": "Case sensitive contains function for comparing single value to single value",
+      "data_type": "String",
+      "syntax": "fieldname contains 'value'",
+      "case_sensitive": true,
+      "category": "substring_search"
+    },
+    {
+      "operator": "contains anycase",
+      "description": "Case insensitive contains function for comparing single value to single value",
+      "data_type": "String",
+      "syntax": "fieldname contains anycase 'value'",
+      "case_sensitive": false,
+      "category": "substring_search"
+    },
+    {
+      "operator": "containscis",
+      "description": "Case insensitive contains function for comparing single value to single value",
+      "data_type": "String",
+      "syntax": "fieldname containscis 'value'",
+      "case_sensitive": false,
+      "category": "substring_search"
+    },
+    {
+      "operator": "not fieldname contains",
+      "description": "Negative case sensitive contains function for comparing single value to single value",
+      "data_type": "String",
+      "syntax": "not fieldname contains 'value'",
+      "case_sensitive": true,
+      "category": "substring_search"
+    },
+    {
+      "operator": "does not contain",
+      "description": "Negative case sensitive contains function for comparing single value to single value",
+      "data_type": "String",
+      "syntax": "fieldname does not contain 'value'",
+      "case_sensitive": true,
+      "category": "substring_search"
+    },
+    {
+      "operator": "not fieldname contains anycase",
+      "description": "Negative case insensitive contains function for comparing single value to single value",
+      "data_type": "String",
+      "syntax": "not fieldname contains anycase 'value'",
+      "case_sensitive": false,
+      "category": "substring_search"
+    },
+    {
+      "operator": "does not containcis",
+      "description": "Negative case insensitive contains function for comparing single value to single value",
+      "data_type": "String",
+      "syntax": "fieldname does not containcis 'value'",
+      "case_sensitive": false,
+      "category": "substring_search"
+    },
+    {
+      "operator": "startswith",
+      "description": "Case sensitive - single value string should start with string",
+      "data_type": "String",
+      "syntax": "fieldname startswith 'value'",
+      "case_sensitive": true,
+      "category": "prefix_search"
+    },
+    {
+      "operator": "startswith anycase",
+      "description": "Case insensitive - single value string should start with string",
+      "data_type": "String",
+      "syntax": "fieldname startswith anycase 'value'",
+      "case_sensitive": false,
+      "category": "prefix_search"
+    },
+    {
+      "operator": "startswithcis",
+      "description": "Case insensitive - single value string should start with string",
+      "data_type": "String",
+      "syntax": "fieldname startswithcis 'value'",
+      "case_sensitive": false,
+      "category": "prefix_search"
+    },
+    {
+      "operator": "endswith",
+      "description": "Case sensitive - single value string should end with string",
+      "data_type": "String",
+      "syntax": "fieldname endswith 'value'",
+      "case_sensitive": true,
+      "category": "suffix_search"
+    },
+    {
+      "operator": "endswith anycase",
+      "description": "Case insensitive - single value string should end with string",
+      "data_type": "String",
+      "syntax": "fieldname endswith anycase 'value'",
+      "case_sensitive": false,
+      "category": "suffix_search"
+    },
+    {
+      "operator": "endswithcis",
+      "description": "Case insensitive - single value string should end with string",
+      "data_type": "String",
+      "syntax": "fieldname endswithcis 'value'",
+      "case_sensitive": false,
+      "category": "suffix_search"
+    },
+    {
+      "operator": "not fieldname startswith",
+      "description": "Negative case sensitive - single value string should not start with string",
+      "data_type": "String",
+      "syntax": "not fieldname startswith 'value'",
+      "case_sensitive": true,
+      "category": "prefix_search"
+    },
+    {
+      "operator": "not fieldname startswith anycase",
+      "description": "Negative case insensitive - single value string should not start with string",
+      "data_type": "String",
+      "syntax": "not fieldname startswith anycase 'value'",
+      "case_sensitive": false,
+      "category": "prefix_search"
+    },
+    {
+      "operator": "Not fieldname endswith",
+      "description": "Negative case sensitive - single value string should not end with string",
+      "data_type": "String",
+      "syntax": "Not fieldname endswith 'value'",
+      "case_sensitive": true,
+      "category": "suffix_search"
+    },
+    {
+      "operator": "not fieldname endswith anycase",
+      "description": "Negative case insensitive - single value string should not end with string",
+      "data_type": "String",
+      "syntax": "not fieldname endswith anycase 'value'",
+      "case_sensitive": false,
+      "category": "suffix_search"
+    },
+    {
+      "operator": "regexp",
+      "description": "Regexp comparison - full string should match regexp expression",
+      "data_type": "String",
+      "syntax": "fieldname regexp 'pattern'",
+      "case_sensitive": true,
+      "category": "regex"
+    },
+    {
+      "operator": "not fieldname regexp",
+      "description": "Not regexp comparison - string should match not regexp expression",
+      "data_type": "String",
+      "syntax": "not fieldname regexp 'pattern'",
+      "case_sensitive": true,
+      "category": "regex"
+    },
+    {
+      "operator": "in",
+      "description": "Case sensitive compare string with list - string should match exactly one value in list",
+      "data_type": "String",
+      "syntax": "fieldname in ('value1', 'value2', 'value3')",
+      "case_sensitive": true,
+      "category": "list_comparison"
+    },
+    {
+      "operator": "not in",
+      "description": "Negative compare string with list - string should match none of values in list",
+      "data_type": "String",
+      "syntax": "fieldname not in ('value1', 'value2', 'value3')",
+      "case_sensitive": true,
+      "category": "list_comparison"
+    },
+    {
+      "operator": "in contains",
+      "description": "Case sensitive compare string with list - string should be contained within at least one value in list",
+      "data_type": "String",
+      "syntax": "fieldname in contains ('value1', 'value2', 'value3')",
+      "case_sensitive": true,
+      "category": "list_comparison"
+    },
+    {
+      "operator": "not fieldname in contains",
+      "description": "Negative case sensitive compare string with list - string should be contained in none of the values in the list",
+      "data_type": "String",
+      "syntax": "not fieldname in contains ('value1', 'value2', 'value3')",
+      "case_sensitive": true,
+      "category": "list_comparison"
+    },
+    {
+      "operator": "in anycase",
+      "description": "Case insensitive compare string with list - string should match one value in list",
+      "data_type": "String",
+      "syntax": "fieldname in anycase ('value1', 'value2', 'value3')",
+      "case_sensitive": false,
+      "category": "list_comparison"
+    },
+    {
+      "operator": "not fieldname in anycase",
+      "description": "Negative case insensitive compare string with list - string should match none of values in list",
+      "data_type": "String",
+      "syntax": "not fieldname in anycase ('value1', 'value2', 'value3')",
+      "case_sensitive": false,
+      "category": "list_comparison"
+    },
+    {
+      "operator": "in contains anycase",
+      "description": "Case insensitive compare string with list - string should be contained with at least one value in list",
+      "data_type": "String",
+      "syntax": "fieldname in contains anycase ('value1', 'value2', 'value3')",
+      "case_sensitive": false,
+      "category": "list_comparison"
+    },
+    {
+      "operator": "not fieldname in contains anycase",
+      "description": "Negative case insensitive compare string with list - string should be contained in none of the values in the list",
+      "data_type": "String",
+      "syntax": "not fieldname in contains anycase ('value1', 'value2', 'value3')",
+      "case_sensitive": false,
+      "category": "list_comparison"
+    },
+    {
+      "operator": "!=",
+      "description": "Negative string comparison",
+      "data_type": "String",
+      "syntax": "fieldname != 'value'",
+      "case_sensitive": true,
+      "category": "equality"
+    },
+    {
+      "operator": "=",
+      "description": "Equal to",
+      "data_type": "String",
+      "syntax": "fieldname = 'value'",
+      "case_sensitive": true,
+      "category": "equality"
+    },
+    {
+      "operator": "~",
+      "description": "Partial string comparison - contains case sensitive",
+      "data_type": "String",
+      "syntax": "fieldname ~ 'value'",
+      "case_sensitive": true,
+      "category": "substring_search"
+    },
+    {
+      "operator": "!~",
+      "description": "Negation of the binding operator =~",
+      "data_type": "String",
+      "syntax": "fieldname !~ 'value'",
+      "case_sensitive": true,
+      "category": "substring_search"
+    },
+    {
+      "operator": "exists",
+      "description": "Check if a field exists",
+      "data_type": "String",
+      "syntax": "fieldname exists",
+      "case_sensitive": false,
+      "category": "existence"
+    },
+    {
+      "operator": "is empty",
+      "description": "Check if a field is empty",
+      "data_type": "String",
+      "syntax": "fieldname is empty",
+      "case_sensitive": false,
+      "category": "existence"
+    },
+    {
+      "operator": "not fieldname exists",
+      "description": "Check if a field does not exist",
+      "data_type": "String",
+      "syntax": "not fieldname exists",
+      "case_sensitive": false,
+      "category": "existence"
+    },
+    {
+      "operator": "IS NOT EMPTY",
+      "description": "Check if a field is not empty",
+      "data_type": "String",
+      "syntax": "fieldname IS NOT EMPTY",
+      "case_sensitive": false,
+      "category": "existence"
+    }
+  ]
+}

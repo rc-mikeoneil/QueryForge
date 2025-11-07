@@ -1,0 +1,1942 @@
+{
+  "section": "Action Actor",
+  "description": "The Action actor is an activity that took place and was recorded by the agent.",
+  "fields": [
+    {
+      "name": "action_app_id_transitions",
+      "data_type": "STRING",
+      "mode": "REPEATED",
+      "description": "List of application ID transitions."
+    },
+    {
+      "name": "action_boot_instance_cleanup_required",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the agent can clean up open instances from a previous computer restart."
+    },
+    {
+      "name": "action_boot_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Computer boot time in ms since epoch time."
+    },
+    {
+      "name": "action_country",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The destination country of network connections, which is based on the remote IP and GeoLocation enrichment."
+    },
+    {
+      "name": "action_device_bus_type",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "For the action, the origin of the device bus type (USB).",
+      "values": {
+        "1": "USB"
+      }
+    },
+    {
+      "name": "action_device_class_guid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Device setup class GUID."
+    },
+    {
+      "name": "action_device_class_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Device setup class internal friendly name."
+    },
+    {
+      "name": "action_device_usb_port_connectable",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not a user can connect to the USB port that the device is connected to."
+    },
+    {
+      "name": "action_device_usb_product_id",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "USB device product ID."
+    },
+    {
+      "name": "action_device_usb_serial_number",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "USB device serial number."
+    },
+    {
+      "name": "action_device_usb_vendor_id",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "USB vendor ID."
+    },
+    {
+      "name": "action_download",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Number of downloaded bytes in the last window of time."
+    },
+    {
+      "name": "action_evtlog_data_fields",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Event log data fields in a JSON array."
+    },
+    {
+      "name": "action_evtlog_description",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Event log description."
+    },
+    {
+      "name": "action_evtlog_event_id",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Event log event ID."
+    },
+    {
+      "name": "action_evtlog_level",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Event log severity level.",
+      "values": {
+        "1": "Critical",
+        "2": "Error",
+        "3": "Warning",
+        "4": "Info",
+        "5": "Verbose"
+      }
+    },
+    {
+      "name": "action_evtlog_message",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Event log message field - summary of the event."
+    },
+    {
+      "name": "action_evtlog_opcode",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Event provider specific information, usually similar to action_evtlog_level."
+    },
+    {
+      "name": "action_evtlog_pid",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Process ID given in the event-log event."
+    },
+    {
+      "name": "action_evtlog_provider_guid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Provider GUID"
+    },
+    {
+      "name": "action_evtlog_provider_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Windows: Provider name, such as Service Control Manager. Linux: The file from which this event originated."
+    },
+    {
+      "name": "action_evtlog_raw_params",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": ""
+    },
+    {
+      "name": "action_evtlog_record_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Unique ID of this event-log record in the computer's event-log."
+    },
+    {
+      "name": "action_evtlog_source",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Method used to get the event log."
+    },
+    {
+      "name": "action_evtlog_tid",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Thread ID given in the event-log event."
+    },
+    {
+      "name": "action_evtlog_uid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "User ID given in the event-log event."
+    },
+    {
+      "name": "action_evtlog_username",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "User ID translation of username."
+    },
+    {
+      "name": "action_evtlog_version",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Version of the event log record (private to provider/channel)."
+    },
+    {
+      "name": "action_external_hostname",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The hostname the endpoint connects to. When there is a proxy connection, this value will differ from action_remote_ip."
+    },
+    {
+      "name": "action_external_port",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The external port of the initiated communication. When there is a proxy connection, this value can differ from action_remote_port."
+    },
+    {
+      "name": "action_file_access_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The action file access timestamp."
+    },
+    {
+      "name": "action_file_archive_list",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Only valid if the file is a ZIP file and the event collection is enabled in the policy."
+    },
+    {
+      "name": "action_file_attributes",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Windows: Bitmask of FILE_ATTRIBUTE_* attributes, which is only relevant for some subtypes. Unix: Always 'null'."
+    },
+    {
+      "name": "action_file_authenticode_sha1",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "SHA-1 (Secure Hash Algorithm 1) of the file signature authenticode."
+    },
+    {
+      "name": "action_file_authenticode_sha2",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "SHA-2 (Secure Hash Algorithm 2) of the file signature authenticode."
+    },
+    {
+      "name": "action_file_create_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The action file create timestamp."
+    },
+    {
+      "name": "action_file_device_info",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Info about the device (volume + HW) including name, class guid, class name, bus type, volume guid, mount point, file system, drive type, vendor id, product id, and serial number."
+    },
+    {
+      "name": "action_file_device_type",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Windows: An enum representing the device type for this file. Regular file = 0, Named pipe = 1"
+    },
+    {
+      "name": "action_file_dir_query",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The query string given to the 'query directory' operation."
+    },
+    {
+      "name": "action_file_dirty_reason",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Only valid for sub_type = 6 (write) when a non-null file_size is provided. Indicates the reason this 'final' write was issued and why the file hash was recalculated."
+    },
+    {
+      "name": "action_file_entropy",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": ""
+    },
+    {
+      "name": "action_file_extension",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "File extension of action_file_path."
+    },
+    {
+      "name": "action_file_group",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Linux & MacOS: The new group of the file (user_id)."
+    },
+    {
+      "name": "action_file_group_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Name assigned to action_file_group (username)."
+    },
+    {
+      "name": "action_file_hash_control_verdict",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "DEPRECATED"
+    },
+    {
+      "name": "action_file_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "DEPRECATED"
+    },
+    {
+      "name": "action_file_info_company",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Company listed in the file information section of the file."
+    },
+    {
+      "name": "action_file_info_description",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Description listed in the file information section of the file."
+    },
+    {
+      "name": "action_file_info_file_version",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "File version listed in the file information section of the file."
+    },
+    {
+      "name": "action_file_info_product_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Product name listed in the file information section of the file."
+    },
+    {
+      "name": "action_file_info_product_version",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Production version listed in the file information section of the file."
+    },
+    {
+      "name": "action_file_internal_meta_data",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "DEPRECATED"
+    },
+    {
+      "name": "action_file_internal_zipped_files",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "DEPRECATED"
+    },
+    {
+      "name": "action_file_md5",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The action file hash value in MD5."
+    },
+    {
+      "name": "action_file_mod_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The action file modification timestamp."
+    },
+    {
+      "name": "action_file_mode",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "A representation of the standard UNIX file permissions mask."
+    },
+    {
+      "name": "action_file_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The file name of action_file_path, which is an empty string for directory operations."
+    },
+    {
+      "name": "action_file_new_file_for_loaded_dll",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "DEPRECATED"
+    },
+    {
+      "name": "action_file_original_event_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "DEPRECATED"
+    },
+    {
+      "name": "action_file_owner",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The new owner of the file according to the user_id."
+    },
+    {
+      "name": "action_file_owner_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The new owner of the file according to the username."
+    },
+    {
+      "name": "action_file_path",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The path of the file in use."
+    },
+    {
+      "name": "action_file_prev_type",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Before the current write, the previous file type, which is based only on the content of the file. This information can be used to detect header changes. Will be valid ONLY on the file_write event that changes the file type. Windows only"
+    },
+    {
+      "name": "action_file_previous_device_info",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Info about the device (volume + HW) including name, class guid, class name, bus type, volume guid, mount point, file system, drive type, vendor id, product id, and serial number."
+    },
+    {
+      "name": "action_file_previous_file_extension",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "File extension of 'action_file_previous_file_path'."
+    },
+    {
+      "name": "action_file_previous_file_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "File name of 'action_file_previous_file_path', which is an empty string for directory operations."
+    },
+    {
+      "name": "action_file_previous_file_path",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The previous path of the file in use."
+    },
+    {
+      "name": "action_file_remote_file_host",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "This is valid when Cortex XDR/XSIAM accesses a file on a remote computer. This means Cortex XDR/XSIAM is the client."
+    },
+    {
+      "name": "action_file_remote_file_ip",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "This is valid when a remote computer accesses a file on this endpoint. This means Cortex XDR/XSIAM is the client. The remote IP can also be a loopback (127.0.0.1 or ::1)."
+    },
+    {
+      "name": "action_file_remote_ip",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Relevant when the actor is a remote actor, where the type is not local and the IP was resolved successfully."
+    },
+    {
+      "name": "action_file_remote_port",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Relevant when the actor is a remote actor, where the type is RemoteRpcTcp."
+    },
+    {
+      "name": "action_file_reparse_path",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Only valid for sub_type = 1/2 (create_new/open). Provides the reparse path if the file was opened through a reparse point."
+    },
+    {
+      "name": "action_file_sec_desc",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Windows: Security descriptor of the file in SDDL."
+    },
+    {
+      "name": "action_file_sha256",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "SHA256 of the binary."
+    },
+    {
+      "name": "action_file_signature_product",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Signature product - The product family part of the signature."
+    },
+    {
+      "name": "action_file_signature_status",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The signature status of the file in use."
+    },
+    {
+      "name": "action_file_signature_vendor",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Signature vendor - The vendor part of the signature."
+    },
+    {
+      "name": "action_file_size",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Size of the file undergoing the process in bytes."
+    },
+    {
+      "name": "action_file_suspicious_strings_bitmap",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Bitmap of suspicious strings found in file content."
+    },
+    {
+      "name": "action_file_type",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Partial file type recognizer."
+    },
+    {
+      "name": "action_file_type_changedaction_file_id",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "DEPRECATED"
+    },
+    {
+      "name": "action_file_type_prev",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": ""
+    },
+    {
+      "name": "action_file_wildfire_verdict",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "DEPRECATED"
+    },
+    {
+      "name": "action_firewall_direction",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Outbound (1), Inbound (2)"
+    },
+    {
+      "name": "action_firewall_local_ip",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The local IP address in the communication."
+    },
+    {
+      "name": "action_firewall_local_port",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The local port in the communication."
+    },
+    {
+      "name": "action_firewall_protocol",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The IP protocol number as specified in RFC 1700."
+    },
+    {
+      "name": "action_firewall_remote_ip",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Relevant when the actor is a remote actor, where the type is not local and the IP was resolved successfully."
+    },
+    {
+      "name": "action_firewall_remote_port",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Relevant when the actor is a remote actor, where the type is RemoteRpcTcp."
+    },
+    {
+      "name": "action_firewall_rule_guid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": ""
+    },
+    {
+      "name": "action_is_dll_injection",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the action is a DLL Injection."
+    },
+    {
+      "name": "action_is_injected_thread",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the action was performed by an injected thread."
+    },
+    {
+      "name": "action_local_ip",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Source IP address."
+    },
+    {
+      "name": "action_local_ip_int",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Source IP in integer format."
+    },
+    {
+      "name": "action_local_port",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Source port"
+    },
+    {
+      "name": "action_local_nat_ip",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Source NAT IP address."
+    },
+    {
+      "name": "action_local_nat_port",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Source NAT port."
+    },
+    {
+      "name": "action_remote_nat_ip",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Destination NAT IP address."
+    },
+    {
+      "name": "action_remote_nat_port",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Destination NAT port."
+    },
+    {
+      "name": "action_nat",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the connection is NAT."
+    },
+    {
+      "name": "action_module_base_address",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The base address where the library was loaded."
+    },
+    {
+      "name": "action_module_device_info",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Info about the device (volume + HW) including name, class guid, class name, bus type, volume guid, mount point, file system, drive type, vendor id, product id, and serial number."
+    },
+    {
+      "name": "action_module_file_access_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Program Executable (PE) metadata collection from the image itself"
+    },
+    {
+      "name": "action_module_file_create_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Program Executable (PE) metadata collection from the image itself"
+    },
+    {
+      "name": "action_module_file_info",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Program Executable (PE) metadata collection from the image itself"
+    },
+    {
+      "name": "action_module_file_mod_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Modified time of the file in the module."
+    },
+    {
+      "name": "action_module_file_size",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Size of the file of the process in bytes."
+    },
+    {
+      "name": "action_module_image_size",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Size of the file in virtual memory."
+    },
+    {
+      "name": "action_module_is_remote",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the module is loaded from a remote process."
+    },
+    {
+      "name": "action_module_is_replay",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "All existing loaded images are replayed, when the agent starts. This is set to true for images loaded when the agent is not started yet."
+    },
+    {
+      "name": "action_module_md5",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The module md5 value."
+    },
+    {
+      "name": "action_module_other_load_location",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "This module was already loaded before from a different location. This is the other location."
+    },
+    {
+      "name": "action_module_path",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The path of the module in use."
+    },
+    {
+      "name": "action_module_process_instance_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Cortex instance ID of the process loading the module."
+    },
+    {
+      "name": "action_module_process_os_pid",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The Operating System (OS) Process Identifier (PID) of the loaded module."
+    },
+    {
+      "name": "action_module_sha256",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "SHA256 of the binary."
+    },
+    {
+      "name": "action_module_signature_product",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Signature product - The product family part of the signature."
+    },
+    {
+      "name": "action_module_signature_status",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The signature status of the module in action."
+    },
+    {
+      "name": "action_module_signature_vendor",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Signature vendor - The vendor part of the signature."
+    },
+    {
+      "name": "action_module_last_writer_actor",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Instance ID of the actor that wrote the file for the module."
+    },
+    {
+      "name": "action_module_code_integrity",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The value of ci!g_CiOptions when the driver is loaded."
+    },
+    {
+      "name": "action_module_boot_code_integrity",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The value of ci!g_CiOptions at boot time."
+    },
+    {
+      "name": "action_module_signature_is_embedded",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the signature is embedded inside the PE or part of an external catalog file."
+    },
+    {
+      "name": "action_module_system_properties",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Addition properties of the DLL."
+    },
+    {
+      "name": "action_module_auth_sha2",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "SHA256 of the binary's Authenticode, which is the part of a PE used when signing."
+    },
+    {
+      "name": "action_module_auth_sha1",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "SHA1 of the binary's Authenticode, which is the part of a PE used when signing."
+    },
+    {
+      "name": "action_network_connection_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The ID of the network connection."
+    },
+    {
+      "name": "action_network_creation_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The start time of the network session."
+    },
+    {
+      "name": "action_network_http",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "HTTP headers"
+    },
+    {
+      "name": "action_network_is_ipv6",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not action_remote_ip is an IPv6 endpoint."
+    },
+    {
+      "name": "action_network_is_npcap",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not this action is an npcap event."
+    },
+    {
+      "name": "action_network_is_server",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "True for incoming connections. False for outgoing ones."
+    },
+    {
+      "name": "action_network_packet_data",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The data is converted to hexadecimal. Each byte is converted to 2 characters representing the character value of the byte."
+    },
+    {
+      "name": "action_network_protocol",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Internet protocol number based on IPPROTO or normalized to IPPROTO (same as Java)."
+    },
+    {
+      "name": "action_network_stats_is_last",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "True, if the connection was terminated, and false otherwise."
+    },
+    {
+      "name": "action_network_stats_seq",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Sequence number of the statistics 'packet'."
+    },
+    {
+      "name": "action_network_success",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the session was successful."
+    },
+    {
+      "name": "action_network_icmp_data",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Only valid for event_sub_type = 18. ICMP packet data."
+    },
+    {
+      "name": "action_network_creation_time_original",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": ""
+    },
+    {
+      "name": "action_network_is_loopback",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Valid for stream_connect, datagram_connect, raw_data, outbound_icmp and stream_statistics. Indicates whether or not both sides of a connection are on the same host. Always false for mac and linux."
+    },
+    {
+      "name": "action_socket_type",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "0 : Unknown type, 1 : Stream, 2 : Datagram, 3 : Raw"
+    },
+    {
+      "name": "action_pkts_received",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Total number of packets received so far from the destination to the source."
+    },
+    {
+      "name": "action_pkts_sent",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Total number of packets sent so far from the source to the destination."
+    },
+    {
+      "name": "action_powered_off",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "True, if the computer is powered off, such as suspended or hibernated, and false otherwise."
+    },
+    {
+      "name": "action_process_causality_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Causality ID of the terminated process."
+    },
+    {
+      "name": "action_process_device_info",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Info about the device (volume + HW) from which this process started. including name, class guid, class name, bus type, volume guid, mount point, file system, drive type, vendor id, product id, and serial number."
+    },
+    {
+      "name": "action_process_file_create_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Creation time of the file that created the process."
+    },
+    {
+      "name": "action_process_file_info",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Metadata from the exe file of the process."
+    },
+    {
+      "name": "action_process_file_mod_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Modification time of the file that created the process."
+    },
+    {
+      "name": "action_process_file_size",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Size of the file involved in the process in bytes."
+    },
+    {
+      "name": "action_process_image_command_line",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process command line - The command used to execute the process."
+    },
+    {
+      "name": "action_process_image_command_line_indices",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process command line - The command used to execute the process."
+    },
+    {
+      "name": "action_process_image_extension",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process image extension - File extension"
+    },
+    {
+      "name": "action_process_image_md5",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "MD5 of the binary."
+    },
+    {
+      "name": "action_process_image_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "File name of the 'action_process_image_path'."
+    },
+    {
+      "name": "action_process_image_path",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process image path - A string identifying the location of the process execution."
+    },
+    {
+      "name": "action_process_image_sha256",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "SHA256 of the binary."
+    },
+    {
+      "name": "action_process_instance_execution_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Instance execution time."
+    },
+    {
+      "name": "action_process_instance_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Cortex instance ID of the process."
+    },
+    {
+      "name": "action_process_integrity_level",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Integrity level of the process created."
+    },
+    {
+      "name": "action_process_is_causality_root",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the created process is a new causality root process."
+    },
+    {
+      "name": "action_process_is_replay",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Windows: The following events are replayed: Processes started before the agent is started. Module load events for modules loaded in replayed processes. Drivers loaded using module load before the agent is started. For loaded drivers, the process is always a special KernelProcess."
+    },
+    {
+      "name": "action_process_is_special",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Indicates special system processes: RegularProcess = 0, KernelProcess = 1, AppContainerProcess = 2, NonWin32SubsystemProcess = 3"
+    },
+    {
+      "name": "action_process_is_txn",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": ""
+    },
+    {
+      "name": "action_process_os_pid",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The Operating System (OS) Process Identifier (PID) of the new process"
+    },
+    {
+      "name": "action_process_remote_session_ip",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Windows: When the process was started from a remote Terminal Services session, the IP address of the remote client connected to the session."
+    },
+    {
+      "name": "action_process_requested_parent_iid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Windows: Same as the action_process_requested_parent_pid, but the instance ID."
+    },
+    {
+      "name": "action_process_requested_parent_pid",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Windows: A parent process can request to set the parent-pid of the child process to something other than their own. This is used for a runas scenario where the os_actor is different from the actor. Yet, it can also be used by malware to fake the parent pid. This field gives the requested parent pid, while giving the true actor/os_actor for the operation."
+    },
+    {
+      "name": "action_process_signature_product",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Signature product - The product family part of the signature."
+    },
+    {
+      "name": "action_process_signature_status",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Signature status of the process: Signed = 1, SignedInvalid = 2, Unsigned = 3, FailedToObtain = 4, WeakHash = 5, where the MD5 is used as the hash algorithm. Unsupported = 6, which means the signature was not calculated. InvalidCVE2020_0601 = 7, which means the executable is malicious and is trying to exploit the windows vulnerability CVE2020-0601. Deleted = 8, which means that the file was deleted by the time the agent tried to calculate the signature."
+    },
+    {
+      "name": "action_process_signature_vendor",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Signature vendor - The vendor part of the signature."
+    },
+    {
+      "name": "action_process_termination_code",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Process exit code."
+    },
+    {
+      "name": "action_process_termination_date",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Instance termination time."
+    },
+    {
+      "name": "action_process_user_sid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Win: Primary user token of the executed binary. Unix: Effective UID of the executed binary."
+    },
+    {
+      "name": "action_process_username",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Name assigned to the 'action_process_user_sid'."
+    },
+    {
+      "name": "action_process_pe_load_info",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Windows: Information about the loaded PE image."
+    },
+    {
+      "name": "action_process_token",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Security context of the process."
+    },
+    {
+      "name": "action_process_privileges",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "String representing a 64-bit integer. These are the enabled special privileges that the process is running with."
+    },
+    {
+      "name": "action_process_fds",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Unix: FD information about 'stdin', 'stdout', and 'stderr'."
+    },
+    {
+      "name": "action_process_is_container_root",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Linux: True for the process that creates the container."
+    },
+    {
+      "name": "action_process_container_info",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": ""
+    },
+    {
+      "name": "action_process_ns_pid",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The PID of the new process in the relevant Linux namespace."
+    },
+    {
+      "name": "action_process_ns_user_sid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Linux-only: Effective UID of the executed binary in the relevant Linux namespace."
+    },
+    {
+      "name": "action_process_ns_user_real_sid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Linux-only: Real UID of the executed binary in the relevant Linux namespace."
+    },
+    {
+      "name": "action_process_is_remote_session_root",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": ""
+    },
+    {
+      "name": "action_process_remote_session_port",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": ""
+    },
+    {
+      "name": "action_process_local_session_ip",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": ""
+    },
+    {
+      "name": "action_process_local_session_port",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": ""
+    },
+    {
+      "name": "action_process_static_analysis_score",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Static analysis score of executed binary. Scale of 0-1, where 0 is definitely benign, and 1 is definitely malware."
+    },
+    {
+      "name": "action_process_container_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Linux: The ID of the container in which this process is running."
+    },
+    {
+      "name": "action_process_user_real_sid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Unix-only: Real UID of the executed binary."
+    },
+    {
+      "name": "action_process_signature_is_embedded",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the signature is embedded inside the PE or part of an external catalog file."
+    },
+    {
+      "name": "action_process_file_access_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Access time of the file that created the process."
+    },
+    {
+      "name": "action_process_cwd",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Working directory from which the process was executed."
+    },
+    {
+      "name": "action_process_is_64bit",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the process is 64 bit."
+    },
+    {
+      "name": "action_process_is_native",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not this process is a 'native process'. On a 32-bit machine, the value is always true, and on a 64-bit machine, the value is true when the process is 64-bit."
+    },
+    {
+      "name": "action_process_peb",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Windows: The address of the PEB of the process."
+    },
+    {
+      "name": "action_process_peb32",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Windows: The address of the PEB32 of the process. Only non-zero if this is a WOW64 process."
+    },
+    {
+      "name": "action_process_image_auth_sha1",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "SHA1 of the binary's Authenticode, which is the part of a PE used when signing."
+    },
+    {
+      "name": "action_process_image_auth_sha2",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "SHA256 of the binary's Authenticode, which is the part of a PE used when signing."
+    },
+    {
+      "name": "action_process_last_writer_actor",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Instance ID of the actor that wrote the file for this process."
+    },
+    {
+      "name": "action_process_script",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "When the executable is an interpreter, the script that it is executing."
+    },
+    {
+      "name": "action_process_script_device_info",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Info about the device (volume + HW) from which this script was executed."
+    },
+    {
+      "name": "action_process_environment_variables",
+      "data_type": "MAP",
+      "mode": "NULLABLE",
+      "description": "Envrionment variables that were sent on the process execution."
+    },
+    {
+      "name": "action_protocol",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "IP protocol of the network event."
+    },
+    {
+      "name": "action_proxy",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not Cortex XDR/XSIAM performed an HTTP proxy resolution to get these fields: action_external_hostname, action_external_port. If true, the hostname/port fields are taken from the HTTP packet data. Otherwise, they are taken from other protocols like DNS."
+    },
+    {
+      "name": "action_registry_data",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Registry data being written to the specific key."
+    },
+    {
+      "name": "action_registry_file_path",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Four operations: Load, Save, Restore, Unload"
+    },
+    {
+      "name": "action_registry_key_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Registry key name being accessed."
+    },
+    {
+      "name": "action_registry_old_data",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Registry data being replaced by a new value."
+    },
+    {
+      "name": "action_registry_old_key_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Old registry key name that is being renamed."
+    },
+    {
+      "name": "action_registry_return_val",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Return value from the registry operation."
+    },
+    {
+      "name": "action_registry_value_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Registry value name being accessed."
+    },
+    {
+      "name": "action_registry_value_type",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Regular types: REG_SZ (1), REG_EXPAND_SZ (2), REG_BINARY (3), REG_DWORD (4), REG_DWORD_BIG_ENDIAN (5), REG_LINK (6), REG_MULTI_SZ (7), REG_RESOURCE_LIST (8), REG_FULL_RESOURCE_DESCRIPTOR (9), REG_RESOURCE_REQUIREMENTS_LIST (10), REG_QWORD (11)"
+    },
+    {
+      "name": "action_remote_ip",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Relevant when the actor is a remote actor, where the type is not local and the IP was resolved successfully."
+    },
+    {
+      "name": "action_remote_ip_int",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Relevant when the actor is a remote actor, where the type is not local and the IP was resolved successfully."
+    },
+    {
+      "name": "action_remote_port",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Relevant when the actor is a remote actor, where the type is RemoteRpcTcp."
+    },
+    {
+      "name": "action_remote_process_causality_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Causality ID of the remote injected process."
+    },
+    {
+      "name": "action_remote_process_file_access_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Access time of the file that created the process."
+    },
+    {
+      "name": "action_remote_process_image_command_line",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process command line - The command used to execute the process."
+    },
+    {
+      "name": "action_remote_process_image_extension",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process image extension - File extension."
+    },
+    {
+      "name": "action_remote_process_image_md5",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "MD5 of the binary."
+    },
+    {
+      "name": "action_remote_process_image_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Image name of the remote injected process."
+    },
+    {
+      "name": "action_remote_process_image_path",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process image path - A string identifying the location of the execution."
+    },
+    {
+      "name": "action_remote_process_image_sha256",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "SHA256 of the binary."
+    },
+    {
+      "name": "action_remote_process_instance_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Instance ID of the remote injected process."
+    },
+    {
+      "name": "action_remote_process_integrity_level",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Integrity level of the remote injected process."
+    },
+    {
+      "name": "action_remote_process_is_causality_root",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the remote process being injected into is a causality root."
+    },
+    {
+      "name": "action_remote_process_os_pid",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The Operating System (OS) Process Identifier (PID) of the remote process"
+    },
+    {
+      "name": "action_remote_process_signature_product",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Signature product - The product family part of the signature."
+    },
+    {
+      "name": "action_remote_process_signature_status",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Signature status of the process: Signed = 1, SignedInvalid = 2, Unsigned = 3, FailedToObtain = 4, WeakHash = 5, where the MD5 is used as the hash algorithm. Unsupported = 6, which means the signature was not calculated. InvalidCVE2020_0601 = 7, which means the executable is malicious and is trying to exploit the windows vulnerability CVE2020-0601. Deleted = 8, which means that the file was deleted by the time the agent tried to calculate the signature."
+    },
+    {
+      "name": "action_remote_process_signature_vendor",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Signature vendor - The vendor part of the signature."
+    },
+    {
+      "name": "action_remote_process_thread_id",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Target thread of remote execution."
+    },
+    {
+      "name": "action_remote_process_thread_start_address",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Memory address of the thread being injected into a remote process."
+    },
+    {
+      "name": "action_remote_process_user_sid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Win: Primary user token of the executed binary. Unix: Effective UID of the executed binary."
+    },
+    {
+      "name": "action_remote_process_username",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Name assigned to the action_process_user_sid field."
+    },
+    {
+      "name": "action_remote_process_file_info",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Metadata from the EXE file of the process."
+    },
+    {
+      "name": "action_remote_process_file_create_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Creation time of the file that created the process."
+    },
+    {
+      "name": "action_remote_process_file_mod_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Modification time of the file that created the process."
+    },
+    {
+      "name": "action_remote_process_signature_is_embedded",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the signature is embedded inside the PE or part of an external catalog file."
+    },
+    {
+      "name": "action_remote_process_is_special",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Indicates special system processes: RegularProcess = 0, KernelProcess = 1, AppContainerProcess = 2, NonWin32SubsystemProcess = 3"
+    },
+    {
+      "name": "action_remote_process_is_replay",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the agent was alive during the execution of the process."
+    },
+    {
+      "name": "action_remote_process_is_64bit",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the process is 64 bit."
+    },
+    {
+      "name": "action_remote_process_is_native",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not this process is a 'native process'. On a 32-bit machine, the value is always true, and on a 64-bit machine, the value is true when the process is 64-bit."
+    },
+    {
+      "name": "action_remote_process_file_size",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Size of the file of the process in bytes."
+    },
+    {
+      "name": "action_remote_process_image_auth_sha1",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "SHA1 of the binary's Authenticode, which is the part of a PE used when signing."
+    },
+    {
+      "name": "action_remote_process_image_auth_sha2",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process image SHA-2 authenticode."
+    },
+    {
+      "name": "action_remote_process_last_writer_actor",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The instance ID of the last writer that changed the file of the process."
+    },
+    {
+      "name": "action_rpc_func_opnum",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Integer identifying the function called."
+    },
+    {
+      "name": "action_rpc_interface_uuid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Universally Unique IDentifier (UUID) identifying the interface. An interface is only uniquely identified by the UUID + Major version + Minor version."
+    },
+    {
+      "name": "action_rpc_interface_version_major",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Major version of the Remote Procedure Call (RPC) interface."
+    },
+    {
+      "name": "action_rpc_interface_version_minor",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Minor version of the Remote Procedure Call (RPC) interface."
+    },
+    {
+      "name": "action_rpc_items",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "EAL remote procedure call (RPC) data items."
+    },
+    {
+      "name": "action_rpc_func_exception_code",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "If an exception occurred during this remote procedure call (RPC), the exception code is provided. Otherwise, the value is 0."
+    },
+    {
+      "name": "action_rpc_interface_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Description of the remote procedure call (RPC) interface, taken from the IDL file."
+    },
+    {
+      "name": "action_rpc_func_str_call_fields",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Parameters where the keys are the names of the argument in the function call. The values are the values of the parameters. Values are strings. For instance, if we have a remote procedure call (RPC) to CreateService(ServiceName, ServiceType), we will get something like { 'ServiceName': 'MyServiceName1', 'ServiceType': '3'}."
+    },
+    {
+      "name": "action_rpc_func_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Function name taken from the IDL file."
+    },
+    {
+      "name": "action_rpc_func_int_call_fields",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Same as the field action_rpc_func_str_call_fields, but the values are integers. Since the values are in a uint64_t format, they are still serialized as strings."
+    },
+    {
+      "name": "action_session_duration",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Number of milliseconds (ms) since the session started."
+    },
+    {
+      "name": "action_syscall_etw_based",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the system call based on Event Tracing for Windows (ETW) or on native hooking."
+    },
+    {
+      "name": "action_syscall_int_params",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Action parameters where the value is an integer in the system call invocation."
+    },
+    {
+      "name": "action_syscall_stack_ptr",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Stack pointer creating the captured syscall."
+    },
+    {
+      "name": "action_syscall_string_params",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Action parameters where the value is a string in the system call invocation."
+    },
+    {
+      "name": "action_syscall_target_image_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Base image name of the target process, such as lsass.exe."
+    },
+    {
+      "name": "action_syscall_target_image_path",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process image path - A string identifying the location of the execution."
+    },
+    {
+      "name": "action_syscall_target_instance_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Instance ID of the target process, when one exists."
+    },
+    {
+      "name": "action_syscall_target_os_pid",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The Operating System (OS) Process Identifier (PID) of the syscall target process"
+    },
+    {
+      "name": "action_syscall_target_thread_id",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Target thread ID of the captured syscall."
+    },
+    {
+      "name": "action_thread_thread_id",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Thread ID creating the captured syscall."
+    },
+    {
+      "name": "action_thread_start_address",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Start address of the thread function, which is serialized as a string as it can be a true 64-bit address."
+    },
+    {
+      "name": "action_thread_parent_pid",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Windows: Same as the actor info."
+    },
+    {
+      "name": "action_thread_parent_tid",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Windows: Same as the actor info."
+    },
+    {
+      "name": "action_thread_parent_iid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Windows: Same as the actor info."
+    },
+    {
+      "name": "action_thread_child_pid",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": ""
+    },
+    {
+      "name": "action_thread_child_tid",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": ""
+    },
+    {
+      "name": "action_thread_child_iid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": ""
+    },
+    {
+      "name": "action_thread_stack_base",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Windows: Base of the stack."
+    },
+    {
+      "name": "action_thread_stack_limit",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Windows: Limit of the stack."
+    },
+    {
+      "name": "action_thread_teb",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Windows: Address of the TEB of the thread."
+    },
+    {
+      "name": "action_total_download",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Total number of payload bytes from the destination to the source so far."
+    },
+    {
+      "name": "action_total_upload",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Total number of payload bytes from the source to the destination so far."
+    },
+    {
+      "name": "action_upload",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Number of uploaded bytes in the last time window."
+    },
+    {
+      "name": "action_user_agent",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The user agent used by an actor to perform an action."
+    },
+    {
+      "name": "action_user_is_local_session",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the user log in from a remote computer or locally."
+    },
+    {
+      "name": "action_user_status",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Agent user status change event. Enum mapping: 1 - logon, 2 - logoff, 3 - locked / screen saver on, 4 - unlocked / screen saver off, 5 - Reconnect, 6 - Disconnect"
+    },
+    {
+      "name": "action_user_status_sid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Security identifier (SID) of the user."
+    },
+    {
+      "name": "action_username",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Name of the user."
+    },
+    {
+      "name": "action_user_session_id",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Windows: Session ID of the process."
+    },
+    {
+      "name": "action_category_of_app_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "App-ID category."
+    },
+    {
+      "name": "action_sub_category_of_app_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "App-ID sub category."
+    },
+    {
+      "name": "action_app_id_risk",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "App-ID risk"
+    },
+    {
+      "name": "action_location",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Geolocation information of the source IP."
+    },
+    {
+      "name": "action_as_data",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "ASN data from the source of the network activity."
+    },
+    {
+      "name": "action_evtlog_normalized_user",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "A normalized user for the event log event."
+    },
+    {
+      "name": "action_direction_confidence",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": ""
+    },
+    {
+      "name": "action_evtlog_int_fields",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": ""
+    },
+    {
+      "name": "action_file_pe_info",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Only valid according to collection policy. Usually, enabled on some write-file events. The field is not aptly named since it sometimes contains info on non-PE files as well."
+    },
+    {
+      "name": "action_file_last_writer_actor",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Instance ID of the actor that wrote the file."
+    },
+    {
+      "name": "action_file_signature_is_embedded",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the signature is embedded inside the PE or part of an external catalog file."
+    },
+    {
+      "name": "action_file_auth_sha1",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "SHA1 of the binary's Authenticode, which is the part of a PE used when signing."
+    },
+    {
+      "name": "action_file_auth_sha2",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "SHA256 of the binary's Authenticode, which is the part of a PE used when signing."
+    },
+    {
+      "name": "action_file_reparse_count",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Only valid for sub_type = 1/2 (create_new/open), which provides the reparse count if the file was open through a reparse point."
+    },
+    {
+      "name": "action_file_pipe_impersonation_integrity_level",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "When the event type is impersonate_pipe, this field contains the integrity level of the token that is used for the impersonation."
+    },
+    {
+      "name": "action_file_operation_flags",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The specified flags for the file operation."
+    },
+    {
+      "name": "action_file_is_anonymous",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the file was created without an accesible path from the filesystem (`open(..., O_TMPFILE)`, `memfd_create`)."
+    },
+    {
+      "name": "action_mount_device_info",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Info about the device (volume + HW)."
+    },
+    {
+      "name": "action_device_usb_vendor_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": ""
+    },
+    {
+      "name": "action_device_usb_product_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": ""
+    },
+    {
+      "name": "action_device_usb_interface_class",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": ""
+    },
+    {
+      "name": "action_device_usb_interface_sub_class",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": ""
+    },
+    {
+      "name": "action_process_handle_is_kernel",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not a handle is used by the kernel."
+    },
+    {
+      "name": "action_process_handle_granted_access",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Access rights that were granted when opening the handle."
+    },
+    {
+      "name": "action_process_handle_opened_process_pid",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "PID of the process opened."
+    },
+    {
+      "name": "action_process_handle_opened_process_iid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "IID of the process opened."
+    },
+    {
+      "name": "address_mapping",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "symbol_name: Name of the suspicious function. image_path: Path of the image containing the function or image injected to. index: By default, set to 1. In Syscall events, points to a function parameter number."
+    },
+    {
+      "name": "action_ns_flags",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Unshare: Flags raw value. Setns: nstype raw value."
+    },
+    {
+      "name": "action_ns_path",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Setns-only: Path to the namespace file descriptor."
+    },
+    {
+      "name": "action_time_change_clock_diff_ms",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Difference in milliseconds from previous system time."
+    },
+    {
+      "name": "action_trace_flags",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Flags that were sent to the ptrace function."
+    },
+    {
+      "name": "action_trace_ret",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Return value of the ptrace function."
+    },
+    {
+      "name": "action_trace_request_id",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Request ID of the ptrace function."
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "table": "UrlClickEvents",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-urlclickevents-table",
+  "page_date": "2025-06-11",
+  "columns": [
+    {
+      "name": "Timestamp",
+      "type": "datetime",
+      "description": "The date and time when the user clicked on the link"
+    },
+    {
+      "name": "Url",
+      "type": "string",
+      "description": "The full URL that was clicked on by the user"
+    },
+    {
+      "name": "ActionType",
+      "type": "string",
+      "description": "Indicates whether the click was allowed or blocked (or blocked due to policy)"
+    },
+    {
+      "name": "AccountUpn",
+      "type": "string",
+      "description": "UPN of the account that clicked on the link"
+    },
+    {
+      "name": "Workload",
+      "type": "string",
+      "description": "The application from which the user clicked on the link (Email, Office, Teams)"
+    },
+    {
+      "name": "NetworkMessageId",
+      "type": "string",
+      "description": "The unique identifier for the email that contains the clicked link"
+    },
+    {
+      "name": "ThreatTypes",
+      "type": "string",
+      "description": "Verdict at the time of click (malware, phish, other threats)"
+    },
+    {
+      "name": "DetectionMethods",
+      "type": "string",
+      "description": "Detection technology used to identify the threat at the time of click"
+    },
+    {
+      "name": "IPAddress",
+      "type": "string",
+      "description": "Public IP address of the device from which the user clicked on the link"
+    },
+    {
+      "name": "IsClickedThrough",
+      "type": "bool",
+      "description": "Indicates whether the user was able to click through to the original URL (1/0)"
+    },
+    {
+      "name": "UrlChain",
+      "type": "string",
+      "description": "For redirection scenarios, URLs present in the redirection chain"
+    },
+    {
+      "name": "ReportId",
+      "type": "string",
+      "description": "Unique identifier for a click event"
+    }
+  ],
+  "col_count": 12,
+  "generated_at": "2025-09-19T07:36:37.417399Z"
+}

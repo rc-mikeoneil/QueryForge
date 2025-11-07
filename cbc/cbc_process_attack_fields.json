@@ -1,0 +1,18 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_attack_fields": {
+      "attack_tactic": {
+        "type": "keyword",
+        "description": "Searchable. A tactic from the MITRE ATT&CK framework; defines a reason for an adversarys action, such as achieving credential access"
+      },
+      "attack_technique": {
+        "type": "keyword",
+        "description": "Searchable. A technique from the MITRE ATT&CK framework; defines an action an adversary takes to accomplish a goal, such as dumping credentials to achieve credential access"
+      },
+      "attack_tid": {
+        "type": "keyword",
+        "description": "Searchable.  Allows searching for a specific combination of MITRE ATT&CK tactic and technique; use the format tactic:technique.subtechnique"
+      }
+    }
+  }
+}

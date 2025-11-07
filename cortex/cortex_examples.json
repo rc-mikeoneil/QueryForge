@@ -1,0 +1,58 @@
+{
+  "cortex_xdr_query_schema": {
+    "example_queries": {
+      "process_execution": [
+        {
+          "title": "PowerShell execution with encoded commands",
+          "description": "Detect PowerShell processes with base64 encoded command arguments",
+          "query": "dataset = xdr_data\n| filter event_type = ENUM.PROCESS and event_sub_type = ENUM.PROCESS_START\n| filter actor_process_image_name = 'powershell.exe'\n| filter action_process_image_command_line contains '-enc'\n| fields agent_hostname, action_process_image_command_line, _time\n| limit 100",
+          "use_case": "malware_detection"
+        },
+        {
+          "title": "Suspicious process execution from temp directories",
+          "description": "Find processes executing from temporary directories",
+          "query": "dataset = xdr_data\n| filter event_type = ENUM.PROCESS\n| filter action_file_path contains 'temp' or action_file_path contains 'tmp'\n| filter action_file_extension = 'exe'\n| fields agent_hostname, action_file_path, actor_process_image_name, _time\n| limit 100",
+          "use_case": "malware_detection"
+        }
+      ],
+      "network_activity": [
+        {
+          "title": "External network connections",
+          "description": "Find processes making external network connections",
+          "query": "dataset = xdr_data\n| filter event_type = ENUM.NETWORK\n| filter is_internal_ip = false\n| fields agent_hostname, actor_process_image_name, action_remote_ip, action_remote_port, _time\n| limit 100",
+          "use_case": "network_analysis"
+        },
+        {
+          "title": "High volume data uploads",
+          "description": "Detect processes uploading large amounts of data",
+          "query": "dataset = xdr_data\n| filter event_type = ENUM.NETWORK\n| comp sum(action_upload) as total_upload by actor_process_image_name, action_remote_ip\n| filter total_upload > 10000000\n| sort desc total_upload\n| limit 50",
+          "use_case": "data_exfiltration"
+        }
+      ],
+      "file_operations": [
+        {
+          "title": "File creation in startup folders",
+          "description": "Detect files created in Windows startup locations",
+          "query": "dataset = xdr_data\n| filter event_type = ENUM.FILE and event_sub_type = ENUM.FILE_CREATE_NEW\n| filter action_file_path contains 'startup'\n| fields agent_hostname, action_file_path, actor_process_image_name, _time\n| limit 100",
+          "use_case": "persistence"
+        }
+      ],
+      "authentication": [
+        {
+          "title": "Failed login attempts",
+          "description": "Find failed authentication events",
+          "query": "dataset = xdr_data\n| filter event_type = ENUM.EVENT_LOG\n| filter action_evtlog_event_id = 4625\n| alter Username = action_evtlog_data_fields->TargetUserName\n| alter SourceIP = action_evtlog_data_fields->IpAddress\n| fields agent_hostname, Username, SourceIP, _time\n| limit 100",
+          "use_case": "authentication_analysis"
+        }
+      ],
+      "registry_operations": [
+        {
+          "title": "Registry Run key modifications",
+          "description": "Detect modifications to registry Run keys for persistence",
+          "query": "dataset = xdr_data\n| filter event_type = ENUM.REGISTRY\n| filter action_registry_key_name contains 'run'\n| fields agent_hostname, action_registry_key_name, action_registry_value_name, actor_process_image_name, _time\n| limit 100",
+          "use_case": "persistence"
+        }
+      ]
+    }
+  }
+}

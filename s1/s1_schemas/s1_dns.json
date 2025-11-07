@@ -1,0 +1,41 @@
+{
+  "metadata": {
+    "source": "SentinelOne Operations Center",
+    "schema_name": "DNS",
+    "extraction_date": "2025-10-21",
+    "description": "DNS event fields for S1QL 2.0 queries",
+    "field_count": 6
+  },
+  "fields": [
+    {
+      "s1ql_field": "event.dns.protocol",
+      "description": "The protocol used in the DNS request",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "event.dns.provider",
+      "description": "The provider used by the agent to collect the DNS event telemetry",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "event.dns.request",
+      "description": "Domain name of the resource requested by the host",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "event.dns.response",
+      "description": "The data in the DNS response describing the resource. I.e. the IP address, DNS, type, and so on.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "event.dns.responseCode",
+      "description": "The DNS response code returned by the DNS server",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "event.dns.transportProtocol",
+      "description": "The transport protocol used in the DNS request",
+      "data_type": "Enum"
+    }
+  ]
+}

@@ -1,0 +1,348 @@
+{
+  "section": "Actor Actor",
+  "description": "The Actor actor is the process that performed the action.",
+  "fields": [
+    {
+      "name": "actor_causality_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Will match 'causality_actor_causality_id' in the causality owner actor fields."
+    },
+    {
+      "name": "actor_effective_user_sid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Win: Primary user token of the executed binary. Unix: Effective UID of the executed binary."
+    },
+    {
+      "name": "actor_effective_username",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Name assigned to 'actor_effective_user_sid'. Win: Includes the domain."
+    },
+    {
+      "name": "actor_is_injected_thread",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not a user can connect to the USB port that the device is connected to."
+    },
+    {
+      "name": "actor_os_process_instance_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Cortex XDR/XSIAM unique identifier for the operating system's actor process."
+    },
+    {
+      "name": "actor_primary_user_sid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Win: Primary user token of the executed binary. Unix: Effective UID of the executed binary."
+    },
+    {
+      "name": "actor_primary_username",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Name assigned to the user_sid."
+    },
+    {
+      "name": "actor_process_auth_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Windows: LUID (uint64) representing the token of the process."
+    },
+    {
+      "name": "actor_process_causality_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Cortex XDR/XSIAM unique causality ID for the actor casuality chain."
+    },
+    {
+      "name": "actor_process_command_line",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process command line - The command used to execute the process."
+    },
+    {
+      "name": "actor_process_command_line_indices",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process command line - The command used to execute the process."
+    },
+    {
+      "name": "actor_process_device_info",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Info about the device (volume + HW) from which this process started. including name, class guid, class name, bus type, volume guid, mount point, file system, drive type, vendor id, product id, and serial number."
+    },
+    {
+      "name": "actor_process_execution_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Timestamp of the execution in epoch time."
+    },
+    {
+      "name": "actor_process_file_access_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Creation time of the file that created the actor process."
+    },
+    {
+      "name": "actor_process_file_create_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Creation time of the file that created the process."
+    },
+    {
+      "name": "actor_process_file_mod_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Modification time of the file that created the process."
+    },
+    {
+      "name": "actor_process_file_size",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Size of the file involved in the process in bytes."
+    },
+    {
+      "name": "actor_process_image_command_line",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process command line - The command used to execute the process."
+    },
+    {
+      "name": "actor_process_image_extension",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process image extension - File extension."
+    },
+    {
+      "name": "actor_process_image_md5",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "MD5 of the binary."
+    },
+    {
+      "name": "actor_process_image_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "File name of the actor_process_image_path."
+    },
+    {
+      "name": "actor_process_image_path",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process image path - A string identifying the location of the execution."
+    },
+    {
+      "name": "actor_process_image_sha256",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "SHA256 of the binary."
+    },
+    {
+      "name": "actor_process_instance_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Cortex XDR/XSIAM unique identifier of the actor process."
+    },
+    {
+      "name": "actor_process_integrity_level",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Integrity level of the process."
+    },
+    {
+      "name": "actor_process_is_64bit",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the process is a 64-bit process."
+    },
+    {
+      "name": "actor_process_is_native",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not this process a 'native process'."
+    },
+    {
+      "name": "actor_process_is_replay",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the agent was alive during the execution of the process."
+    },
+    {
+      "name": "actor_process_is_special",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Indicates special system processes: RegularProcess = 0, KernelProcess = 1, AppContainerProcess = 2, NonWin32SubsystemProcess = 3"
+    },
+    {
+      "name": "actor_process_logon_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Windows: LUID (uint64) representing the token of the process."
+    },
+    {
+      "name": "actor_process_os_pid",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The Operating System (OS) Process Identifier (PID) of the actor process."
+    },
+    {
+      "name": "actor_process_session_id",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Windows: Session ID of the process."
+    },
+    {
+      "name": "actor_process_signature_is_embedded",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the signature embedded inside the Program Executable (PE) or part of an external catalog file."
+    },
+    {
+      "name": "actor_process_signature_product",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Signature product - The product family part of the signature."
+    },
+    {
+      "name": "actor_process_signature_status",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Signature status of the process: Signed = 1, SignedInvalid = 2, Unsigned = 3, FailedToObtain = 4, WeakHash = 5, Unsupported = 6, InvalidCVE2020_0601 = 7, Deleted = 8"
+    },
+    {
+      "name": "actor_process_signature_vendor",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Signature vendor - The vendor part of the signature."
+    },
+    {
+      "name": "actor_remote_host",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Relevant when the actor is a remote actor and the host was resolved successfully."
+    },
+    {
+      "name": "actor_remote_ip",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Relevant when the actor is a remote actor, where the type is not local and the IP was resolved successfully."
+    },
+    {
+      "name": "actor_remote_pipe_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Relevant when the actor is a remote actor, where the type is RemoteRpcNamedPipe."
+    },
+    {
+      "name": "actor_remote_port",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Relevant when the actor is a remote actor, where the type is RemoteRpcTcp."
+    },
+    {
+      "name": "actor_thread_thread_id",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "An identifier of the OS thread which is responsible for the event."
+    },
+    {
+      "name": "actor_type",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Enum describing actor type: Local = 1, RemoteRpcNamedPipe = 2, RemoteRpcHttp = 3, RemoteRpcTcp = 4, RemoteFileSmb = 5"
+    },
+    {
+      "name": "actor_primary_normalized_user",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "A normalized user for the actor."
+    },
+    {
+      "name": "actor_effective_normalized_user",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Normalized user information."
+    },
+    {
+      "name": "actor_container_info",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Container information for the process."
+    },
+    {
+      "name": "actor_rpc_interface_uuid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "MS-RPC interface unique identifier."
+    },
+    {
+      "name": "actor_rpc_func_opnum",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "MS-RPC function operation identitifer."
+    },
+    {
+      "name": "actor_rpc_interface_version_major",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "MS-RPC interface major version."
+    },
+    {
+      "name": "actor_rpc_interface_version_minor",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "MS-RPC interface minor version."
+    },
+    {
+      "name": "actor_rpc_protocol",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "MS-RPC protocol type."
+    },
+    {
+      "name": "actor_local_ip",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Source IP of the network activity."
+    },
+    {
+      "name": "actor_local_port",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Source port for the network activity"
+    },
+    {
+      "name": "actor_process_image_auth_sha2",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process image SHA-2 authenticode."
+    },
+    {
+      "name": "actor_process_image_auth_sha1",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process image SHA-1 authenticode."
+    },
+    {
+      "name": "actor_process_last_writer_actor",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Cortex instance ID of the last process that has written the actor process image."
+    },
+    {
+      "name": "actor_process_file_original_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Original file name of the actor image based on the file information metadata."
+    },
+    {
+      "name": "actor_process_file_internal_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Internal name of the actor image based on the file information metadata."
+    }
+  ]
+}

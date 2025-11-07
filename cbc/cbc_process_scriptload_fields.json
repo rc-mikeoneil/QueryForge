@@ -1,0 +1,68 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_scriptload_fields": {
+      "scriptload_content": {
+        "type": "keyword",
+        "description": "Searchable. Deobfuscated script content of script(s) loaded from the filesystem.  Requires Windows sensor, AMSI support via Windows 10/Server version 1703 or later  For more information see here",
+        "array": true
+      },
+      "scriptload_content_length": {
+        "type": "integer",
+        "description": "Searchable. Character count of the deobfuscated script content of script(s) loaded from the filesystem.  Requires Windows sensor, AMSI support via Windows 10/Server version 1703 or later  For more information see here",
+        "array": true
+      },
+      "scriptload_content_raw": {
+        "type": "keyword",
+        "description": "Searchable. Raw script content of the script loaded from the filesystem without tokenization of special characters.  Requires Windows sensor, AMSI support via Windows 10/Server version 1703 or later  For more information see here"
+      },
+      "scriptload_count": {
+        "type": "integer",
+        "description": "Searchable. Count of scriptload events reported by the sensor since last initialization.  Requires Windows sensor or macOS sensor"
+      },
+      "scriptload_effective_reputation": {
+        "type": "keyword",
+        "description": "Searchable. Effective reputation of the script file loaded by the process; applied by the sensor when the event occurred.  Requires Windows sensor or macOS sensor, and Enterprise EDR"
+      },
+      "scriptload_file_type": {
+        "type": "keyword",
+        "description": "Searchable. The type of file.",
+        "array": true
+      },
+      "scriptload_hash": {
+        "type": "keyword",
+        "description": "Searchable. MD5 and/or SHA-256 hash(es) of the script file loaded by the process.  Requires Windows sensor or macOS sensor",
+        "array": true
+      },
+      "scriptload_issuer": {
+        "type": "keyword",
+        "description": "Scriptload certificate issuer names",
+        "array": true
+      },
+      "scriptload_md5": {
+        "type": "md5",
+        "description": "Deprecated. Use scriptload_hash"
+      },
+      "scriptload_name": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Filesystem path of the script file loaded by the process."
+      },
+      "scriptload_publisher": {
+        "type": "keyword",
+        "description": "Searchable. Publisher name on the certificate used to sign the script file; reports signatures on Powershell scripts and .MSI/.MSP files.  Requires Windows sensor or macOS sensor"
+      },
+      "scriptload_publisher_state": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. State of the loaded script(s)' digital signature(s); checks signatures on Powershell scripts and .MSI/.MSP files  Requires Windows sensor or macOS sensor",
+        "array": true
+      },
+      "scriptload_sha256": {
+        "type": "sha256",
+        "description": "Deprecated. Use scriptload_hash"
+      },
+      "scriptload_type": {
+        "type": "keyword",
+        "description": "The type of the scriptload operation"
+      }
+    }
+  }
+}

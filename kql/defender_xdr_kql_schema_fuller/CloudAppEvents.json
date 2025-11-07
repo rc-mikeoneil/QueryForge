@@ -1,0 +1,54 @@
+{
+  "table": "CloudAppEvents",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-cloudappevents-table",
+  "page_date": "2025-05-15",
+  "columns": [
+    {
+      "name": "Timestamp",
+      "type": "datetime",
+      "description": "Date and time when the event was recorded"
+    },
+    {
+      "name": "ActionType",
+      "type": "string",
+      "description": "Type of activity that triggered the event"
+    },
+    {
+      "name": "Application",
+      "type": "string",
+      "description": "Application that performed the recorded action"
+    },
+    {
+      "name": "ApplicationId",
+      "type": "int",
+      "description": "Unique identifier for the application"
+    },
+    {
+      "name": "AppInstanceId",
+      "type": "int",
+      "description": "Unique identifier for the instance of an application"
+    },
+    {
+      "name": "AccountObjectId",
+      "type": "string",
+      "description": "Unique identifier for the account in Microsoft Entra ID"
+    },
+    {
+      "name": "AccountId",
+      "type": "string",
+      "description": "Identifier for the account as found by Microsoft Defender for Cloud Apps"
+    },
+    {
+      "name": "AccountDisplayName",
+      "type": "string",
+      "description": "Name displayed in the address book entry for the account user"
+    },
+    {
+      "name": "IsAdminOperation",
+      "type": "bool",
+      "description": "Indicates whether the activity was performed by an administrator"
+    }
+  ],
+  "col_count": 9,
+  "generated_at": "2025-09-19T07:36:37.421448Z"
+}

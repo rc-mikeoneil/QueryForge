@@ -1,0 +1,32 @@
+{
+  "cortex_xdr_query_schema": {
+    "best_practices": {
+      "performance": [
+        "Always specify time ranges using _time filter to limit data scanned",
+        "Filter on event_type first as it's highly indexed",
+        "Use specific field filters before broad contains/regex operations",
+        "Limit result sets with | limit to avoid overwhelming queries",
+        "Use comp aggregations to reduce result volumes before detailed analysis"
+      ],
+      "query_construction": [
+        "Start with dataset selection",
+        "Apply most selective filters first (event_type, agent_id, time range)",
+        "Use | fields to select only needed columns",
+        "Combine related filters in single filter stage when possible",
+        "Use alter to create computed fields for complex expressions"
+      ],
+      "dataset_selection": [
+        "Use xdr_data for endpoint telemetry (processes, files, registry)",
+        "Use firewall_logs for network traffic from NGFWs",
+        "Join with endpoints dataset for asset context",
+        "Join with ad_users/ad_computers for identity correlation"
+      ],
+      "field_usage": [
+        "Use ENUM values for event_type and event_sub_type for clarity",
+        "Extract nested JSON fields with -> operator or json_extract()",
+        "Use alter to create readable aliases for complex field names",
+        "Check field nullability before filtering to avoid missing results"
+      ]
+    }
+  }
+}

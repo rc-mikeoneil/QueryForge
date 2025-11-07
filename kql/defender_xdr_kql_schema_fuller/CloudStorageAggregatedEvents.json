@@ -1,0 +1,229 @@
+{
+  "table": "cloudstorageaggregatedevents",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-cloudstorageaggregatedevents-table",
+  "page_date": "2025-10-03",
+  "columns": [
+    {
+      "name": "DataAggregationStartTime",
+      "type": "datetime",
+      "description": "The start time during which the data was aggregated"
+    },
+    {
+      "name": "DataAggregationEndTime",
+      "type": "datetime",
+      "description": "The end time during which the data was aggregated"
+    },
+    {
+      "name": "DataSource",
+      "type": "string",
+      "description": "The source of the aggregated logs"
+    },
+    {
+      "name": "SubscriptionId",
+      "type": "string",
+      "description": "Unique identifier assigned to the Azure subscription"
+    },
+    {
+      "name": "ResourceGroup",
+      "type": "string",
+      "description": "Name of the resource group where the storage account resides"
+    },
+    {
+      "name": "StorageAccount",
+      "type": "string",
+      "description": "The identifier for the storage account"
+    },
+    {
+      "name": "StorageContainer",
+      "type": "string",
+      "description": "The identifier for the storage container"
+    },
+    {
+      "name": "StorageFileShare",
+      "type": "string",
+      "description": "The identifier for the storage file share"
+    },
+    {
+      "name": "ServiceType",
+      "type": "string",
+      "description": "Specifies the type of storage service (for example, Blob, ADLS Gen2, Files.REST, Files.SMB)"
+    },
+    {
+      "name": "IpAddress",
+      "type": "string",
+      "description": "The IP addresses from which the storage was accessed"
+    },
+    {
+      "name": "UserAgentHeader",
+      "type": "string",
+      "description": "Details of the user agent accessing the storage (for example, browser or application)"
+    },
+    {
+      "name": "OperationNamesList",
+      "type": "object",
+      "description": "A list of storage operations performed (for example, CreateContainer, DeleteContainer)"
+    },
+    {
+      "name": "AuthenticationType",
+      "type": "string",
+      "description": "The authentication method used to access the storage (for example, AccountKey, SAS, Oauth)"
+    },
+    {
+      "name": "AccountObjectId",
+      "type": "string",
+      "description": "The unique identifier of the object is making the storage access"
+    },
+    {
+      "name": "AccountTenantId",
+      "type": "long",
+      "description": "The unique identifier of the Azure tenant"
+    },
+    {
+      "name": "AccountApplicationId",
+      "type": "string",
+      "description": "The application ID associated with the storage access"
+    },
+    {
+      "name": "AccountUpn",
+      "type": "string",
+      "description": "The user principal name of the accessing user"
+    },
+    {
+      "name": "AccountType",
+      "type": "long",
+      "description": "The account type used"
+    },
+    {
+      "name": "OperationsCount",
+      "type": "int",
+      "description": "The total number of storage operations performed"
+    },
+    {
+      "name": "SuccessfulOperationsCount",
+      "type": "int",
+      "description": "The count of successful storage operations"
+    },
+    {
+      "name": "FailedOperationsCount",
+      "type": "int",
+      "description": "The count of failed storage operations"
+    },
+    {
+      "name": "FirstEventTimestamp",
+      "type": "datetime",
+      "description": "The timestamp of the first observed operation in the aggregation period"
+    },
+    {
+      "name": "LastEventTimestamp",
+      "type": "datetime",
+      "description": "The timestamp of the last observed operation in the aggregation period"
+    },
+    {
+      "name": "TotalResponseLength",
+      "type": "int",
+      "description": "The total response length of all GET operations during the aggregation period"
+    },
+    {
+      "name": "SuccessfulReadOperations",
+      "type": "int",
+      "description": "The count of successful read operations"
+    },
+    {
+      "name": "DistinctGetOperations",
+      "type": "int",
+      "description": "The count of distinct GET operations performed"
+    },
+    {
+      "name": "AnonymousSuccessfulOperations",
+      "type": "int",
+      "description": "The count of successful anonymous operations"
+    },
+    {
+      "name": "HasAnonymousResourceNotFoundFailures",
+      "type": "bool",
+      "description": "Indicates whether anonymous resource not found failures occurred"
+    },
+    {
+      "name": "CountryName",
+      "type": "string",
+      "description": "The name of the country from where the storage was accessed"
+    },
+    {
+      "name": "CityName",
+      "type": "string",
+      "description": "The name of the city from where the storage was accessed"
+    },
+    {
+      "name": "ProvinceName",
+      "type": "string",
+      "description": "The name of the province or state from where the storage was accessed"
+    },
+    {
+      "name": "ClientSystemServiceName",
+      "type": "string",
+      "description": "The name of the system service is in the data center"
+    },
+    {
+      "name": "ClientCloudPlatformName",
+      "type": "string",
+      "description": "The name of the cloud platform where the data center is located"
+    },
+    {
+      "name": "IsTorExitNode",
+      "type": "bool",
+      "description": "Indicates whether the IP address is a Tor exit node"
+    },
+    {
+      "name": "IsKnownSuspiciousIp",
+      "type": "bool",
+      "description": "Indicates whether the IP address is known to be suspicious"
+    },
+    {
+      "name": "IsPrivateIp",
+      "type": "bool",
+      "description": "Indicates whether the IP address is private"
+    },
+    {
+      "name": "SuspiciousUserAgentName",
+      "type": "string",
+      "description": "The name of the suspicious user agent accessing the storage"
+    },
+    {
+      "name": "HashReputationMd5List",
+      "type": "object",
+      "description": "A list of MD5 hash reputations for the accessed resources"
+    },
+    {
+      "name": "AzureResourceId",
+      "type": "string",
+      "description": "The Azure Resource ID of the storage account"
+    },
+    {
+      "name": "Location",
+      "type": "string",
+      "description": "The location of the storage account (region)"
+    },
+    {
+      "name": "Timestamp",
+      "type": "datetime",
+      "description": "Indicate the time when the record was generated"
+    },
+    {
+      "name": "ReportId",
+      "type": "string",
+      "description": "GUID to identify the record in the specific table"
+    },
+    {
+      "name": "ActionType",
+      "type": "string",
+      "description": "Type of action (aggregated logs)"
+    },
+    {
+      "name": "AdditionalFields",
+      "type": "dynamic",
+      "description": "Additional information about the event in JSON array format"
+    }
+  ],
+  "col_count": 44,
+  "generated_at": "2025-10-03T02:10:05.894173Z"
+}

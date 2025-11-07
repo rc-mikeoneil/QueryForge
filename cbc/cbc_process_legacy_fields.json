@@ -1,0 +1,10 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_legacy_fields": {
+      "legacy_description": {
+        "type": "keyword",
+        "description": "Deprecated. Use event_description"
+      }
+    }
+  }
+}

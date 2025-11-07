@@ -1,0 +1,1141 @@
+{
+  "metadata": {
+    "source": "SentinelOne Operations Center",
+    "schema_name": "Common Data Fields",
+    "extraction_date": "2025-10-21",
+    "description": "Common Data Fields event fields for S1QL 2.0 queries",
+    "field_count": 226
+  },
+  "fields": [
+    {
+      "s1ql_field": "account.id",
+      "description": "SentinelOne Account ID",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "account.name",
+      "description": "SentinelOne Account Name",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "agent.uuid",
+      "description": "Unique Identifier of the SentinelOne agent",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "agent.version",
+      "description": "Version of SentinelOne Agent",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "cloud.accountId",
+      "description": "Cloud Account ID",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "cloud.image",
+      "description": "Cloud Image / AMI ID",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "cloud.instanceId",
+      "description": "Cloud Instance ID",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "cloud.region",
+      "description": "Cloud Region",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "cloud.roleName",
+      "description": "Cloud Role Name",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "cloud.securityGroup",
+      "description": "Cloud Security Groups",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "cloud.serviceProvider",
+      "description": "Cloud Service Provider",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "cloud.subnetIds",
+      "description": "Cloud Subnet IDs",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "cloud.tags",
+      "description": "Cloud Tags",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "cloud.vpcId",
+      "description": "Cloud VPC ID",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "endpoint.name",
+      "description": "Hostname of endpoint",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "endpoint.os",
+      "description": "Endpoint operating system family name",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "endpoint.type",
+      "description": "Machine type: server, laptop, desktop, Kubernetes Node",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "event.category",
+      "description": "Event category groups event types related to a common object such as a process, file, driver, task, indicator, IP. For example, filtering on event.category = 'process' yields all events relating to process activity.",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "event.id",
+      "description": "Unique SentinelOne identifier for the event",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "event.repetitionCount",
+      "description": "Count of Concurrent Identical Events",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "event.time",
+      "description": "The time the event was created. Format: epoch time (milliseconds since 1.1.1970), Timezone: UTC",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "event.type",
+      "description": "Type of operating system, application, network or user activity observed by the agent on the endpoint. Event types can include for example: Process events such as process creation or process termination Memory events such as memory read or write Driver events such as driver creation Registry events such as registry key renaming File events such as file creation, modification or deletion Network events such as IP connect, DNS resolved or URL Post Profile events such as Profile addition or removal. Event types are categorized to different groups by event.category",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "metric.name",
+      "description": "Metrics",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "metric.value",
+      "description": "Metrics",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.activeContent.hash",
+      "description": "Active Content SHA1 of source process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.activeContent.id",
+      "description": "Active Content file unique ID of source process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.activeContent.path",
+      "description": "Active Content file path of source process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.activeContent.signedStatus",
+      "description": "Active Content file signed status of source process (as attributed by the OS)",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "osSrc.process.activeContentType",
+      "description": "Active Content type of source process (as attributed by the OS)",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "osSrc.process.childProcCount",
+      "description": "Child process count",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.cmdline",
+      "description": "Command arguments sent with source process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.crossProcessCount",
+      "description": "Target Process event Count",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.crossProcessDupRemoteProcessHandleCount",
+      "description": "Duplicate Process Handle' event count",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.crossProcessDupThreadHandleCount",
+      "description": "Duplicate Thread Handle' Count",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.crossProcessOpenProcessCount",
+      "description": "Open Process' Count",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.crossProcessOutOfStorylineCount",
+      "description": "Out of Storyline' event count",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.crossProcessThreadCreateCount",
+      "description": "Remote Thread' Count",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.displayName",
+      "description": "Display name of source process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.dnsCount",
+      "description": "Count of DNS requests",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.image.binaryIsExecutable",
+      "description": "Is binary backing source process (as attributed by the OS) an executable",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "osSrc.process.image.extension",
+      "description": "Extension of the OS source process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.image.md5",
+      "description": "MD5 of source process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.image.origin.creationMethod",
+      "description": "Type of action that spawned the file",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "osSrc.process.image.origin.creatorProcess.name",
+      "description": "The process name that spawned the file",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.image.origin.creatorProcess.uid",
+      "description": "The process UID that spawned the file",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.image.origin.locationPath",
+      "description": "Source path for copied files, or URL for downloaded files",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.image.origin.locationType",
+      "description": "If file was copied, describes the source file's location. If file was downloaded, describes which program created it",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "osSrc.process.image.path",
+      "description": "Full path of executable backing this process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.image.sha1",
+      "description": "SHA1 of source process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.image.sha256",
+      "description": "SHA256 of source process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.indicatorBootConfigurationUpdateCount",
+      "description": "Count of indicators - Boot Configuration Update",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.indicatorEvasionCount",
+      "description": "Count of indicators - Evasion",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.indicatorExploitationCount",
+      "description": "Count of indicators - Exploitation",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.indicatorGeneral.count",
+      "description": "Count of indicators - General",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.indicatorInfostealerCount",
+      "description": "Count of indicators - Infostealer",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.indicatorInjectionCount",
+      "description": "Count of indicators - Injection",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.indicatorPersistenceCount",
+      "description": "Count of indicators - Persistence",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.indicatorPostExploitationCount",
+      "description": "Count of indicators - Post Exploitation",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.indicatorRansomwareCount",
+      "description": "Count of indicators - Ransomware",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.indicatorReconnaissanceCount",
+      "description": "Count of indicators - Reconnaissance",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.integrityLevel",
+      "description": "Integrity level of source process (as attributed by the OS)",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "osSrc.process.isNative64Bit",
+      "description": "Is source process (as attributed by the OS) compiled natively for 64-Bit or runs as WoW.",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "osSrc.process.isRedirectCmdProcessor",
+      "description": "Is interpreter for source process (as attributed by the OS) with stdout redirection",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "osSrc.process.isStorylineRoot",
+      "description": "Indicates if the source process (as attributed by the OS) is the root of Storyline",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "osSrc.process.moduleCount",
+      "description": "Count of Modules Loaded",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.name",
+      "description": "The file name of the source process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.netConnCount",
+      "description": "Network connection count",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.netConnInCount",
+      "description": "Incoming network connection count",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.netConnOutCount",
+      "description": "Outgoing network connection count",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.activeContent.hash",
+      "description": "Active Content SHA1 for the OS source process parent (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.activeContent.id",
+      "description": "Active Content file unique ID for the OS source process parent (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.activeContent.path",
+      "description": "Active Content file path for the OS source process parent (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.activeContent.signedStatus",
+      "description": "Active Content file signed status for the OS source process parent (as attributed by the OS)",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.activeContentType",
+      "description": "Active Content type of the OS source process parent (as attributed by the OS)",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.cmdline",
+      "description": "Command arguments sent with the process that created the OS source process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.displayName",
+      "description": "Display name of process that created the OS source process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.image.md5",
+      "description": "MD5 of process that created the OS source process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.image.origin.creationMethod",
+      "description": "Type of action that spawned the file",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.image.origin.creatorProcess.name",
+      "description": "The process name that spawned the file",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.image.origin.creatorProcess.uid",
+      "description": "The process UID that spawned the file",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.image.origin.locationPath",
+      "description": "Source path for copied files, or URL for downloaded files",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.image.origin.locationType",
+      "description": "If file was copied, describes the source file's location. If file was downloaded, describes which program created it",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.image.path",
+      "description": "Full path of executable backing this process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.image.sha1",
+      "description": "SHA1 of process that created the OS source process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.image.sha256",
+      "description": "SHA256 of process that created the OS source process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.image.signature.isValid",
+      "description": "Indicates the OS parent image signature is valid",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.image.type",
+      "description": "Type of OS process that created a process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.image.uid",
+      "description": "Image UID of the OS source process parent",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.integrityLevel",
+      "description": "Integrity level of process that created the OS source process (as attributed by the OS)",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.isNative64Bit",
+      "description": "Was the OS source process parent (as attributed by the OS) compiled natively for 64-Bit or runs as WoW",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.isRedirectCmdProcessor",
+      "description": "Does OS source process parent (as attributed by the OS) interpreter have stdout redirection",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.isStorylineRoot",
+      "description": "Is OS source process parent (as attributed by the OS) root of Storyline",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.name",
+      "description": "Name of the process that created the OS source process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.pid",
+      "description": "PID of process that created the OS source process (as attributed by the OS)",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.publisher",
+      "description": "Publisher that digitally signed the binary invoked as part of the process that created the OS source process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.reasonSignatureInvalid",
+      "description": "Reason process that created the OS source process signature is not valid (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.sessionId",
+      "description": "ID of terminal (cmd, shell, other) session of the process that created the OS source process (as attributed by the OS)",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.signedStatus",
+      "description": "Signature status of process that created the OS source process (as attributed by the OS)",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.startTime",
+      "description": "Start time of parent of the OS source process. Format: epoch time (milliseconds since 1.1.1970), Timezone: UTC",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.storyline.id",
+      "description": "Storyline ID of the process that created the OS source process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.uid",
+      "description": "Unique ID of process that created the OS source process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.user",
+      "description": "Username under which the process that created the OS source process ran (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.parent.userSid",
+      "description": "The Security Descriptor (SID) of the user the parent process is running under.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.pid",
+      "description": "PID for source process (as attributed by the OS)",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.publisher",
+      "description": "Publisher that signed binary invoked as part of the process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.reasonSignatureInvalid",
+      "description": "Reason process (as attributed by the OS) signature invalid",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.registryChangeCount",
+      "description": "Count of registry key changes",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.sessionId",
+      "description": "ID of the terminal (cmd, shell, other) session of source process (as attributed by the OS)",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.signedStatus",
+      "description": "Signature status of source process (as attributed by the OS)",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "osSrc.process.startTime",
+      "description": "Start time of source process (as attributed by the OS). Format: epoch time (milliseconds since 1.1.1970), Timezone: UTC",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.storyline.id",
+      "description": "Storyline ID of the source process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.subsystem",
+      "description": "Subsystem of source process (as attributed by the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.tgtFileCreationCount",
+      "description": "Count of file creation events",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.tgtFileDeletionCount",
+      "description": "Count of file deletion events",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.tgtFileModificationCount",
+      "description": "Count of file modification events",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "osSrc.process.uid",
+      "description": "Unique ID of source process (as attributed by the the OS)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.user",
+      "description": "Username under which source process (attributed by the OS) ran",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.userSid",
+      "description": "The Security Decriptor (SID) of the user the process is running under. For example, a service may run as \"NT AUTHORITY\\SYSTEM\" with the SID \"S-1-5-18\"",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "osSrc.process.verifiedStatus",
+      "description": "Verification status of process signature (as attributed by the OS)",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "site.id",
+      "description": "SentinelOne Site ID",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "site.name",
+      "description": "SentinelOne Site name",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.activeContent.hash",
+      "description": "Active Content SHA1 for source process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.activeContent.id",
+      "description": "Active Content file unique ID for source process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.activeContent.path",
+      "description": "Active Content file path for source process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.activeContent.signedStatus",
+      "description": "Active Content file signed status for source process",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "src.process.activeContentType",
+      "description": "Active Content type of source process",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "src.process.childProcCount",
+      "description": "Count of the child processes as attributed by the OS.",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.crossProcessCount",
+      "description": "Target Process event Count",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.crossProcessDupRemoteProcessHandleCount",
+      "description": "'Duplicate Process Handle' event count",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.crossProcessDupThreadHandleCount",
+      "description": "'Duplicate Thread Handle' Count",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.crossProcessOpenProcessCount",
+      "description": "'Open Process' Count",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.crossProcessOutOfStorylineCount",
+      "description": "'Out of Storyline' event count",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.crossProcessThreadCreateCount",
+      "description": "'Remote Thread' Count",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.displayName",
+      "description": "Display name of source process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.dnsCount",
+      "description": "Count of DNS requests",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.eUserName",
+      "description": "Effective Username under which the process ran",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.eUserUid",
+      "description": "EUID of the account that executed the source process",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.image.origin.creationMethod",
+      "description": "Type of action that spawned the file",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "src.process.image.origin.creatorProcess.name",
+      "description": "The process name that spawned the file",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.image.origin.creatorProcess.uid",
+      "description": "The process UID that spawned the file",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.image.origin.locationPath",
+      "description": "Source path for copied files, or URL for downloaded files",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.image.origin.locationType",
+      "description": "If file was copied, describes the source file's location. If file was downloaded, describes which program created it",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "src.process.image.size",
+      "description": "The size of the source process's image in bytes.",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.image.uid",
+      "description": "The process' image Uid. This is a unique identifier that is generated for each process.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.indicatorBootConfigurationUpdateCount",
+      "description": "Count of indicators - Boot Configuration Update",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.indicatorEvasionCount",
+      "description": "Count of indicators - Evasion",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.indicatorExploitationCount",
+      "description": "Count of indicators - Exploitation",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.indicatorGeneralCount",
+      "description": "Count of indicators - General",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.indicatorInfostealerCount",
+      "description": "Count of indicators - Infostealer",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.indicatorInjectionCount",
+      "description": "Count of indicators - Injection",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.indicatorPersistenceCount",
+      "description": "Count of indicators - Persistence",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.indicatorPostExploitationCount",
+      "description": "Count of indicators - Post Exploitation",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.indicatorRansomwareCount",
+      "description": "Count of indicators - Ransomware",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.indicatorReconnaissanceCount",
+      "description": "Count of indicators - Reconnaissance",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.lUserName",
+      "description": "Login Username under which the process ran",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.lUserUid",
+      "description": "LUID of the account that executed the source process",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.moduleCount",
+      "description": "Count of Modules Loaded",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.name",
+      "description": "The file name of the process originating the event",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.netConnCount",
+      "description": "Count of incoming and outgoing network connections",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.netConnInCount",
+      "description": "Count of incoming network connections",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.netConnOutCount",
+      "description": "Count of outgoing network connections",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.parent.activeContent.hash",
+      "description": "Active Content SHA1 for source process parent",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.parent.activeContent.id",
+      "description": "Active Content file unique ID for source process parent",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.parent.activeContent.path",
+      "description": "Active Content file path for source process parent",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.parent.activeContent.signedStatus",
+      "description": "Active Content file signed status for source process parent",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "src.process.parent.activeContentType",
+      "description": "Active Content type of source process parent",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "src.process.parent.cmdline",
+      "description": "Command arguments sent with the process that created this process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.parent.displayName",
+      "description": "Display name of process that created this process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.parent.eUserName",
+      "description": "Effective Username under which the parent process ran",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.parent.eUserUid",
+      "description": "EUID of the account that executed the source process parent",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.parent.image.extension",
+      "description": "The extension of the process parent's image name. For example, if the image name is \"chrome.exe\", this would be \"exe\".",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.parent.image.md5",
+      "description": "MD5 of process that created this process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.parent.image.origin.creationMethod",
+      "description": "Type of action that spawned the file",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "src.process.parent.image.origin.creatorProcess.name",
+      "description": "The process name that spawned the file",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.parent.image.origin.creatorProcess.uid",
+      "description": "The process UID that spawned the file",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.parent.image.origin.locationPath",
+      "description": "Source path for copied files, or URL for downloaded files",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.parent.image.origin.locationType",
+      "description": "If file was copied, describes the source file's location. If file was downloaded, describes which program created it",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "src.process.parent.image.path",
+      "description": "Image path of process that created this process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.parent.image.sha1",
+      "description": "SHA1 of process that created this process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.parent.image.sha256",
+      "description": "SHA256 of process that created this process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.parent.image.size",
+      "description": "The size of the source process's parent image in bytes.",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.parent.integrityLevel",
+      "description": "Integrity level of process that created this process",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "src.process.parent.isNative64Bit",
+      "description": "Was source process parent compiled natively for 64-Bit or runs as WoW",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "src.process.parent.isRedirectCmdProcessor",
+      "description": "Does source process parent interpreter have stdout redirection",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "src.process.parent.isStorylineRoot",
+      "description": "Indicates if source process parent is the root of Storyline",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "src.process.parent.lUserName",
+      "description": "Login Username under which the parent process ran",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.parent.lUserUid",
+      "description": "LUID of the account that executed the source process parent",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.parent.name",
+      "description": "Name of process that created this process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.parent.pid",
+      "description": "PID of process that created this process",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.parent.publisher",
+      "description": "Publisher that signed binary invoked as part of the process that created this process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.parent.rUserName",
+      "description": "Real Username under which the parent process ran",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.parent.rUserUid",
+      "description": "RUID of the account that executed the source process parent",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.parent.reasonSignatureInvalid",
+      "description": "Reason process signature is not valid",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.parent.sessionId",
+      "description": "ID of terminal (cmd, shell, other) session of source process",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.parent.signedStatus",
+      "description": "Signature status of process that created this process",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "src.process.parent.startTime",
+      "description": "Start time of parent of the source process. Format: epoch time (milliseconds since 1.1.1970), Timezone: UTC",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.parent.storyline.id",
+      "description": "Storyline ID of process that created this process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.parent.uid",
+      "description": "Unique ID of process that created this process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.parent.user",
+      "description": "Username under which the process that created this process ran",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.pid",
+      "description": "PID of source process",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.rUserName",
+      "description": "Real Username under which the process ran",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.rUserUid",
+      "description": "RUID of the account that executed the source process",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.registryChangeCount",
+      "description": "Count of registry key changes",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.startTime",
+      "description": "Start time of source process. Format: epoch time (milliseconds since 1.1.1970), Timezone: UTC",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.storyline.id",
+      "description": "Storyline ID source process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.tgtFileCreationCount",
+      "description": "Count of file creation events",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.tgtFileDeletionCount",
+      "description": "Count of file deletion events",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.tgtFileModificationCount",
+      "description": "Count of file modification events",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "src.process.user",
+      "description": "Username under which source process ran",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.userSid",
+      "description": "The Security Descriptor (SID) of the user the process is running under. For example, S-1-5-18 (That's NT AUTHORITY/SYSTEM)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.eUserName",
+      "description": "Effective Username under which the target process ran",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.eUserUid",
+      "description": "EUID of the account that executed the target process",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "tgt.process.image.extension",
+      "description": "The extension of the target process file name. For example, if the process is \"chrome.exe\", the extension will be \"exe\".",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.image.origin.creationMethod",
+      "description": "Type of action that spawned the file",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "tgt.process.image.origin.creatorProcess.name",
+      "description": "The process name that spawned the file",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.image.origin.creatorProcess.uid",
+      "description": "The process UID that spawned the file",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.image.origin.locationPath",
+      "description": "Source path for copied files, or URL for downloaded files",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.image.origin.locationType",
+      "description": "If file was copied, describes the source file's location. If file was downloaded, describes which program created it",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "tgt.process.image.size",
+      "description": "The size of the target process's file in bytes.",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "tgt.process.image.uid",
+      "description": "The target process' image Uid. This is a unique identifier that is generated for each process.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.lUserName",
+      "description": "Login Username under which the target process ran",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.lUserUid",
+      "description": "LUID of the account that executed the target process",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "tgt.process.parent.image.type",
+      "description": "The target process parents' file type, such as PE, LNK, PYTHON, JS, PDF, etc.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.rUserName",
+      "description": "Real Username under which the target process ran",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.rUserUid",
+      "description": "RUID of the account that executed the target process",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "tgt.process.userSid",
+      "description": "The Security Descriptor (SID) of the user that was used to execute the process.",
+      "data_type": "String"
+    }
+  ]
+}

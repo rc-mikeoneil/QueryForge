@@ -1,0 +1,67 @@
+{
+  "metadata": {
+    "source": "SentinelOne Operations Center",
+    "data_type": "Numeric",
+    "extraction_date": "2025-10-21",
+    "description": "Operators available for Numeric data type fields in S1QL queries",
+    "operator_count": 7
+  },
+  "operators": [
+    {
+      "operator": "!=",
+      "description": "Negative string comparison",
+      "data_type": "Numeric",
+      "syntax": "fieldname != value",
+      "case_sensitive": false,
+      "category": "equality"
+    },
+    {
+      "operator": ">=",
+      "description": "Greater than or equal to",
+      "data_type": "Numeric",
+      "syntax": "fieldname >= value",
+      "case_sensitive": false,
+      "category": "comparison"
+    },
+    {
+      "operator": "<=",
+      "description": "Less than or equal to",
+      "data_type": "Numeric",
+      "syntax": "fieldname <= value",
+      "case_sensitive": false,
+      "category": "comparison"
+    },
+    {
+      "operator": "=",
+      "description": "Equal to",
+      "data_type": "Numeric",
+      "syntax": "fieldname = value",
+      "case_sensitive": false,
+      "category": "equality"
+    },
+    {
+      "operator": ">",
+      "description": "Greater than",
+      "data_type": "Numeric",
+      "syntax": "fieldname > value",
+      "case_sensitive": false,
+      "category": "comparison"
+    },
+    {
+      "operator": "<",
+      "description": "Less than",
+      "data_type": "Numeric",
+      "syntax": "fieldname < value",
+      "case_sensitive": false,
+      "category": "comparison"
+    },
+    {
+      "operator": "between",
+      "description": "Range for dates and numbers",
+      "data_type": "Numeric",
+      "syntax": "fieldname between value1 and value2",
+      "case_sensitive": false,
+      "category": "range"
+    }
+  ]
+}

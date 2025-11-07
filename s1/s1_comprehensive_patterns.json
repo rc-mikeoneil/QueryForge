@@ -1,0 +1,112 @@
+{
+  "comprehensive_security_patterns": {
+    "description": "Multi-indicator detection patterns for SentinelOne Deep Visibility queries",
+    "patterns": {
+      "rdp_detection": {
+        "description": "Comprehensive Remote Desktop Protocol detection",
+        "indicators": ["ports", "processes", "network"],
+        "dataset": "processes",
+        "query": "TgtProcNetConnRemotePort In Contains Anycase (\"3389\", \"3388\") OR TgtProcNetConnLocalPort In Contains Anycase (\"3389\", \"3388\") OR SrcProcName In Contains Anycase (\"mstsc.exe\", \"rdpclip.exe\", \"rdpinit.exe\", \"termsrv.dll\") OR SrcProcCmdLine ContainsAnyCase (\"mstsc\", \"/v:\", \"/admin\") OR TgtProcNetConnRemoteDomain ContainsAnyCase (\"rdp\", \"remote\")",
+        "notes": "Detects RDP activity via ports, processes, and network indicators"
+      },
+      "smb_lateral_movement": {
+        "description": "SMB-based lateral movement",
+        "indicators": ["ports", "processes", "network"],
+        "dataset": "processes",
+        "query": "TgtProcNetConnRemotePort In Contains Anycase (\"445\", \"139\") OR TgtProcNetConnLocalPort In Contains Anycase (\"445\", \"139\") OR SrcProcName In Contains Anycase (\"net.exe\", \"net1.exe\", \"psexec.exe\", \"paexec.exe\") OR SrcProcCmdLine ContainsAnyCase (\"\\\\admin$\", \"\\\\c$\", \"net use\", \"net share\") OR TgtProcNetConnRemoteDomain Contains \"\\\\\\\\\"",
+        "notes": "Detects SMB lateral movement via administrative shares"
+      },
+      "powershell_execution": {
+        "description": "Suspicious PowerShell execution",
+        "indicators": ["processes", "command_line"],
+        "dataset": "processes",
+        "query": "SrcProcName In Contains Anycase (\"powershell.exe\", \"pwsh.exe\", \"powershell_ise.exe\") AND (SrcProcCmdLine ContainsAnyCase (\"-enc\", \"-encodedcommand\", \"-w hidden\", \"-windowstyle hidden\", \"-nop\", \"-noprofile\", \"-ep bypass\", \"-executionpolicy bypass\", \"invoke-expression\", \"iex\", \"downloadstring\", \"downloadfile\"))",
+        "notes": "Detects PowerShell with evasion techniques and download capabilities"
+      },
+      "wmi_execution": {
+        "description": "WMI execution for lateral movement",
+        "indicators": ["processes", "command_line", "parent_process"],
+        "dataset": "processes",
+        "query": "SrcProcName In Contains Anycase (\"wmic.exe\", \"wmiprvse.exe\", \"scrcons.exe\") OR (SrcProcCmdLine ContainsAnyCase (\"wmic\", \"/node:\", \"process call create\")) OR SrcProcParentName = \"wmiprvse.exe\"",
+        "notes": "Detects WMI usage for remote execution"
+      },
+      "credential_dumping": {
+        "description": "Credential dumping attempts",
+        "indicators": ["processes", "command_line", "targets"],
+        "dataset": "processes",
+        "query": "SrcProcName In Contains Anycase (\"mimikatz.exe\", \"procdump.exe\", \"sqldumper.exe\") OR SrcProcCmdLine ContainsAnyCase (\"sekurlsa\", \"lsass\", \"procdump\") OR (SrcProcCmdLine ContainsAnyCase (\"comsvcs.dll\", \"minidump\")) OR TgtProcName = \"lsass.exe\"",
+        "notes": "Detects credential dumping via various tools"
+      },
+      "webshell_activity": {
+        "description": "Web shell execution detection",
+        "indicators": ["processes", "parent_process"],
+        "dataset": "processes",
+        "query": "SrcProcParentName In Contains Anycase (\"w3wp.exe\", \"httpd.exe\", \"nginx.exe\", \"apache.exe\", \"tomcat.exe\") AND SrcProcName In Contains Anycase (\"cmd.exe\", \"powershell.exe\", \"wscript.exe\", \"cscript.exe\", \"net.exe\", \"whoami.exe\", \"ipconfig.exe\", \"ping.exe\")",
+        "notes": "Detects suspicious processes spawned by web servers"
+      },
+      "scheduled_task_persistence": {
+        "description": "Scheduled task creation",
+        "indicators": ["processes", "command_line"],
+        "dataset": "processes",
+        "query": "SrcProcName In Contains Anycase (\"schtasks.exe\", \"at.exe\") OR (SrcProcCmdLine ContainsAnyCase (\"schtasks\", \"/create\")) OR SrcProcCmdLine ContainsAnyCase (\"New-ScheduledTask\", \"Register-ScheduledTask\")",
+        "notes": "Detects scheduled task creation for persistence"
+      },
+      "service_creation": {
+        "description": "Windows service creation",
+        "indicators": ["processes", "command_line"],
+        "dataset": "processes",
+        "query": "SrcProcName = \"sc.exe\" AND (SrcProcCmdLine ContainsAnyCase (\"create\", \"config\")) OR SrcProcCmdLine ContainsAnyCase (\"New-Service\", \"Set-Service\")",
+        "notes": "Detects Windows service creation and modification"
+      },
+      "registry_persistence": {
+        "description": "Registry persistence mechanisms",
+        "indicators": ["registry_operations"],
+        "dataset": "processes",
+        "query": "TgtProcRegistryKeyPath ContainsAnyCase (\"\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run\", \"\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\RunOnce\", \"\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Winlogon\\\\Userinit\", \"\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Winlogon\\\\Shell\")",
+        "notes": "Detects registry Run key modifications"
+      },
+      "suspicious_downloads": {
+        "description": "Suspicious file downloads",
+        "indicators": ["processes", "command_line", "network"],
+        "dataset": "processes",
+        "query": "SrcProcName In Contains Anycase (\"powershell.exe\", \"cmd.exe\", \"wscript.exe\", \"cscript.exe\", \"mshta.exe\", \"rundll32.exe\", \"regsvr32.exe\", \"certutil.exe\", \"bitsadmin.exe\") AND (SrcProcCmdLine ContainsAnyCase (\"http://\", \"https://\", \"ftp://\", \"downloadfile\", \"downloadstring\", \"invoke-webrequest\", \"wget\", \"curl\", \"-decode\", \"bitstransfer\"))",
+        "notes": "Detects file downloads via scripting engines and LOLBins"
+      },
+      "lolbins_execution": {
+        "description": "Living Off the Land Binaries abuse",
+        "indicators": ["processes", "command_line"],
+        "dataset": "processes",
+        "query": "SrcProcName In Contains Anycase (\"mshta.exe\", \"regsvr32.exe\", \"rundll32.exe\", \"certutil.exe\", \"msiexec.exe\", \"installutil.exe\", \"regasm.exe\", \"regsvcs.exe\", \"msxsl.exe\", \"odbcconf.exe\", \"forfiles.exe\", \"pcalua.exe\") OR SrcProcCmdLine ContainsAnyCase (\"javascript:\", \"vbscript:\", \"/i:http\")",
+        "notes": "Detects abuse of legitimate Windows binaries"
+      },
+      "bypass_uac": {
+        "description": "UAC bypass techniques",
+        "indicators": ["processes", "command_line"],
+        "dataset": "processes",
+        "query": "SrcProcCmdLine ContainsAnyCase (\"eventvwr.exe\", \"fodhelper.exe\", \"computerdefaults.exe\") OR (SrcProcName = \"dism.exe\" AND SrcProcParentName NOT In Contains Anycase (\"svchost.exe\", \"services.exe\"))",
+        "notes": "Detects common UAC bypass techniques"
+      },
+      "process_injection": {
+        "description": "Process injection techniques",
+        "indicators": ["cross_process", "behaviors"],
+        "dataset": "processes",
+        "query": "TgtProcCrossInjection = \"true\" OR SrcProcCmdLine ContainsAnyCase (\"virtualalloc\", \"writeprocessmemory\", \"createremotethread\", \"ntcreatethreadex\")",
+        "notes": "Detects process injection via various techniques"
+      },
+      "dll_hijacking": {
+        "description": "DLL hijacking and side-loading",
+        "indicators": ["loaded_modules", "file_paths"],
+        "dataset": "processes",
+        "query": "TgtProcImagePath ContainsAnyCase (\"\\\\appdata\\\\\", \"\\\\temp\\\\\", \"\\\\public\\\\\", \"\\\\programdata\\\\\") AND TgtProcImagePath EndsWith \".dll\"",
+        "notes": "Detects DLL loading from suspicious directories"
+      },
+      "network_scanning": {
+        "description": "Network scanning activity",
+        "indicators": ["network_connections", "processes"],
+        "dataset": "processes",
+        "query": "SrcProcName In Contains Anycase (\"nmap.exe\", \"masscan.exe\", \"angry_ip_scanner.exe\", \"advanced_port_scanner.exe\")",
+        "notes": "Detects known port scanning tools"
+      }
+    }
+  }
+}

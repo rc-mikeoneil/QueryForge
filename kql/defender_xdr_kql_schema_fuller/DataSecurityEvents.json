@@ -1,0 +1,314 @@
+{
+  "table": "datasecurityevents",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-datasecurityevents-table",
+  "page_date": "2025-10-03",
+  "columns": [
+    {
+      "name": "ApplicationNames",
+      "type": "string",
+      "description": "List of application names used or related to the event"
+    },
+    {
+      "name": "DeviceId",
+      "type": "string",
+      "description": "Unique identifier for the device in Microsoft Defender for Endpoint"
+    },
+    {
+      "name": "DeviceName",
+      "type": "string",
+      "description": "Fully qualified domain name(FQDN) of the device"
+    },
+    {
+      "name": "AadDeviceId",
+      "type": "guid",
+      "description": "Unique identifier for the device in Microsoft Entra ID"
+    },
+    {
+      "name": "IsManagedDevice",
+      "type": "bool",
+      "description": "Indicates if the device is managed by the organization (True) or not (False)"
+    },
+    {
+      "name": "DlpPolicyMatchInfo",
+      "type": "string",
+      "description": "Information around the list of data loss prevention (DLP) policies matching this event"
+    },
+    {
+      "name": "DlpPolicyEnforcementMode",
+      "type": "int",
+      "description": "Indicates the Data Loss Prevention policy that was enforced; value can be: 0 (None), 1 (Audit), 2 (Warn), 3 (Warn and bypass), 4 (Block), 5 (Allow)"
+    },
+    {
+      "name": "DlpPolicyRuleMatchInfo",
+      "type": "dynamic",
+      "description": "Details of the data loss prevention (DLP)  rules that matched with this event; in JSON array format"
+    },
+    {
+      "name": "FileRenameInfo",
+      "type": "string",
+      "description": "Details of the file (file name and extension) before this event"
+    },
+    {
+      "name": "PhysicalAccessPointId",
+      "type": "string",
+      "description": "Unique identifier for the physical access point"
+    },
+    {
+      "name": "PhysicalAccessPointName",
+      "type": "string",
+      "description": "Name of the physical access point"
+    },
+    {
+      "name": "PhysicalAccessStatus",
+      "type": "string",
+      "description": "Status of physical access, whether it succeeded or failed"
+    },
+    {
+      "name": "PhysicalAssetTag",
+      "type": "string",
+      "description": "Tag assigned to the asset as configured in Microsoft Insider Risk Management global settings"
+    },
+    {
+      "name": "RemovableMediaManufacturer",
+      "type": "string",
+      "description": "Manufacturer name of the removable device"
+    },
+    {
+      "name": "RemovableMediaModel",
+      "type": "string",
+      "description": "Model name of the removable device"
+    },
+    {
+      "name": "RemovableMediaSerialNumber",
+      "type": "string",
+      "description": "Serial number of the removable device"
+    },
+    {
+      "name": "TeamsChannelName",
+      "type": "string",
+      "description": "Name of the Teams channel"
+    },
+    {
+      "name": "TeamsChannelType",
+      "type": "string",
+      "description": "Type of the Teams channel"
+    },
+    {
+      "name": "TeamsTeamName",
+      "type": "string",
+      "description": "Name of the Teams team"
+    },
+    {
+      "name": "UserAlternateEmails",
+      "type": "string",
+      "description": "Alternate emails or aliases of the user"
+    },
+    {
+      "name": "AccountUpn",
+      "type": "string",
+      "description": "User principal name (UPN) of the account"
+    },
+    {
+      "name": "AccountObjectId",
+      "type": "string",
+      "description": "Unique identifier for the account in Microsoft Entra ID"
+    },
+    {
+      "name": "Department",
+      "type": "string",
+      "description": "Name of the department that the account user belongs to"
+    },
+    {
+      "name": "SourceCodeInfo",
+      "type": "string",
+      "description": "Details of the source code repository involved in the event"
+    },
+    {
+      "name": "CcPolicyMatchInfo",
+      "type": "dynamic",
+      "description": "Details of the Communications Compliance policy matches for this event; in JSON array format"
+    },
+    {
+      "name": "IPAddress",
+      "type": "string",
+      "description": "IP addresses of the clients on which the activity was performed; can contain multiple IPs if related to Microsoft Defender for Cloud Apps alerts"
+    },
+    {
+      "name": "Timestamp",
+      "type": "datetime",
+      "description": "Date and time when the event was recorded"
+    },
+    {
+      "name": "DeviceSourceLocationType",
+      "type": "int",
+      "description": "Indicates the type of location where the endpoint signals originated from; values can be: 0 (Unknown), 1 (Local), 2 (Remote), 3 (Removable), 4 (Cloud), 5 (File share)"
+    },
+    {
+      "name": "DeviceDestinationLocationType",
+      "type": "int",
+      "description": "Indicates the type of location where the endpoint signals connected to; values can be: 0 (Unknown), 1 (Local), 2 (Remote), 3 (Removable), 4 (Cloud), 5 (File share)"
+    },
+    {
+      "name": "IrmPolicyMatchInfo",
+      "type": "dynamic",
+      "description": "Details of Insider Risk Management policy matches for the content involved in the event; in JSON array format"
+    },
+    {
+      "name": "UnallowedUrlDomains",
+      "type": "string",
+      "description": "Websites or service URLs involved in this event that is configured as Unallowed in Insider Risk Management global settings"
+    },
+    {
+      "name": "ExternalUrlDomains",
+      "type": "string",
+      "description": "Websites or service URLs involved in this event that is classified as External in Insider Risk Management global settings"
+    },
+    {
+      "name": "UrlDomainInfo",
+      "type": "string",
+      "description": "Details about the websites or service URLs involved in the event"
+    },
+    {
+      "name": "SourceUrlDomain",
+      "type": "string",
+      "description": "Domain where the device and email signals originated"
+    },
+    {
+      "name": "TargetUrlDomain",
+      "type": "string",
+      "description": "Domain where the content was shared with or the user has browsed to"
+    },
+    {
+      "name": "EmailAttachmentCount",
+      "type": "int",
+      "description": "Number of email attachments"
+    },
+    {
+      "name": "EmailAttachmentInfo",
+      "type": "dynamic",
+      "description": "Details of email attachments; in JSON array format"
+    },
+    {
+      "name": "InternetMessageId",
+      "type": "string",
+      "description": "Public-facing identifier for the email or Teams message that is set by the sending email system"
+    },
+    {
+      "name": "NetworkMessageId",
+      "type": "guid",
+      "description": "Unique identifier for the email, generated by Microsoft 365"
+    },
+    {
+      "name": "EmailSubject",
+      "type": "string",
+      "description": "Subject of the email"
+    },
+    {
+      "name": "ObjectId",
+      "type": "string",
+      "description": "Unique identifier of the object that the recorded action was applied to, in case of files, it includes the extension"
+    },
+    {
+      "name": "ObjectName",
+      "type": "string",
+      "description": "Name of the object that the recorded action was applied to, in case of files, it includes the extension"
+    },
+    {
+      "name": "ObjectType",
+      "type": "string",
+      "description": "Type of object, such as a file or a folder, that the recorded action was applied to"
+    },
+    {
+      "name": "ObjectSize",
+      "type": "int",
+      "description": "Size of the object in bytes"
+    },
+    {
+      "name": "IsHidden",
+      "type": "bool",
+      "description": "Indicates whether the user has marked the content as hidden (True) or not (False)"
+    },
+    {
+      "name": "ActivityId",
+      "type": "guid",
+      "description": "Unique identifier of the activity log"
+    },
+    {
+      "name": "ActionType",
+      "type": "string",
+      "description": "Type of activity that triggered the event"
+    },
+    {
+      "name": "SensitiveInfoTypeInfo",
+      "type": "dynamic",
+      "description": "Details of Data Loss Prevention sensitive info types detected in the impacted asset"
+    },
+    {
+      "name": "SensitivityLabelId",
+      "type": "string",
+      "description": "The current Microsoft Information Protection sensitivity label ID associated with the item"
+    },
+    {
+      "name": "SharepointSiteSensitivityLabelIds",
+      "type": "string",
+      "description": "The current Microsoft Information Protection sensitivity label ID assigned to the parent site of the item related to SharePoint activities"
+    },
+    {
+      "name": "PreviousSensitivityLabelId",
+      "type": "string",
+      "description": "The previous Microsoft Information Protection sensitivity label ID associated with the item in case of activities where the sensitivity label was changed"
+    },
+    {
+      "name": "Operation",
+      "type": "string",
+      "description": "Name of the admin activity"
+    },
+    {
+      "name": "RecipientEmailAddress",
+      "type": "string",
+      "description": "Email address of the recipient, or email address of the recipient after distribution list expansion"
+    },
+    {
+      "name": "SiteUrl",
+      "type": "string",
+      "description": "The URL of the site where the file or folder accessed by the user is located"
+    },
+    {
+      "name": "SourceRelativeUrl",
+      "type": "string",
+      "description": "The URL of the folder that contains the file accessed by the user"
+    },
+    {
+      "name": "TargetFilePath",
+      "type": "string",
+      "description": "Target file path of endpoint activities"
+    },
+    {
+      "name": "PrinterName",
+      "type": "string",
+      "description": "List of printers involved in the behavior"
+    },
+    {
+      "name": "Workload",
+      "type": "string",
+      "description": "The Microsoft 365 service where the event occurred"
+    },
+    {
+      "name": "IrmActionCategory",
+      "type": "enum",
+      "description": "A unique enumeration value indicating the activity category in Microsoft Purview Insider Risk Management"
+    },
+    {
+      "name": "SequenceCorrelationId",
+      "type": "string",
+      "description": "Details of the sequence activity"
+    },
+    {
+      "name": "CloudAppAlertId",
+      "type": "string",
+      "description": "Unique identifier for the alert in Microsoft Defender for Cloud Apps"
+    }
+  ],
+  "col_count": 61,
+  "generated_at": "2025-10-03T02:10:08.115553Z"
+}

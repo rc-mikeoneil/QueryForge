@@ -1,0 +1,10 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_file_fields": {
+      "file_scan_result": {
+        "type": "keyword",
+        "description": "Searchable. Classification of malware detected during a background scan performed by the Endpoint Standard sensor i.e. enriched_event_type=STATIC_SCAN; returned value is the /-separated combination of malware family and malware name (e.g. TROJAN/TR/PowerShell.Gen, where malware family = TROJAN)  Requires Endpoint Standard"
+      }
+    }
+  }
+}

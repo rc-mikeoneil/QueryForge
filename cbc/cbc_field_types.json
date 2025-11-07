@@ -1,0 +1,175 @@
+{
+  "carbonblack_edr_query_schema": {
+    "field_types": {
+      "text": {
+        "description": "Tokenized on whitespace and punctuation, case-insensitive",
+        "search_behavior": "Each word searched individually, supports phrase queries",
+        "example": "product_name:\"visual studio\""
+      },
+      "keyword": {
+        "description": "No tokenization, exact match required",
+        "search_behavior": "Must exactly match the field value",
+        "wildcards_supported": true,
+        "example": "process_name:svchost.exe"
+      },
+      "md5": {
+        "description": "MD5 hash value, keyword field",
+        "format": "32-character hexadecimal string",
+        "example": "process_md5:6d7c8a951af6ad6835c029b3cb88d333"
+      },
+      "sha256": {
+        "description": "SHA-256 hash value, keyword field",
+        "format": "64-character hexadecimal string",
+        "example": "process_sha256:BCB8F25FE404CDBFCB0927048F668D7958E590357930CF620F74B59839AF2A9C"
+      },
+      "path": {
+        "description": "Tokenized by path hierarchy",
+        "tokenization": "All subpaths are searchable",
+        "wildcards_supported": true,
+        "example": "path:c:\\windows\\system32\\boot\\winload.exe",
+        "special_cases": {
+          "modload": "Leading slashes tokenized, recommend omitting",
+          "regmod": "Replace controlset001/002 with currentcontrolset, omit leading backslash"
+        }
+      },
+      "domain": {
+        "description": "Split into labels for position-dependent searches",
+        "syntax": {
+          "trailing_dot": "Matches labels at end of domain (.com matches *.com)",
+          "leading_dot": "Matches labels at beginning (example. matches example.*)",
+          "both_dots": "Matches labels in middle (.com. matches *.com.*)",
+          "no_dots": "Matches anywhere in domain"
+        },
+        "example": "domain:example.com"
+      },
+      "ipaddr": {
+        "description": "IPv4 address with CIDR notation support",
+        "format": "(ip)/(netmask)",
+        "default_netmask": 32,
+        "examples": [
+          "ipaddr:192.168.0.0/16",
+          "ipaddr:10.0.1.1"
+        ]
+      },
+      "ipv6addr": {
+        "description": "IPv6 address with CIDR notation support",
+        "format": "(ip)/(netmask)",
+        "default_netmask": 32,
+        "examples": [
+          "ipv6addr:fe00:b9:266:2011:28dc:43d4:3298:12e2",
+          "ipv6addr:fe00:b9:266:2011::0/50"
+        ]
+      },
+      "count": {
+        "description": "Integer value from 0 to MAXINT",
+        "syntax": {
+          "exact": "X (matches exactly X)",
+          "range": "[X TO Y] (matches >= X and <= Y)",
+          "wildcard": "* can replace X or Y"
+        },
+        "examples": [
+          "modload_count:34",
+          "modload_count:[1 TO 10]",
+          "netconn_count:[10 TO *]"
+        ]
+      },
+      "datetime": {
+        "description": "Date and time field with multiple search formats",
+        "formats": [
+          {
+            "format": "YYYY-MM-DD",
+            "description": "Matches all entries on this day",
+            "example": "start:2016-12-01"
+          },
+          {
+            "format": "YYYY-MM-DDThh:mm:ss",
+            "description": "Matches within 24 hours from this timestamp",
+            "example": "start:2016-12-01T22:15:00"
+          },
+          {
+            "format": "[YYYY-MM-DD TO YYYY-MM-DD]",
+            "description": "Matches all entries in date range",
+            "example": "start:[2016-12-01 TO 2016-12-31]"
+          },
+          {
+            "format": "[YYYY-MM-DDThh:mm:ss TO YYYY-MM-DDThh:mm:ss]",
+            "description": "Matches all entries in datetime range",
+            "example": "start:[2016-12-01T22:15:00 TO 2016-12-01T23:14:59]"
+          },
+          {
+            "format": "-Xh",
+            "description": "Relative time calculation (h=hours, m=minutes, s=seconds)",
+            "example": "start:-24h"
+          }
+        ]
+      },
+      "bool": {
+        "description": "Boolean field with true/false values",
+        "values": [
+          "true",
+          "false"
+        ],
+        "case_insensitive": true,
+        "example": "is_64bit:true"
+      },
+      "sign": {
+        "description": "Digital signature status",
+        "values": [
+          "Signed",
+          "Unsigned",
+          "Bad Signature",
+          "Invalid Signature",
+          "Expired",
+          "Invalid Chain",
+          "Untrusted Root",
+          "Explicit Distrust"
+        ],
+        "quote_required": "For values with whitespace",
+        "examples": [
+          "digsig_result:Signed",
+          "digsig_result:\"Invalid Chain\""
+        ]
+      },
+      "cmdline": {
+        "description": "Command line tokenization with special parsing rules",
+        "tokenization": {
+          "removed_chars": [
+            "\\",
+            "\"",
+            "'",
+            "(",
+            ")",
+            "[",
+            "]",
+            "{",
+            "}",
+            ",",
+            "=",
+            "<",
+            ">",
+            "&",
+            "|",
+            ";"
+          ],
+          "preserved_chars": [
+            "%",
+            "$",
+            "-",
+            ".",
+            "_",
+            "^",
+            "@",
+            "#",
+            "!",
+            "?"
+          ],
+          "forward_slash": "Parsed as path or command switch depending on position",
+          "colon": "Parsed as drive letter or whitespace depending on position",
+          "file_extensions": "Stored as separate tokens (.exe, .dll)"
+        },
+        "wildcards_supported": true,
+        "example": "process_cmdline:backup"
+      }
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "table": "behaviorinfo",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-behaviorinfo-table",
+  "page_date": "2025-10-03",
+  "columns": [
+    {
+      "name": "Timestamp",
+      "type": "datetime",
+      "description": "Date and time when the record was generated"
+    },
+    {
+      "name": "BehaviorId",
+      "type": "string",
+      "description": "Unique identifier for the behavior"
+    },
+    {
+      "name": "ActionType",
+      "type": "string",
+      "description": "Type of behavior"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "description": "Description of the behavior"
+    },
+    {
+      "name": "Categories",
+      "type": "string",
+      "description": "Type of threat indicator or  breach activity identified by the behavior"
+    },
+    {
+      "name": "AttackTechniques",
+      "type": "string",
+      "description": "MITRE ATT&CK techniques associated with the activity that triggered the behavior"
+    },
+    {
+      "name": "ServiceSource",
+      "type": "string",
+      "description": "Product or service that identified the behavior"
+    },
+    {
+      "name": "DetectionSource",
+      "type": "string",
+      "description": "Detection technology or sensor that identified the notable component or activity"
+    },
+    {
+      "name": "DataSources",
+      "type": "string",
+      "description": "Products or services that provided information for the behavior"
+    },
+    {
+      "name": "DeviceId",
+      "type": "string",
+      "description": "Unique identifier for the device in the service"
+    },
+    {
+      "name": "AccountUpn",
+      "type": "string",
+      "description": "User principal name (UPN) of the account"
+    },
+    {
+      "name": "AccountObjectId",
+      "type": "string",
+      "description": "Unique identifier for the account in Microsoft Entra ID"
+    },
+    {
+      "name": "StartTime",
+      "type": "datetime",
+      "description": "Date and time of the first activity related to the behavior"
+    },
+    {
+      "name": "EndTime",
+      "type": "datetime",
+      "description": "Date and time of the last activity related to the behavior"
+    },
+    {
+      "name": "AdditionalFields",
+      "type": "string",
+      "description": "Additional information about the behavior"
+    }
+  ],
+  "col_count": 15,
+  "generated_at": "2025-10-03T02:10:02.463471Z"
+}

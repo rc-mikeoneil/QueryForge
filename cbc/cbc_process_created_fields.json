@@ -1,0 +1,10 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_created_fields": {
+      "created_timestamp": {
+        "type": "datetime",
+        "description": "Searchable. Timestamp of when the event document was created."
+      }
+    }
+  }
+}

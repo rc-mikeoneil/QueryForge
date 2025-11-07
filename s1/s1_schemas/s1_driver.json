@@ -1,0 +1,76 @@
+{
+  "metadata": {
+    "source": "SentinelOne Operations Center",
+    "schema_name": "Driver",
+    "extraction_date": "2025-10-21",
+    "description": "Driver event fields for S1QL 2.0 queries",
+    "field_count": 13
+  },
+  "fields": [
+    {
+      "s1ql_field": "driver.certificate.signature.algorithm",
+      "description": "Driver Certificate Signature Algorithm is the digest algorithm (hash function) used to calculate the driver certificate signature. SHA1 or SHA256 are most commonly used.",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "driver.certificate.signature.hash",
+      "description": "Driver Certificate Signature is a SHA1 or SHA256 hash used to identify the driver certificate",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "driver.certificate.thumbprint",
+      "description": "Driver Certificate Thumbprint is a SHA1 or SHA256 hash used to identify the driver certificate",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "driver.certificate.thumbprintAlgorithm",
+      "description": "Driver Certificate Thumbprint Algorithm is the digest algorithm (hash function) used to calculate the driver certificate thumbprint. SHA1 or SHA256 are most commonly used.",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "driver.dropper.process.storyline.id",
+      "description": "The Storyline ID associated with the process that wrote the driver file to the disk. Used to track the storyline of the driver dropper to look for the full list of IOCs associated with the driver.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "driver.fileVersion",
+      "description": "The driver image file version.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "driver.isLoadedBeforeMonitor",
+      "description": "Is Loaded Before Monitor",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "driver.loadVerdict",
+      "description": "Driver Load Verdict",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "driver.peSha1",
+      "description": "SHA1 Hash of the Driver PE File",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "driver.peSha256",
+      "description": "SHA256 Hash of the Driver PE File",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "driver.registryKeyPath",
+      "description": "The registry key path where the driver registered itself.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "driver.serviceName",
+      "description": "The service name of the driver",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "driver.startType",
+      "description": "Driver Load Start Type determines when a driver will be loaded, either during or after the system starts.",
+      "data_type": "Numeric"
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "table": "cloudprocessevents",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-cloudprocessevents-table",
+  "page_date": "2025-10-03",
+  "columns": [
+    {
+      "name": "Timestamp",
+      "type": "datetime",
+      "description": "Date and time when the event was recorded"
+    },
+    {
+      "name": "AzureResourceId",
+      "type": "string",
+      "description": "Unique identifier of the Azure resource associated with the process"
+    },
+    {
+      "name": "AwsResourceName",
+      "type": "string",
+      "description": "Unique identifier specific to Amazon Web Services devices, containing the Amazon resource name"
+    },
+    {
+      "name": "GcpFullResourceName",
+      "type": "string",
+      "description": "Unique identifier specific to Google Cloud Platform devices, containing a combination of zone and ID for GCP"
+    },
+    {
+      "name": "ContainerImageName",
+      "type": "string",
+      "description": "The container image name or ID, if it exists"
+    },
+    {
+      "name": "KubernetesNamespace",
+      "type": "string",
+      "description": "The Kubernetes namespace name"
+    },
+    {
+      "name": "KubernetesPodName",
+      "type": "string",
+      "description": "The Kubernetes pod name"
+    },
+    {
+      "name": "KubernetesResource",
+      "type": "string",
+      "description": "Identifier value that includes namespace, resource type and name"
+    },
+    {
+      "name": "ContainerName",
+      "type": "string",
+      "description": "Name of the container in Kubernetes or another runtime environment"
+    },
+    {
+      "name": "ContainerId",
+      "type": "string",
+      "description": "The container identifier in Kubernetes or another runtime environment"
+    },
+    {
+      "name": "ActionType",
+      "type": "string",
+      "description": "Type of activity that triggered the event. See the in-portal schema reference for details."
+    },
+    {
+      "name": "FileName",
+      "type": "string",
+      "description": "Name of the file that the recorded action was applied to"
+    },
+    {
+      "name": "FolderPath",
+      "type": "string",
+      "description": "Folder containing the file that the recorded action was applied to"
+    },
+    {
+      "name": "ProcessId",
+      "type": "long",
+      "description": "Process ID (PID) of the newly created process"
+    },
+    {
+      "name": "ProcessName",
+      "type": "string",
+      "description": "The name of the process"
+    },
+    {
+      "name": "ParentProcessName",
+      "type": "string",
+      "description": "The name of the parent process"
+    },
+    {
+      "name": "ParentProcessId",
+      "type": "string",
+      "description": "The process ID (PID) of the parent process"
+    },
+    {
+      "name": "ProcessCommandLine",
+      "type": "string",
+      "description": "Command line used to create the new process"
+    },
+    {
+      "name": "ProcessCreationTime",
+      "type": "datetime",
+      "description": "Date and time the process was created"
+    },
+    {
+      "name": "ProcessCurrentWorkingDirectory",
+      "type": "string",
+      "description": "Current working directory of the running process"
+    },
+    {
+      "name": "AccountName",
+      "type": "string",
+      "description": "User name of the account"
+    },
+    {
+      "name": "LogonId",
+      "type": "long",
+      "description": "Identifier for a logon session. This identifier is unique on the same pod or container between restarts."
+    },
+    {
+      "name": "InitiatingProcessId",
+      "type": "string",
+      "description": "Process ID (PID) of the process that initiated the event"
+    },
+    {
+      "name": "AdditionalFields",
+      "type": "string",
+      "description": "Additional information about the event in JSON array format"
+    }
+  ],
+  "col_count": 24,
+  "generated_at": "2025-10-03T02:10:04.737807Z"
+}

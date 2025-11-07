@@ -1,0 +1,10 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_tms_fields": {
+      "tms_rule_id": {
+        "type": "keyword",
+        "description": "ID of the rule that triggered an Intrusion Detection System or Network Traffic Analysis alert  Requires XDR"
+      }
+    }
+  }
+}

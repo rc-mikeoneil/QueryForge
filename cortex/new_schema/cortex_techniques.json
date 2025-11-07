@@ -1,0 +1,92 @@
+{
+  "cortex_xdr_query_schema": {
+    "special_techniques": {
+      "json_extraction": {
+        "description": "Extract values from JSON/RECORD fields",
+        "methods": [
+          {
+            "name": "Arrow notation",
+            "syntax": "<field>-><subfield>",
+            "examples": [
+              "action_evtlog_data_fields->TargetUserName",
+              "auth_normalized_user->username"
+            ]
+          },
+          {
+            "name": "json_extract function",
+            "syntax": "json_extract(<field>, '$.path')",
+            "examples": [
+              "json_extract(action_evtlog_data_fields, '$.TargetUserName')",
+              "json_extract_scalar(http_data, '$.uri')"
+            ]
+          }
+        ]
+      },
+      "array_operations": {
+        "description": "Work with REPEATED fields (arrays)",
+        "operations": [
+          {
+            "name": "arrayexpand",
+            "description": "Expand array into separate rows",
+            "example": "| arrayexpand dns_resolutions"
+          },
+          {
+            "name": "arrayfilter",
+            "description": "Filter array elements",
+            "example": "| alter admins = arrayfilter(member_of, '@element' contains 'Admin')"
+          },
+          {
+            "name": "in operator",
+            "description": "Check if value exists in array",
+            "example": "| filter 'malware' in dfe_labels"
+          }
+        ]
+      },
+      "string_operations": {
+        "description": "String manipulation functions",
+        "functions": [
+          {
+            "name": "concat",
+            "description": "Concatenate strings",
+            "example": "| alter full_path = concat(action_file_path, '\\\\', action_file_name)"
+          },
+          {
+            "name": "regextract",
+            "description": "Extract using regex",
+            "example": "| alter domain = arrayindex(regextract(action_external_hostname, '([^.]+\\\\.[^.]+)), 0)"
+          },
+          {
+            "name": "replace",
+            "description": "Replace substrings",
+            "example": "| alter clean_name = replace(process_name, '\"', '')"
+          }
+        ]
+      },
+      "time_functions": {
+        "description": "Time manipulation functions",
+        "functions": [
+          {
+            "name": "current_time",
+            "description": "Get current timestamp",
+            "example": "_time > current_time() - interval '1 hour'"
+          },
+          {
+            "name": "timestamp",
+            "description": "Convert string to timestamp",
+            "example": "_time > timestamp('2024-01-01 00:00:00')"
+          },
+          {
+            "name": "timestamp_diff",
+            "description": "Calculate time difference",
+            "example": "| alter time_diff = timestamp_diff(_time, current_time(), 'MINUTE')"
+          },
+          {
+            "name": "extract_time",
+            "description": "Extract time components",
+            "example": "| alter hour = extract_time(_time, 'HOUR')"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "metadata": {
+    "source": "SentinelOne Operations Center",
+    "schema_name": "Indicators",
+    "extraction_date": "2025-10-21",
+    "description": "Indicators event fields for S1QL 2.0 queries",
+    "field_count": 4
+  },
+  "fields": [
+    {
+      "s1ql_field": "indicator.category",
+      "description": "Category name of the behavioral indicator. A full listing of indicator categories can be found here: https://community.sentinelone.com/s/article/000006183",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "indicator.description",
+      "description": "Description of the behavioral indicator. A full list of behavioral indicator descriptions can be found here: https://community.sentinelone.com/s/article/000006183",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "indicator.metadata",
+      "description": "Contains metadata information relevant to the behavioral indicator. For example, for the ServiceCreated indicator, this field contains the name of the service For Process related indicators, this field contains additional information about the process such as process name and process ID For the WmiQueryAntiVm indicator, this field contains the query",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "indicator.name",
+      "description": "Friendly name of the behavioral indicator. Behavioral indicator descriptions can be found here: https://community.sentinelone.com/s/article/000006183",
+      "data_type": "String"
+    }
+  ]
+}

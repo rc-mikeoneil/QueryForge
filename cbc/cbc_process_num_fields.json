@@ -1,0 +1,14 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_num_fields": {
+      "num_devices": {
+        "type": "integer",
+        "description": "Count of devices where application is reported for the requested search population  Requires Endpoint Standard"
+      },
+      "num_events": {
+        "type": "integer",
+        "description": "Count of events attributed to the device or application running on the requested search population  Requires Endpoint Standard"
+      }
+    }
+  }
+}

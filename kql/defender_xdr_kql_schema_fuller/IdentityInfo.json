@@ -1,0 +1,239 @@
+{
+  "table": "IdentityInfo",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-identityinfo-table",
+  "page_date": "2025-06-20",
+  "columns": [
+    {
+      "name": "Timestamp",
+      "type": "datetime",
+      "description": "The date and time that the line was written to the database."
+    },
+    {
+      "name": "ReportId",
+      "type": "string",
+      "description": "Unique identifier for the event"
+    },
+    {
+      "name": "AccountObjectId",
+      "type": "string",
+      "description": "Unique identifier for the account in Microsoft Entra ID"
+    },
+    {
+      "name": "AccountUpn",
+      "type": "string",
+      "description": "User principal name (UPN) of the account"
+    },
+    {
+      "name": "OnPremSid",
+      "type": "string",
+      "description": "On-premises security identifier (SID) of the account"
+    },
+    {
+      "name": "AccountDisplayName",
+      "type": "string",
+      "description": "Display name of the account user"
+    },
+    {
+      "name": "AccountName",
+      "type": "string",
+      "description": "User name of the account"
+    },
+    {
+      "name": "AccountDomain",
+      "type": "string",
+      "description": "Domain of the account"
+    },
+    {
+      "name": "CriticalityLevel",
+      "type": "int",
+      "description": "The criticality score of the account"
+    },
+    {
+      "name": "Type",
+      "type": "string",
+      "description": "Type of identity; possible values: User, ServiceAccount"
+    },
+    {
+      "name": "DistinguishedName",
+      "type": "string",
+      "description": "The user's distinguished name"
+    },
+    {
+      "name": "CloudSid",
+      "type": "string",
+      "description": "Cloud security identifier of the account"
+    },
+    {
+      "name": "GivenName",
+      "type": "string",
+      "description": "Given name or first name of the account user"
+    },
+    {
+      "name": "Surname",
+      "type": "string",
+      "description": "Surname/family name of the account user"
+    },
+    {
+      "name": "Department",
+      "type": "string",
+      "description": "Department that the account user belongs to"
+    },
+    {
+      "name": "JobTitle",
+      "type": "string",
+      "description": "Job title of the account user"
+    },
+    {
+      "name": "EmailAddress",
+      "type": "string",
+      "description": "SMTP address of the account"
+    },
+    {
+      "name": "SipProxyAddress",
+      "type": "string",
+      "description": "SIP address of the account"
+    },
+    {
+      "name": "Address",
+      "type": "string",
+      "description": "Address of the account user"
+    },
+    {
+      "name": "City",
+      "type": "string",
+      "description": "City where the account user is located"
+    },
+    {
+      "name": "Country",
+      "type": "string",
+      "description": "Country/Region where the account user is located"
+    },
+    {
+      "name": "IsAccountEnabled",
+      "type": "boolean",
+      "description": "Indicates whether the account is enabled"
+    },
+    {
+      "name": "Manager",
+      "type": "string",
+      "description": "The listed manager of the account user"
+    },
+    {
+      "name": "Phone",
+      "type": "string",
+      "description": "The listed phone number of the account user"
+    },
+    {
+      "name": "CreatedDateTime",
+      "type": "datetime",
+      "description": "Date and time when the account user was created"
+    },
+    {
+      "name": "ChangeSource",
+      "type": "string",
+      "description": "Identifies which provider or process triggered the addition of the new row"
+    },
+    {
+      "name": "BlastRadius",
+      "type": "string",
+      "description": "Based on org position and Entra roles/permissions (Low, Medium, High)"
+    },
+    {
+      "name": "CompanyName",
+      "type": "string",
+      "description": "Name of the company for which the user works"
+    },
+    {
+      "name": "DeletedDateTime",
+      "type": "datetime",
+      "description": "Date and time when the user account was deleted"
+    },
+    {
+      "name": "EmployeeId",
+      "type": "string",
+      "description": "Employee identifier assigned by the organization"
+    },
+    {
+      "name": "OtherMailAddresses",
+      "type": "dynamic",
+      "description": "Additional email addresses of the user account"
+    },
+    {
+      "name": "RiskLevel",
+      "type": "string",
+      "description": "Entra ID risk level of the user account"
+    },
+    {
+      "name": "RiskLevelDetails",
+      "type": "string",
+      "description": "Details regarding the Entra ID risk level"
+    },
+    {
+      "name": "State",
+      "type": "string",
+      "description": "State where the sign-in occurred, if available"
+    },
+    {
+      "name": "Tags",
+      "type": "dynamic",
+      "description": "Tags assigned to the account user by Defender for Identity"
+    },
+    {
+      "name": "AssignedRoles",
+      "type": "dynamic",
+      "description": "(Entra-only) roles assigned to the account user"
+    },
+    {
+      "name": "PrivilegedEntraPimRoles",
+      "type": "dynamic",
+      "description": "Snapshot of privileged role schedules in Entra PIM"
+    },
+    {
+      "name": "TenantId",
+      "type": "string",
+      "description": "Unique identifier for your organization's Entra tenant"
+    },
+    {
+      "name": "SourceSystem",
+      "type": "string",
+      "description": "The source system for the record"
+    },
+    {
+      "name": "OnPremObjectId",
+      "type": "string",
+      "description": "Active Directory object ID of the user"
+    },
+    {
+      "name": "TenantMembershipType",
+      "type": "string",
+      "description": "User type in Entra; Guest, Member"
+    },
+    {
+      "name": "RiskStatus",
+      "type": "string",
+      "description": "Status of the user's risk"
+    },
+    {
+      "name": "UserAccountControl",
+      "type": "string",
+      "description": "Security attributes of the user account in the AD domain"
+    },
+    {
+      "name": "IdentityEnvironment",
+      "type": "string",
+      "description": "Environment where the identity is used; CloudOnly, Hybrid, On-premises"
+    },
+    {
+      "name": "SourceProviders",
+      "type": "dynamic",
+      "description": "Source providers of the accounts for the identity; ActiveDirectory, EntraID, Okta"
+    },
+    {
+      "name": "GroupMembership",
+      "type": "dynamic",
+      "description": "Entra groups where the user account is a member"
+    }
+  ],
+  "col_count": 46,
+  "generated_at": "2025-09-19T07:36:37.418778Z"
+}

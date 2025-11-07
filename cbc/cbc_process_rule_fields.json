@@ -1,0 +1,18 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_rule_fields": {
+      "rule_config_id": {
+        "type": "keyword",
+        "description": "Searchable. The GUID of the policy rule config associated with the Observation or Alert"
+      },
+      "rule_config_name": {
+        "type": "keyword",
+        "description": "Searchable. The name of the policy rule config associated with the Observation or Alert, such as Defense Evasion or Advanced Scripting Prevention"
+      },
+      "rule_id": {
+        "type": "keyword",
+        "description": "Searchable. ID of the rule that triggered an alert or observation; applies to INDICATOR_OF_ATTACK, INTRUSION_DETECTION_SYSTEM, HOST_BASED_FIREWALL, TAU_INTELLIGENCE, USB_DEVICE_CONTROL alerts and observations"
+      }
+    }
+  }
+}

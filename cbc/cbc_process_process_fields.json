@@ -1,0 +1,170 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_process_fields": {
+      "process_cmdline": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Command line executed by the actor process",
+        "array": true
+      },
+      "process_cmdline_length": {
+        "type": "integer",
+        "description": "Searchable. Character count of the actor process command line",
+        "array": true
+      },
+      "process_cmdline_raw": {
+        "type": "keyword",
+        "description": "Searchable. Command lines related to process  Note: This field's value is untokenized.",
+        "array": true
+      },
+      "process_company_name": {
+        "type": "keyword",
+        "description": "Searchable. Company name embedded in the portable executable header of the Windows process binary.  Requires Windows sensor"
+      },
+      "process_container_pid": {
+        "type": "keyword",
+        "description": "Searchable. Containerized process identifier assigned by the operating system; can be multi-valued in case of fork() or exec() process operations on Linux"
+      },
+      "process_copyright": {
+        "type": "keyword",
+        "description": "Copyright notice embedded in the portable executable header of the Windows process binary.  Requires Windows sensor"
+      },
+      "process_duration": {
+        "type": "integer",
+        "description": "Searchable. Duration of the process (in milliseconds); available after sensor reports the process has terminated; equal to (process_end_time - process_start_time)"
+      },
+      "process_effective_reputation": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Effective reputation of the actor process; applied by the sensor when the event occurred"
+      },
+      "process_effective_reputation_source": {
+        "type": "keyword",
+        "description": "Searchable Source of the effective reputation for the actor process"
+      },
+      "process_elevated": {
+        "type": "bool",
+        "description": "Searchable. True if the process was running with elevated privileges; not present if False  Requires Windows sensor"
+      },
+      "process_end_time": {
+        "type": "datetime",
+        "description": "Sensor timestamp when the process terminated; available after sensor reports the process has terminated (only for processes whose start times the sensor captured)"
+      },
+      "process_file_description": {
+        "type": "keyword",
+        "description": "Searchable. File description embedded in the portable executable header of the Windows process binary  Requires Windows sensor"
+      },
+      "process_file_size": {
+        "type": "integer",
+        "description": "Size of the binary executed by the process, in bytes."
+      },
+      "process_guid": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Unique process identifier for the actor process"
+      },
+      "process_hash": {
+        "type": "keyword",
+        "description": "Searchable. MD5 and/or SHA-256 hash of the actor process binary; order may vary when two hashes are reported",
+        "array": true
+      },
+      "process_integrity_level": {
+        "type": "keyword",
+        "description": "Searchable. Windows Mandatory Integrity Control (MIC) level of the process  Requires Windows sensor"
+      },
+      "process_internal_name": {
+        "type": "keyword",
+        "description": "Searchable. Internal name embedded in the portable executable header of the Windows process binary.  Requires Windows sensor"
+      },
+      "process_issuer": {
+        "type": "keyword",
+        "description": "Searchable. The process certificate issuer names",
+        "array": true
+      },
+      "process_loaded_script_hash": {
+        "type": "keyword",
+        "description": "Deprecated. Use scriptload_hash",
+        "array": true
+      },
+      "process_loaded_script_name": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Deprecated. Use scriptload_name"
+      },
+      "process_name": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Filesystem path of the actor process binary"
+      },
+      "process_original_filename": {
+        "type": "keyword",
+        "description": "Searchable. Original filename embedded in the portable executable header of the Windows process binary.  Requires Windows sensor"
+      },
+      "process_pid": {
+        "type": "integer",
+        "description": "Searchable. Process identifier assigned by the operating system; can be multi-valued in case of fork() or exec() process operations on Linux and macOS",
+        "array": true
+      },
+      "process_private_build": {
+        "type": "keyword",
+        "description": "Text that describes a private version of a process binary; typically specified if the file was not built using standard release procedures. Embedded in the portable executable header of the Windows process binary.  Requires Windows sensor"
+      },
+      "process_privileges": {
+        "type": "keyword",
+        "description": "Searchable. Windows privileges associated wth the process (see Microsoft documentation for complete list privilege-constants)  Requires Windows sensor",
+        "array": true
+      },
+      "process_product_name": {
+        "type": "keyword",
+        "description": "Searchable. Product name embedded in the portable executable header of the Windows process binary.  Requires Windows sensor"
+      },
+      "process_product_version": {
+        "type": "keyword",
+        "description": "Searchable. Product version embedded in the portable executable header of the Windows process binary.  Requires Windows sensor"
+      },
+      "process_publisher": {
+        "type": "keyword",
+        "description": "Searchable. Publisher name on the certificate used to sign the Windows or macOS process binary",
+        "array": true
+      },
+      "process_publisher_state": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. State of the digital signature(s) of a Windows or macOS process binary",
+        "array": true
+      },
+      "process_reputation": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Reputation of the actor process; applied when event is processed by the Carbon Black Cloud i.e. after sensor delivers event to the cloud"
+      },
+      "process_service_name": {
+        "type": "keyword",
+        "description": "Searchable. Windows service name(s) assigned to the process  Requires Windows sensor",
+        "array": true
+      },
+      "process_sha256": {
+        "type": "sha256",
+        "description": "SHA-256 hash of the actor process binary"
+      },
+      "process_special_build": {
+        "type": "keyword",
+        "description": "Text that describes how this version of the process binary differs from the standard version; typically specified for private builds. Embedded in the portable executable header of the Windows process binary.  Requires Windows sensor"
+      },
+      "process_start_time": {
+        "type": "datetime",
+        "description": "Searchable. Sensor reported timestamp of when the process started; not available for processes running before the sensor starts"
+      },
+      "process_terminated": {
+        "type": "bool",
+        "description": "Searchable. True indicates the process has terminated; always false for enriched events (process termination not recorded)"
+      },
+      "process_trademark": {
+        "type": "keyword",
+        "description": "Trademark information embedded in the portable executable header of the Windows process binary.  Requires Windows sensor"
+      },
+      "process_user_id": {
+        "type": "keyword",
+        "description": "Searchable. The user ID under which the actor process was executed. Equals SID for Windows endpoints.  Requires Windows sensor 4.0 or later."
+      },
+      "process_username": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. User context in which the actor process was executed. MacOS - all users for the PID for fork() and exec() transitions, Linux - process user for exec() events, but in a future sensor release can be multi-valued due to setuid()\"",
+        "array": true
+      }
+    }
+  }
+}

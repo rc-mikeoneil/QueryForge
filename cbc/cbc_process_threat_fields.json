@@ -1,0 +1,18 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_threat_fields": {
+      "threat_hunt_id": {
+        "type": "keyword",
+        "description": "ID of the MDR threat hunt"
+      },
+      "threat_hunt_name": {
+        "type": "keyword",
+        "description": "Name of the MDR threat hunt"
+      },
+      "threat_name": {
+        "type": "keyword",
+        "description": "Name of the threat related to the observation"
+      }
+    }
+  }
+}

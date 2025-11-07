@@ -1,0 +1,232 @@
+{
+  "metadata": {
+    "source": "SentinelOne Operations Center",
+    "version": "16 October 2025",
+    "extraction_date": "2025-10-21",
+    "description": "Complete query operators reference for SentinelOne Search and PowerQuery",
+    "documentation_url": "https://community.sentinelone.com"
+  },
+  "field_categories": {
+    "process": ["src.process.name", "src.process.cmdline", "src.process.signedStatus", "src.process.crossProcessCount", "src.process.parent.storyline.id", "src.process.storyline.id", "osSrc.process.parent.storyline.id", "osSrc.process.storyline.id", "tgt.process.storyline.id"],
+    "event": ["event.type", "event.login.loginIsSuccessful"],
+    "indicator": ["indicator.category", "indicator.name", "indicator.description"],
+    "file": ["tgt.file.size", "registry.keyPath"],
+    "log_analytics": ["logfile", "uriPath", "status", "client", "httpStatus", "error", "path"],
+    "hash": ["md5", "sha1", "sha256"]
+  },
+  "operators": [
+    {
+      "name": "AND",
+      "category": "logical",
+      "symbols": ["AND", "&&"],
+      "description": "Combines query terms requiring all terms to match",
+      "syntax": "term1 AND term2",
+      "case_sensitivity": "n/a",
+      "data_types": ["all"],
+      "example_queries": [{"query": "event.type = 'Process Creation' src.process.name = 'svchost.exe'", "description": "Implicit AND"}]
+    },
+    {
+      "name": "OR",
+      "category": "logical",
+      "symbols": ["OR", "||"],
+      "description": "Combines query terms where at least one must match",
+      "syntax": "term1 OR term2",
+      "case_sensitivity": "n/a",
+      "data_types": ["all"],
+      "example_queries": [{"query": "indicator.category = 'InfoStealer' or indicator.category = 'Evasion'", "description": "Match either category"}]
+    },
+    {
+      "name": "NOT",
+      "category": "logical",
+      "symbols": ["NOT", "!"],
+      "description": "Excludes events matching the specified term",
+      "syntax": "NOT term",
+      "case_sensitivity": "n/a",
+      "data_types": ["all"],
+      "example_queries": [{"query": "src.process.signedStatus='unsigned' && !(src.process.name='svchost.exe')", "description": "NOT with ! symbol"}]
+    },
+    {
+      "name": "contains",
+      "category": "text_search",
+      "symbols": ["contains"],
+      "description": "Retrieves events containing the search term (case-insensitive by default)",
+      "syntax": "fieldname contains 'search-term'",
+      "case_sensitivity": "case-insensitive by default",
+      "data_types": ["string", "text"],
+      "modifiers": [{"name": "matchcase", "syntax": "fieldname contains:matchcase 'term'"}],
+      "example_queries": [{"query": "logfile contains 'access_log'", "description": "Basic contains search"}],
+      "limitations": ["* contains cannot be used in Alerts", "Not optimized for Dashboards"]
+    },
+    {
+      "name": "matches",
+      "category": "text_search",
+      "symbols": ["matches", "$"],
+      "description": "Searches a field using regular expressions",
+      "syntax": "fieldname matches 'regex'",
+      "case_sensitivity": "case-insensitive by default",
+      "data_types": ["string", "text"],
+      "modifiers": [{"name": "matchcase", "syntax": "fieldname matches:matchcase 'Regex'"}],
+      "example_queries": [{"query": "registry.keyPath matches '\\\\.*\\\\VSS'", "description": "Regex with double-escaping"}],
+      "limitations": ["Double-escaping required", "Regex cannot exceed 1000 bytes"]
+    },
+    {
+      "name": "equals",
+      "category": "comparison",
+      "symbols": ["==", "="],
+      "description": "Selects events with a particular value",
+      "syntax": "fieldname == value",
+      "case_sensitivity": "case-sensitive for strings",
+      "data_types": ["string", "numeric", "boolean"],
+      "example_queries": [{"query": "status == 404", "description": "Numeric exact match"}]
+    },
+    {
+      "name": "not_equals",
+      "category": "comparison",
+      "symbols": ["!="],
+      "description": "Selects events that do not have a particular value",
+      "syntax": "fieldname != value",
+      "case_sensitivity": "case-sensitive for strings",
+      "data_types": ["string", "numeric", "boolean"],
+      "example_queries": [{"query": "indicator.name != 'RawVolumeAccess'", "description": "Exclude specific value"}]
+    },
+    {
+      "name": "greater_than",
+      "category": "comparison",
+      "symbols": [">"],
+      "description": "Field value greater than specified value",
+      "syntax": "fieldname > value",
+      "case_sensitivity": "n/a",
+      "data_types": ["numeric"],
+      "example_queries": [{"query": "src.process.crossProcessCount > 0", "description": "Numeric comparison"}]
+    },
+    {
+      "name": "greater_than_or_equal",
+      "category": "comparison",
+      "symbols": [">="],
+      "description": "Field value greater than or equal to specified value",
+      "syntax": "fieldname >= value",
+      "case_sensitivity": "n/a",
+      "data_types": ["numeric"],
+      "example_queries": [{"query": "status >= 400", "description": "HTTP status range"}]
+    },
+    {
+      "name": "less_than",
+      "category": "comparison",
+      "symbols": ["<"],
+      "description": "Field value less than specified value",
+      "syntax": "fieldname < value",
+      "case_sensitivity": "n/a",
+      "data_types": ["numeric"],
+      "example_queries": [{"query": "tgt.file.size < 65536", "description": "File size limit"}]
+    },
+    {
+      "name": "less_than_or_equal",
+      "category": "comparison",
+      "symbols": ["<="],
+      "description": "Field value less than or equal to specified value",
+      "syntax": "fieldname <= value",
+      "case_sensitivity": "n/a",
+      "data_types": ["numeric"],
+      "example_queries": [{"query": "status <= 499", "description": "Upper bound"}]
+    },
+    {
+      "name": "wildcard",
+      "category": "special",
+      "symbols": ["*"],
+      "description": "Match events with any value in a field, or search all fields",
+      "syntax": "fieldname = *",
+      "case_sensitivity": "n/a",
+      "data_types": ["all"],
+      "example_queries": [{"query": "indicator.description = *", "description": "Any value"}, {"query": "* contains 'search term'", "description": "All fields"}],
+      "limitations": ["* contains and * matches limited to PowerQuery initial filters"]
+    },
+    {
+      "name": "in",
+      "category": "special",
+      "symbols": ["in"],
+      "description": "Search for numeric, boolean, and text values in a field",
+      "syntax": "fieldname in (value1, value2, value3)",
+      "case_sensitivity": "case-sensitive by default",
+      "data_types": ["string", "numeric", "boolean"],
+      "modifiers": [{"name": "matchcase", "syntax": "fieldname contains:matchcase (values)"}],
+      "example_queries": [{"query": "httpStatus in (404)", "description": "Single value"}, {"query": "fieldname in (\"aaa\", 111, false)", "description": "Multiple types"}],
+      "limitations": ["Cannot match null or missing fields", "Quote text values, don't quote numeric/boolean"]
+    }
+  ],
+  "shortcuts": [
+    {
+      "shortcut": "cmdline",
+      "symbol": "#cmdline",
+      "description": "All Processes CmdLine Arguments",
+      "use_case": "Quick search across all command line fields"
+    },
+    {
+      "shortcut": "dns",
+      "symbol": "#dns",
+      "description": "All DNS requests and responses",
+      "use_case": "Search all DNS-related fields"
+    },
+    {
+      "shortcut": "filepath",
+      "symbol": "#filepath",
+      "description": "All Paths",
+      "use_case": "Search all file path fields"
+    },
+    {
+      "shortcut": "hash",
+      "symbol": "#hash",
+      "description": "any MD5, SHA1, or SHA256 field",
+      "use_case": "Search all hash fields at once"
+    },
+    {
+      "shortcut": "ip",
+      "symbol": "#ip",
+      "description": "All IPs",
+      "use_case": "Search all IP address fields"
+    },
+    {
+      "shortcut": "md5",
+      "symbol": "#md5",
+      "description": "All Md5",
+      "use_case": "Search all MD5 hash fields"
+    },
+    {
+      "shortcut": "name",
+      "symbol": "#name",
+      "description": "All Processes Names",
+      "use_case": "Search all process name fields"
+    },
+    {
+      "shortcut": "sha1",
+      "symbol": "#sha1",
+      "description": "All Sha1",
+      "use_case": "Search all SHA1 hash fields"
+    },
+    {
+      "shortcut": "sha256",
+      "symbol": "#sha256",
+      "description": "All Sha256",
+      "use_case": "Search all SHA256 hash fields"
+    },
+    {
+      "shortcut": "storylineid",
+      "symbol": "#storylineid",
+      "description": "All Storyline Ids",
+      "searches_fields": ["osSrc.process.parent.storyline.id", "osSrc.process.storyline.id", "src.process.parent.storyline.id", "src.process.storyline.id", "tgt.process.storyline.id"],
+      "example": "#storylineid = 'bba6fccd-a1e8-9561-b397-33bae4194c75'",
+      "use_case": "Quick search across all storyline ID fields"
+    },
+    {
+      "shortcut": "uid",
+      "symbol": "#uid",
+      "description": "All UIDs",
+      "use_case": "Search all UID fields"
+    },
+    {
+      "shortcut": "username",
+      "symbol": "#username",
+      "description": "All Processes Users",
+      "use_case": "Search all user/username fields"
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "cortex_xdr_query_schema": {
+    "enum_values": {
+      "event_type": {
+        "PROCESS": {
+          "value": 1,
+          "description": "Process execution events"
+        },
+        "NETWORK": {
+          "value": 2,
+          "description": "Network connection events"
+        },
+        "FILE": {
+          "value": 3,
+          "description": "File operation events"
+        },
+        "REGISTRY": {
+          "value": 4,
+          "description": "Registry modification events"
+        },
+        "INJECTION": {
+          "value": 5,
+          "description": "Code injection events"
+        },
+        "LOAD_IMAGE": {
+          "value": 6,
+          "description": "DLL/module load events"
+        },
+        "USER_STATUS_CHANGE": {
+          "value": 7,
+          "description": "User session change events"
+        },
+        "TIME_CHANGE": {
+          "value": 8,
+          "description": "System time change events"
+        },
+        "THREAD": {
+          "value": 9,
+          "description": "Thread creation events"
+        },
+        "CAUSALITY": {
+          "value": 10,
+          "description": "Causality chain events"
+        },
+        "HOST_STATUS_CHANGE": {
+          "value": 11,
+          "description": "Host status change events"
+        },
+        "AGENT_STATUS_CHANGE": {
+          "value": 12,
+          "description": "Agent status change events"
+        },
+        "INTERNAL_STATISTICS": {
+          "value": 13,
+          "description": "Internal statistics events"
+        },
+        "PROCESS_HANDLE": {
+          "value": 14,
+          "description": "Process handle events"
+        },
+        "EVENT_LOG": {
+          "value": 15,
+          "description": "Windows Event Log events"
+        },
+        "EPM_STATUS": {
+          "value": 16,
+          "description": "EPM status events"
+        },
+        "METADATA_CHANGE": {
+          "value": 17,
+          "description": "Metadata change events"
+        },
+        "SYSTEM_CALL": {
+          "value": 18,
+          "description": "System call events"
+        },
+        "DEVICE": {
+          "value": 19,
+          "description": "Device events"
+        },
+        "HOST_FIREWALL": {
+          "value": 23,
+          "description": "Host firewall events"
+        }
+      },
+      "event_sub_type_process": {
+        "PROCESS_START": {
+          "description": "Process creation"
+        },
+        "PROCESS_STOP": {
+          "description": "Process termination"
+        }
+      },
+      "event_sub_type_file": {
+        "FILE_CREATE_NEW": {
+          "description": "New file creation"
+        },
+        "FILE_WRITE": {
+          "description": "File modification"
+        },
+        "FILE_REMOVE": {
+          "description": "File deletion"
+        },
+        "FILE_RENAME": {
+          "description": "File rename"
+        },
+        "FILE_OPEN": {
+          "description": "File open/access"
+        }
+      },
+      "agent_os_type": {
+        "WINDOWS": {
+          "value": 1,
+          "description": "Windows operating system"
+        },
+        "MACOS": {
+          "value": 2,
+          "description": "MacOS operating system"
+        },
+        "LINUX": {
+          "value": 4,
+          "description": "Linux operating system"
+        }
+      },
+      "auth_outcome": {
+        "SUCCESS": {
+          "value": "success",
+          "description": "Authentication succeeded"
+        },
+        "FAIL": {
+          "value": "fail",
+          "description": "Authentication failed"
+        },
+        "UNKNOWN": {
+          "value": "unknown",
+          "description": "Authentication outcome unknown"
+        },
+        "SKIPPED": {
+          "value": "SKIPPED",
+          "description": "Authentication skipped"
+        },
+        "ALLOW": {
+          "value": "ALLOW",
+          "description": "Authentication allowed"
+        },
+        "DENY": {
+          "value": "DENY",
+          "description": "Authentication denied"
+        },
+        "CHALLENGE": {
+          "value": "CHALLENGE",
+          "description": "Authentication challenge required"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "carbonblack_edr_query_schema": {
+    "operators": {
+      "logical": {
+        "AND": {
+          "syntax": [
+            "and",
+            "AND",
+            "whitespace"
+          ],
+          "description": "Boolean AND operator",
+          "examples": [
+            "svchost.exe cmd.exe",
+            "svchost.exe and cmd.exe"
+          ]
+        },
+        "OR": {
+          "syntax": [
+            "or",
+            "OR"
+          ],
+          "description": "Boolean OR operator",
+          "examples": [
+            "svchost.exe or cmd.exe"
+          ]
+        },
+        "NOT": {
+          "syntax": [
+            "-"
+          ],
+          "description": "Boolean NOT operator",
+          "examples": [
+            "-svchost.exe",
+            "-alliance_score_srstrust:*"
+          ]
+        },
+        "NESTING": {
+          "syntax": [
+            "()"
+          ],
+          "description": "Parentheses for nested queries",
+          "examples": [
+            "(svchost.exe or cmd.exe) powershell.exe"
+          ]
+        }
+      },
+      "wildcard": {
+        "asterisk": {
+          "symbol": "*",
+          "description": "Matches zero or more characters",
+          "examples": [
+            "process_name:win*.exe"
+          ],
+          "warning": "Leading wildcards not recommended - significant performance penalty"
+        }
+      },
+      "field_syntax": {
+        "description": "Limit terms to specific fields",
+        "format": "<field>:<term>",
+        "examples": [
+          "process_name:svchost.exe",
+          "md5:5a18f00ab9330ac7539675f326cf11"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "comprehensive_security_patterns": {
+    "description": "Multi-indicator detection patterns for Microsoft 365 Defender Advanced Hunting",
+    "patterns": {
+      "rdp_detection": {
+        "description": "Comprehensive Remote Desktop Protocol detection",
+        "indicators": ["ports", "processes", "network_connections", "logon_events"],
+        "table": "DeviceNetworkEvents",
+        "query": "DeviceNetworkEvents | where RemotePort in (3389, 3388) or LocalPort in (3389, 3388) or RemoteUrl contains 'rdp' or RemoteUrl contains 'remote' or InitiatingProcessFileName in~ ('mstsc.exe', 'rdpclip.exe', 'rdpinit.exe') or InitiatingProcessCommandLine contains 'mstsc' or InitiatingProcessCommandLine contains '/v:'",
+        "notes": "Detects RDP activity across network events and process execution"
+      },
+      "smb_lateral_movement": {
+        "description": "SMB-based lateral movement detection",
+        "indicators": ["ports", "processes", "network_connections"],
+        "table": "DeviceNetworkEvents",
+        "query": "DeviceNetworkEvents | where RemotePort in (445, 139) or LocalPort in (445, 139) or InitiatingProcessFileName in~ ('net.exe', 'net1.exe', 'psexec.exe', 'paexec.exe') or InitiatingProcessCommandLine contains '\\\\admin$' or InitiatingProcessCommandLine contains '\\\\c$' or InitiatingProcessCommandLine contains 'net use' or RemoteUrl contains '\\\\\\\\'",
+        "notes": "Detects SMB lateral movement via administrative shares and remote execution tools"
+      },
+      "powershell_execution": {
+        "description": "Comprehensive PowerShell execution with suspicious patterns",
+        "indicators": ["processes", "command_line"],
+        "table": "DeviceProcessEvents",
+        "query": "DeviceProcessEvents | where FileName in~ ('powershell.exe', 'pwsh.exe', 'powershell_ise.exe') or ProcessCommandLine contains '-enc' or ProcessCommandLine contains '-encodedcommand' or ProcessCommandLine contains '-w hidden' or ProcessCommandLine contains '-windowstyle hidden' or ProcessCommandLine contains '-nop' or ProcessCommandLine contains '-noprofile' or ProcessCommandLine contains '-ep bypass' or ProcessCommandLine contains 'invoke-expression' or ProcessCommandLine contains 'iex' or ProcessCommandLine contains 'downloadstring' or ProcessCommandLine contains 'downloadfile'",
+        "notes": "Detects PowerShell with evasion techniques and remote download capabilities"
+      },
+      "wmi_execution": {
+        "description": "Windows Management Instrumentation execution",
+        "indicators": ["processes", "command_line", "parent_process"],
+        "table": "DeviceProcessEvents",
+        "query": "DeviceProcessEvents | where FileName in~ ('wmic.exe', 'wmiprvse.exe', 'scrcons.exe') or ProcessCommandLine contains 'wmic' or ProcessCommandLine contains '/node:' or ProcessCommandLine contains 'process call create' or InitiatingProcessFileName =~ 'wmiprvse.exe'",
+        "notes": "Detects WMI usage for remote execution and persistence"
+      },
+      "credential_dumping": {
+        "description": "Credential dumping tools and LSASS access",
+        "indicators": ["processes", "command_line", "file_access"],
+        "table": "DeviceProcessEvents",
+        "query": "DeviceProcessEvents | where FileName in~ ('mimikatz.exe', 'procdump.exe', 'sqldumper.exe') or ProcessCommandLine contains 'sekurlsa' or ProcessCommandLine contains 'lsass' or ProcessCommandLine contains 'procdump' and ProcessCommandLine contains 'lsass' or ProcessCommandLine contains 'comsvcs.dll' and ProcessCommandLine contains 'minidump'",
+        "notes": "Detects credential dumping attempts via various tools and techniques"
+      },
+      "webshell_activity": {
+        "description": "Web shell detection via web server child processes",
+        "indicators": ["processes", "parent_process"],
+        "table": "DeviceProcessEvents",
+        "query": "DeviceProcessEvents | where InitiatingProcessFileName in~ ('w3wp.exe', 'httpd.exe', 'nginx.exe', 'apache.exe') and FileName in~ ('cmd.exe', 'powershell.exe', 'wscript.exe', 'cscript.exe', 'net.exe', 'whoami.exe', 'ipconfig.exe', 'ping.exe', 'netstat.exe')",
+        "notes": "Detects suspicious processes spawned by web servers"
+      },
+      "scheduled_task_persistence": {
+        "description": "Scheduled task creation for persistence",
+        "indicators": ["processes", "command_line", "registry"],
+        "table": "DeviceProcessEvents",
+        "query": "DeviceProcessEvents | where FileName in~ ('schtasks.exe', 'at.exe') or ProcessCommandLine contains 'schtasks' and ProcessCommandLine contains '/create' or ProcessCommandLine contains 'New-ScheduledTask' or ProcessCommandLine contains 'Register-ScheduledTask'",
+        "notes": "Detects scheduled task creation via command line and PowerShell"
+      },
+      "service_creation": {
+        "description": "Windows service creation",
+        "indicators": ["processes", "command_line"],
+        "table": "DeviceProcessEvents",
+        "query": "DeviceProcessEvents | where FileName =~ 'sc.exe' and (ProcessCommandLine contains 'create' or ProcessCommandLine contains 'config') or ProcessCommandLine contains 'New-Service' or ProcessCommandLine contains 'Set-Service'",
+        "notes": "Detects Windows service creation and modification"
+      },
+      "registry_run_key_persistence": {
+        "description": "Registry Run key modifications",
+        "indicators": ["registry_modifications"],
+        "table": "DeviceRegistryEvents",
+        "query": "DeviceRegistryEvents | where RegistryKey contains '\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run' or RegistryKey contains '\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\RunOnce' or RegistryKey contains '\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Winlogon\\\\Userinit' or RegistryKey contains '\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Winlogon\\\\Shell'",
+        "notes": "Detects modifications to common registry persistence locations"
+      },
+      "suspicious_downloads": {
+        "description": "Suspicious file downloads",
+        "indicators": ["processes", "command_line", "network_connections"],
+        "table": "DeviceProcessEvents",
+        "query": "DeviceProcessEvents | where FileName in~ ('powershell.exe', 'cmd.exe', 'wscript.exe', 'cscript.exe', 'mshta.exe', 'rundll32.exe', 'regsvr32.exe', 'certutil.exe', 'bitsadmin.exe') and (ProcessCommandLine contains 'http://' or ProcessCommandLine contains 'https://' or ProcessCommandLine contains 'ftp://' or ProcessCommandLine contains 'downloadfile' or ProcessCommandLine contains 'downloadstring' or ProcessCommandLine contains 'invoke-webrequest' or ProcessCommandLine contains 'wget' or ProcessCommandLine contains 'curl' or ProcessCommandLine contains '-decode')",
+        "notes": "Detects file downloads via scripting engines and LOLBins"
+      },
+      "lolbins_execution": {
+        "description": "Living Off the Land Binaries abuse",
+        "indicators": ["processes", "command_line"],
+        "table": "DeviceProcessEvents",
+        "query": "DeviceProcessEvents | where FileName in~ ('mshta.exe', 'regsvr32.exe', 'rundll32.exe', 'certutil.exe', 'msiexec.exe', 'installutil.exe', 'regasm.exe', 'regsvcs.exe', 'msxsl.exe', 'odbcconf.exe', 'forfiles.exe', 'pcalua.exe') or ProcessCommandLine contains 'javascript:' or ProcessCommandLine contains 'vbscript:' or ProcessCommandLine contains '/i:http'",
+        "notes": "Detects abuse of legitimate Windows binaries for code execution"
+      },
+      "bypass_uac": {
+        "description": "UAC bypass techniques",
+        "indicators": ["processes", "registry", "command_line"],
+        "table": "DeviceProcessEvents",
+        "query": "DeviceProcessEvents | where ProcessCommandLine contains 'eventvwr.exe' or ProcessCommandLine contains 'fodhelper.exe' or ProcessCommandLine contains 'computerdefaults.exe' or FileName =~ 'dism.exe' and InitiatingProcessFileName !in~ ('svchost.exe', 'services.exe')",
+        "notes": "Detects common UAC bypass techniques"
+      },
+      "suspicious_network_scanning": {
+        "description": "Network scanning and reconnaissance",
+        "indicators": ["network_connections", "processes"],
+        "table": "DeviceNetworkEvents",
+        "query": "DeviceNetworkEvents | where InitiatingProcessFileName in~ ('nmap.exe', 'masscan.exe', 'angry_ip_scanner.exe', 'advanced_port_scanner.exe') or ActionType == 'ConnectionSuccess' | summarize ConnectionCount = count() by DeviceId, InitiatingProcessFileName, bin(Timestamp, 1m) | where ConnectionCount > 100",
+        "notes": "Detects port scanning activity based on high connection rates"
+      },
+      "data_exfiltration": {
+        "description": "Potential data exfiltration via file transfers",
+        "indicators": ["network_connections", "file_operations", "processes"],
+        "table": "DeviceNetworkEvents",
+        "query": "DeviceNetworkEvents | where RemotePort in (21, 22, 69, 873, 3389) or RemoteUrl contains 'ftp' or RemoteUrl contains 'sftp' or InitiatingProcessCommandLine contains 'copy' or InitiatingProcessCommandLine contains 'xcopy' or InitiatingProcessCommandLine contains 'robocopy' | where RemoteIPType == 'Public'",
+        "notes": "Detects file transfer activity to external hosts"
+      },
+      "email_collection": {
+        "description": "Email data collection attempts",
+        "indicators": ["file_access", "processes", "command_line"],
+        "table": "DeviceFileEvents",
+        "query": "DeviceFileEvents | where FolderPath contains '\\\\AppData\\\\Local\\\\Microsoft\\\\Outlook' or FolderPath contains '.pst' or FolderPath contains '.ost' or FolderPath endswith '.eml' or FolderPath endswith '.msg' | where ActionType in ('FileCreated', 'FileRenamed', 'FileCopied') | where InitiatingProcessFileName !in~ ('outlook.exe', 'msexchange')",
+        "notes": "Detects unauthorized access to email data files"
+      }
+    }
+  }
+}

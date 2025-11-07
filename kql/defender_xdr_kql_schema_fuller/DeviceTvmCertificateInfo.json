@@ -1,0 +1,79 @@
+{
+  "table": "devicetvmcertificateinfo",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-devicetvmcertificateinfo-table",
+  "page_date": "2025-10-03",
+  "columns": [
+    {
+      "name": "DeviceId",
+      "type": "string",
+      "description": "Unique identifier for the device in the service"
+    },
+    {
+      "name": "Thumbprint",
+      "type": "string",
+      "description": "Unique identifier for the certificate"
+    },
+    {
+      "name": "Path",
+      "type": "string",
+      "description": "The location of the certificate"
+    },
+    {
+      "name": "SerialNumber",
+      "type": "string",
+      "description": "Unique identifier for the certificate within a certificate authority's systems"
+    },
+    {
+      "name": "IssuedTo",
+      "type": "dynamic",
+      "description": "Entity that a certificate belongs to; can be a device, an individual, or an organization"
+    },
+    {
+      "name": "IssuedBy",
+      "type": "dynamic",
+      "description": "Entity that verified the information and signed the certificate"
+    },
+    {
+      "name": "FriendlyName",
+      "type": "string",
+      "description": "Easy-to-understand version of a certificate's title"
+    },
+    {
+      "name": "SignatureAlgorithm",
+      "type": "string",
+      "description": "Hashing algorithm and encryption algorithm used"
+    },
+    {
+      "name": "KeySize",
+      "type": "string",
+      "description": "Size of the key used in the signature algorithm"
+    },
+    {
+      "name": "ExpirationDate",
+      "type": "string",
+      "description": "The date and time beyond which the certificate is no longer valid"
+    },
+    {
+      "name": "IssueDate",
+      "type": "string",
+      "description": "The earliest date and time when the certificate became valid"
+    },
+    {
+      "name": "SubjectType",
+      "type": "string",
+      "description": "Indicates if the holder of the certificate is a CA or end entity"
+    },
+    {
+      "name": "KeyUsage",
+      "type": "string",
+      "description": "The valid cryptographic uses of the certificate's public key"
+    },
+    {
+      "name": "ExtendedKeyUsage",
+      "type": "string",
+      "description": "Other valid uses for the certificate"
+    }
+  ],
+  "col_count": 14,
+  "generated_at": "2025-10-03T02:10:15.962021Z"
+}

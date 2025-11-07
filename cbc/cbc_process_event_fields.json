@@ -1,0 +1,41 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_event_fields": {
+      "event_attack_stage": {
+        "type": "keyword",
+        "description": "Searchable. Stage(s) of the cyber kill chain when an attack was terminated by sensor  Requires Endpoint Standard",
+        "array": true
+      },
+      "event_description": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Event description calculated by the Carbon Black Cloud  Requires Endpoint Standard"
+      },
+      "event_guid": {
+        "type": "keyword",
+        "description": "Deprecated. Use event_id"
+      },
+      "event_hash": {
+        "type": "keyword",
+        "description": "Deprecated. Use event_id"
+      },
+      "event_id": {
+        "type": "keyword",
+        "description": "Searchable. Unique event identifier assigned by the Carbon Black Cloud"
+      },
+      "event_threat_score": {
+        "type": "integer",
+        "description": "Searchable. Score(s) assigned by Carbon Black Cloud for the detected threat (Returns values 0-8)  Requires Endpoint Standard",
+        "array": true
+      },
+      "event_timestamp": {
+        "type": "datetime",
+        "description": "Searchable. Timestamp reported by the sensor when the event occurred"
+      },
+      "event_type": {
+        "type": "keyword",
+        "description": "Searchable. Type of event observed",
+        "array": true
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_asset_fields": {
+      "asset_id": {
+        "type": "keyword",
+        "description": "Searchable. Asset id that is guaranteed to be unique within each PSC environment, which is a set of organizations."
+      }
+    }
+  }
+}

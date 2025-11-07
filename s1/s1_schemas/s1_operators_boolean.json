@@ -1,0 +1,43 @@
+{
+  "metadata": {
+    "source": "SentinelOne Operations Center",
+    "data_type": "Boolean",
+    "extraction_date": "2025-10-21",
+    "description": "Operators available for Boolean data type fields in S1QL queries",
+    "operator_count": 4
+  },
+  "operators": [
+    {
+      "operator": "Is true",
+      "description": "Check if a boolean field is set as true",
+      "data_type": "Boolean",
+      "syntax": "fieldname Is true",
+      "case_sensitive": false,
+      "category": "boolean_check"
+    },
+    {
+      "operator": "Is false",
+      "description": "Check if a boolean field is set as false",
+      "data_type": "Boolean",
+      "syntax": "fieldname Is false",
+      "case_sensitive": false,
+      "category": "boolean_check"
+    },
+    {
+      "operator": "Not fieldname Is True",
+      "description": "Negation of boolean true check",
+      "data_type": "Boolean",
+      "syntax": "Not fieldname Is True",
+      "case_sensitive": false,
+      "category": "boolean_negation"
+    },
+    {
+      "operator": "Not fieldname Is False",
+      "description": "Negation of boolean false check",
+      "data_type": "Boolean",
+      "syntax": "Not fieldname Is False",
+      "case_sensitive": false,
+      "category": "boolean_negation"
+    }
+  ]
+}

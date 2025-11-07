@@ -1,0 +1,19 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_blocked_fields": {
+      "blocked_effective_reputation": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Effective reputation of the blocked file; applied by the sensor when the event occurs"
+      },
+      "blocked_hash": {
+        "type": "keyword",
+        "description": "Searchable. MD5 and SHA-256 hash(es) of the child process(es) binary; for any process(es) terminated by the sensor",
+        "array": true
+      },
+      "blocked_name": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Tokenized file path of the files blocked by sensor action"
+      }
+    }
+  }
+}

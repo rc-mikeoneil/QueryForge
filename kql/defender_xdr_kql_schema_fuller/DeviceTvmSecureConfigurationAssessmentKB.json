@@ -1,0 +1,59 @@
+{
+  "table": "devicetvmsecureconfigurationassessmentkb",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-devicetvmsecureconfigurationassessmentkb-table",
+  "page_date": "2025-10-03",
+  "columns": [
+    {
+      "name": "ConfigurationId",
+      "type": "string",
+      "description": "Unique identifier for a specific configuration"
+    },
+    {
+      "name": "ConfigurationImpact",
+      "type": "real",
+      "description": "Rated impact of the configuration to the overall configuration score (1-10)"
+    },
+    {
+      "name": "ConfigurationName",
+      "type": "string",
+      "description": "Display name of the configuration"
+    },
+    {
+      "name": "ConfigurationDescription",
+      "type": "string",
+      "description": "Description of the configuration"
+    },
+    {
+      "name": "RiskDescription",
+      "type": "string",
+      "description": "Description of the associated risk"
+    },
+    {
+      "name": "ConfigurationCategory",
+      "type": "string",
+      "description": "Category or grouping to which the configuration belongs: Application, OS, Network, Accounts, Security controls"
+    },
+    {
+      "name": "ConfigurationSubcategory",
+      "type": "string",
+      "description": "Subcategory or subgrouping to which the configuration belongs. In many cases, this describes specific capabilities or features."
+    },
+    {
+      "name": "ConfigurationBenchmarks",
+      "type": "dynamic",
+      "description": "List of industry benchmarks recommending the same or similar configuration"
+    },
+    {
+      "name": "Tags",
+      "type": "dynamic",
+      "description": "Labels representing various attributes used to identify or categorize a security configuration"
+    },
+    {
+      "name": "RemediationOptions",
+      "type": "string",
+      "description": "Recommended actions to reduce or address any associated risks"
+    }
+  ],
+  "col_count": 10,
+  "generated_at": "2025-10-03T02:10:22.040160Z"
+}

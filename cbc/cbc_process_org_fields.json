@@ -1,0 +1,10 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_org_fields": {
+      "org_id": {
+        "type": "keyword",
+        "description": "Searchable. Organization identifer; unique across all environments and equivalent to org_key in other Carbon Black Cloud APIs"
+      }
+    }
+  }
+}

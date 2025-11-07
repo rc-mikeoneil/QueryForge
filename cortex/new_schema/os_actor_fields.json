@@ -1,0 +1,286 @@
+{
+  "actor_type": "OS Actor",
+  "actor_description": "The OS actor is the process identified by the operation system as the process that performed the action.",
+  "fields": [
+    {
+      "field_name": "os_actor_causality_id",
+      "data_type": "STRING (NULLABLE)",
+      "description": "The causality chain identifier of the Operating System actor"
+    },
+    {
+      "field_name": "os_actor_effective_user_sid",
+      "data_type": "STRING (NULLABLE)",
+      "description": "Win: Primary user token of the executed binary. Unix: Effective UID of the executed binary."
+    },
+    {
+      "field_name": "os_actor_effective_username",
+      "data_type": "STRING (NULLABLE)",
+      "description": "The username which launched the Operating System actor process"
+    },
+    {
+      "field_name": "os_actor_is_injected_thread",
+      "data_type": "BOOLEAN (NULLABLE)",
+      "description": "Indicates whether or not the thread is injected to the operating system actor process."
+    },
+    {
+      "field_name": "os_actor_primary_user_sid",
+      "data_type": "STRING (NULLABLE)",
+      "description": "Win: Primary user token of the executed binary. Unix: Effective UID of the executed binary."
+    },
+    {
+      "field_name": "os_actor_primary_username",
+      "data_type": "STRING (NULLABLE)",
+      "description": "Name assigned to the user_sid."
+    },
+    {
+      "field_name": "os_actor_process_auth_id",
+      "data_type": "STRING (NULLABLE)",
+      "description": "Windows: LUID (uint64) representing the token of the process."
+    },
+    {
+      "field_name": "os_actor_process_causality_id",
+      "data_type": "STRING (NULLABLE)",
+      "description": "The causality chain identifier of the Operating System actor process"
+    },
+    {
+      "field_name": "os_actor_process_command_line",
+      "data_type": "STRING (NULLABLE)",
+      "description": "Process command line - The command used to execute the process."
+    },
+    {
+      "field_name": "os_actor_process_command_line_indices",
+      "data_type": "STRING (NULLABLE)",
+      "description": "Process command line - The command used to execute the process."
+    },
+    {
+      "field_name": "os_actor_process_device_info",
+      "data_type": "RECORD (NULLABLE)",
+      "description": "Info about the device (volume + HW) from which this process started. including name, class guid, class name, bus type, volume guid, mount point, file system, drive type, vendor id, product id, and serial number."
+    },
+    {
+      "field_name": "os_actor_process_execution_time",
+      "data_type": "INTEGER (NULLABLE)",
+      "description": "The execution timestamp"
+    },
+    {
+      "field_name": "os_actor_process_file_access_time",
+      "data_type": "INTEGER (NULLABLE)",
+      "description": "Access time of the file that created the process"
+    },
+    {
+      "field_name": "os_actor_process_file_create_time",
+      "data_type": "INTEGER (NULLABLE)",
+      "description": "Creation time of the file that created the process."
+    },
+    {
+      "field_name": "os_actor_process_file_mod_time",
+      "data_type": "INTEGER (NULLABLE)",
+      "description": "Modification time of the file that created the process."
+    },
+    {
+      "field_name": "os_actor_process_file_size",
+      "data_type": "INTEGER (NULLABLE)",
+      "description": "Size of the file involved in the process in bytes."
+    },
+    {
+      "field_name": "os_actor_process_image_command_line",
+      "data_type": "STRING (NULLABLE)",
+      "description": "Process command line - The command used to execute the process."
+    },
+    {
+      "field_name": "os_actor_process_image_extension",
+      "data_type": "STRING (NULLABLE)",
+      "description": "Process image extension - File extension."
+    },
+    {
+      "field_name": "os_actor_process_image_md5",
+      "data_type": "STRING (NULLABLE)",
+      "description": "MD5 of the binary."
+    },
+    {
+      "field_name": "os_actor_process_image_name",
+      "data_type": "STRING (NULLABLE)",
+      "description": "The process image name on the disk"
+    },
+    {
+      "field_name": "os_actor_process_image_path",
+      "data_type": "STRING (NULLABLE)",
+      "description": "Process image path - A string identifying the location of the execution."
+    },
+    {
+      "field_name": "os_actor_process_image_sha256",
+      "data_type": "STRING (NULLABLE)",
+      "description": "SHA256 of the binary."
+    },
+    {
+      "field_name": "os_actor_process_instance_id",
+      "data_type": "STRING (NULLABLE)",
+      "description": "Process instance identifier."
+    },
+    {
+      "field_name": "os_actor_process_integrity_level",
+      "data_type": "INTEGER (NULLABLE)",
+      "description": "The integrity level of the process (INTEGER)"
+    },
+    {
+      "field_name": "os_actor_process_is_64bit",
+      "data_type": "BOOLEAN (NULLABLE)",
+      "description": "Indicates whether or not the process is compiled for 64 bit."
+    },
+    {
+      "field_name": "os_actor_process_is_native",
+      "data_type": "BOOLEAN (NULLABLE)",
+      "description": "Indicates whether or not this process is a \"native process\". On a 32 bit machine the value will be always true, on 64 bit machine it will be true if the process is 64 bit."
+    },
+    {
+      "field_name": "os_actor_process_is_replay",
+      "data_type": "BOOLEAN (NULLABLE)",
+      "description": "Indicates whether or not the process event data is replayed or not. replayed means that the agent sent the data after the action occured for example after a reboot"
+    },
+    {
+      "field_name": "os_actor_process_is_special",
+      "data_type": "INTEGER (NULLABLE)",
+      "description": "Indicates special system processes: RegularProcess = 0, KernelProcess = 1, AppContainerProcess = 2, NonWin32SubsystemProcess = 3"
+    },
+    {
+      "field_name": "os_actor_process_logon_id",
+      "data_type": "STRING (NULLABLE)",
+      "description": "Windows: LUID (uint64) representing the token of the process."
+    },
+    {
+      "field_name": "os_actor_process_os_pid",
+      "data_type": "INTEGER (NULLABLE)",
+      "description": "The Operating System (OS) Process Identifier (PID) of the operating system actor process"
+    },
+    {
+      "field_name": "os_actor_process_session_id",
+      "data_type": "INTEGER (NULLABLE)",
+      "description": "Windows: Session ID of the process."
+    },
+    {
+      "field_name": "os_actor_process_signature_is_embedded",
+      "data_type": "BOOLEAN (NULLABLE)",
+      "description": "Indicates whether or not the signature is embedded inside the Program Executable (PE) or part of an external catalog file."
+    },
+    {
+      "field_name": "os_actor_process_signature_product",
+      "data_type": "STRING (NULLABLE)",
+      "description": "Signature product - The product family part of the signature."
+    },
+    {
+      "field_name": "os_actor_process_signature_status",
+      "data_type": "INTEGER (NULLABLE)",
+      "description": "Signature status of the process: Signed = 1, SignedInvalid = 2, Unsigned = 3, FailedToObtain = 4, WeakHash = 5 (where the MD5 is used as the hash algorithm), Unsupported = 6 (which means the signature was not calculated), InvalidCVE2020_0601 = 7 (which means the executable is malicious and is trying to exploit the windows vulnerability CVE2020-0601), Deleted = 8 (which means that the file was deleted by the time the agent tried to calculate the signature)."
+    },
+    {
+      "field_name": "os_actor_process_signature_vendor",
+      "data_type": "STRING (NULLABLE)",
+      "description": "Signature vendor - The vendor part of the signature."
+    },
+    {
+      "field_name": "os_actor_remote_host",
+      "data_type": "STRING (NULLABLE)",
+      "description": "Relevant when the actor is a remote actor and the host was resolved successfully."
+    },
+    {
+      "field_name": "os_actor_remote_ip",
+      "data_type": "STRING (NULLABLE)",
+      "description": "Relevant when the actor is a remote actor, where the type is not local and the IP was resolved successfully."
+    },
+    {
+      "field_name": "os_actor_remote_port",
+      "data_type": "INTEGER (NULLABLE)",
+      "description": "Relevant when the actor is a remote actor, where the type is RemoteRpcTcp."
+    },
+    {
+      "field_name": "os_actor_session_id",
+      "data_type": "INTEGER (NULLABLE)",
+      "description": "Session id of the actor process"
+    },
+    {
+      "field_name": "os_actor_thread_thread_id",
+      "data_type": "INTEGER (NULLABLE)",
+      "description": "Thread id of the thread in the process which made the action"
+    },
+    {
+      "field_name": "os_actor_type",
+      "data_type": "INTEGER (NULLABLE)",
+      "description": "Enum describing actor type: Local = 1 (The actor is a local process), RemoteRpcNamedPipe = 2 (The actor is remote RPC over a named-pipe/SMB connection), RemoteRpcHttp = 3 (The actor is remote RPC a remote HTTP connection), RemoteRpcTcp = 4 (The actor is remote RPC over a TCP connection), RemoteFileSmb = 5 (The actor is a remote file operation over SMB)"
+    },
+    {
+      "field_name": "os_actor_container_info",
+      "data_type": "RECORD",
+      "description": "Container information for the process."
+    },
+    {
+      "field_name": "os_actor_process_ns_pid",
+      "data_type": "Not specified",
+      "description": "Not specified"
+    },
+    {
+      "field_name": "os_actor_ns_user_sid",
+      "data_type": "Not specified",
+      "description": "Not specified"
+    },
+    {
+      "field_name": "os_actor_process_container_id",
+      "data_type": "Not specified",
+      "description": "Not specified"
+    },
+    {
+      "field_name": "os_actor_process_image_auth_sha1",
+      "data_type": "STRING",
+      "description": "Process image SHA-1 authenticode."
+    },
+    {
+      "field_name": "os_actor_process_image_auth_sha2",
+      "data_type": "STRING",
+      "description": "Process image SHA-2 authenticode."
+    },
+    {
+      "field_name": "os_actor_process_last_writer_actor",
+      "data_type": "STRING",
+      "description": "Cortex instance ID of the last process that has written the os actor process image."
+    },
+    {
+      "field_name": "os_actor_rpc_func_opnum",
+      "data_type": "INTEGER",
+      "description": "MS-RPC function operation identitifer."
+    },
+    {
+      "field_name": "os_actor_rpc_interface_version_major",
+      "data_type": "INTEGER",
+      "description": "MS-RPC interface major version."
+    },
+    {
+      "field_name": "os_actor_rpc_interface_version_minor",
+      "data_type": "INTEGER",
+      "description": "MS-RPC interface minor version."
+    },
+    {
+      "field_name": "os_actor_rpc_protocol",
+      "data_type": "STRING",
+      "description": "MS-RPC protocol type."
+    },
+    {
+      "field_name": "os_actor_rpc_interface_uuid",
+      "data_type": "STRING",
+      "description": "MS-RPC interface unique identifier."
+    },
+    {
+      "field_name": "os_actor_process_static_analysis_score",
+      "data_type": "DEPRECATED",
+      "description": "DEPRECATED"
+    },
+    {
+      "field_name": "os_actor_process_file_original_name",
+      "data_type": "STRING",
+      "description": "Original file name of the casuality actor image based on the file information metadata."
+    },
+    {
+      "field_name": "os_actor_process_file_internal_name",
+      "data_type": "STRING",
+      "description": "Internal name of the casuality actor image based on the file information metadata."
+    }
+  ]
+}

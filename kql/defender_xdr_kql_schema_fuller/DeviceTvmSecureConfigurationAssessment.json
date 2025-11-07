@@ -1,0 +1,69 @@
+{
+  "table": "devicetvmsecureconfigurationassessment",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-devicetvmsecureconfigurationassessment-table",
+  "page_date": "2025-10-03",
+  "columns": [
+    {
+      "name": "DeviceId",
+      "type": "string",
+      "description": "Unique identifier for the device in the service"
+    },
+    {
+      "name": "DeviceName",
+      "type": "string",
+      "description": "Fully qualified domain name (FQDN) of the device"
+    },
+    {
+      "name": "OSPlatform",
+      "type": "string",
+      "description": "Platform of the operating system running on the device. Indicates specific operating systems, including variations within the same family, such as Windows 11, Windows 10, and Windows 7."
+    },
+    {
+      "name": "Timestamp",
+      "type": "datetime",
+      "description": "Date and time when the record was generated"
+    },
+    {
+      "name": "ConfigurationId",
+      "type": "string",
+      "description": "Unique identifier for a specific configuration"
+    },
+    {
+      "name": "ConfigurationCategory",
+      "type": "string",
+      "description": "Category or grouping to which the configuration belongs: Application, OS, Network, Accounts, Security controls"
+    },
+    {
+      "name": "ConfigurationSubcategory",
+      "type": "string",
+      "description": "Subcategory or subgrouping to which the configuration belongs. In many cases,  string describes specific capabilities or features."
+    },
+    {
+      "name": "ConfigurationImpact",
+      "type": "real",
+      "description": "Rated impact of the configuration to the overall configuration score (1-10)"
+    },
+    {
+      "name": "IsCompliant",
+      "type": "boolean",
+      "description": "Indicates whether the configuration or policy is properly configured* A value of 1 is Compliant* A value of 0 is Not Compliant"
+    },
+    {
+      "name": "IsApplicable",
+      "type": "boolean",
+      "description": "Indicates whether the configuration or policy applies to the device* A value of 1 is Applicable* A value of 0 is Not Applicable"
+    },
+    {
+      "name": "Context",
+      "type": "dynamic",
+      "description": "Additional contextual information about the configuration or policy"
+    },
+    {
+      "name": "IsExpectedUserImpact",
+      "type": "boolean",
+      "description": "Indicates whether there will be user impact if the configuration or policy is applied"
+    }
+  ],
+  "col_count": 12,
+  "generated_at": "2025-10-03T02:10:20.935569Z"
+}

@@ -1,0 +1,304 @@
+{
+  "table": "DeviceFileEvents",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-devicefileevents-table",
+  "page_date": "2025-06-11",
+  "columns": [
+    {
+      "name": "Timestamp",
+      "type": "datetime",
+      "description": "Date and time when the event was recorded"
+    },
+    {
+      "name": "DeviceId",
+      "type": "string",
+      "description": "Unique identifier for the device in the service"
+    },
+    {
+      "name": "DeviceName",
+      "type": "string",
+      "description": "Fully qualified domain name (FQDN) of the device"
+    },
+    {
+      "name": "ActionType",
+      "type": "string",
+      "description": "Type of activity that triggered the event. See the in-portal schema reference for details."
+    },
+    {
+      "name": "FileName",
+      "type": "string",
+      "description": "Name of the file that the recorded action was applied to"
+    },
+    {
+      "name": "FolderPath",
+      "type": "string",
+      "description": "Folder containing the file that the recorded action was applied to"
+    },
+    {
+      "name": "SHA1",
+      "type": "string",
+      "description": "SHA-1 of the file that the recorded action was applied to"
+    },
+    {
+      "name": "SHA256",
+      "type": "string",
+      "description": "SHA-256 of the file that the recorded action was applied to. This field is usually not populated — use the SHA1 column when available."
+    },
+    {
+      "name": "MD5",
+      "type": "string",
+      "description": "MD5 hash of the file that the recorded action was applied to"
+    },
+    {
+      "name": "FileOriginUrl",
+      "type": "string",
+      "description": "URL where the file was downloaded from"
+    },
+    {
+      "name": "FileOriginReferrerUrl",
+      "type": "string",
+      "description": "URL of the web page that links to the downloaded file"
+    },
+    {
+      "name": "FileOriginIP",
+      "type": "string",
+      "description": "IP address where the file was downloaded from"
+    },
+    {
+      "name": "PreviousFolderPath",
+      "type": "string",
+      "description": "Original folder containing the file before the recorded action was applied"
+    },
+    {
+      "name": "PreviousFileName",
+      "type": "string",
+      "description": "Original name of the file that was renamed as a result of the action"
+    },
+    {
+      "name": "FileSize",
+      "type": "long",
+      "description": "Size of the file in bytes"
+    },
+    {
+      "name": "InitiatingProcessAccountDomain",
+      "type": "string",
+      "description": "Domain of the account that ran the process responsible for the event"
+    },
+    {
+      "name": "InitiatingProcessAccountName",
+      "type": "string",
+      "description": "User name of the account that ran the process responsible for the event; might show Entra ID username"
+    },
+    {
+      "name": "InitiatingProcessAccountSid",
+      "type": "string",
+      "description": "Security Identifier (SID) of the account that ran the process responsible for the event"
+    },
+    {
+      "name": "InitiatingProcessAccountUpn",
+      "type": "string",
+      "description": "UPN of the account that ran the process responsible for the event"
+    },
+    {
+      "name": "InitiatingProcessAccountObjectId",
+      "type": "string",
+      "description": "Microsoft Entra object ID of the user account that ran the process responsible for the event"
+    },
+    {
+      "name": "InitiatingProcessMD5",
+      "type": "string",
+      "description": "MD5 hash of the process (image file) that initiated the event"
+    },
+    {
+      "name": "InitiatingProcessSHA1",
+      "type": "string",
+      "description": "SHA-1 of the process (image file) that initiated the event"
+    },
+    {
+      "name": "InitiatingProcessSHA256",
+      "type": "string",
+      "description": "SHA-256 of the process (image file) that initiated the event"
+    },
+    {
+      "name": "InitiatingProcessFolderPath",
+      "type": "string",
+      "description": "Folder containing the process (image file) that initiated the event"
+    },
+    {
+      "name": "InitiatingProcessFileName",
+      "type": "string",
+      "description": "Name of the process file that initiated the event; or name of the process"
+    },
+    {
+      "name": "InitiatingProcessFileSize",
+      "type": "long",
+      "description": "Size of the process (image file) that initiated the event"
+    },
+    {
+      "name": "InitiatingProcessVersionInfoCompanyName",
+      "type": "string",
+      "description": "Company name from the version info of the process responsible for the event"
+    },
+    {
+      "name": "InitiatingProcessVersionInfoProductName",
+      "type": "string",
+      "description": "Product name from the version info of the process responsible for the event"
+    },
+    {
+      "name": "InitiatingProcessVersionInfoProductVersion",
+      "type": "string",
+      "description": "Product version from the version info of the process responsible for the event"
+    },
+    {
+      "name": "InitiatingProcessVersionInfoInternalFileName",
+      "type": "string",
+      "description": "Internal file name from the version info of the process responsible for the event"
+    },
+    {
+      "name": "InitiatingProcessVersionInfoOriginalFileName",
+      "type": "string",
+      "description": "Original file name from the version info of the process responsible for the event"
+    },
+    {
+      "name": "InitiatingProcessVersionInfoFileDescription",
+      "type": "string",
+      "description": "Description from the version info of the process responsible for the event"
+    },
+    {
+      "name": "InitiatingProcessId",
+      "type": "long",
+      "description": "Process ID (PID) of the process that initiated the event"
+    },
+    {
+      "name": "InitiatingProcessCommandLine",
+      "type": "string",
+      "description": "Command line used to run the process that initiated the event"
+    },
+    {
+      "name": "InitiatingProcessCreationTime",
+      "type": "datetime",
+      "description": "Date and time when the process that initiated the event was started"
+    },
+    {
+      "name": "InitiatingProcessIntegrityLevel",
+      "type": "string",
+      "description": "Integrity level of the process that initiated the event..."
+    },
+    {
+      "name": "InitiatingProcessTokenElevation",
+      "type": "string",
+      "description": "Token type indicating the presence or absence of UAC elevation"
+    },
+    {
+      "name": "InitiatingProcessParentId",
+      "type": "long",
+      "description": "Process ID (PID) of the parent process that spawned the process responsible for the event"
+    },
+    {
+      "name": "InitiatingProcessParentFileName",
+      "type": "string",
+      "description": "Name of the parent process that spawned the process responsible for the event"
+    },
+    {
+      "name": "InitiatingProcessParentCreationTime",
+      "type": "datetime",
+      "description": "Date and time when the parent of the process responsible for the event was started"
+    },
+    {
+      "name": "RequestProtocol",
+      "type": "string",
+      "description": "Network protocol, if applicable: Unknown, Local, SMB, or NFS"
+    },
+    {
+      "name": "RequestSourceIP",
+      "type": "string",
+      "description": "IPv4 or IPv6 address of the remote device that initiated the activity"
+    },
+    {
+      "name": "RequestSourcePort",
+      "type": "int",
+      "description": "Source port on the remote device that initiated the activity"
+    },
+    {
+      "name": "RequestAccountName",
+      "type": "string",
+      "description": "User name of account used to remotely initiate the activity"
+    },
+    {
+      "name": "RequestAccountDomain",
+      "type": "string",
+      "description": "Domain of the account used to remotely initiate the activity"
+    },
+    {
+      "name": "RequestAccountSid",
+      "type": "string",
+      "description": "Security Identifier (SID) of the account used to remotely initiate the activity"
+    },
+    {
+      "name": "ShareName",
+      "type": "string",
+      "description": "Name of shared folder containing the file"
+    },
+    {
+      "name": "SensitivityLabel",
+      "type": "string",
+      "description": "Label applied to content to classify it"
+    },
+    {
+      "name": "SensitivitySubLabel",
+      "type": "string",
+      "description": "Sublabel applied to content to classify it"
+    },
+    {
+      "name": "IsAzureInfoProtectionApplied",
+      "type": "boolean",
+      "description": "Indicates whether the file is encrypted by Azure Information Protection"
+    },
+    {
+      "name": "ReportId",
+      "type": "long",
+      "description": "Event identifier based on a repeating counter..."
+    },
+    {
+      "name": "AppGuardContainerId",
+      "type": "string",
+      "description": "Identifier for the virtualized container used by Application Guard to isolate browser activity"
+    },
+    {
+      "name": "AdditionalFields",
+      "type": "string",
+      "description": "Additional information about the entity or event"
+    },
+    {
+      "name": "InitiatingProcessSessionId",
+      "type": "long",
+      "description": "Windows session ID of the initiating process"
+    },
+    {
+      "name": "IsInitiatingProcessRemoteSession",
+      "type": "bool",
+      "description": "Indicates whether the initiating process was run under an RDP session"
+    },
+    {
+      "name": "InitiatingProcessRemoteSessionDeviceName",
+      "type": "string",
+      "description": "Device name of the remote device from which the initiating process's RDP session was initiated"
+    },
+    {
+      "name": "InitiatingProcessRemoteSessionIP",
+      "type": "string",
+      "description": "IP address of the remote device from which the initiating process's RDP session was initiated"
+    },
+    {
+      "name": "ProcessUniqueId",
+      "type": "string",
+      "description": "Unique identifier of the process; equal to Process Start Key in Windows devices"
+    },
+    {
+      "name": "InitiatingProcessUniqueId",
+      "type": "string",
+      "description": "Unique identifier of the initiating process; equal to Process Start Key in Windows devices"
+    }
+  ],
+  "col_count": 59,
+  "generated_at": "2025-09-19T07:36:37.412053Z"
+}

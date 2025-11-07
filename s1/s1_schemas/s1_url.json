@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "source": "SentinelOne Operations Center",
+    "schema_name": "URL",
+    "extraction_date": "2025-10-21",
+    "description": "URL event fields for S1QL 2.0 queries",
+    "field_count": 2
+  },
+  "fields": [
+    {
+      "s1ql_field": "event.url.action",
+      "description": "URL action of process",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "url.address",
+      "description": "The full URL address accessed in the URL event",
+      "data_type": "String"
+    }
+  ]
+}

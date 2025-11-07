@@ -1,0 +1,30 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_network_fields": {
+      "network_traffic_analysis_action": {
+        "type": "keyword",
+        "description": "Type of the anomaly detection.  Requires XDR"
+      },
+      "network_traffic_analysis_behavior": {
+        "type": "keyword",
+        "description": "Specific values which caused the anomaly detection. The content of this field is a serialized json. The structure is specific to each detector identifier (network_traffic_analysis_identifier).  E.g. {\"DetectorStateType\":\"OUTLIER\"}  Requires XDR"
+      },
+      "network_traffic_analysis_identifier": {
+        "type": "keyword",
+        "description": "Identifier contains a string friendly name that uniquely identifies the detector. The identifier is used by alert aggregation to fetch additional metadata about the detector from the threat metadata service. It then enriches the threat_name and tms_rule_id to the proto.  E.g. anomaly:portscan  Requires XDR"
+      },
+      "network_traffic_analysis_is_client_relevant": {
+        "type": "bool",
+        "description": "If true, the client is relevant to the attack. It might be part of the attack.  Requires XDR"
+      },
+      "network_traffic_analysis_is_client_target": {
+        "type": "bool",
+        "description": "If true, the client is the target of the attack, otherwise its the server.  Requires XDR"
+      },
+      "network_traffic_analysis_primary_alert": {
+        "type": "bool",
+        "description": "If true, then this is the primary alert of all alerts, otherwise is not.  Requires XDR"
+      }
+    }
+  }
+}

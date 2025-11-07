@@ -1,0 +1,10 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_observed_fields": {
+      "observed_filename": {
+        "type": "path",
+        "description": "Observed file path"
+      }
+    }
+  }
+}

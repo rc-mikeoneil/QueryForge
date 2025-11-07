@@ -1,0 +1,222 @@
+{
+  "carbonblack_edr_query_schema": {
+    "example_queries": {
+      "process_search": [
+        {
+          "description": "Find processes with network connections to specific domain",
+          "query": "netconn_domain:www.carbonblack.com"
+        },
+        {
+          "description": "Find processes that loaded specific DLL",
+          "query": "modload_name:kernel32.dll"
+        },
+        {
+          "description": "Find processes with specific parent",
+          "query": "parent_name:explorer.exe"
+        },
+        {
+          "description": "Find processes that created child process",
+          "query": "childproc_name:cmd.exe"
+        },
+        {
+          "description": "Find processes by MD5 hash",
+          "query": "md5:5a18f00ab9330ac7539675f3f326cf11"
+        },
+        {
+          "description": "Find processes with command line containing specific term",
+          "query": "process_cmdline:backup"
+        },
+        {
+          "description": "Find processes on specific hostname",
+          "query": "device_name:win-5ikqdnf9go1"
+        },
+        {
+          "description": "Find processes in sensor group",
+          "query": "device_group:\"default group\""
+        },
+        {
+          "description": "Find processes by username",
+          "query": "process_username:system"
+        },
+        {
+          "description": "Find processes with registry modifications",
+          "query": "regmod_name:registry\\machine\\system\\currentcontrolset\\control\\deviceclasses*"
+        },
+        {
+          "description": "Find processes with network connections to IP address",
+          "query": "netconn_ipv4:127.0.0.1"
+        },
+        {
+          "description": "Find processes with connections to IP subnet",
+          "query": "netconn_ipv4:192.168.1.0/24"
+        },
+        {
+          "description": "Find processes with IPv6 connections",
+          "query": "netconn_ipv6:\"fe00:b9:266:2011:28dc:43d4:3298:12e2\""
+        },
+        {
+          "description": "Find processes with specific module load count",
+          "query": "modload_count:34"
+        },
+        {
+          "description": "Find processes with module load count in range",
+          "query": "modload_count:[1 TO 10]"
+        },
+        {
+          "description": "Find processes started on specific date",
+          "query": "process_start_time:2016-12-01"
+        },
+        {
+          "description": "Find processes started in date range",
+          "query": "process_start_time:[2016-12-01 TO 2016-12-31]"
+        },
+        {
+          "description": "Find processes started in last 24 hours",
+          "query": "process_start_time:-24h"
+        },
+        {
+          "description": "Find processes with file modifications",
+          "query": "filemod_name:system32/ntdll.dll"
+        },
+        {
+          "description": "Find processes with cross-process injection",
+          "query": "crossproc_action:ACTION_CREATE_REMOTE_THREAD"
+        },
+        {
+          "description": "Complex query with multiple conditions",
+          "query": "(process_name:svchost.exe or process_name:cmd.exe) and netconn_domain:.com and -process_username:system"
+        },
+        {
+          "description": "Find processes with specific path using wildcards",
+          "query": "process_name:c:\\windows\\system*\\*.exe"
+        }
+      ],
+      "binary_search": [
+        {
+          "description": "Find binaries by MD5",
+          "query": "md5:5a18f00ab9330ac7539675f3326cf11"
+        },
+        {
+          "description": "Find unsigned binaries",
+          "query": "digsig_result:Unsigned"
+        },
+        {
+          "description": "Find binaries by publisher",
+          "query": "digsig_publisher:Oracle"
+        },
+        {
+          "description": "Find binaries by company name",
+          "query": "company_name:Microsoft"
+        },
+        {
+          "description": "Find binaries by product name",
+          "query": "product_name:Java"
+        },
+        {
+          "description": "Find binaries with expired signatures",
+          "query": "digsig_result:Expired"
+        },
+        {
+          "description": "Find binaries signed on specific date",
+          "query": "digsig_sign_time:2011-12-31"
+        },
+        {
+          "description": "Find 64-bit executables",
+          "query": "is_64bit:true and is_executable_image:true"
+        },
+        {
+          "description": "Find binaries observed at specific path",
+          "query": "observed_filename:c:\\windows\\system32\\mtxoci.dll"
+        },
+        {
+          "description": "Find binaries with specific size range",
+          "query": "orig_mod_len:[1024 TO 4096]"
+        }
+      ],
+      "alert_search": [
+        {
+          "description": "Find unresolved alerts",
+          "query": "status:unresolved"
+        },
+        {
+          "description": "Find alerts from specific feed",
+          "query": "feed_name:\"My Watchlists\""
+        },
+        {
+          "description": "Find alerts on specific hostname",
+          "query": "hostname:workstation01"
+        },
+        {
+          "description": "Find alerts by severity score",
+          "query": "alert_severity:[75 TO *]"
+        },
+        {
+          "description": "Find alerts assigned to specific user",
+          "query": "assigned_to:john.doe"
+        },
+        {
+          "description": "Find alerts with specific IOC",
+          "query": "ioc_value:5a18f00ab9330ac7539675f3326cf11"
+        }
+      ],
+      "threat_intelligence": [
+        {
+          "description": "Find binaries with any threat intelligence score",
+          "query": "alliance_score_<feed>:*"
+        },
+        {
+          "description": "Find binaries with specific feed score",
+          "query": "alliance_score_<feed>:10"
+        },
+        {
+          "description": "Find binaries with feed score in range",
+          "query": "alliance_score_<feed>:[10 TO 20]"
+        },
+        {
+          "description": "Find binaries with high threat score",
+          "query": "alliance_score_<feed>:[75 TO *]"
+        }
+      ],
+      "binary_joins": [
+        {
+          "description": "Find processes that loaded unsigned modules",
+          "query": "digsig_result_modload:Unsigned"
+        },
+        {
+          "description": "Find processes with unsigned parent",
+          "query": "digsig_result_parent:Unsigned"
+        },
+        {
+          "description": "Find processes that wrote unsigned files",
+          "query": "digsig_result_filewrite:Unsigned"
+        },
+        {
+          "description": "Find processes with unsigned child processes",
+          "query": "digsig_result_child:Unsigned"
+        }
+      ],
+      "complex_queries": [
+        {
+          "description": "Find suspicious PowerShell with network activity",
+          "query": "process_name:powershell.exe and netconn_count:[1 TO *] and -domain:.microsoft.com"
+        },
+        {
+          "description": "Find processes with suspicious behaviors",
+          "query": "(crossproc_type:remotethread or crossproc_type:processopen) and -signed:true"
+        },
+        {
+          "description": "Find lateral movement indicators",
+          "query": "parent_name:services.exe and process_name:cmd.exe and netconn_count:[1 TO *]"
+        },
+        {
+          "description": "Find persistence via registry",
+          "query": "regmod:*\\currentversion\\run* and filewrite_md5:*"
+        },
+        {
+          "description": "Find encoded command execution",
+          "query": "process_cmdline:*-enc* or process_cmdline:*-encodedcommand* or process_cmdline:*frombase64*"
+        }
+      ]
+    }
+  }
+}

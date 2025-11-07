@@ -1,0 +1,135 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_auth_fields": {
+      "auth_cleartext_credentials_logon": {
+        "type": "bool",
+        "description": "Searchable. True if the logon attempt occurred using cleartext credentials; false if the logon attempt occurred using encrypted credentials"
+      },
+      "auth_credential_provider": {
+        "type": "keyword",
+        "description": "The logon process that validated the credentials in Event ID 4611. Common processes include Winlogon, Schannell, KSecDD, Secondary Logon Service (runas), IKE, HTTP.SYS, SspTest, dsRole, DS Replication CredProvConsent (user account control)"
+      },
+      "auth_daemon_logon": {
+        "type": "bool",
+        "description": "Searchable. Identifies if the logon attempt is attributed to a service (Windows) or daemon (macOS/Linux)"
+      },
+      "auth_domain_name": {
+        "type": "keyword",
+        "description": "Searchable. Domain name of the user the authentication event is attributed to"
+      },
+      "auth_elevated_token_logon": {
+        "type": "bool",
+        "description": "Searchable. True if the logon attempt occurred using an elevated token; false if the logon attempt occurred without the use of an elevated token"
+      },
+      "auth_event_action": {
+        "type": "keyword",
+        "description": "Searchable. Action that results from an authentication attempt"
+      },
+      "auth_failed_logon_count": {
+        "type": "integer",
+        "description": "Searchable. Number of failed logon attempts since last successful logon"
+      },
+      "auth_failure_reason": {
+        "type": "keyword",
+        "description": "Only used with ACTION_LOGON_FAILED event. The fields are documented at https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4625"
+      },
+      "auth_failure_status": {
+        "type": "keyword",
+        "description": "Searchable. Only used with ACTION_LOGON_FAILED event. The fields are documented at https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4625"
+      },
+      "auth_failure_sub_status": {
+        "type": "keyword",
+        "description": "Searchable. Hexadecimal code that identifies the logon failure reason"
+      },
+      "auth_impersonation_level": {
+        "type": "keyword",
+        "description": "Values are: IMPERSONATION_INVALID IMPERSONATION_NONE - Default, No impersonation IMPERSONATION_ANONYMOUS - Security Anonymous: The server cannot impersonate or identify the client. IMPERSONATION_CLIENT - Security Identification: The server can get the identity and privileges of the client, but cannot impersonate the client. IMPERSONATION_LOCAL_ONLY - Security Impersonation: The server can impersonate the clients security context on the local system. IMPERSONATION_LOCAL_OR_REMOTE - Security Delegation: The server can impersonate the clients security context on remote systems"
+      },
+      "auth_interactive_logon": {
+        "type": "bool",
+        "description": "Searchable. True if the logon attempt was interactive; false if the logon attempt was non-interactive"
+      },
+      "auth_key_length": {
+        "type": "integer",
+        "description": "For non-kerberos authentication this is the length of the key used to secure the authentication channel"
+      },
+      "auth_last_failed_logon_time": {
+        "type": "datetime",
+        "description": "Time of last failed logon"
+      },
+      "auth_linked_logon_id": {
+        "type": "keyword",
+        "description": "When UAC (User Account Control) is enabled and an administrator logs on there are 2 logon sessions created, one with admin privileges and a split token without. This is the linked LUID in 00000000-00000000 format"
+      },
+      "auth_logon_id": {
+        "type": "keyword",
+        "description": "Searchable. Locally unique identifier of the user the authentication event is attributed to. Unique per logon session per machine"
+      },
+      "auth_logon_type": {
+        "type": "integer",
+        "description": "Searchable. Identifies the logon type initiated by the authentication connection"
+      },
+      "auth_package": {
+        "type": "keyword",
+        "description": "Populated for Event id 4610 Events and identifies the authorization package that was loaded"
+      },
+      "auth_package_version": {
+        "type": "keyword",
+        "description": "The version of the authorization package identified in auth_package that was used"
+      },
+      "auth_privileges": {
+        "type": "keyword",
+        "description": "Searchable. Privilege(s) assigned to the logon session",
+        "array": true
+      },
+      "auth_remote_device": {
+        "type": "keyword",
+        "description": "Searchable. Name of the remote device the remote authentication attempt is made from"
+      },
+      "auth_remote_ipv4": {
+        "type": "ipaddr",
+        "description": "Searchable. IP address of the remote device the remote authentication attempt is made from"
+      },
+      "auth_remote_ipv6": {
+        "type": "ipv6addr",
+        "description": "Where the user was when they logged on - remote ip v6 address"
+      },
+      "auth_remote_location": {
+        "type": "keyword",
+        "description": "Searchable. Where the user was when they logged on in this format; city, region, country"
+      },
+      "auth_remote_logon": {
+        "type": "bool",
+        "description": "Searchable. True if the logon attempt was remote; false if the logon attempt was local"
+      },
+      "auth_remote_port": {
+        "type": "integer",
+        "description": "Searchable. Port number the remote authentication attempt is made from"
+      },
+      "auth_restricted_admin_logon": {
+        "type": "bool",
+        "description": "Searchable. True if the logon attempt occurred using Restricted Admin mode for Remote Desktop Connection; false if the logon attempt occurred without the use of Restricted Admin Mode"
+      },
+      "auth_server": {
+        "type": "keyword",
+        "description": "The server name that authenticated the logon"
+      },
+      "auth_user_id": {
+        "type": "keyword",
+        "description": "Searchable. Security ID (SID) of the user on a Windows machine. SID is a unique value of variable length used to identify a trustee (security principal)"
+      },
+      "auth_user_principal_name": {
+        "type": "keyword",
+        "description": "Searchable. User Principal Name (UPN) of the user associated with the authentication event"
+      },
+      "auth_username": {
+        "type": "keyword",
+        "description": "Searchable. Name of the user the authentication event is attributed to"
+      },
+      "auth_virtual_account_logon": {
+        "type": "bool",
+        "description": "Searchable. True if the logon attempt occurred using a virtual account; false if the logon attempt occurred without the use of a virtual account"
+      }
+    }
+  }
+}

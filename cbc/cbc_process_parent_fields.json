@@ -1,0 +1,74 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_parent_fields": {
+      "parent_cmdline": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Command line of the parent process"
+      },
+      "parent_cmdline_length": {
+        "type": "integer",
+        "description": "Searchable. Character count of the parent process' command line"
+      },
+      "parent_cmdline_raw": {
+        "type": "keyword",
+        "description": "Searchable. Command line related to parent process  Note: This field's value is untokenized."
+      },
+      "parent_effective_reputation": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Effective reputation of the parent process; applied by the sensor when the event occurred"
+      },
+      "parent_effective_reputation_source": {
+        "type": "keyword",
+        "description": "Searchable Source of the effective reputation for the parent process"
+      },
+      "parent_guid": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Unique process identifier assigned to the parent process"
+      },
+      "parent_hash": {
+        "type": "keyword",
+        "description": "Searchable. MD5 and/or SHA-256 hash of the parent process binary",
+        "array": true
+      },
+      "parent_issuer": {
+        "type": "keyword",
+        "description": "Searchable. Parent certificate issuer names",
+        "array": true
+      },
+      "parent_name": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Filesystem path of the parent process binary"
+      },
+      "parent_pid": {
+        "type": "integer",
+        "description": "Searchable. Identifier assigned by the operating system to the parent process"
+      },
+      "parent_product_name": {
+        "type": "keyword",
+        "description": "Product name associated with the parent executable (from the binary resource)"
+      },
+      "parent_publisher": {
+        "type": "keyword",
+        "description": "Publisher name(s) on the certificate(s) used to sign the Windows or macOS binary of the parent process",
+        "array": true
+      },
+      "parent_publisher_state": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. State of the digital signature(s) of the parent process' binary",
+        "array": true
+      },
+      "parent_reputation": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Reputation of the parent process; applied when event is processed by the Carbon Black Cloud i.e. after sensor delivers event to the cloud"
+      },
+      "parent_user_id": {
+        "type": "keyword",
+        "description": "Searchable. The user ID of the parent process."
+      },
+      "parent_username": {
+        "type": "keyword",
+        "description": "Username of the parent process"
+      }
+    }
+  }
+}

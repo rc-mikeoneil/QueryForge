@@ -1,0 +1,342 @@
+{
+  "section": "DST Action Actor",
+  "description": "The DST Action actor is the receiving process for actions performed remotely from one host to another.",
+  "fields": [
+    {
+      "name": "dst_actor_causality_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Causality ID of the destination actor."
+    },
+    {
+      "name": "dst_actor_effective_user_sid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Win: Primary user token of the executed binary. Unix: Effective UID of the executed binary."
+    },
+    {
+      "name": "dst_actor_effective_username",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Name assigned to the 'actor_effective_user_sid'."
+    },
+    {
+      "name": "dst_actor_is_injected_thread",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not this destination actor's thread is an injected thread."
+    },
+    {
+      "name": "dst_actor_os_process_instance_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Cortex XDR/XSIAM unique identifier for the destination operating system's actor process."
+    },
+    {
+      "name": "dst_actor_primary_user_sid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Win: Primary user token of the executed binary. Unix: Effective unique identifier (UID) of the executed binary."
+    },
+    {
+      "name": "dst_actor_primary_username",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Name assigned to the user_sid."
+    },
+    {
+      "name": "dst_actor_process_auth_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Windows: LUID (uint64) representing the token of the process."
+    },
+    {
+      "name": "dst_actor_process_causality_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Causality ID of the destination actor process."
+    },
+    {
+      "name": "dst_actor_process_command_line",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process command line - The command used to execute the process."
+    },
+    {
+      "name": "dst_actor_process_command_line_indices",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process command line - The command used to execute the process."
+    },
+    {
+      "name": "dst_actor_process_device_info",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Info about the device (volume + HW) from which this process started. including name, class guid, class name, bus type, volume guid, mount point, file system, drive type, vendor id, product id, and serial number."
+    },
+    {
+      "name": "dst_actor_process_execution_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Destination actor process execution time in epoch time."
+    },
+    {
+      "name": "dst_actor_process_file_access_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Access time of the file that created the destination actor process."
+    },
+    {
+      "name": "dst_actor_process_file_create_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Creation time of the file that created the process."
+    },
+    {
+      "name": "dst_actor_process_file_mod_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Modification time of the file that created the process."
+    },
+    {
+      "name": "dst_actor_process_file_size",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Size of the file involved in the process in bytes."
+    },
+    {
+      "name": "dst_actor_process_image_command_line",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process command line - The command used to execute the process."
+    },
+    {
+      "name": "dst_actor_process_image_extension",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process image extension - File extension."
+    },
+    {
+      "name": "dst_actor_process_image_md5",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "MD5 of the binary."
+    },
+    {
+      "name": "dst_actor_process_image_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "File name of the 'dst_actor_process_image_path'."
+    },
+    {
+      "name": "dst_actor_process_image_path",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process image path - A string identifying the location of the execution."
+    },
+    {
+      "name": "dst_actor_process_image_sha256",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "SHA256 of the binary."
+    },
+    {
+      "name": "dst_actor_process_instance_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process instance ID."
+    },
+    {
+      "name": "dst_actor_process_integrity_level",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Process integrity level."
+    },
+    {
+      "name": "dst_actor_process_is_64bit",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the process is 64-bit."
+    },
+    {
+      "name": "dst_actor_process_is_native",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not this process is a 'native process'. On a 32-bit machine the value is always true, and on a 64-bit machine the value is true, if the process is 64-bit."
+    },
+    {
+      "name": "dst_actor_process_is_replay",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "A boolean value that specifies whether the Agent was alive during the execution of the process."
+    },
+    {
+      "name": "dst_actor_process_is_special",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Indicates special system processes: RegularProcess = 0, KernelProcess = 1, AppContainerProcess = 2, NonWin32SubsystemProcess = 3"
+    },
+    {
+      "name": "dst_actor_process_logon_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Windows: LUID (uint64) representing the token of the process."
+    },
+    {
+      "name": "dst_actor_process_os_pid",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The Operating System (OS) Process Identifier (PID) of the destination actor process"
+    },
+    {
+      "name": "dst_actor_process_session_id",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Windows: Session ID of the process."
+    },
+    {
+      "name": "dst_actor_process_signature_is_embedded",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the signature is embedded inside the Program Executable (PE) or part of an external catalog file."
+    },
+    {
+      "name": "dst_actor_process_signature_product",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Signature product - The product family part of the signature."
+    },
+    {
+      "name": "dst_actor_process_signature_status",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Signature status of the process: Signed = 1, SignedInvalid = 2, Unsigned = 3, FailedToObtain = 4, WeakHash = 5, Unsupported = 6, InvalidCVE2020_0601 = 7, Deleted = 8"
+    },
+    {
+      "name": "dst_actor_process_signature_vendor",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Signature vendor - The vendor part of the signature."
+    },
+    {
+      "name": "dst_actor_remote_host",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Relevant when the actor is a remote actor and the host was resolved successfully."
+    },
+    {
+      "name": "dst_actor_remote_ip",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Relevant when the actor is a remote actor, where the type is not local and the IP was resolved successfully."
+    },
+    {
+      "name": "dst_actor_remote_pipe_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Relevant when the actor is a remote actor, where the type is RemoteRpcNamedPipe."
+    },
+    {
+      "name": "dst_actor_remote_port",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Relevant when the actor is a remote actor, where the type is RemoteRpcTcp."
+    },
+    {
+      "name": "dst_actor_thread_thread_id",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "An identifier of the operating system (OS) thread responsible for the event."
+    },
+    {
+      "name": "dst_actor_type",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The type of actor: Local = 1, RemoteRpcNamedPipe = 2, RemoteRpcHttp = 3, RemoteRpcTcp = 4, RemoteFileSmb = 5"
+    },
+    {
+      "name": "dst_actor_primary_normalized_user",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "A normalized user for the destination actor."
+    },
+    {
+      "name": "dst_actor_effective_normalized_user",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "A normalized user for the destination actor."
+    },
+    {
+      "name": "dst_actor_container_info",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Container information for the destination process."
+    },
+    {
+      "name": "dst_actor_process_container_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Container ID that is running this destination process."
+    },
+    {
+      "name": "dst_actor_rpc_interface_uuid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "MS-RPC interface unique identifier."
+    },
+    {
+      "name": "dst_actor_rpc_func_opnum",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "MS-RPC function operation identitifer."
+    },
+    {
+      "name": "dst_actor_rpc_interface_version_major",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "MS-RPC interface major version."
+    },
+    {
+      "name": "dst_actor_rpc_interface_version_minor",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "MS-RPC interface minor version."
+    },
+    {
+      "name": "dst_actor_rpc_protocol",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "MS-RPC protocol type."
+    },
+    {
+      "name": "dst_actor_process_image_auth_sha2",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process image SHA-2 authenticode."
+    },
+    {
+      "name": "dst_actor_process_image_auth_sha1",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Process image SHA-1 authenticode."
+    },
+    {
+      "name": "dst_actor_process_last_writer_actor",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Cortex instance ID of the last process that has written the actor process image."
+    },
+    {
+      "name": "dst_actor_process_file_original_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Original file name of the casuality actor image based on the file information metadata."
+    },
+    {
+      "name": "dst_actor_process_file_internal_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Internal name of the casuality actor image based on the file information metadata."
+    }
+  ]
+}

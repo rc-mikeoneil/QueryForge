@@ -1,0 +1,39 @@
+{
+  "table": "devicetvminfogathering",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-devicetvminfogathering-table",
+  "page_date": "2025-10-03",
+  "columns": [
+    {
+      "name": "Timestamp",
+      "type": "datetime",
+      "description": "Date and time when the record was generated"
+    },
+    {
+      "name": "LastSeenTime",
+      "type": "datetime",
+      "description": "Date and time when the service last saw the device"
+    },
+    {
+      "name": "DeviceId",
+      "type": "string",
+      "description": "Unique identifier for the device in the service"
+    },
+    {
+      "name": "DeviceName",
+      "type": "string",
+      "description": "Fully qualified domain name (FQDN) of the device"
+    },
+    {
+      "name": "OSPlatform",
+      "type": "string",
+      "description": "Platform of the operating system running on the device. This indicates specific operating systems, including variations within the same family, such as Windows 10 and Windows 7."
+    },
+    {
+      "name": "AdditionalFields",
+      "type": "dynamic",
+      "description": "Additional information about the entity or event"
+    }
+  ],
+  "col_count": 6,
+  "generated_at": "2025-10-03T02:10:18.519508Z"
+}

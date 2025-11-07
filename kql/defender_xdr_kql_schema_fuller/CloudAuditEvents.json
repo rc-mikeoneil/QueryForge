@@ -1,0 +1,79 @@
+{
+  "table": "cloudauditevents",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-cloudauditevents-table",
+  "page_date": "2025-10-03",
+  "columns": [
+    {
+      "name": "Timestamp",
+      "type": "datetime",
+      "description": "Date and time when the event was recorded"
+    },
+    {
+      "name": "ReportId",
+      "type": "string",
+      "description": "Unique identifier for the event"
+    },
+    {
+      "name": "DataSource",
+      "type": "string",
+      "description": "Data source for the cloud audit events, can be GCP (for Google Cloud Platform), AWS (for Amazon Web Services), Azure (for Azure Resource Manager), Kubernetes Audit (for Kubernetes), or other cloud platforms"
+    },
+    {
+      "name": "ActionType",
+      "type": "string",
+      "description": "Type of activity that triggered the event, can be: Unknown, Create, Read, Update, Delete, Other"
+    },
+    {
+      "name": "OperationName",
+      "type": "string",
+      "description": "Audit event operation name as it appears in the record, usually includes both resource type and operation"
+    },
+    {
+      "name": "ResourceId",
+      "type": "string",
+      "description": "Unique identifier of the cloud resource accessed"
+    },
+    {
+      "name": "IPAddress",
+      "type": "string",
+      "description": "The client IP address used to access the cloud resource or control plane"
+    },
+    {
+      "name": "IsAnonymousProxy",
+      "type": "boolean",
+      "description": "Indicates whether the IP address belongs to a known anonymous proxy (1) or no (0)"
+    },
+    {
+      "name": "CountryCode",
+      "type": "string",
+      "description": "Two-letter code indicating the country where the client IP address is geolocated"
+    },
+    {
+      "name": "City",
+      "type": "string",
+      "description": "City where the client IP address is geolocated"
+    },
+    {
+      "name": "Isp",
+      "type": "string",
+      "description": "Internet service provider (ISP) associated with the IP address"
+    },
+    {
+      "name": "UserAgent",
+      "type": "string",
+      "description": "User agent information from the web browser or other client application"
+    },
+    {
+      "name": "RawEventData",
+      "type": "dynamic",
+      "description": "Full raw event information from the data source in JSON format"
+    },
+    {
+      "name": "AdditionalFields",
+      "type": "dynamic",
+      "description": "Additional information about the audit event"
+    }
+  ],
+  "col_count": 14,
+  "generated_at": "2025-10-03T02:10:03.588414Z"
+}

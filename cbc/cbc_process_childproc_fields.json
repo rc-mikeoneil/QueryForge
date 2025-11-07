@@ -1,0 +1,119 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_childproc_fields": {
+      "childproc_childproc_count": {
+        "type": "integer",
+        "description": "Searchable. Number of childprocs made by the child process"
+      },
+      "childproc_cmdline": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Command line of the child process"
+      },
+      "childproc_cmdline_length": {
+        "type": "integer",
+        "description": "Searchable. Character count of the child process' command line  Requires Endpoint Standard"
+      },
+      "childproc_cmdline_raw": {
+        "type": "keyword",
+        "description": "Searchable. Command lines related to child processes  Note: This field's value is untokenized",
+        "array": true
+      },
+      "childproc_count": {
+        "type": "integer",
+        "description": "Searchable. Count of childproc events reported by the sensor since last initialization"
+      },
+      "childproc_crossproc_actor_count": {
+        "type": "integer",
+        "description": "Searchable. The number of cross-procedure actors made by the child process."
+      },
+      "childproc_crossproc_target_count": {
+        "type": "integer",
+        "description": "Searchable. The number of cross-procedure targets made by the child process."
+      },
+      "childproc_effective_reputation": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Effective reputation of the child process; applied by the sensor when the event occurs"
+      },
+      "childproc_effective_reputation_source": {
+        "type": "keyword",
+        "description": "Source of the effective reputation for the child process"
+      },
+      "childproc_filemod_count": {
+        "type": "integer",
+        "description": "Searchable. Number of filemods made by the child process"
+      },
+      "childproc_guid": {
+        "type": "keyword",
+        "description": "Searchable. Unique identifier for the child process; same as childproc_process_guid"
+      },
+      "childproc_hash": {
+        "type": "keyword",
+        "description": "Searchable. Hash(es) of the child process(es)' binary (MD5 or SHA-256 for Enterprise EDR, SHA-256 for Endpoint Standard)",
+        "array": true
+      },
+      "childproc_issuer": {
+        "type": "keyword",
+        "description": "Childproc certificate issuer names",
+        "array": true
+      },
+      "childproc_md5": {
+        "type": "md5",
+        "description": "Searchable. MD5 hash of the binary executed by the child process"
+      },
+      "childproc_modload_count": {
+        "type": "integer",
+        "description": "Searchable. The number of module loads made by the child process."
+      },
+      "childproc_name": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Filesystem path of the child process' binary"
+      },
+      "childproc_netconn_count": {
+        "type": "integer",
+        "description": "Searchable. Number of netconns made by the child process"
+      },
+      "childproc_pid": {
+        "type": "integer",
+        "description": "Process identifier assigned by the operating system to the child process"
+      },
+      "childproc_process_guid": {
+        "type": "keyword",
+        "description": "Searchable. Unique identifier for the child process; same as childproc_guid"
+      },
+      "childproc_product_name": {
+        "type": "keyword",
+        "description": "Product name associated with the child executable (from the binary resource)"
+      },
+      "childproc_publisher": {
+        "type": "keyword",
+        "description": "Publisher name on the certificate used to sign the Windows or macOS binary of child process(es)",
+        "array": true
+      },
+      "childproc_publisher_state": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. State of the digital signature(s) of the child processes' binaries",
+        "array": true
+      },
+      "childproc_regmod_count": {
+        "type": "integer",
+        "description": "Searchable. Number of registry modifications made by the child process."
+      },
+      "childproc_reputation": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Reputation of the child process; applied by the Carbon Black Cloud when the event was processed"
+      },
+      "childproc_sha256": {
+        "type": "sha256",
+        "description": "Searchable. SHA-256 hash of the binary executed by the child process in the event"
+      },
+      "childproc_suppressed": {
+        "type": "bool",
+        "description": "True if the Carbon Black Cloud suppressed one or more childproc process records; not present if false (suppressed if the child process shows no interesting activity after the process is created); only reported for Linux sensors"
+      },
+      "childproc_username": {
+        "type": "keyword",
+        "description": "Searchable. The user context in which the child process was executed"
+      }
+    }
+  }
+}

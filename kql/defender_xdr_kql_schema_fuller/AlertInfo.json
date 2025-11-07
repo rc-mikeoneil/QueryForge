@@ -1,0 +1,39 @@
+{
+  "table": "AlertInfo",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-alertinfo-table",
+  "page_date": "2025-06-11",
+  "columns": [
+    {
+      "name": "Timestamp",
+      "type": "datetime",
+      "description": "Date and time when the record was generated"
+    },
+    {
+      "name": "AlertId",
+      "type": "string",
+      "description": "Unique identifier for the alert"
+    },
+    {
+      "name": "Title",
+      "type": "string",
+      "description": "Title of the alert"
+    },
+    {
+      "name": "Category",
+      "type": "string",
+      "description": "Type of threat indicator or breach activity identified by the alert"
+    },
+    {
+      "name": "Severity",
+      "type": "string",
+      "description": "Indicates the potential impact (high, medium, or low) of the indicator/activity"
+    },
+    {
+      "name": "ServiceSource",
+      "type": "string",
+      "description": "Product or service that provided the alert information"
+    }
+  ],
+  "col_count": 6,
+  "generated_at": "2025-09-19T07:36:37.419589Z"
+}

@@ -1,0 +1,11 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_sensor_fields": {
+      "sensor_action": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. An action performed by the sensor on the process",
+        "array": true
+      }
+    }
+  }
+}

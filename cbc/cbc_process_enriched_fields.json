@@ -1,0 +1,11 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_enriched_fields": {
+      "enriched_event_type": {
+        "type": "keyword",
+        "description": "Searchable. Event type(s) as determined by the Carbon Black Cloud  Requires Endpoint Standard",
+        "array": true
+      }
+    }
+  }
+}

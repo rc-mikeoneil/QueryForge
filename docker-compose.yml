@@ -1,0 +1,19 @@
+services:
+  unified-mcp:
+    platform: linux/arm64
+    build: .
+    image: queryforge:latest
+    container_name: queryforge
+    user: "10001:10001"
+    working_dir: /app
+    environment:
+      - CACHE_DIR=/app/.cache
+      - MCP_TRANSPORT=sse
+      - MCP_HOST=0.0.0.0
+      - MCP_PORT=8080
+      - LITELLM_API_KEY=${LITELLM_API_KEY:-}
+      - LITELLM_BASE_URL=${LITELLM_BASE_URL:-}
+      - LITELLM_EMBEDDING_MODEL=${LITELLM_EMBEDDING_MODEL:-text-embedding-3-large}
+    ports:
+      - "8080:8080"
+    restart: unless-stopped

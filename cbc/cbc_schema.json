@@ -1,0 +1,1973 @@
+{
+  "carbonblack_edr_query_schema": {
+    "version": "platform-search-1.0",
+    "description": "Carbon Black Cloud Platform Search field schema converted from CSV",
+    "operators": {
+      "logical": {
+        "AND": {
+          "syntax": [
+            "and",
+            "AND",
+            "whitespace"
+          ],
+          "description": "Boolean AND operator",
+          "examples": [
+            "svchost.exe cmd.exe",
+            "svchost.exe and cmd.exe"
+          ]
+        },
+        "OR": {
+          "syntax": [
+            "or",
+            "OR"
+          ],
+          "description": "Boolean OR operator",
+          "examples": [
+            "svchost.exe or cmd.exe"
+          ]
+        },
+        "NOT": {
+          "syntax": [
+            "-"
+          ],
+          "description": "Boolean NOT operator",
+          "examples": [
+            "-svchost.exe",
+            "-alliance_score_srstrust:*"
+          ]
+        },
+        "NESTING": {
+          "syntax": [
+            "()"
+          ],
+          "description": "Parentheses for nested queries",
+          "examples": [
+            "(svchost.exe or cmd.exe) powershell.exe"
+          ]
+        }
+      },
+      "wildcard": {
+        "asterisk": {
+          "symbol": "*",
+          "description": "Matches zero or more characters",
+          "examples": [
+            "process_name:win*.exe"
+          ],
+          "warning": "Leading wildcards not recommended - significant performance penalty"
+        }
+      },
+      "field_syntax": {
+        "description": "Limit terms to specific fields",
+        "format": "<field>:<term>",
+        "examples": [
+          "process_name:svchost.exe",
+          "md5:5a18f00ab9330ac7539675f326cf11"
+        ]
+      }
+    },
+    "field_types": {
+      "text": {
+        "description": "Tokenized on whitespace and punctuation, case-insensitive",
+        "search_behavior": "Each word searched individually, supports phrase queries",
+        "example": "product_name:\"visual studio\""
+      },
+      "keyword": {
+        "description": "No tokenization, exact match required",
+        "search_behavior": "Must exactly match the field value",
+        "wildcards_supported": true,
+        "example": "process_name:svchost.exe"
+      },
+      "md5": {
+        "description": "MD5 hash value, keyword field",
+        "format": "32-character hexadecimal string",
+        "example": "process_md5:6d7c8a951af6ad6835c029b3cb88d333"
+      },
+      "sha256": {
+        "description": "SHA-256 hash value, keyword field",
+        "format": "64-character hexadecimal string",
+        "example": "process_sha256:BCB8F25FE404CDBFCB0927048F668D7958E590357930CF620F74B59839AF2A9C"
+      },
+      "path": {
+        "description": "Tokenized by path hierarchy",
+        "tokenization": "All subpaths are searchable",
+        "wildcards_supported": true,
+        "example": "path:c:\\windows\\system32\\boot\\winload.exe",
+        "special_cases": {
+          "modload": "Leading slashes tokenized, recommend omitting",
+          "regmod": "Replace controlset001/002 with currentcontrolset, omit leading backslash"
+        }
+      },
+      "domain": {
+        "description": "Split into labels for position-dependent searches",
+        "syntax": {
+          "trailing_dot": "Matches labels at end of domain (.com matches *.com)",
+          "leading_dot": "Matches labels at beginning (example. matches example.*)",
+          "both_dots": "Matches labels in middle (.com. matches *.com.*)",
+          "no_dots": "Matches anywhere in domain"
+        },
+        "example": "domain:example.com"
+      },
+      "ipaddr": {
+        "description": "IPv4 address with CIDR notation support",
+        "format": "(ip)/(netmask)",
+        "default_netmask": 32,
+        "examples": [
+          "ipaddr:192.168.0.0/16",
+          "ipaddr:10.0.1.1"
+        ]
+      },
+      "ipv6addr": {
+        "description": "IPv6 address with CIDR notation support",
+        "format": "(ip)/(netmask)",
+        "default_netmask": 32,
+        "examples": [
+          "ipv6addr:fe00:b9:266:2011:28dc:43d4:3298:12e2",
+          "ipv6addr:fe00:b9:266:2011::0/50"
+        ]
+      },
+      "count": {
+        "description": "Integer value from 0 to MAXINT",
+        "syntax": {
+          "exact": "X (matches exactly X)",
+          "range": "[X TO Y] (matches >= X and <= Y)",
+          "wildcard": "* can replace X or Y"
+        },
+        "examples": [
+          "modload_count:34",
+          "modload_count:[1 TO 10]",
+          "netconn_count:[10 TO *]"
+        ]
+      },
+      "datetime": {
+        "description": "Date and time field with multiple search formats",
+        "formats": [
+          {
+            "format": "YYYY-MM-DD",
+            "description": "Matches all entries on this day",
+            "example": "start:2016-12-01"
+          },
+          {
+            "format": "YYYY-MM-DDThh:mm:ss",
+            "description": "Matches within 24 hours from this timestamp",
+            "example": "start:2016-12-01T22:15:00"
+          },
+          {
+            "format": "[YYYY-MM-DD TO YYYY-MM-DD]",
+            "description": "Matches all entries in date range",
+            "example": "start:[2016-12-01 TO 2016-12-31]"
+          },
+          {
+            "format": "[YYYY-MM-DDThh:mm:ss TO YYYY-MM-DDThh:mm:ss]",
+            "description": "Matches all entries in datetime range",
+            "example": "start:[2016-12-01T22:15:00 TO 2016-12-01T23:14:59]"
+          },
+          {
+            "format": "-Xh",
+            "description": "Relative time calculation (h=hours, m=minutes, s=seconds)",
+            "example": "start:-24h"
+          }
+        ]
+      },
+      "bool": {
+        "description": "Boolean field with true/false values",
+        "values": [
+          "true",
+          "false"
+        ],
+        "case_insensitive": true,
+        "example": "is_64bit:true"
+      },
+      "sign": {
+        "description": "Digital signature status",
+        "values": [
+          "Signed",
+          "Unsigned",
+          "Bad Signature",
+          "Invalid Signature",
+          "Expired",
+          "Invalid Chain",
+          "Untrusted Root",
+          "Explicit Distrust"
+        ],
+        "quote_required": "For values with whitespace",
+        "examples": [
+          "digsig_result:Signed",
+          "digsig_result:\"Invalid Chain\""
+        ]
+      },
+      "cmdline": {
+        "description": "Command line tokenization with special parsing rules",
+        "tokenization": {
+          "removed_chars": [
+            "\\",
+            "\"",
+            "'",
+            "(",
+            ")",
+            "[",
+            "]",
+            "{",
+            "}",
+            ",",
+            "=",
+            "<",
+            ">",
+            "&",
+            "|",
+            ";"
+          ],
+          "preserved_chars": [
+            "%",
+            "$",
+            "-",
+            ".",
+            "_",
+            "^",
+            "@",
+            "#",
+            "!",
+            "?"
+          ],
+          "forward_slash": "Parsed as path or command switch depending on position",
+          "colon": "Parsed as drive letter or whitespace depending on position",
+          "file_extensions": "Stored as separate tokens (.exe, .dll)"
+        },
+        "wildcards_supported": true,
+        "example": "process_cmdline:backup"
+      }
+    },
+    "search_types": {
+      "process_search": {
+        "description": "Search for process execution events",
+        "applicable_to": [
+          "processes"
+        ]
+      },
+      "alert_search": {
+        "description": "Search for security alerts",
+        "applicable_to": [
+          "alerts"
+        ]
+      },
+      "binary_search": {
+        "description": "Search for binaries and file metadata",
+        "applicable_to": [
+          "binaries"
+        ]
+      }
+    },
+    "process_search_fields": {
+      "asset_id": {
+        "type": "keyword",
+        "description": "Searchable. Asset id that is guaranteed to be unique within each PSC environment, which is a set of organizations."
+      },
+      "attack_tactic": {
+        "type": "keyword",
+        "description": "Searchable. A tactic from the MITRE ATT&CK framework; defines a reason for an adversarys action, such as achieving credential access"
+      },
+      "attack_technique": {
+        "type": "keyword",
+        "description": "Searchable. A technique from the MITRE ATT&CK framework; defines an action an adversary takes to accomplish a goal, such as dumping credentials to achieve credential access"
+      },
+      "attack_tid": {
+        "type": "keyword",
+        "description": "Searchable.  Allows searching for a specific combination of MITRE ATT&CK tactic and technique; use the format tactic:technique.subtechnique"
+      },
+      "auth_cleartext_credentials_logon": {
+        "type": "bool",
+        "description": "Searchable. True if the logon attempt occurred using cleartext credentials; false if the logon attempt occurred using encrypted credentials"
+      },
+      "auth_credential_provider": {
+        "type": "keyword",
+        "description": "The logon process that validated the credentials in Event ID 4611. Common processes include Winlogon, Schannell, KSecDD, Secondary Logon Service (runas), IKE, HTTP.SYS, SspTest, dsRole, DS Replication CredProvConsent (user account control)"
+      },
+      "auth_daemon_logon": {
+        "type": "bool",
+        "description": "Searchable. Identifies if the logon attempt is attributed to a service (Windows) or daemon (macOS/Linux)"
+      },
+      "auth_domain_name": {
+        "type": "keyword",
+        "description": "Searchable. Domain name of the user the authentication event is attributed to"
+      },
+      "auth_elevated_token_logon": {
+        "type": "bool",
+        "description": "Searchable. True if the logon attempt occurred using an elevated token; false if the logon attempt occurred without the use of an elevated token"
+      },
+      "auth_event_action": {
+        "type": "keyword",
+        "description": "Searchable. Action that results from an authentication attempt"
+      },
+      "auth_failed_logon_count": {
+        "type": "integer",
+        "description": "Searchable. Number of failed logon attempts since last successful logon"
+      },
+      "auth_failure_reason": {
+        "type": "keyword",
+        "description": "Only used with ACTION_LOGON_FAILED event. The fields are documented at https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4625"
+      },
+      "auth_failure_status": {
+        "type": "keyword",
+        "description": "Searchable. Only used with ACTION_LOGON_FAILED event. The fields are documented at https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4625"
+      },
+      "auth_failure_sub_status": {
+        "type": "keyword",
+        "description": "Searchable. Hexadecimal code that identifies the logon failure reason"
+      },
+      "auth_impersonation_level": {
+        "type": "keyword",
+        "description": "Values are: IMPERSONATION_INVALID IMPERSONATION_NONE - Default, No impersonation IMPERSONATION_ANONYMOUS - Security Anonymous: The server cannot impersonate or identify the client. IMPERSONATION_CLIENT - Security Identification: The server can get the identity and privileges of the client, but cannot impersonate the client. IMPERSONATION_LOCAL_ONLY - Security Impersonation: The server can impersonate the clients security context on the local system. IMPERSONATION_LOCAL_OR_REMOTE - Security Delegation: The server can impersonate the clients security context on remote systems"
+      },
+      "auth_interactive_logon": {
+        "type": "bool",
+        "description": "Searchable. True if the logon attempt was interactive; false if the logon attempt was non-interactive"
+      },
+      "auth_key_length": {
+        "type": "integer",
+        "description": "For non-kerberos authentication this is the length of the key used to secure the authentication channel"
+      },
+      "auth_last_failed_logon_time": {
+        "type": "datetime",
+        "description": "Time of last failed logon"
+      },
+      "auth_linked_logon_id": {
+        "type": "keyword",
+        "description": "When UAC (User Account Control) is enabled and an administrator logs on there are 2 logon sessions created, one with admin privileges and a split token without. This is the linked LUID in 00000000-00000000 format"
+      },
+      "auth_logon_id": {
+        "type": "keyword",
+        "description": "Searchable. Locally unique identifier of the user the authentication event is attributed to. Unique per logon session per machine"
+      },
+      "auth_logon_type": {
+        "type": "integer",
+        "description": "Searchable. Identifies the logon type initiated by the authentication connection"
+      },
+      "auth_package": {
+        "type": "keyword",
+        "description": "Populated for Event id 4610 Events and identifies the authorization package that was loaded"
+      },
+      "auth_package_version": {
+        "type": "keyword",
+        "description": "The version of the authorization package identified in auth_package that was used"
+      },
+      "auth_privileges": {
+        "type": "keyword",
+        "description": "Searchable. Privilege(s) assigned to the logon session",
+        "array": true
+      },
+      "auth_remote_device": {
+        "type": "keyword",
+        "description": "Searchable. Name of the remote device the remote authentication attempt is made from"
+      },
+      "auth_remote_ipv4": {
+        "type": "ipaddr",
+        "description": "Searchable. IP address of the remote device the remote authentication attempt is made from"
+      },
+      "auth_remote_ipv6": {
+        "type": "ipv6addr",
+        "description": "Where the user was when they logged on - remote ip v6 address"
+      },
+      "auth_remote_location": {
+        "type": "keyword",
+        "description": "Searchable. Where the user was when they logged on in this format; city, region, country"
+      },
+      "auth_remote_logon": {
+        "type": "bool",
+        "description": "Searchable. True if the logon attempt was remote; false if the logon attempt was local"
+      },
+      "auth_remote_port": {
+        "type": "integer",
+        "description": "Searchable. Port number the remote authentication attempt is made from"
+      },
+      "auth_restricted_admin_logon": {
+        "type": "bool",
+        "description": "Searchable. True if the logon attempt occurred using Restricted Admin mode for Remote Desktop Connection; false if the logon attempt occurred without the use of Restricted Admin Mode"
+      },
+      "auth_server": {
+        "type": "keyword",
+        "description": "The server name that authenticated the logon"
+      },
+      "auth_user_id": {
+        "type": "keyword",
+        "description": "Searchable. Security ID (SID) of the user on a Windows machine. SID is a unique value of variable length used to identify a trustee (security principal)"
+      },
+      "auth_user_principal_name": {
+        "type": "keyword",
+        "description": "Searchable. User Principal Name (UPN) of the user associated with the authentication event"
+      },
+      "auth_username": {
+        "type": "keyword",
+        "description": "Searchable. Name of the user the authentication event is attributed to"
+      },
+      "auth_virtual_account_logon": {
+        "type": "bool",
+        "description": "Searchable. True if the logon attempt occurred using a virtual account; false if the logon attempt occurred without the use of a virtual account"
+      },
+      "backend_timestamp": {
+        "type": "datetime",
+        "description": "Searchable. Timestamp when the Carbon Black Cloud processed and enabled the data for searching; occurs after ingress_time; may differ from device_timestamp by a few minutes due to asynchronous processing"
+      },
+      "blocked_effective_reputation": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Effective reputation of the blocked file; applied by the sensor when the event occurs"
+      },
+      "blocked_hash": {
+        "type": "keyword",
+        "description": "Searchable. MD5 and SHA-256 hash(es) of the child process(es) binary; for any process(es) terminated by the sensor",
+        "array": true
+      },
+      "blocked_name": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Tokenized file path of the files blocked by sensor action"
+      },
+      "childproc_childproc_count": {
+        "type": "integer",
+        "description": "Searchable. Number of childprocs made by the child process"
+      },
+      "childproc_cmdline": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Command line of the child process"
+      },
+      "childproc_cmdline_length": {
+        "type": "integer",
+        "description": "Searchable. Character count of the child process' command line  Requires Endpoint Standard"
+      },
+      "childproc_cmdline_raw": {
+        "type": "keyword",
+        "description": "Searchable. Command lines related to child processes  Note: This field's value is untokenized",
+        "array": true
+      },
+      "childproc_count": {
+        "type": "integer",
+        "description": "Searchable. Count of childproc events reported by the sensor since last initialization"
+      },
+      "childproc_crossproc_actor_count": {
+        "type": "integer",
+        "description": "Searchable. The number of cross-procedure actors made by the child process."
+      },
+      "childproc_crossproc_target_count": {
+        "type": "integer",
+        "description": "Searchable. The number of cross-procedure targets made by the child process."
+      },
+      "childproc_effective_reputation": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Effective reputation of the child process; applied by the sensor when the event occurs"
+      },
+      "childproc_effective_reputation_source": {
+        "type": "keyword",
+        "description": "Source of the effective reputation for the child process"
+      },
+      "childproc_filemod_count": {
+        "type": "integer",
+        "description": "Searchable. Number of filemods made by the child process"
+      },
+      "childproc_guid": {
+        "type": "keyword",
+        "description": "Searchable. Unique identifier for the child process; same as childproc_process_guid"
+      },
+      "childproc_hash": {
+        "type": "keyword",
+        "description": "Searchable. Hash(es) of the child process(es)' binary (MD5 or SHA-256 for Enterprise EDR, SHA-256 for Endpoint Standard)",
+        "array": true
+      },
+      "childproc_issuer": {
+        "type": "keyword",
+        "description": "Childproc certificate issuer names",
+        "array": true
+      },
+      "childproc_md5": {
+        "type": "md5",
+        "description": "Searchable. MD5 hash of the binary executed by the child process"
+      },
+      "childproc_modload_count": {
+        "type": "integer",
+        "description": "Searchable. The number of module loads made by the child process."
+      },
+      "childproc_name": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Filesystem path of the child process' binary"
+      },
+      "childproc_netconn_count": {
+        "type": "integer",
+        "description": "Searchable. Number of netconns made by the child process"
+      },
+      "childproc_pid": {
+        "type": "integer",
+        "description": "Process identifier assigned by the operating system to the child process"
+      },
+      "childproc_process_guid": {
+        "type": "keyword",
+        "description": "Searchable. Unique identifier for the child process; same as childproc_guid"
+      },
+      "childproc_product_name": {
+        "type": "keyword",
+        "description": "Product name associated with the child executable (from the binary resource)"
+      },
+      "childproc_publisher": {
+        "type": "keyword",
+        "description": "Publisher name on the certificate used to sign the Windows or macOS binary of child process(es)",
+        "array": true
+      },
+      "childproc_publisher_state": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. State of the digital signature(s) of the child processes' binaries",
+        "array": true
+      },
+      "childproc_regmod_count": {
+        "type": "integer",
+        "description": "Searchable. Number of registry modifications made by the child process."
+      },
+      "childproc_reputation": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Reputation of the child process; applied by the Carbon Black Cloud when the event was processed"
+      },
+      "childproc_sha256": {
+        "type": "sha256",
+        "description": "Searchable. SHA-256 hash of the binary executed by the child process in the event"
+      },
+      "childproc_suppressed": {
+        "type": "bool",
+        "description": "True if the Carbon Black Cloud suppressed one or more childproc process records; not present if false (suppressed if the child process shows no interesting activity after the process is created); only reported for Linux sensors"
+      },
+      "childproc_username": {
+        "type": "keyword",
+        "description": "Searchable. The user context in which the child process was executed"
+      },
+      "cloud_provider_account_id": {
+        "type": "keyword",
+        "description": "Searchable. The account ID with the cloud provider."
+      },
+      "cloud_provider_resource_id": {
+        "type": "keyword",
+        "description": "Searchable. The resource ID with the cloud provider."
+      },
+      "cloud_provider_scale_group": {
+        "type": "keyword",
+        "description": "Searchable. The automatic scaling group name within the cloud provider."
+      },
+      "cloud_provider_tags": {
+        "type": "keyword",
+        "description": "Searchable. Tags used for the cloud provider."
+      },
+      "container_cgroup": {
+        "type": "keyword",
+        "description": "Searchable. A control group on linux that manages resources and which the container must interact with. Only reported for containerized processes.  Requires Linux sensor 2.15 or later."
+      },
+      "container_id": {
+        "type": "keyword",
+        "description": "Searchable. ID of the container. Only reported for containerized processes.  Requires Linux sensor 2.15 or later."
+      },
+      "container_image_hash": {
+        "type": "keyword",
+        "description": "Searchable. SHA-256 hash of the container image. Only reported for containerized processes.  Requires Linux sensor 2.15 or later."
+      },
+      "container_image_name": {
+        "type": "keyword",
+        "description": "Searchable. Name of the container image; images are static files with executable code than can create containers. Only reported for containerized processes.  Requires Linux sensor 2.15 or later."
+      },
+      "container_name": {
+        "type": "keyword",
+        "description": "Searchable. Name of the container; names are typically generated by runtime engines or by platforms, e.g. K8s. Only reported for containerized processes.  Requires Linux sensor 2.15 or later."
+      },
+      "created_timestamp": {
+        "type": "datetime",
+        "description": "Searchable. Timestamp of when the event document was created."
+      },
+      "crossproc_action": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. The cross-process action initiated by the actor process"
+      },
+      "crossproc_api": {
+        "type": "keyword",
+        "description": "Searchable. Name of the operating system API called by the actor process. In cases where that call targets another process, that process is reported as crossproc_name. In cases where there is no target process, this field represents a system API call.  Available with:all sensors with Endpoint Standard Windows 3.8 or later sensor with Enterprise EDR macOS sensors with Enterprise EDR (only reporting the PEP_CREATE_PHANDLE_API call made in task_for_pid() requests)"
+      },
+      "crossproc_cmdline": {
+        "type": "keyword",
+        "description": "Command line of the cross-process command"
+      },
+      "crossproc_cmdline_length": {
+        "type": "keyword",
+        "description": "Character count of the cross-process command line executed"
+      },
+      "crossproc_count": {
+        "type": "integer",
+        "description": "Searchable. Count of crossproc events reported by the sensor since last initialization"
+      },
+      "crossproc_effective_reputation": {
+        "type": "keyword",
+        "description": "Effective reputation of the binary on one side of the cross-process action; if crossproc_target=true, it is the effective reputation of the process targeted in the cross-process action; if crossproc_target=false, it is of the actor process (applied by the sensor when the event occurred)"
+      },
+      "crossproc_effective_reputation_source": {
+        "type": "keyword",
+        "description": "Source of the effective reputation for the cross-process"
+      },
+      "crossproc_excluded_count": {
+        "type": "integer",
+        "description": "Count of excluded crossproc events, as reported by the sensor since last initialization"
+      },
+      "crossproc_guid": {
+        "type": "keyword",
+        "description": "Unique process identifier of one of the cross-process members; if crossproc_target=true, it is the GUID of the process targeted in the cross-process action; if crossproc_target=false, it is the GUID of the actor process (same as crossproc_process_guid)"
+      },
+      "crossproc_hash": {
+        "type": "keyword",
+        "description": "Searchable. MD5 and/or SHA-256 hash(es) of the binaries whose processes are running on one side of the cross-process action; if crossproc_target=true, the hash(es) are of the process targeted in the cross-process action; if crossproc_target=false, the hash(es) are of the actor process",
+        "array": true
+      },
+      "crossproc_issuer": {
+        "type": "keyword",
+        "description": "Crossproc certificate issuer names",
+        "array": true
+      },
+      "crossproc_md5": {
+        "type": "md5",
+        "description": "Searchable. MD5 hash of the binary on one side of the cross-process action; if crossproc_target=true, it is the MD5 of the process targeted in the cross-process action; if crossproc_target=false, it is the MD5 of the actor process"
+      },
+      "crossproc_name": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Filesystem path of the binary of one side of the cross-process action (can be missing for certain crossproc actions); if crossproc_target=true, it is the path of the process targeted in the cross-process action; if crossproc_target=false, it is the path of the actor process"
+      },
+      "crossproc_pid": {
+        "type": "integer",
+        "description": "Process identifier assigned by the operating system to one of the cross-process members; if crossproc_target=true, it is the PID of the process targeted in the cross-process action; if crossproc_target=false, it is the PID of the actor process"
+      },
+      "crossproc_process_guid": {
+        "type": "keyword",
+        "description": "Searchable. Unique identifer of the process on one side of the cross-process action; if crossproc_target=true, it is the GUID of the process targeted in the cross-process action; if crossproc_target=false, it is the GUID of the actor process (same as crossproc_guid)"
+      },
+      "crossproc_product_name": {
+        "type": "keyword",
+        "description": "Product name associated with the crossproc executable (from the binary resource)"
+      },
+      "crossproc_publisher": {
+        "type": "keyword",
+        "description": "Crossproc certificate signer names",
+        "array": true
+      },
+      "crossproc_publisher_state": {
+        "type": "keyword",
+        "description": "Certificate signature state of the crossproc as string. Can be combination of FILE_SIGNATURE_STATE_INVALID, FILE_SIGNATURE_STATE_SIGNED, FILE_SIGNATURE_STATE_VERIFIED, FILE_SIGNATURE_STATE_NOT_SIGNED, FILE_SIGNATURE_STATE_UNKNOWN, FILE_SIGNATURE_STATE_CHAINED, FILE_SIGNATURE_STATE_TRUSTED, FILE_SIGNATURE_STATE_OS, FILE_SIGNATURE_STATE_CATALOG_SIGNED or FILE_SIGNATURE_STATE_NOT_SIGNED if not signed",
+        "array": true
+      },
+      "crossproc_reputation": {
+        "type": "keyword",
+        "description": "Reputation of crossproc as provided by the CDC"
+      },
+      "crossproc_sha256": {
+        "type": "sha256",
+        "description": "Searchable. SHA-256 hash of the binary on one side of the cross-process action; if crossproc_target=true, it is the SHA-256 of the process targeted in the cross-process action; if crossproc_target=false, it is the SHA-256 of the actor process"
+      },
+      "crossproc_target": {
+        "type": "bool",
+        "description": "Searchable. True if the process was the target of the cross-process event; false if the process was the actor"
+      },
+      "crossproc_username": {
+        "type": "keyword",
+        "description": "Username associated with the crossproc process"
+      },
+      "device_external_ip": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. IP address of the endpoint according to the Carbon Black Cloud; can differ from device_internal_ip due to network proxy or NAT; either IPv4 (dotted decimal notation) or IPv6 (proprietary format documented below)"
+      },
+      "device_group": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Sensor group to which the endpoint was assigned when the sensor recorded the event data"
+      },
+      "device_group_id": {
+        "type": "integer",
+        "description": "Searchable. ID assigned to the device_group by Carbon Black Cloud; will match on the ad_group_id on the Devices API"
+      },
+      "device_id": {
+        "type": "integer",
+        "description": "Searchable. ID assigned to the endpoint by Carbon Black Cloud; unique across all Carbon Black Cloud environments"
+      },
+      "device_installed_by": {
+        "type": "keyword",
+        "description": "Searchable. The Carbon Black Cloud user who was logged in to the endpoint when the sensor was installed (e.g. pat.malarkey@email.com, DOMAIN\\pmalarkey or pmalarkey)"
+      },
+      "device_internal_ip": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. IP address of the endpoint reported by the sensor; either IPv4 (dotted decimal notation) or IPv6 (proprietary format, documented below)"
+      },
+      "device_location": {
+        "type": "keyword",
+        "description": "The endpoints current location relative to the organizations network, based on the current IP address and the devices registered DNS domain suffix"
+      },
+      "device_name": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Hostname of the endpoint recorded by the sensor when last initialized"
+      },
+      "device_os": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. The operating system of the endpoint"
+      },
+      "device_os_version": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. The operating system and version of the endpoint  Requires Windows sensor"
+      },
+      "device_policy": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Policy applied to the endpoint in the Carbon Black Cloud"
+      },
+      "device_policy_id": {
+        "type": "integer",
+        "description": "Searchable. ID assigned to the device_policy by the Carbon Black Cloud"
+      },
+      "device_sensor_version": {
+        "type": "keyword",
+        "description": "Searchable. Version of the sensor installed on the device"
+      },
+      "device_target_priority": {
+        "type": "keyword",
+        "description": "The Target value configured in the policy assigned to the sensor  Requires Endpoint Standard"
+      },
+      "device_timestamp": {
+        "type": "datetime",
+        "description": "Searchable. Sensor-reported timestamp of the batch of events in which this record was submitted to Carbon Black Cloud"
+      },
+      "document_guid": {
+        "type": "keyword",
+        "description": "Searchable. Unique id of solr document. Built as process_guid+server-side timestamp in epoch milliseconds (1/1/1970 based)."
+      },
+      "domain": {
+        "type": "domain",
+        "description": "Domain name"
+      },
+      "enriched": {
+        "type": "bool",
+        "description": "Searchable. True if the result includes data from the Endpoint Standard product. Not present if false.  Requires Endpoint Standard"
+      },
+      "enriched_event_type": {
+        "type": "keyword",
+        "description": "Searchable. Event type(s) as determined by the Carbon Black Cloud  Requires Endpoint Standard",
+        "array": true
+      },
+      "event_attack_stage": {
+        "type": "keyword",
+        "description": "Searchable. Stage(s) of the cyber kill chain when an attack was terminated by sensor  Requires Endpoint Standard",
+        "array": true
+      },
+      "event_description": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Event description calculated by the Carbon Black Cloud  Requires Endpoint Standard"
+      },
+      "event_guid": {
+        "type": "keyword",
+        "description": "Deprecated. Use event_id"
+      },
+      "event_hash": {
+        "type": "keyword",
+        "description": "Deprecated. Use event_id"
+      },
+      "event_id": {
+        "type": "keyword",
+        "description": "Searchable. Unique event identifier assigned by the Carbon Black Cloud"
+      },
+      "event_threat_score": {
+        "type": "integer",
+        "description": "Searchable. Score(s) assigned by Carbon Black Cloud for the detected threat (Returns values 0-8)  Requires Endpoint Standard",
+        "array": true
+      },
+      "event_timestamp": {
+        "type": "datetime",
+        "description": "Searchable. Timestamp reported by the sensor when the event occurred"
+      },
+      "event_type": {
+        "type": "keyword",
+        "description": "Searchable. Type of event observed",
+        "array": true
+      },
+      "file_scan_result": {
+        "type": "keyword",
+        "description": "Searchable. Classification of malware detected during a background scan performed by the Endpoint Standard sensor i.e. enriched_event_type=STATIC_SCAN; returned value is the /-separated combination of malware family and malware name (e.g. TROJAN/TR/PowerShell.Gen, where malware family = TROJAN)  Requires Endpoint Standard"
+      },
+      "fileless_scriptload_cmdline": {
+        "type": "keyword",
+        "description": "Searchable. Deobfuscated script content run in a fileless context by the process  Requires Windows sensor and Windows 10/Server version 1703 or later  For more information see here",
+        "array": true
+      },
+      "fileless_scriptload_cmdline_length": {
+        "type": "integer",
+        "description": "Searchable. Character count of the deobfuscated script content run in a fileless context.  Requires Windows sensor and Windows 10/Server version 1703 or later  For more information see here",
+        "array": true
+      },
+      "fileless_scriptload_cmdline_raw": {
+        "type": "keyword",
+        "description": "Searchable. Deobfuscated command lines of fileless scripts  Note: This field's value is untokenized.  Requires Windows sensor and Windows 10/Server version 1703 or later  For more information see here",
+        "array": true
+      },
+      "fileless_scriptload_hash": {
+        "type": "keyword",
+        "description": "Searchable. SHA-256 hash(es) of the deobfuscated script content run by the process in a fileless context.  Requires Windows sensor and Windows 10/Server version 1703 or later  For more information see here",
+        "array": true
+      },
+      "fileless_scriptload_sha256": {
+        "type": "sha256",
+        "description": "Deprecated. Use fileless_scriptload_hash"
+      },
+      "filemod_action": {
+        "type": "keyword",
+        "description": "Action(s) associated with the filemod operation"
+      },
+      "filemod_count": {
+        "type": "integer",
+        "description": "Searchable. Count of filemod events reported by the sensor since last initialization"
+      },
+      "filemod_effective_reputation": {
+        "type": "keyword",
+        "description": "Reputation of the actor that modified the file"
+      },
+      "filemod_excluded_count": {
+        "type": "integer",
+        "description": "Count of excluded filemod events, as reported by the sensor since last initialization"
+      },
+      "filemod_file_type": {
+        "type": "keyword",
+        "description": "Searchable. The type of file e.g. EXECUTABLE_IMAGE, EXECUTABLE_LIBRARY or SCRIPT"
+      },
+      "filemod_hash": {
+        "type": "keyword",
+        "description": "Searchable. MD5 and/or SHA-256 hash(es) of the file(s) modified by the actor process",
+        "array": true
+      },
+      "filemod_issuer": {
+        "type": "keyword",
+        "description": "Filemod certificate issuer names",
+        "array": true
+      },
+      "filemod_md5": {
+        "type": "md5",
+        "description": "Searchable. MD5 hash of the file modified by the actor process"
+      },
+      "filemod_name": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Filesystem path of the file modified by the process"
+      },
+      "filemod_new_name": {
+        "type": "keyword",
+        "description": "Searchable. Filesystem path of the new file modified by the process during ACTION_FILE_RENAME"
+      },
+      "filemod_old_name": {
+        "type": "keyword",
+        "description": "Searchable. Filesystem path of the old file modified by the process during ACTION_FILE_RENAME"
+      },
+      "filemod_publisher": {
+        "type": "keyword",
+        "description": "Searchable. Publisher name on the certificate(s) used to sign the target file of the filemod",
+        "array": true
+      },
+      "filemod_publisher_state": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. State of the digital signature(s) of the target file of the filemod; checks signatures on Powershell scripts and .MSI/.MSP files",
+        "array": true
+      },
+      "filemod_reputation": {
+        "type": "keyword",
+        "description": "Reputation of the target file"
+      },
+      "filemod_sha256": {
+        "type": "sha256",
+        "description": "Searchable. SHA-256 hash of the file modified by the actor process"
+      },
+      "filemod_type": {
+        "type": "keyword",
+        "description": "Type of file involved in the filemod operation  Requires Enterprise EDR"
+      },
+      "hash": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Aggregate set of MD5 and SHA-256 hashes associated with the process (including childproc_hash, crossproc_hash, filemod_hash, modload_hash, process_hash); enables one-step search for any matches on the specified hashes",
+        "array": true
+      },
+      "hostname": {
+        "type": "keyword",
+        "description": "Hostname"
+      },
+      "ingress_time": {
+        "type": "integer",
+        "description": "Searchable. Timestamp of when the Carbon Black Cloud receives data for initial processing (Unix format)"
+      },
+      "ipaddr": {
+        "type": "ipaddr",
+        "description": "IPv4 address (CIDR supported)"
+      },
+      "ipport": {
+        "type": "integer",
+        "description": "Network port"
+      },
+      "ipv6addr": {
+        "type": "ipv6addr",
+        "description": "IPv6 address (CIDR supported)"
+      },
+      "legacy": {
+        "type": "bool",
+        "description": "Deprecated. Use enriched"
+      },
+      "legacy_description": {
+        "type": "keyword",
+        "description": "Deprecated. Use event_description"
+      },
+      "md5": {
+        "type": "md5",
+        "description": "MD5 hash"
+      },
+      "modload_action": {
+        "type": "keyword",
+        "description": "Searchable. Action associated with the modload operation  Requires Enterprise EDR"
+      },
+      "modload_count": {
+        "type": "integer",
+        "description": "Searchable. Count of modload events reported by the sensor since last initialization"
+      },
+      "modload_effective_reputation": {
+        "type": "keyword",
+        "description": "Searchable. Effective reputation(s) of the loaded module(s); applied by the sensor when the event occurred  Requires Enterprise EDR"
+      },
+      "modload_excluded_count": {
+        "type": "integer",
+        "description": "Count of excluded modload events, as reported by the sensor since last initialization"
+      },
+      "modload_file_type": {
+        "type": "keyword",
+        "description": "Searchable. The type of file"
+      },
+      "modload_hash": {
+        "type": "keyword",
+        "description": "Searchable. MD5 or SHA-256 hash(es) of the module(s) loaded by the process  Requires Enterprise EDR",
+        "array": true
+      },
+      "modload_issuer": {
+        "type": "keyword",
+        "description": "Modload certificate issuer names",
+        "array": true
+      },
+      "modload_md5": {
+        "type": "md5",
+        "description": "Searchable. MD5 hash of the module loaded by the process  Requires Enterprise EDR"
+      },
+      "modload_name": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Filesystem path(s) of the module(s) loaded by the process  Requires Enterprise EDR",
+        "array": true
+      },
+      "modload_publisher": {
+        "type": "keyword",
+        "description": "Searchable. Publisher name on the certificate(s) used to sign the Windows or macOS module binary  Requires Enterprise EDR"
+      },
+      "modload_publisher_state": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Digital signature state(s) of the loaded modules' binaries  Requires Enterprise EDR",
+        "array": true
+      },
+      "modload_sha256": {
+        "type": "sha256",
+        "description": "Searchable. SHA-256 hash of the module loaded by the process  Requires Enterprise EDR"
+      },
+      "netconn_action": {
+        "type": "keyword",
+        "description": "Deprecated. Use netconn_actions"
+      },
+      "netconn_actions": {
+        "type": "keyword",
+        "description": "Searchable. Netconn operation actions such as ACTION_CONNECTION_CREATE, plus XDR actions like ACTION_HTTP",
+        "array": true
+      },
+      "netconn_application_protocol": {
+        "type": "keyword",
+        "description": "Searchable. Protocol detected in the application layer of the network session; does not necessarily correspond to the port listed in IANA service registry.  Requires XDR"
+      },
+      "netconn_bytes_received": {
+        "type": "integer",
+        "description": "Searchable. Final byte count for all traffic received by the sensors endpoint during the netconn session.  Requires XDR"
+      },
+      "netconn_bytes_sent": {
+        "type": "integer",
+        "description": "Searchable. Final byte count for all traffic sent by the sensors endpoint during the netconn session.  Requires XDR"
+      },
+      "netconn_community_id": {
+        "type": "keyword",
+        "description": "Searchable. Community ID of the network session, calculated according to the convention documented in https://github.com/corelight/community-id-spec.  Requires Enterprise EDR"
+      },
+      "netconn_count": {
+        "type": "integer",
+        "description": "Searchable. Count of netconn events reported by the sensor since last initialization"
+      },
+      "netconn_dns_answer_class": {
+        "type": "keyword",
+        "description": "Searchable. The set of resource class in the query answer (aka answer_class).  Requires Windows sensor 4.0 or later and XDR add-on.",
+        "array": true
+      },
+      "netconn_dns_answer_count": {
+        "type": "integer",
+        "description": "Searchable. The total number of resource records in a reply messages answer section.  Requires Windows sensor 4.0 or later and XDR add-on."
+      },
+      "netconn_dns_answer_data": {
+        "type": "keyword",
+        "description": "Searchable. The set of data in the query answer.  Requires Windows sensor 4.0 or later and XDR add-on.",
+        "array": true
+      },
+      "netconn_dns_answer_data_length": {
+        "type": "integer",
+        "description": "Searchable. The length of the data in a reply messages answer section.  Requires Windows sensor 4.0 or later and XDR add-on.",
+        "array": true
+      },
+      "netconn_dns_answer_name": {
+        "type": "keyword",
+        "description": "Searchable. The set of resource descriptions in the query answer (aka answer_name).  Requires Windows sensor 4.0 or later and XDR add-on.",
+        "array": true
+      },
+      "netconn_dns_answer_ttl": {
+        "type": "long",
+        "description": "Searchable. The set of resource ttl in the query answer.  Requires Windows sensor 4.0 or later and XDR add-on.",
+        "array": true
+      },
+      "netconn_dns_answer_type": {
+        "type": "keyword",
+        "description": "Searchable. The set of resource type in the query answer (aka answer_type).  Requires Windows sensor 4.0 or later and XDR add-on.",
+        "array": true
+      },
+      "netconn_dns_flags": {
+        "type": "keyword",
+        "description": "Searchable. A set of DNS flags.  Requires Windows sensor 4.0 or later and XDR add-on.",
+        "array": true
+      },
+      "netconn_dns_query_class": {
+        "type": "keyword",
+        "description": "Searchable. A descriptive name for the class of the query.  Requires Windows sensor 4.0 or later and XDR add-on."
+      },
+      "netconn_dns_query_name": {
+        "type": "keyword",
+        "description": "Searchable. The domain name that is the subject of the DNS query.  Requires Windows sensor 4.0 or later and XDR add-on."
+      },
+      "netconn_dns_query_type": {
+        "type": "keyword",
+        "description": "Searchable. A descriptive name for the type of the query.  Requires Windows sensor 4.0 or later and XDR add-on."
+      },
+      "netconn_dns_response_code": {
+        "type": "integer",
+        "description": "Searchable. DNS response code.  Requires Windows sensor 4.0 or later and XDR add-on."
+      },
+      "netconn_domain": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Domain name (FQDN) associated with the remote end of the network connection, if available  Note: 'netconn_domain' is searchable for PROCESSES but not returnable."
+      },
+      "netconn_excluded_count": {
+        "type": "integer",
+        "description": "Count of excluded netconn events, as reported by the sensor since last initialization"
+      },
+      "netconn_failed": {
+        "type": "bool",
+        "description": "Searchable. True if the outbound network connection attempt failed; if successful, the field is not set"
+      },
+      "netconn_first_packet_timestamp": {
+        "type": "datetime",
+        "description": "Searchable. Timestamp when the sensor detected the first packet in the network session (ISO 8601 format, in UTC).  Requires XDR"
+      },
+      "netconn_inbound": {
+        "type": "bool",
+        "description": "Searchable. True if the network connection was inbound; false if outbound"
+      },
+      "netconn_ipv4": {
+        "type": "ipaddr",
+        "description": "Searchable. Value-Searchable. IPv4 address of the remote side of the network connection; stored as integer (not dotted decimal); searchable using either format"
+      },
+      "netconn_ipv6": {
+        "type": "ipv6addr",
+        "description": "Searchable. Value-Searchable. IPv6 address of the remote side of the network connection; stored as a String without octet-separating colon characters"
+      },
+      "netconn_ja3_local_fingerprint": {
+        "type": "keyword",
+        "description": "Searchable. JA3 hash of the client side of the TLS session; can be JA3 or JA3S depending on which side initiated the TLS session.  Requires XDR"
+      },
+      "netconn_ja3_local_fingerprint_fields": {
+        "type": "keyword",
+        "description": "Searchable. Decimal values of the bytes used to calculate the JA3 hash for the local side of the TLS session.  Requires XDR"
+      },
+      "netconn_ja3_remote_fingerprint": {
+        "type": "keyword",
+        "description": "Searchable. JA3 hash of the remote side of the TLS session; can be JA3 or JA3S depending on which side initiated the TLS session.  Requires XDR"
+      },
+      "netconn_ja3_remote_fingerprint_fields": {
+        "type": "keyword",
+        "description": "Searchable. Decimal values of the bytes used to calculate the JA3 hash for the remote side of the TLS session.  Requires XDR"
+      },
+      "netconn_last_packet_timestamp": {
+        "type": "datetime",
+        "description": "Searchable. Timestamp when the sensor detected the last packet in the network session.  Requires XDR"
+      },
+      "netconn_listen": {
+        "type": "bool",
+        "description": "True if the process opened a socket to listen for incoming connections (i.e. where netconn_action = ACTION_CONNECTION_LISTEN); not present if false"
+      },
+      "netconn_local_ipv4": {
+        "type": "ipaddr",
+        "description": "Searchable. Value-Searchable. IPv4 address of the local side of the network connection; stored as an integer (not dotted decimal); searchable by either format"
+      },
+      "netconn_local_ipv6": {
+        "type": "ipv6addr",
+        "description": "Searchable. Value-Searchable. IPv6 address of the local side of the network connection; stored as a String without octet-separating colon characters"
+      },
+      "netconn_local_location": {
+        "type": "keyword",
+        "description": "Geolocation of the local side of the network connection"
+      },
+      "netconn_local_port": {
+        "type": "integer",
+        "description": "TCP or UDP port used by the local side of the network connection"
+      },
+      "netconn_location": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Geolocation of the remote side of the network connection; same as netconn_remote_location"
+      },
+      "netconn_port": {
+        "type": "integer",
+        "description": "Searchable. TCP or UDP port used by the interesting side of the network connection (when netconn_inbound = true, this represents the local port; otherwise, this represents the port on the remote side of the network connection); compare with netconn_remote_port, event_network_remote_port and event_network_local_port"
+      },
+      "netconn_protocol": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Network protocol of the network connection"
+      },
+      "netconn_proxy_domain": {
+        "type": "keyword",
+        "description": "Searchable. Domain name (FQDN) associated with the remote side of the connection with an intermediary HTTP network device, usually a proxy server  Requires Windows sensor and Enterprise EDR  Unencrypted intermediary network devices only"
+      },
+      "netconn_proxy_ipv4": {
+        "type": "ipaddr",
+        "description": "Searchable. IPv4 address of the remote side of the connection with an intermediary HTTP network device, usually a proxy server. Stored as integer not dotted decimal, but searchable using either format  Requires Windows sensor and Enterprise EDR  Unencrypted intermediary network devices only"
+      },
+      "netconn_proxy_ipv6": {
+        "type": "ipv6addr",
+        "description": "Searchable. IPv6 address of the remote side of the connection with an intermediary HTTP network device, usually a proxy server; stored as String without octet-separating colon characters  Requires Windows sensor and Enterprise EDR  Unencrypted intermediary network devices only"
+      },
+      "netconn_proxy_port": {
+        "type": "integer",
+        "description": "Searchable. TCP or UDP port used by the remote side of the connection with an intermediary HTTP network device, usually a proxy server  Requires Windows sensor and Enterprise EDR  Unencrypted intermediary network devices only"
+      },
+      "netconn_remote_device_id": {
+        "type": "integer",
+        "description": "Searchable. The device_id of the remote side of the network session, if a Carbon Black Cloud sensor is installed on the remote asset.  Requires XDR"
+      },
+      "netconn_remote_device_name": {
+        "type": "keyword",
+        "description": "Searchable. The device_name of the remote side of the network session, if a Carbon Black Cloud sensor is installed on the remote asset.  Requires XDR"
+      },
+      "netconn_remote_ipv4": {
+        "type": "ipaddr",
+        "description": "Searchable. IPv4 address of the remote side of the network connection; stored as integer, not dotted decimal, but searchable as either"
+      },
+      "netconn_remote_ipv6": {
+        "type": "ipv6addr",
+        "description": "Searchable. IPv6 address of the remote side of the network connection; stored as String without octet-separating colon characters"
+      },
+      "netconn_remote_location": {
+        "type": "keyword",
+        "description": "Geolocation of the remote side of the network connection"
+      },
+      "netconn_remote_port": {
+        "type": "integer",
+        "description": "Searchable. TCP or UDP port used by the remote side of the network connection; same as netconn_port and event_network_remote_port"
+      },
+      "netconn_request_headers": {
+        "type": "keyword",
+        "description": "Searchable. List of HTTP request headers captured from the start of the HTTP session. Represented as key:value pairs for each header.  Requires XDR"
+      },
+      "netconn_request_method": {
+        "type": "keyword",
+        "description": "Searchable. HTTP request method submitted as part of the HTTP session request.  Requires XDR"
+      },
+      "netconn_request_url": {
+        "type": "keyword",
+        "description": "Searchable. The URL path and HTTP version requested in the HTTP session.  Requires XDR"
+      },
+      "netconn_response_headers": {
+        "type": "keyword",
+        "description": "Searchable. List of HTTP response headers captured from the start of the HTTP session. Represented as key:value pairs for each header.  Requires XDR"
+      },
+      "netconn_response_status_code": {
+        "type": "integer",
+        "description": "Searchable. The numeric code included in the HTTP response, signifying status of the requested operation.  Requires XDR"
+      },
+      "netconn_server_name_indication": {
+        "type": "keyword",
+        "description": "Searchable. Hostname requested by the TLS client, used to help server distinguish between multiple TLS-protected services listening on the same IP:port binding.  Requires XDR"
+      },
+      "netconn_tls_certificate_issuer_name": {
+        "type": "keyword",
+        "description": "Searchable. Name reported in the TLS certificate for the entity which issued the TLS certificate.  Requires XDR"
+      },
+      "netconn_tls_certificate_subject_name": {
+        "type": "keyword",
+        "description": "Searchable. Name reported in the TLS certificate for the entity to which the TLS certificate was issued.  Requires XDR"
+      },
+      "netconn_tls_certificate_subject_not_valid_after": {
+        "type": "datetime",
+        "description": "Searchable. Timestamp after which the TLS certificate asserts it is no longer valid.  Requires XDR"
+      },
+      "netconn_tls_certificate_subject_not_valid_before": {
+        "type": "datetime",
+        "description": "Searchable. Timestamp before which the TLS certificate asserts it is not yet valid.  Requires XDR"
+      },
+      "netconn_tls_cipher": {
+        "type": "keyword",
+        "description": "Searchable. Netconn TLS cipher suite (see the IANA TLS cipher suites registry for the full list of possible values TLS Cipher Suites)"
+      },
+      "netconn_tls_version": {
+        "type": "keyword",
+        "description": "Searchable. TLS protocol version used in this session  Requires XDR"
+      },
+      "network_traffic_analysis_action": {
+        "type": "keyword",
+        "description": "Type of the anomaly detection.  Requires XDR"
+      },
+      "network_traffic_analysis_behavior": {
+        "type": "keyword",
+        "description": "Specific values which caused the anomaly detection. The content of this field is a serialized json. The structure is specific to each detector identifier (network_traffic_analysis_identifier).  E.g. {\"DetectorStateType\":\"OUTLIER\"}  Requires XDR"
+      },
+      "network_traffic_analysis_identifier": {
+        "type": "keyword",
+        "description": "Identifier contains a string friendly name that uniquely identifies the detector. The identifier is used by alert aggregation to fetch additional metadata about the detector from the threat metadata service. It then enriches the threat_name and tms_rule_id to the proto.  E.g. anomaly:portscan  Requires XDR"
+      },
+      "network_traffic_analysis_is_client_relevant": {
+        "type": "bool",
+        "description": "If true, the client is relevant to the attack. It might be part of the attack.  Requires XDR"
+      },
+      "network_traffic_analysis_is_client_target": {
+        "type": "bool",
+        "description": "If true, the client is the target of the attack, otherwise its the server.  Requires XDR"
+      },
+      "network_traffic_analysis_primary_alert": {
+        "type": "bool",
+        "description": "If true, then this is the primary alert of all alerts, otherwise is not.  Requires XDR"
+      },
+      "num_devices": {
+        "type": "integer",
+        "description": "Count of devices where application is reported for the requested search population  Requires Endpoint Standard"
+      },
+      "num_events": {
+        "type": "integer",
+        "description": "Count of events attributed to the device or application running on the requested search population  Requires Endpoint Standard"
+      },
+      "observation_description": {
+        "type": "keyword",
+        "description": "Searchable. Description of the activity that generated the observation"
+      },
+      "observation_id": {
+        "type": "keyword",
+        "description": "Searchable. Unique ID of the observation"
+      },
+      "observation_type": {
+        "type": "keyword",
+        "description": "Searchable. Type of observation generated"
+      },
+      "observed_filename": {
+        "type": "path",
+        "description": "Observed file path"
+      },
+      "org_id": {
+        "type": "keyword",
+        "description": "Searchable. Organization identifer; unique across all environments and equivalent to org_key in other Carbon Black Cloud APIs"
+      },
+      "parent_cmdline": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Command line of the parent process"
+      },
+      "parent_cmdline_length": {
+        "type": "integer",
+        "description": "Searchable. Character count of the parent process' command line"
+      },
+      "parent_cmdline_raw": {
+        "type": "keyword",
+        "description": "Searchable. Command line related to parent process  Note: This field's value is untokenized."
+      },
+      "parent_effective_reputation": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Effective reputation of the parent process; applied by the sensor when the event occurred"
+      },
+      "parent_effective_reputation_source": {
+        "type": "keyword",
+        "description": "Searchable Source of the effective reputation for the parent process"
+      },
+      "parent_guid": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Unique process identifier assigned to the parent process"
+      },
+      "parent_hash": {
+        "type": "keyword",
+        "description": "Searchable. MD5 and/or SHA-256 hash of the parent process binary",
+        "array": true
+      },
+      "parent_issuer": {
+        "type": "keyword",
+        "description": "Searchable. Parent certificate issuer names",
+        "array": true
+      },
+      "parent_name": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Filesystem path of the parent process binary"
+      },
+      "parent_pid": {
+        "type": "integer",
+        "description": "Searchable. Identifier assigned by the operating system to the parent process"
+      },
+      "parent_product_name": {
+        "type": "keyword",
+        "description": "Product name associated with the parent executable (from the binary resource)"
+      },
+      "parent_publisher": {
+        "type": "keyword",
+        "description": "Publisher name(s) on the certificate(s) used to sign the Windows or macOS binary of the parent process",
+        "array": true
+      },
+      "parent_publisher_state": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. State of the digital signature(s) of the parent process' binary",
+        "array": true
+      },
+      "parent_reputation": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Reputation of the parent process; applied when event is processed by the Carbon Black Cloud i.e. after sensor delivers event to the cloud"
+      },
+      "parent_user_id": {
+        "type": "keyword",
+        "description": "Searchable. The user ID of the parent process."
+      },
+      "parent_username": {
+        "type": "keyword",
+        "description": "Username of the parent process"
+      },
+      "path": {
+        "type": "path",
+        "description": "File path"
+      },
+      "process_cmdline": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Command line executed by the actor process",
+        "array": true
+      },
+      "process_cmdline_length": {
+        "type": "integer",
+        "description": "Searchable. Character count of the actor process command line",
+        "array": true
+      },
+      "process_cmdline_raw": {
+        "type": "keyword",
+        "description": "Searchable. Command lines related to process  Note: This field's value is untokenized.",
+        "array": true
+      },
+      "process_company_name": {
+        "type": "keyword",
+        "description": "Searchable. Company name embedded in the portable executable header of the Windows process binary.  Requires Windows sensor"
+      },
+      "process_container_pid": {
+        "type": "keyword",
+        "description": "Searchable. Containerized process identifier assigned by the operating system; can be multi-valued in case of fork() or exec() process operations on Linux"
+      },
+      "process_copyright": {
+        "type": "keyword",
+        "description": "Copyright notice embedded in the portable executable header of the Windows process binary.  Requires Windows sensor"
+      },
+      "process_duration": {
+        "type": "integer",
+        "description": "Searchable. Duration of the process (in milliseconds); available after sensor reports the process has terminated; equal to (process_end_time - process_start_time)"
+      },
+      "process_effective_reputation": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Effective reputation of the actor process; applied by the sensor when the event occurred"
+      },
+      "process_effective_reputation_source": {
+        "type": "keyword",
+        "description": "Searchable Source of the effective reputation for the actor process"
+      },
+      "process_elevated": {
+        "type": "bool",
+        "description": "Searchable. True if the process was running with elevated privileges; not present if False  Requires Windows sensor"
+      },
+      "process_end_time": {
+        "type": "datetime",
+        "description": "Sensor timestamp when the process terminated; available after sensor reports the process has terminated (only for processes whose start times the sensor captured)"
+      },
+      "process_file_description": {
+        "type": "keyword",
+        "description": "Searchable. File description embedded in the portable executable header of the Windows process binary  Requires Windows sensor"
+      },
+      "process_file_size": {
+        "type": "integer",
+        "description": "Size of the binary executed by the process, in bytes."
+      },
+      "process_guid": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Unique process identifier for the actor process"
+      },
+      "process_hash": {
+        "type": "keyword",
+        "description": "Searchable. MD5 and/or SHA-256 hash of the actor process binary; order may vary when two hashes are reported",
+        "array": true
+      },
+      "process_integrity_level": {
+        "type": "keyword",
+        "description": "Searchable. Windows Mandatory Integrity Control (MIC) level of the process  Requires Windows sensor"
+      },
+      "process_internal_name": {
+        "type": "keyword",
+        "description": "Searchable. Internal name embedded in the portable executable header of the Windows process binary.  Requires Windows sensor"
+      },
+      "process_issuer": {
+        "type": "keyword",
+        "description": "Searchable. The process certificate issuer names",
+        "array": true
+      },
+      "process_loaded_script_hash": {
+        "type": "keyword",
+        "description": "Deprecated. Use scriptload_hash",
+        "array": true
+      },
+      "process_loaded_script_name": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Deprecated. Use scriptload_name"
+      },
+      "process_name": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Filesystem path of the actor process binary"
+      },
+      "process_original_filename": {
+        "type": "keyword",
+        "description": "Searchable. Original filename embedded in the portable executable header of the Windows process binary.  Requires Windows sensor"
+      },
+      "process_pid": {
+        "type": "integer",
+        "description": "Searchable. Process identifier assigned by the operating system; can be multi-valued in case of fork() or exec() process operations on Linux and macOS",
+        "array": true
+      },
+      "process_private_build": {
+        "type": "keyword",
+        "description": "Text that describes a private version of a process binary; typically specified if the file was not built using standard release procedures. Embedded in the portable executable header of the Windows process binary.  Requires Windows sensor"
+      },
+      "process_privileges": {
+        "type": "keyword",
+        "description": "Searchable. Windows privileges associated wth the process (see Microsoft documentation for complete list privilege-constants)  Requires Windows sensor",
+        "array": true
+      },
+      "process_product_name": {
+        "type": "keyword",
+        "description": "Searchable. Product name embedded in the portable executable header of the Windows process binary.  Requires Windows sensor"
+      },
+      "process_product_version": {
+        "type": "keyword",
+        "description": "Searchable. Product version embedded in the portable executable header of the Windows process binary.  Requires Windows sensor"
+      },
+      "process_publisher": {
+        "type": "keyword",
+        "description": "Searchable. Publisher name on the certificate used to sign the Windows or macOS process binary",
+        "array": true
+      },
+      "process_publisher_state": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. State of the digital signature(s) of a Windows or macOS process binary",
+        "array": true
+      },
+      "process_reputation": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Reputation of the actor process; applied when event is processed by the Carbon Black Cloud i.e. after sensor delivers event to the cloud"
+      },
+      "process_service_name": {
+        "type": "keyword",
+        "description": "Searchable. Windows service name(s) assigned to the process  Requires Windows sensor",
+        "array": true
+      },
+      "process_sha256": {
+        "type": "sha256",
+        "description": "SHA-256 hash of the actor process binary"
+      },
+      "process_special_build": {
+        "type": "keyword",
+        "description": "Text that describes how this version of the process binary differs from the standard version; typically specified for private builds. Embedded in the portable executable header of the Windows process binary.  Requires Windows sensor"
+      },
+      "process_start_time": {
+        "type": "datetime",
+        "description": "Searchable. Sensor reported timestamp of when the process started; not available for processes running before the sensor starts"
+      },
+      "process_terminated": {
+        "type": "bool",
+        "description": "Searchable. True indicates the process has terminated; always false for enriched events (process termination not recorded)"
+      },
+      "process_trademark": {
+        "type": "keyword",
+        "description": "Trademark information embedded in the portable executable header of the Windows process binary.  Requires Windows sensor"
+      },
+      "process_user_id": {
+        "type": "keyword",
+        "description": "Searchable. The user ID under which the actor process was executed. Equals SID for Windows endpoints.  Requires Windows sensor 4.0 or later."
+      },
+      "process_username": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. User context in which the actor process was executed. MacOS - all users for the PID for fork() and exec() transitions, Linux - process user for exec() events, but in a future sensor release can be multi-valued due to setuid()\"",
+        "array": true
+      },
+      "regmod_action": {
+        "type": "keyword",
+        "description": "Action associated with the regmod operation"
+      },
+      "regmod_count": {
+        "type": "integer",
+        "description": "Searchable. Count of regmod events reported by the sensor since last initialization"
+      },
+      "regmod_excluded_count": {
+        "type": "integer",
+        "description": "Count of excluded regmod events, as reported by the sensor since last initialization"
+      },
+      "regmod_name": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Full path of the registry key(s) modified by the process"
+      },
+      "regmod_new_name": {
+        "type": "keyword",
+        "description": "Searchable. New registry key name; renamed keys only (regmod_action=ACTION_RENAME_KEY)"
+      },
+      "regmod_old_name": {
+        "type": "keyword",
+        "description": "Searchable. Old registry key name; renamed keys only (regmod_action=ACTION_RENAME_KEY)"
+      },
+      "report_id": {
+        "type": "keyword",
+        "description": "Searchable. ID of the watchlist report(s) that detected a hit on the process  Requires Enterprise EDR"
+      },
+      "report_severity": {
+        "type": "integer",
+        "description": "Searchable. Severity rating of the watchlist report; ranges 1-10, where 10 is severe  Requires Enterprise EDR"
+      },
+      "report_watchlist_id": {
+        "type": "keyword",
+        "description": "Deprecated. Use watchlist_id"
+      },
+      "rule_config_id": {
+        "type": "keyword",
+        "description": "Searchable. The GUID of the policy rule config associated with the Observation or Alert"
+      },
+      "rule_config_name": {
+        "type": "keyword",
+        "description": "Searchable. The name of the policy rule config associated with the Observation or Alert, such as Defense Evasion or Advanced Scripting Prevention"
+      },
+      "rule_id": {
+        "type": "keyword",
+        "description": "Searchable. ID of the rule that triggered an alert or observation; applies to INDICATOR_OF_ATTACK, INTRUSION_DETECTION_SYSTEM, HOST_BASED_FIREWALL, TAU_INTELLIGENCE, USB_DEVICE_CONTROL alerts and observations"
+      },
+      "scriptload_content": {
+        "type": "keyword",
+        "description": "Searchable. Deobfuscated script content of script(s) loaded from the filesystem.  Requires Windows sensor, AMSI support via Windows 10/Server version 1703 or later  For more information see here",
+        "array": true
+      },
+      "scriptload_content_length": {
+        "type": "integer",
+        "description": "Searchable. Character count of the deobfuscated script content of script(s) loaded from the filesystem.  Requires Windows sensor, AMSI support via Windows 10/Server version 1703 or later  For more information see here",
+        "array": true
+      },
+      "scriptload_content_raw": {
+        "type": "keyword",
+        "description": "Searchable. Raw script content of the script loaded from the filesystem without tokenization of special characters.  Requires Windows sensor, AMSI support via Windows 10/Server version 1703 or later  For more information see here"
+      },
+      "scriptload_count": {
+        "type": "integer",
+        "description": "Searchable. Count of scriptload events reported by the sensor since last initialization.  Requires Windows sensor or macOS sensor"
+      },
+      "scriptload_effective_reputation": {
+        "type": "keyword",
+        "description": "Searchable. Effective reputation of the script file loaded by the process; applied by the sensor when the event occurred.  Requires Windows sensor or macOS sensor, and Enterprise EDR"
+      },
+      "scriptload_file_type": {
+        "type": "keyword",
+        "description": "Searchable. The type of file.",
+        "array": true
+      },
+      "scriptload_hash": {
+        "type": "keyword",
+        "description": "Searchable. MD5 and/or SHA-256 hash(es) of the script file loaded by the process.  Requires Windows sensor or macOS sensor",
+        "array": true
+      },
+      "scriptload_issuer": {
+        "type": "keyword",
+        "description": "Scriptload certificate issuer names",
+        "array": true
+      },
+      "scriptload_md5": {
+        "type": "md5",
+        "description": "Deprecated. Use scriptload_hash"
+      },
+      "scriptload_name": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Filesystem path of the script file loaded by the process."
+      },
+      "scriptload_publisher": {
+        "type": "keyword",
+        "description": "Searchable. Publisher name on the certificate used to sign the script file; reports signatures on Powershell scripts and .MSI/.MSP files.  Requires Windows sensor or macOS sensor"
+      },
+      "scriptload_publisher_state": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. State of the loaded script(s)' digital signature(s); checks signatures on Powershell scripts and .MSI/.MSP files  Requires Windows sensor or macOS sensor",
+        "array": true
+      },
+      "scriptload_sha256": {
+        "type": "sha256",
+        "description": "Deprecated. Use scriptload_hash"
+      },
+      "scriptload_type": {
+        "type": "keyword",
+        "description": "The type of the scriptload operation"
+      },
+      "sensor_action": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. An action performed by the sensor on the process",
+        "array": true
+      },
+      "sha256": {
+        "type": "sha256",
+        "description": "SHA-256 hash"
+      },
+      "threat_hunt_id": {
+        "type": "keyword",
+        "description": "ID of the MDR threat hunt"
+      },
+      "threat_hunt_name": {
+        "type": "keyword",
+        "description": "Name of the MDR threat hunt"
+      },
+      "threat_name": {
+        "type": "keyword",
+        "description": "Name of the threat related to the observation"
+      },
+      "tms_rule_id": {
+        "type": "keyword",
+        "description": "ID of the rule that triggered an Intrusion Detection System or Network Traffic Analysis alert  Requires XDR"
+      },
+      "triggered_alert_id": {
+        "type": "keyword",
+        "description": "Triggered alert IDs associated with the process (including silent alerts)"
+      },
+      "ttp": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Patterns of behavior (i.e. tactics, techniques, procedures) associated with specific threat actor(s) attributed to events of the process",
+        "array": true
+      },
+      "username": {
+        "type": "keyword",
+        "description": "User context"
+      },
+      "virtual_private_cloud_id": {
+        "type": "keyword",
+        "description": "Searchable. ID of the virtual private cloud."
+      },
+      "watchlist_hit": {
+        "type": "keyword",
+        "description": "Identifier for specific hit record(s) generated by a watchlist, from report metadata; format <watchlist_id>:<report_id>:<report_severity>  Requires Enterprise EDR",
+        "array": true
+      },
+      "watchlist_id": {
+        "type": "keyword",
+        "description": "Searchable. ID of the watchlist that generated a hit on the process  Requires Enterprise EDR"
+      },
+      "watchlist_name": {
+        "type": "keyword",
+        "description": "Searchable. Name of the watchlist that generated a hit on the process  Requires Enterprise EDR"
+      },
+      "windows_event_id": {
+        "type": "keyword",
+        "description": "Searchable. Identifier of the Windows event type, specified by Windows OS"
+      }
+    },
+    "example_queries": {
+      "process_search": [
+        {
+          "description": "Find processes with network connections to specific domain",
+          "query": "netconn_domain:www.carbonblack.com"
+        },
+        {
+          "description": "Find processes that loaded specific DLL",
+          "query": "modload_name:kernel32.dll"
+        },
+        {
+          "description": "Find processes with specific parent",
+          "query": "parent_name:explorer.exe"
+        },
+        {
+          "description": "Find processes that created child process",
+          "query": "childproc_name:cmd.exe"
+        },
+        {
+          "description": "Find processes by MD5 hash",
+          "query": "md5:5a18f00ab9330ac7539675f3f326cf11"
+        },
+        {
+          "description": "Find processes with command line containing specific term",
+          "query": "process_cmdline:backup"
+        },
+        {
+          "description": "Find processes on specific hostname",
+          "query": "device_name:win-5ikqdnf9go1"
+        },
+        {
+          "description": "Find processes in sensor group",
+          "query": "device_group:\"default group\""
+        },
+        {
+          "description": "Find processes by username",
+          "query": "process_username:system"
+        },
+        {
+          "description": "Find processes with registry modifications",
+          "query": "regmod_name:registry\\machine\\system\\currentcontrolset\\control\\deviceclasses*"
+        },
+        {
+          "description": "Find processes with network connections to IP address",
+          "query": "netconn_ipv4:127.0.0.1"
+        },
+        {
+          "description": "Find processes with connections to IP subnet",
+          "query": "netconn_ipv4:192.168.1.0/24"
+        },
+        {
+          "description": "Find processes with IPv6 connections",
+          "query": "netconn_ipv6:\"fe00:b9:266:2011:28dc:43d4:3298:12e2\""
+        },
+        {
+          "description": "Find processes with specific module load count",
+          "query": "modload_count:34"
+        },
+        {
+          "description": "Find processes with module load count in range",
+          "query": "modload_count:[1 TO 10]"
+        },
+        {
+          "description": "Find processes started on specific date",
+          "query": "process_start_time:2016-12-01"
+        },
+        {
+          "description": "Find processes started in date range",
+          "query": "process_start_time:[2016-12-01 TO 2016-12-31]"
+        },
+        {
+          "description": "Find processes started in last 24 hours",
+          "query": "process_start_time:-24h"
+        },
+        {
+          "description": "Find processes with file modifications",
+          "query": "filemod_name:system32/ntdll.dll"
+        },
+        {
+          "description": "Find processes with cross-process injection",
+          "query": "crossproc_action:ACTION_CREATE_REMOTE_THREAD"
+        },
+        {
+          "description": "Complex query with multiple conditions",
+          "query": "(process_name:svchost.exe or process_name:cmd.exe) and netconn_domain:.com and -process_username:system"
+        },
+        {
+          "description": "Find processes with specific path using wildcards",
+          "query": "process_name:c:\\windows\\system*\\*.exe"
+        }
+      ],
+      "binary_search": [
+        {
+          "description": "Find binaries by MD5",
+          "query": "md5:5a18f00ab9330ac7539675f3326cf11"
+        },
+        {
+          "description": "Find unsigned binaries",
+          "query": "digsig_result:Unsigned"
+        },
+        {
+          "description": "Find binaries by publisher",
+          "query": "digsig_publisher:Oracle"
+        },
+        {
+          "description": "Find binaries by company name",
+          "query": "company_name:Microsoft"
+        },
+        {
+          "description": "Find binaries by product name",
+          "query": "product_name:Java"
+        },
+        {
+          "description": "Find binaries with expired signatures",
+          "query": "digsig_result:Expired"
+        },
+        {
+          "description": "Find binaries signed on specific date",
+          "query": "digsig_sign_time:2011-12-31"
+        },
+        {
+          "description": "Find 64-bit executables",
+          "query": "is_64bit:true and is_executable_image:true"
+        },
+        {
+          "description": "Find binaries observed at specific path",
+          "query": "observed_filename:c:\\windows\\system32\\mtxoci.dll"
+        },
+        {
+          "description": "Find binaries with specific size range",
+          "query": "orig_mod_len:[1024 TO 4096]"
+        }
+      ],
+      "alert_search": [
+        {
+          "description": "Find unresolved alerts",
+          "query": "status:unresolved"
+        },
+        {
+          "description": "Find alerts from specific feed",
+          "query": "feed_name:\"My Watchlists\""
+        },
+        {
+          "description": "Find alerts on specific hostname",
+          "query": "hostname:workstation01"
+        },
+        {
+          "description": "Find alerts by severity score",
+          "query": "alert_severity:[75 TO *]"
+        },
+        {
+          "description": "Find alerts assigned to specific user",
+          "query": "assigned_to:john.doe"
+        },
+        {
+          "description": "Find alerts with specific IOC",
+          "query": "ioc_value:5a18f00ab9330ac7539675f3326cf11"
+        }
+      ],
+      "threat_intelligence": [
+        {
+          "description": "Find binaries with any threat intelligence score",
+          "query": "alliance_score_<feed>:*"
+        },
+        {
+          "description": "Find binaries with specific feed score",
+          "query": "alliance_score_<feed>:10"
+        },
+        {
+          "description": "Find binaries with feed score in range",
+          "query": "alliance_score_<feed>:[10 TO 20]"
+        },
+        {
+          "description": "Find binaries with high threat score",
+          "query": "alliance_score_<feed>:[75 TO *]"
+        }
+      ],
+      "binary_joins": [
+        {
+          "description": "Find processes that loaded unsigned modules",
+          "query": "digsig_result_modload:Unsigned"
+        },
+        {
+          "description": "Find processes with unsigned parent",
+          "query": "digsig_result_parent:Unsigned"
+        },
+        {
+          "description": "Find processes that wrote unsigned files",
+          "query": "digsig_result_filewrite:Unsigned"
+        },
+        {
+          "description": "Find processes with unsigned child processes",
+          "query": "digsig_result_child:Unsigned"
+        }
+      ],
+      "complex_queries": [
+        {
+          "description": "Find suspicious PowerShell with network activity",
+          "query": "process_name:powershell.exe and netconn_count:[1 TO *] and -domain:.microsoft.com"
+        },
+        {
+          "description": "Find processes with suspicious behaviors",
+          "query": "(crossproc_type:remotethread or crossproc_type:processopen) and -signed:true"
+        },
+        {
+          "description": "Find lateral movement indicators",
+          "query": "parent_name:services.exe and process_name:cmd.exe and netconn_count:[1 TO *]"
+        },
+        {
+          "description": "Find persistence via registry",
+          "query": "regmod:*\\currentversion\\run* and filewrite_md5:*"
+        },
+        {
+          "description": "Find encoded command execution",
+          "query": "process_cmdline:*-enc* or process_cmdline:*-encodedcommand* or process_cmdline:*frombase64*"
+        }
+      ]
+    },
+    "best_practices": {
+      "performance": [
+        "Avoid leading wildcards - they carry significant performance penalty",
+        "Use specific fields instead of searching all default fields",
+        "Use binary joins sparingly as they can be resource-intensive",
+        "Prefer exact matches over wildcards when possible",
+        "Use date ranges to limit search scope"
+      ],
+      "query_construction": [
+        "Multiple terms without operators are connected with AND by default",
+        "Terms not preceded by fields search all default fields",
+        "Use quotes for terms with whitespace",
+        "Escape special characters with backslash when needed",
+        "Use parentheses for complex nested queries"
+      ],
+      "special_considerations": [
+        "For regmod searches: replace controlset001/002 with currentcontrolset",
+        "For regmod searches: omit leading backslash",
+        "For modload searches: omit leading slash (optional but recommended)",
+        "For IP addresses in bulk search: must use 'ipaddr:' prefix",
+        "For domain searches: dot placement affects position matching"
+      ]
+    },
+    "alert_search_fields": {
+      "alert_category": {
+        "type": "keyword",
+        "description": "Searchable. A deprecated Carbon Black Cloud classification for events tagged to an alert indicating whether the event is a threat or observed (now always THREAT) Requires Endpoint Standard",
+        "array": true
+      },
+      "alert_id": {
+        "type": "keyword",
+        "description": "Searchable. ID of the alert(s) associated with the process or event.  Note: 'id' or 'legacy_alert_id' will work for searching events or processes associated with a CB_ANALYTIC alert.",
+        "array": true
+      }
+    },
+    "documentation": {
+      "notes": [
+        "Note: 'field_types' are normalized type descriptors (e.g., keyword, text, path, domain, ipaddr, ipv6addr, datetime, bool, md5, sha256) derived from the CSV and CBC docs to standardize search behavior. They are NOT queryable field names. Always use actual field names from this schema (e.g., netconn_ipv4, netconn_ipv6, netconn_domain, process_name, regmod_name, process_start_time) when constructing queries.",
+        "Specifically for the Linux sensor, parent_hash and process_hash are only calculated for events resulting from such activity as process exec and process fork, as well as discovering or blocking processes, plus module loads, file create & write (for known binary file formats), file scan (for known binary file formats and shell scripts) and file read (for shell scripts).",
+        "Limitations",
+        "As with standard AND queries when searching for field_1 = X and field_2 = Y, an event with only one field populated will not be returned.",
+        "A special case of this is when searching across both Endpoint Standard and Enterprise EDR data; if you combine any fields that are each available in only one product, you will receive zero results. For example:",
+        "If you search event_attack_stage:BREACH you will get results on both the Enriched Events and Processes search endpoints (requires Endpoint Standard)",
+        "If you search netconn_count:[1 TO *], you will only get results on Processes search endpoint (requires Enterprise EDR)",
+        "If you perform the search event_attack_stage:BREACH AND netconn_count:[1 TO *], you will get no results because NO events have both Endpoint Standard-only event_attack_stage and Enterprise EDR-only netconn_count fields",
+        "Any field can be searched on individually",
+        "Data Conversions",
+        "IPv6 data format to standard IPv6 notation",
+        "Use this if you are migrating from Endpoint Standard fields (used in integrationServices API routes) to Platform Search fields (including Process, Process Events and Enriched Event searches). The IPv6 netconn fields in Platform Search do not return in API responses using a standard IPv6 notation (it does not include colons) in order to make it easier to sort, use the big integer library, and perform subnet searches.",
+        "Example return value for fields like netconn_ipv6, netconn_remote_ipv6, netconn_local_ipv6: FF0200000000000000000000000000FB",
+        "To convert the notation to standard IPv6, you must insert a colon character between every four alphanumeric characters, or run the following function:",
+        "const StringIP = d.replace(/(.{4})/g, '$1:').slice(0, -1);",
+        "Result: FF02:0000:0000:0000:0000:0000:0000:00FB",
+        "However, when searching on these IPv6 fields, you must use escaped colon-separated notation e.g. netconn_ipv6:\"2607:F8B0:4006:081B:0000:0000:0000:200E\"",
+        "IPv4 integer format to dotted decimal notation",
+        "IPv4 netconn fields return their value in integer format rather than the more common dotted decimal notation.",
+        "The conversion from IPv4 integers to dotted decimal is common and can be validated with tools like this converter",
+        "Example: If you received netconn_remote_ipv4 = 911598478, the dotted decimal equivalent would be 54.85.227.142",
+        "Special Tokenizations",
+        "Some fields are tokenized to allow more efficient searches",
+        "File Path Tokenization",
+        "Fields: process_name, parent_name, filemod_name, childproc_name, crossproc_name, modload_name, scriptload_name, regmod_name",
+        "Search for path hierarchies. Use slash (/) character or escaped backslash (\\\\) characters and enclose in double quotes if path contains colon or space characters. Exclude any leading path separator. File extension searching also supported.",
+        "Search examples: process_name:\"c:/windows/system32/cmd.exe\" filemod_name:.wcry regmod_name:myregkey/myregvalue modload_name:downloads\\\\myfile.exe parent_name:\"c:/program files\"",
+        "Domain name Tokenization",
+        "Fields: netconn_domain",
+        "Search for any part of the domain. Start or end with \u2018. to only look for a prefix or suffix.",
+        "Search examples: netconn_domain:.google.com netconn_domain:.ru netconn_domain:www.google.com",
+        "IPv4 Address Tokenization",
+        "Fields: netconn_ipv4",
+        "Search examples: netconn_ipv4:192.168.0.10 netconn_ipv4:192.168.0.0/24",
+        "IPv6 Address Tokenization",
+        "Fields: netconn_ipv6",
+        "Search examples: netconn_ipv6:\"2001:0db8:85a3:0000:0000:8a2e:0370:7334\" netconn_ipv6:\"2001:db8::/127\"",
+        "Command Line Tokenization",
+        "Fields: process_cmdline",
+        "Words in the command line can be searched, along with switches (-x /x) and file extensions.",
+        "Search examples: process_cmdline:\"d:/path/myprogram.vbs /v\" process_cmdline:\"d:\" process_cmdline:.vbs process_cmdline:\"/v\""
+      ]
+    }
+  }
+}

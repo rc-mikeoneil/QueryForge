@@ -1,0 +1,10 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_virtual_fields": {
+      "virtual_private_cloud_id": {
+        "type": "keyword",
+        "description": "Searchable. ID of the virtual private cloud."
+      }
+    }
+  }
+}

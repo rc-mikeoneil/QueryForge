@@ -1,0 +1,49 @@
+{
+  "table": "devicetvmhardwarefirmware",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-devicetvmhardwarefirmware-table",
+  "page_date": "2025-10-03",
+  "columns": [
+    {
+      "name": "DeviceId",
+      "type": "string",
+      "description": "Unique identifier for the device in the service"
+    },
+    {
+      "name": "DeviceName",
+      "type": "string",
+      "description": "Fully qualified domain name (FQDN) of the device"
+    },
+    {
+      "name": "ComponentType",
+      "type": "string",
+      "description": "Type of hardware or firmware component"
+    },
+    {
+      "name": "Manufacturer",
+      "type": "string",
+      "description": "Manufacturer of hardware or firmware component"
+    },
+    {
+      "name": "ComponentName",
+      "type": "string",
+      "description": "Name of hardware or firmware component"
+    },
+    {
+      "name": "ComponentFamily",
+      "type": "string",
+      "description": "Component family or class, a grouping of components that have similar features or characteristics as determined by the manufacturer"
+    },
+    {
+      "name": "ComponentVersion",
+      "type": "string",
+      "description": "Component version (for example, BIOS version)"
+    },
+    {
+      "name": "AdditionalFields",
+      "type": "dynamic",
+      "description": "Additional information about the components in JSON array format"
+    }
+  ],
+  "col_count": 8,
+  "generated_at": "2025-10-03T02:10:17.086476Z"
+}

@@ -1,0 +1,76 @@
+{
+  "metadata": {
+    "source": "SentinelOne Operations Center",
+    "schema_name": "Registry",
+    "extraction_date": "2025-10-21",
+    "description": "Registry event fields for S1QL 2.0 queries",
+    "field_count": 13
+  },
+  "fields": [
+    {
+      "s1ql_field": "registry.export.path",
+      "description": "The path to which a registry key was exported.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "registry.import.path",
+      "description": "The path from which the registry key was imported.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "registry.keyPath",
+      "description": "Full path location of the Registry Key entry",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "registry.keyUid",
+      "description": "Unique ID of registry key (as assigned by SentinelOne)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "registry.oldValue",
+      "description": "Registry previous value (in case of modification)",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "registry.oldValueFullSize",
+      "description": "Registry previous full size (in case of modification)",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "registry.oldValueIsComplete",
+      "description": "Was the previous registry value full size or was it truncated (in case of modification)",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "registry.oldValueType",
+      "description": "Registry previous value type (in case of modification)",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "registry.owner.userSid",
+      "description": "The Security Descriptor (SID) of the user/user group that owns the registry key.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "registry.value",
+      "description": "Registry Value",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "registry.valueFullSize",
+      "description": "Full size of registry value (in case it was truncated)",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "registry.valueIsComplete",
+      "description": "Is the registry value full size or is it truncated",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "registry.valueType",
+      "description": "Type of registry value",
+      "data_type": "Enum"
+    }
+  ]
+}

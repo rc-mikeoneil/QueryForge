@@ -1,0 +1,43 @@
+{
+  "metadata": {
+    "source": "SentinelOne Operations Center",
+    "data_type": "ENUM",
+    "extraction_date": "2025-10-21",
+    "description": "Operators available for ENUM data type fields in S1QL queries",
+    "operator_count": 4
+  },
+  "operators": [
+    {
+      "operator": "in",
+      "description": "Case sensitive compare string with list - string should match exactly one value in list",
+      "data_type": "ENUM",
+      "syntax": "fieldname in (value1, value2, value3)",
+      "case_sensitive": true,
+      "category": "list_comparison"
+    },
+    {
+      "operator": "not in",
+      "description": "Negative compare string with list - string should match none of values in list",
+      "data_type": "ENUM",
+      "syntax": "fieldname not in (value1, value2, value3)",
+      "case_sensitive": true,
+      "category": "list_comparison"
+    },
+    {
+      "operator": "!=",
+      "description": "Negative string comparison",
+      "data_type": "ENUM",
+      "syntax": "fieldname != value",
+      "case_sensitive": true,
+      "category": "equality"
+    },
+    {
+      "operator": "=",
+      "description": "Equal to",
+      "data_type": "ENUM",
+      "syntax": "fieldname = value",
+      "case_sensitive": true,
+      "category": "equality"
+    }
+  ]
+}

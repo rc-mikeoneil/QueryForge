@@ -1,0 +1,30 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_regmod_fields": {
+      "regmod_action": {
+        "type": "keyword",
+        "description": "Action associated with the regmod operation"
+      },
+      "regmod_count": {
+        "type": "integer",
+        "description": "Searchable. Count of regmod events reported by the sensor since last initialization"
+      },
+      "regmod_excluded_count": {
+        "type": "integer",
+        "description": "Count of excluded regmod events, as reported by the sensor since last initialization"
+      },
+      "regmod_name": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Full path of the registry key(s) modified by the process"
+      },
+      "regmod_new_name": {
+        "type": "keyword",
+        "description": "Searchable. New registry key name; renamed keys only (regmod_action=ACTION_RENAME_KEY)"
+      },
+      "regmod_old_name": {
+        "type": "keyword",
+        "description": "Searchable. Old registry key name; renamed keys only (regmod_action=ACTION_RENAME_KEY)"
+      }
+    }
+  }
+}

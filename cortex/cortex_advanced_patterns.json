@@ -1,0 +1,41 @@
+{
+  "cortex_xdr_query_schema": {
+    "advanced_patterns": {
+      "threat_hunting": {
+        "description": "Advanced queries for proactive threat hunting",
+        "examples": [
+          {
+            "name": "Process hollowing detection",
+            "query": "dataset = xdr_data | filter event_type = ENUM.INJECTION | filter event_sub_type = ENUM.INJECTION_HOLLOW_PROCESS | fields agent_hostname, actor_process_image_name, action_process_image_name, _time"
+          },
+          {
+            "name": "Credential dumping via LSASS access",
+            "query": "dataset = xdr_data | filter event_type = ENUM.PROCESS_HANDLE | filter action_process_image_name = 'lsass.exe' | filter actor_process_image_name not in ('svchost.exe', 'wininit.exe') | fields agent_hostname, actor_process_image_name, _time"
+          },
+          {
+            "name": "Kerberoasting detection",
+            "query": "dataset = xdr_data | filter event_type = ENUM.EVENT_LOG | filter action_evtlog_event_id = 4769 | alter ServiceName = action_evtlog_data_fields->ServiceName | alter TicketOptions = action_evtlog_data_fields->TicketOptions | filter TicketOptions = '0x40810000' | fields agent_hostname, ServiceName, _time"
+          }
+        ]
+      },
+      "correlation_queries": {
+        "description": "Correlate events across different types",
+        "examples": [
+          {
+            "name": "Process to network correlation",
+            "query": "dataset = xdr_data | filter event_type = ENUM.PROCESS and actor_process_image_name = 'powershell.exe' | join (dataset = xdr_data | filter event_type = ENUM.NETWORK) as net net.actor_process_instance_id = actor_process_instance_id | fields agent_hostname, actor_process_image_command_line, net.action_remote_ip, _time"
+          }
+        ]
+      },
+      "baseline_deviation": {
+        "description": "Detect deviations from normal behavior",
+        "examples": [
+          {
+            "name": "Unusual process relationships",
+            "query": "dataset = xdr_data | filter event_type = ENUM.PROCESS | comp count() by actor_process_image_name, action_process_image_name | filter count < 5 | sort asc count"
+          }
+        ]
+      }
+    }
+  }
+}

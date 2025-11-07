@@ -1,0 +1,1502 @@
+{
+  "schema_name": "Cortex XQL - XDR_DATA Fields",
+  "source": "Cortex XQL Schema Reference Guide - Palo Alto Networks",
+  "fields": [
+    {
+      "field_name": "_insert_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "System field: The time the data entry was added to the system."
+    },
+    {
+      "field_name": "_product",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "System field: The data product as ingested from the data collector."
+    },
+    {
+      "field_name": "_raw_json",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "System field: All raw data as ingested from the data collector in a JSON format."
+    },
+    {
+      "field_name": "_raw_log",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "System field: All raw data as ingested from the data collector in a text format."
+    },
+    {
+      "field_name": "_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "System field: Data entry's timestamp. If unknown, then the time the data entry was added to the database."
+    },
+    {
+      "field_name": "_vendor",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "System field: The data vendor as ingested from the data collector."
+    },
+    {
+      "field_name": "action_threat_ids",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Threat IDs"
+    },
+    {
+      "field_name": "additional_info",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Additional information for any event that occurred (GlobalProtect)."
+    },
+    {
+      "field_name": "agent_content_version",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The agent content version."
+    },
+    {
+      "field_name": "agent_external_ip",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "External IP of the agent reporting this event."
+    },
+    {
+      "field_name": "agent_host_boot_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Last time this host was started in epoch time."
+    },
+    {
+      "field_name": "agent_hostname",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Hostname of the agent."
+    },
+    {
+      "field_name": "agent_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "A unique identifier per agent."
+    },
+    {
+      "field_name": "agent_install_type",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Agent installation type with the following possible values: 0 - Standard agent, 1 - Virtual Desktop Infrastructure (VDI) instance, 2 - Virtual Desktop Infrastructure (VDI) golden image, 4 - Temporary session, 5 - Light agent"
+    },
+    {
+      "field_name": "agent_interface_map",
+      "data_type": "RECORD",
+      "mode": "REPEATED",
+      "description": "Agent interface maps (IPs and Mac).",
+      "nested_fields": [
+        {
+          "field_name": "mac",
+          "data_type": "STRING",
+          "mode": "NULLABLE"
+        }
+      ]
+    },
+    {
+      "field_name": "agent_ip_addresses",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "All IPv4 interface addresses."
+    },
+    {
+      "field_name": "agent_ip_addresses_v6",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "All IPv6 interface addresses."
+    },
+    {
+      "field_name": "agent_is_vdi",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the agent is a VDI agent."
+    },
+    {
+      "field_name": "agent_mac_addresses",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Mac addresses assigned to all interfaces for this agent."
+    },
+    {
+      "field_name": "agent_os_sub_type",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "A lengthier description of the operating system (OS) type."
+    },
+    {
+      "field_name": "agent_os_type",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Operating system type: Windows = 1, MacOS = 2, Linux = 4"
+    },
+    {
+      "field_name": "agent_session_start_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Indicates when the agent was started."
+    },
+    {
+      "field_name": "agent_status_component",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Gives the name of the endpoint detection and response (EDR) filter that was updated."
+    },
+    {
+      "field_name": "agent_version",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The agent version."
+    },
+    {
+      "field_name": "associated_event_ids",
+      "data_type": "STRING",
+      "mode": "REPEATED",
+      "description": "Associated event IDs"
+    },
+    {
+      "field_name": "associated_mac",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Associated mac addresses."
+    },
+    {
+      "field_name": "association_strength",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Indicates whether an agent_id includes an associated value using this enum mapping: 10 IP Address, 20 MAC, 30 Hardware ID, 35 Collector ID, 40 Agent ID, 45 Collector Event Data, 50 Event Data"
+    },
+    {
+      "field_name": "auth_client",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The client-side host."
+    },
+    {
+      "field_name": "auth_client_type",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Type of device that the client operated from, such as a computer."
+    },
+    {
+      "field_name": "auth_correlation_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Identifies events from separate sessions that occurred together as part of an operation."
+    },
+    {
+      "field_name": "auth_domain",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "User-side domain name."
+    },
+    {
+      "field_name": "auth_identity",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Client-side identification."
+    },
+    {
+      "field_name": "auth_identity_display_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Display name of the authentication actor."
+    },
+    {
+      "field_name": "auth_identity_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Identity / Principal ID"
+    },
+    {
+      "field_name": "auth_identity_sid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Identity SID"
+    },
+    {
+      "field_name": "auth_is_interactive",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "True: Interactive sign-ins, where a user manually signs in using their username and password. False: Non-interactive sign-ins, such as a service-to-service authentication."
+    },
+    {
+      "field_name": "auth_method",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Auth method, such as a publickey and password."
+    },
+    {
+      "field_name": "auth_mfa_needed",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not a Multi-factor authentication (MFA) is required."
+    },
+    {
+      "field_name": "auth_normalized_user",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Normalized user information."
+    },
+    {
+      "field_name": "auth_outcome",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Authentication attempt outcome as either 'success', 'fail', 'unknown', 'SKIPPED', 'ALLOW', 'DENY', or 'CHALLENGE'."
+    },
+    {
+      "field_name": "auth_outcome_reason",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Event success status description."
+    },
+    {
+      "field_name": "auth_server",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Server-side host."
+    },
+    {
+      "field_name": "auth_service",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Authentication service name."
+    },
+    {
+      "field_name": "auth_service_sid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Service SID"
+    },
+    {
+      "field_name": "auth_target",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Authentication target host."
+    },
+    {
+      "field_name": "auth_target_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Target / Resource ID"
+    },
+    {
+      "field_name": "azure_ad_resource_display_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Display name of the Azure AD resource (authentication server)."
+    },
+    {
+      "field_name": "azure_ad_resource_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Resource ID"
+    },
+    {
+      "field_name": "azure_ad_resource_tenant_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Resource tenant ID."
+    },
+    {
+      "field_name": "backtrace_identities",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Backtrace identities information",
+      "nested_fields": [
+        {
+          "field_name": "start_time",
+          "data_type": "INTEGER",
+          "mode": "NULLABLE"
+        }
+      ]
+    },
+    {
+      "field_name": "cef_device_product",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Extracted CEF product."
+    },
+    {
+      "field_name": "cef_device_vendor",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Extracted CEF vendor."
+    },
+    {
+      "field_name": "cef_device_version",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Extracted CEF device version."
+    },
+    {
+      "field_name": "cef_extension",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Extracted CEF extension."
+    },
+    {
+      "field_name": "cef_severity",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Extracted CEF severity."
+    },
+    {
+      "field_name": "cef_signature_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Extracted CEF signature ID."
+    },
+    {
+      "field_name": "cef_version",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Extracted CEF version."
+    },
+    {
+      "field_name": "client_version",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The endpoints GlobalProtect version."
+    },
+    {
+      "field_name": "clipboard_data_size",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Size of data."
+    },
+    {
+      "field_name": "clipboard_data_type",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "CF_UNICODETEXT, CF_BITMAP"
+    },
+    {
+      "field_name": "clipboard_source_iid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "IID of the source process of the copied data."
+    },
+    {
+      "field_name": "cloud_entity",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Cloud provider information on the source IP of the activity."
+    },
+    {
+      "field_name": "customerId",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Extracted customer ID."
+    },
+    {
+      "field_name": "device_id",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Device identifier record"
+    },
+    {
+      "field_name": "dfe_labels",
+      "data_type": "STRING",
+      "mode": "REPEATED",
+      "description": "Story label"
+    },
+    {
+      "field_name": "dns_query_items",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "List of all the request items (name and type)."
+    },
+    {
+      "field_name": "dns_query_name",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "DNS request name."
+    },
+    {
+      "field_name": "dns_query_name_domain_randomness",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Domain randomness score."
+    },
+    {
+      "field_name": "dns_query_type",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "DNS query type."
+    },
+    {
+      "field_name": "dns_reply_code",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "DNS reply codes: 0 -> No error, 1 -> Format Error, 2 -> Server Failure, 3 -> Non-Existent Domain, 4 -> Not Implemented, 5 -> Query Refused, 6 -> Name Exists when it should not, 7 -> RR Set Exists when it should not, 8 -> RR Set that should exist does not, 9 -> Server Not Authoritative for zone, 10 -> Name not contained in zone, 16 -> Bad OPT Version / TSIG Signature Failure, 17 -> Key not recognized, 18 -> Signature out of time window, 19 -> Bad TKEY Mode, 20 -> Duplicate key name, 21 -> Algorithm not supported, 22 -> Bad Truncation"
+    },
+    {
+      "field_name": "dns_reply_codes",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "DNS reply codes for the DNS query."
+    },
+    {
+      "field_name": "dns_resolutions",
+      "data_type": "RECORD",
+      "mode": "REPEATED",
+      "description": "DNS resolutions for query. Comprised of the Resource Record name, type, and value for each resolution item.",
+      "nested_fields": [
+        {
+          "field_name": "name",
+          "data_type": "STRING",
+          "mode": "NULLABLE"
+        }
+      ]
+    },
+    {
+      "field_name": "dst_action_as_data",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "ASN data from the destination of the network activity."
+    },
+    {
+      "field_name": "dst_action_boot_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Destination computer boot time in ms since the last epoch time."
+    },
+    {
+      "field_name": "dst_action_country",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Destination country of the action."
+    },
+    {
+      "field_name": "dst_action_external_hostname",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The hostname Cortex XDR/XSIAM connect to. For a proxy connection, this value differs from the action_remote_ip."
+    },
+    {
+      "field_name": "dst_action_external_hostname_domain_randomness",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Domain randomness score."
+    },
+    {
+      "field_name": "dst_action_external_port",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The port Cortex XDR/XSIAM connects to. For a proxy connection, this value can differ from the action_remote_port."
+    },
+    {
+      "field_name": "dst_action_location",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Geolocation information of the destination IP."
+    },
+    {
+      "field_name": "dst_action_powered_off",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "True, if the computer is powered off, such as suspend or hibernate. False, otherwise."
+    },
+    {
+      "field_name": "dst_action_url_category",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Next-Generation Firewall (NGFW) URL category."
+    },
+    {
+      "field_name": "dst_action_user_agent",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The user agent used by an actor to perform an action."
+    },
+    {
+      "field_name": "dst_action_user_is_local_session",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the user login from a remote computer or locally."
+    },
+    {
+      "field_name": "dst_action_user_session_id",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Session ID of the action."
+    },
+    {
+      "field_name": "dst_action_user_status",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Same as the event sub-type."
+    },
+    {
+      "field_name": "dst_action_user_status_sid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Security identifier (SID) of the user."
+    },
+    {
+      "field_name": "dst_action_username",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Name of the destination user."
+    },
+    {
+      "field_name": "dst_agent_content_version",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Agent content version."
+    },
+    {
+      "field_name": "dst_agent_external_ip",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The IP that the destination agent reported this data."
+    },
+    {
+      "field_name": "dst_agent_host_boot_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Host boot time in epoch time."
+    },
+    {
+      "field_name": "dst_agent_hostname",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Agent hostname"
+    },
+    {
+      "field_name": "dst_agent_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Agent ID"
+    },
+    {
+      "field_name": "dst_agent_install_type",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Type of agent installation: 0 - Standard agent, 1 - VDI instance, 2 - VDI golden image, 4 - Temporary session, 5 - Light agent"
+    },
+    {
+      "field_name": "dst_agent_interface_map",
+      "data_type": "RECORD",
+      "mode": "REPEATED",
+      "description": "Agent interface maps (IPs and Mac)",
+      "nested_fields": [
+        {
+          "field_name": "mac",
+          "data_type": "STRING",
+          "mode": "NULLABLE"
+        }
+      ]
+    },
+    {
+      "field_name": "dst_agent_ip_addresses",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Agent IPv4 addresses."
+    },
+    {
+      "field_name": "dst_agent_ip_addresses_v6",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Agent IPv6 addresses."
+    },
+    {
+      "field_name": "dst_agent_is_vdi",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the agent is a VDI installation."
+    },
+    {
+      "field_name": "dst_agent_os_sub_type",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "A lengthier description of the Operating System (OS) type."
+    },
+    {
+      "field_name": "dst_agent_os_type",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Agent Operating System types: Windows = 1, MacOS = 2, Linux = 4"
+    },
+    {
+      "field_name": "dst_agent_session_start_time",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "When the agent was started."
+    },
+    {
+      "field_name": "dst_agent_status_component",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Destination agent status component"
+    },
+    {
+      "field_name": "dst_agent_version",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Agent version"
+    },
+    {
+      "field_name": "dst_associated_mac",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Associated MAC address."
+    },
+    {
+      "field_name": "dst_association_strength",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Specifies whether an agent_id includes an associated value, using this enum mapping: 0 = No association, 10 = IP Address, 15 = Kerberos, 20 = MAC, 30 = Hardware ID, 35 = Collector ID, 40 = Agent ID, 45 = Collector Event Data, 50 = Event Data"
+    },
+    {
+      "field_name": "dst_causality_actor_primary_normalized_user",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "A normalized user for the causality chain."
+    },
+    {
+      "field_name": "dst_cloud_entity",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Cloud provider information on the destination IP of the activity."
+    },
+    {
+      "field_name": "dst_event_utc_diff_minutes",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The difference in minutes of the original timestamp from UTC, which identifies the agent's original time zone."
+    },
+    {
+      "field_name": "dst_host_metadata_domain",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Domain of the host."
+    },
+    {
+      "field_name": "dst_host_metadata_hostname",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Hostname"
+    },
+    {
+      "field_name": "dst_host_metadata_interface_map",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Agent interface maps (IPs and Mac)",
+      "nested_fields": [
+        {
+          "field_name": "is_ipv6",
+          "data_type": "BOOLEAN",
+          "mode": "NULLABLE"
+        }
+      ]
+    },
+    {
+      "field_name": "dst_is_internal_ip",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the source IP is outside the private range."
+    },
+    {
+      "field_name": "dst_mac",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "MAC address"
+    },
+    {
+      "field_name": "dst_manifest_file_version",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Destination manifest file version"
+    },
+    {
+      "field_name": "dst_tcp_flags",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "TCP flags"
+    },
+    {
+      "field_name": "dst_trapsId",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "DEPRECATED"
+    },
+    {
+      "field_name": "dst_ttl",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The closest time-to-live (TTL) preceding / following the sensor."
+    },
+    {
+      "field_name": "dst_user_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Windows: Primary user token of the executed binary. Unix: Effective UID of the executed binary."
+    },
+    {
+      "field_name": "dst_xdr_pro_lite",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the destination agent is running XDR Pro (not XTH)."
+    },
+    {
+      "field_name": "dynamic_event_int_map",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "DEPRECATED"
+    },
+    {
+      "field_name": "dynamic_event_string_map",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Same as dynamic_event_int_map, only those are string values."
+    },
+    {
+      "field_name": "event_address_code_symbol",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Event address code symbol"
+    },
+    {
+      "field_name": "event_address_mapped_image_path",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Windows: DLL path for the address (in process address-space) this event refers to. For example, in thread-start events, this is the path of the DLL the thread was started in."
+    },
+    {
+      "field_name": "event_allocation_base_shellcode_buffer",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Hexlified buffer of shellcode at the base of the allocation of the event associated buffer."
+    },
+    {
+      "field_name": "event_call_region_base_address",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Call region base address related to the event."
+    },
+    {
+      "field_name": "event_call_region_shellcode_buffer",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Hexlified buffer of shellcode at the call region."
+    },
+    {
+      "field_name": "event_causality_mark_of_cain",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Indicates whether a security event, such as BTP and static analysis, was raised in this causality. kNotification (1) - A security event has occurred and has NOT been prevented. kPrevention (2) - A security event has occurred but was (partially or fully) prevented."
+    },
+    {
+      "field_name": "event_direct_syscall_ip_mapped_file_path",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "When the event is a direct syscall, this field contains the DLL that the syscall originated from."
+    },
+    {
+      "field_name": "event_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Event identifier"
+    },
+    {
+      "field_name": "event_impersonation_status",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "This is equivalent to the event_is_impersonated field, but sometimes the status is unknown. The other field can't account for this as it's a boolean field. Unknown = 0, Impersonated = 1, Not-Impersonated = 2"
+    },
+    {
+      "field_name": "event_invalidity_field",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Set by the preprocessor when detecting that an event is invalid. The name of the field which caused the event to be invalid."
+    },
+    {
+      "field_name": "event_is_boot_replay",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "A boolean value that is true during the first replay."
+    },
+    {
+      "field_name": "event_is_duplicated_replay",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "A boolean value that is true if the event was already sent before and another replay sends this event again."
+    },
+    {
+      "field_name": "event_is_impersonated",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Windows: Indicates whether or not the thread performing the event is impersonating."
+    },
+    {
+      "field_name": "event_is_replay",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the event is part of the system state replay sent when the agent is started."
+    },
+    {
+      "field_name": "event_is_simulated",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not this event was simulated by the TMS."
+    },
+    {
+      "field_name": "event_page_base_shellcode_buffer",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Hexlified buffer of shellcode at the base of the page of the event associated buffer."
+    },
+    {
+      "field_name": "event_resolved_stack_trace",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Stack trace related to the event."
+    },
+    {
+      "field_name": "event_rpc_func_opnum",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Integer identifying the function being called."
+    },
+    {
+      "field_name": "event_rpc_interface_uuid",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "UUID identifying the interface."
+    },
+    {
+      "field_name": "event_rpc_interface_version_major",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Major version of the remote procedure call (RPC) interface."
+    },
+    {
+      "field_name": "event_rpc_interface_version_minor",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Minor version of the remote procedure call (RPC) interface."
+    },
+    {
+      "field_name": "event_rpc_protocol",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Enum representing the remote procedure call (RPC) protocol: LocalRpc (ALPC port) = 0, Tcp = 1, NamedPipes = 2, Http = 3"
+    },
+    {
+      "field_name": "event_shellcode_address",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The address of the shellcode in the usermode callstack."
+    },
+    {
+      "field_name": "event_source_bitmask",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Bitmask of the sources involved in producing the event: Simulated - 0x01, Kernel-Module - 0x02, EBPF - 0x04, Fanotify - 0x08, Path-Resolved - 0x10"
+    },
+    {
+      "field_name": "event_sub_type",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "This field is updated based on the event type defined in the event_type field. For each event type, there are multiple event sub types. To see the possible values for the event_type and event_sub_type, create an XQL query with a filter stage, which autocompletes the values."
+    },
+    {
+      "field_name": "event_thread_context",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "A string representing a JSON array containing thread specific context. Note: From XDR agent 8.2, this field is only relevant for office macros."
+    },
+    {
+      "field_name": "event_timestamp",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Integer indicating when the event occurred."
+    },
+    {
+      "field_name": "event_timestamp_original",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Event timestamp in epoch time."
+    },
+    {
+      "field_name": "event_type",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "A unique identifier of the event type: Process = 1, Network = 2, File = 3, Registry = 4, Injection = 5, LoadImage = 6, UserStatusChange = 7, TimeChange = 8, Thread = 9, Causality = 10, HostStatusChange = 11, AgentStatusChange = 12, InternalStatistics = 13, ProcessHandle = 14, WindowsEventLog = 15, EpmStatus = 16, MetadataChange = 17, SystemCall = 18, Device = 19, HostFirewall = 23"
+    },
+    {
+      "field_name": "event_user_presence",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not there was a physical user presence on the machine. Windows: The value is 'true' if the user session was unlocked during the event."
+    },
+    {
+      "field_name": "event_user_presence_status",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "This is equivalent to the event_user_presence field, but sometimes the status is unknown. The other field can't account for this as it's a boolean field. Unknown = 0, User not present = 1, User present = 2"
+    },
+    {
+      "field_name": "event_user_thread_context_ip",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The instruction pointer at the moment the syscall was made."
+    },
+    {
+      "field_name": "event_user_thread_context_ip_in_native_ntdll",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the IP in the trapframe when in the middle of a syscall was pointing to ntdll."
+    },
+    {
+      "field_name": "event_user_thread_context_is_heavens_gate",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the user stack pointer is not inside the x64 stack limits, but was inside the x86 stack limits for a wow64 process."
+    },
+    {
+      "field_name": "event_user_thread_context_is_stack_pivot",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the RSP in the trapframe was not inside the thread stack limits."
+    },
+    {
+      "field_name": "event_user_thread_context_sp",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The stack pointer at the moment the syscall was made."
+    },
+    {
+      "field_name": "event_utc_diff_minutes",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The difference in minutes of the original timestamp from UTC."
+    },
+    {
+      "field_name": "event_validity_enum",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "An enum set by the preprocessor when detecting that an event is invalid: 1 - valid, 2 - invalid due to future timestamp field, 3 - invalid due to an 'old' timestamp field that exceeds the host's boot time."
+    },
+    {
+      "field_name": "event_version",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Version of the event structure, where each change increases the version."
+    },
+    {
+      "field_name": "event_versions",
+      "data_type": "INTEGER",
+      "mode": "REPEATED",
+      "description": "Event version for this event."
+    },
+    {
+      "field_name": "execution_actor_causality_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Causality ID of the parent which executed the terminated process instance."
+    },
+    {
+      "field_name": "execution_actor_instance_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Instance ID of the parent which executed the terminated process instance."
+    },
+    {
+      "field_name": "facility",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Facility field"
+    },
+    {
+      "field_name": "file_data",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "File data record"
+    },
+    {
+      "field_name": "fw_dst_normalized_user",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Normalized user information."
+    },
+    {
+      "field_name": "fw_identities",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "DEPRECATED"
+    },
+    {
+      "field_name": "fw_is_dup_log",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Firewall duplicate log indicator"
+    },
+    {
+      "field_name": "fw_log_subtypes",
+      "data_type": "STRING",
+      "mode": "REPEATED",
+      "description": "Firewall log subtypes"
+    },
+    {
+      "field_name": "fw_log_types",
+      "data_type": "STRING",
+      "mode": "REPEATED",
+      "description": "Firewall log types"
+    },
+    {
+      "field_name": "fw_src_normalized_user",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Normalized user information."
+    },
+    {
+      "field_name": "fw_time_generated",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Equivalent to the event_timestamp."
+    },
+    {
+      "field_name": "fw_traffic_flags",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Protocol traffic flags as seen on the Next-Generation Firewall (NGFW)."
+    },
+    {
+      "field_name": "generatedTime",
+      "data_type": "TIMESTAMP",
+      "mode": "NULLABLE",
+      "description": "Equivalent to the event_timestamp."
+    },
+    {
+      "field_name": "global_protect_data",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "GlobalProtect data record"
+    },
+    {
+      "field_name": "hardware_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Unique identifier GlobalProtect assigned to the host."
+    },
+    {
+      "field_name": "host_metadata_domain",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Domain of the host."
+    },
+    {
+      "field_name": "host_metadata_hostname",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Hostname"
+    },
+    {
+      "field_name": "host_metadata_interface_map",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Agent interface maps (IPs and Mac).",
+      "nested_fields": [
+        {
+          "field_name": "is_ipv6",
+          "data_type": "BOOLEAN",
+          "mode": "NULLABLE"
+        }
+      ]
+    },
+    {
+      "field_name": "http_content_type",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Content-type header of the HTTP traffic."
+    },
+    {
+      "field_name": "http_data",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "HTTP log data."
+    },
+    {
+      "field_name": "http_data_is_trimmed",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether the HTTP data was too long that it was trimmed by the Next-Generation Firewall (NGFW)."
+    },
+    {
+      "field_name": "http_method",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "HTTP method: 0 = UNKNOWN_METHOD, 1 = GET, 2 = POST, 3 = CONNECT, 4 = HEAD, 5 = PUT, 6 = DELETE, 7 = OPTIONS"
+    },
+    {
+      "field_name": "http_referer",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "HTTP Referer header."
+    },
+    {
+      "field_name": "http_req_before_method",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "HTTP request before method"
+    },
+    {
+      "field_name": "http_req_content_type_header",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "HTTP content type header."
+    },
+    {
+      "field_name": "http_req_host_header",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "HTTP host header."
+    },
+    {
+      "field_name": "http_req_referer_header",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "HTTP Referer header."
+    },
+    {
+      "field_name": "http_req_uri",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "HTTP request URI."
+    },
+    {
+      "field_name": "http_req_user_agent_header",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "HTTP user agent header."
+    },
+    {
+      "field_name": "http_rsp_code",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "HTTP response code."
+    },
+    {
+      "field_name": "http_rsp_content_type_header",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "HTTP response content type header."
+    },
+    {
+      "field_name": "http_rsp_filename",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "HTTP response filename."
+    },
+    {
+      "field_name": "http_server",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "HTTP server"
+    },
+    {
+      "field_name": "http_status_code",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "HTTP status code."
+    },
+    {
+      "field_name": "hwnd",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The foreground window."
+    },
+    {
+      "field_name": "icmp_code",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "ICMP protocol request code."
+    },
+    {
+      "field_name": "icmp_original_length",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Internet Control Message Protocol (ICMP) payload length."
+    },
+    {
+      "field_name": "icmp_type",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "ICMP protocol request type."
+    },
+    {
+      "field_name": "insert_timestamp",
+      "data_type": "TIMESTAMP",
+      "mode": "NULLABLE",
+      "description": "Ingestion timestamp"
+    },
+    {
+      "field_name": "is_disintegrated",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the story was disintegrated."
+    },
+    {
+      "field_name": "is_internal_ip",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the source IP is outside the private range."
+    },
+    {
+      "field_name": "krb_tgs_data",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Kerberos Ticket Granting Service (TGS) log data.",
+      "nested_fields": [
+        {
+          "field_name": "is_machine_account",
+          "data_type": "BOOLEAN",
+          "mode": "NULLABLE"
+        }
+      ]
+    },
+    {
+      "field_name": "krb_tgt_data",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Kerberos Ticket Granting Ticket (TGT) log data.",
+      "nested_fields": [
+        {
+          "field_name": "is_machine_account",
+          "data_type": "BOOLEAN",
+          "mode": "NULLABLE"
+        }
+      ]
+    },
+    {
+      "field_name": "ldap_data",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "LDAP log data."
+    },
+    {
+      "field_name": "login_data",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Windows Event Log login data."
+    },
+    {
+      "field_name": "login_data_dst_normalized_user",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Destination user CIE resolution information."
+    },
+    {
+      "field_name": "login_data_dst_outbound_normalized_user",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Destination outbound user DSS resolution information."
+    },
+    {
+      "field_name": "login_data_src_normalized_user",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Source user CIE resolution information."
+    },
+    {
+      "field_name": "non_standard_dport",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "This field is a boolean represented as an Integer. Indicates whether or not the destination port is a non-standard port based on Next-Generation Firewall (NGFW) logic"
+    },
+    {
+      "field_name": "ntlm_auth_data",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "NTLM log data."
+    },
+    {
+      "field_name": "one_login_data",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "OneLogin data record"
+    },
+    {
+      "field_name": "other_json",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "DEPRECATED"
+    },
+    {
+      "field_name": "packet",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Packet payload excluding TCP/IP header. Only valid for event_sub_type = 17 (raw_data)"
+    },
+    {
+      "field_name": "related_alerts",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "Related alerts record"
+    },
+    {
+      "field_name": "serverTime",
+      "data_type": "TIMESTAMP",
+      "mode": "NULLABLE",
+      "description": "Timestamp of the event displayed on the server side."
+    },
+    {
+      "field_name": "ssl_data",
+      "data_type": "RECORD",
+      "mode": "NULLABLE",
+      "description": "SSL log data."
+    },
+    {
+      "field_name": "ssl_req_chello_sni_sample",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "SNI domain obtained from SSL protocol parsing."
+    },
+    {
+      "field_name": "sso_debug_data",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Okta debug info, which includes protocol information, URIs, and more."
+    },
+    {
+      "field_name": "sso_display_message",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Single Sign-on (SSO) event description."
+    },
+    {
+      "field_name": "sso_event_type",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Single Sign-On (SSO) event type as obtained by the original SSO provider."
+    },
+    {
+      "field_name": "sso_severity",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Severity as reported: DEBUG, INFO, WARN, ERROR"
+    },
+    {
+      "field_name": "story_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "ID of the story."
+    },
+    {
+      "field_name": "story_id_original",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "DEPRECATED"
+    },
+    {
+      "field_name": "story_publish_timestamp",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "Story publishing timestamp in epoch time."
+    },
+    {
+      "field_name": "story_version",
+      "data_type": "FLOAT",
+      "mode": "NULLABLE",
+      "description": "Story version"
+    },
+    {
+      "field_name": "syscall_action_etw_based",
+      "data_type": "BOOLEAN",
+      "mode": "NULLABLE",
+      "description": "Indicates whether or not the syscall collected is from Windows ETW."
+    },
+    {
+      "field_name": "syscall_action_int_params",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Integer parameters from syscalls in a JSON format."
+    },
+    {
+      "field_name": "syscall_action_stack_ptr",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Syscall action stack pointer"
+    },
+    {
+      "field_name": "syscall_action_string_params",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "String parameters from syscalls in a JSON format."
+    },
+    {
+      "field_name": "tcp_flags",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "TCP Flags"
+    },
+    {
+      "field_name": "title",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Title of top_level_hwnd."
+    },
+    {
+      "field_name": "top_level_hwnd",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "The top level window of the foreground window."
+    },
+    {
+      "field_name": "trapsId",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "DEPRECATED"
+    },
+    {
+      "field_name": "ttl",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "IP Protocol time-to-live (TTL) obtained from the source."
+    },
+    {
+      "field_name": "tunnel_type",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "The type of tunnel."
+    },
+    {
+      "field_name": "uri",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Threat URI"
+    },
+    {
+      "field_name": "user_generic_value1",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "A bitmap that can be set in the YAML. The first bit indicates whether an operation is in the GUI or not."
+    },
+    {
+      "field_name": "user_generic_value2",
+      "data_type": "INTEGER",
+      "mode": "NULLABLE",
+      "description": "An integer that can be set in the YAML. It is used to indicate Yara rule IDs for windows web shells."
+    },
+    {
+      "field_name": "user_id",
+      "data_type": "STRING",
+      "mode": "NULLABLE",
+      "description": "Windows: User SID, Unix: UID"
+    }
+  ],
+  "metadata": {
+    "total_fields": 262,
+    "document_type": "Cortex XQL Schema Reference",
+    "vendor": "Palo Alto Networks",
+    "parsed_date": "2025-11-04"
+  }
+}

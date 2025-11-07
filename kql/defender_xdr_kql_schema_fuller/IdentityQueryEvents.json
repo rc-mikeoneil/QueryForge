@@ -1,0 +1,134 @@
+{
+  "table": "identityqueryevents",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-identityqueryevents-table",
+  "page_date": "2025-10-03",
+  "columns": [
+    {
+      "name": "Timestamp",
+      "type": "datetime",
+      "description": "Date and time when the event was recorded"
+    },
+    {
+      "name": "ActionType",
+      "type": "string",
+      "description": "Type of activity that triggered the event. See thein-portal schema referencefor details"
+    },
+    {
+      "name": "Application",
+      "type": "string",
+      "description": "Application that performed the recorded action"
+    },
+    {
+      "name": "QueryType",
+      "type": "string",
+      "description": "Type of query, such as QueryGroup, QueryUser, or EnumerateUsers"
+    },
+    {
+      "name": "QueryTarget",
+      "type": "string",
+      "description": "Name of user, group, device, domain, or any other entity type being queried"
+    },
+    {
+      "name": "Query",
+      "type": "string",
+      "description": "String used to run the query"
+    },
+    {
+      "name": "Protocol",
+      "type": "string",
+      "description": "Protocol used during the communication"
+    },
+    {
+      "name": "AccountName",
+      "type": "string",
+      "description": "User name of the account"
+    },
+    {
+      "name": "AccountDomain",
+      "type": "string",
+      "description": "Domain of the account"
+    },
+    {
+      "name": "AccountUpn",
+      "type": "string",
+      "description": "User principal name (UPN) of the account"
+    },
+    {
+      "name": "AccountSid",
+      "type": "string",
+      "description": "Security Identifier (SID) of the account"
+    },
+    {
+      "name": "AccountObjectId",
+      "type": "string",
+      "description": "Unique identifier for the account in Microsoft Entra ID"
+    },
+    {
+      "name": "AccountDisplayName",
+      "type": "string",
+      "description": "Name of the account user displayed in the address book. Typically a combination of a given or first name, a middle initial, and a last name or surname."
+    },
+    {
+      "name": "DeviceName",
+      "type": "string",
+      "description": "Fully qualified domain name (FQDN) of the device"
+    },
+    {
+      "name": "IPAddress",
+      "type": "string",
+      "description": "IP address assigned to the endpoint and used during related network communications"
+    },
+    {
+      "name": "Port",
+      "type": "int",
+      "description": "TCP port used during communication"
+    },
+    {
+      "name": "DestinationDeviceName",
+      "type": "string",
+      "description": "Name of the device running the server application that processed the recorded action"
+    },
+    {
+      "name": "DestinationIPAddress",
+      "type": "string",
+      "description": "IP address of the device running the server application that processed the recorded action"
+    },
+    {
+      "name": "DestinationPort",
+      "type": "int",
+      "description": "Destination port of related network communications"
+    },
+    {
+      "name": "TargetDeviceName",
+      "type": "string",
+      "description": "Fully qualified domain name (FQDN) of the device that the recorded action was applied to"
+    },
+    {
+      "name": "TargetAccountUpn",
+      "type": "string",
+      "description": "User principal name (UPN) of the account that the recorded action was applied to"
+    },
+    {
+      "name": "TargetAccountDisplayName",
+      "type": "string",
+      "description": "Display name of the account that the recorded action was applied to"
+    },
+    {
+      "name": "Location",
+      "type": "string",
+      "description": "City, country/region, or other geographic location associated with the event"
+    },
+    {
+      "name": "ReportId",
+      "type": "string",
+      "description": "Unique identifier for the event"
+    },
+    {
+      "name": "AdditionalFields",
+      "type": "dynamic",
+      "description": "Additional information about the entity or event"
+    }
+  ],
+  "col_count": 25,
+  "generated_at": "2025-10-03T02:10:36.179260Z"
+}

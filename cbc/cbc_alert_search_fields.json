@@ -1,0 +1,16 @@
+{
+  "carbonblack_edr_query_schema": {
+    "alert_search_fields": {
+      "alert_category": {
+        "type": "keyword",
+        "description": "Searchable. A deprecated Carbon Black Cloud classification for events tagged to an alert indicating whether the event is a threat or observed (now always THREAT) Requires Endpoint Standard",
+        "array": true
+      },
+      "alert_id": {
+        "type": "keyword",
+        "description": "Searchable. ID of the alert(s) associated with the process or event.  Note: 'id' or 'legacy_alert_id' will work for searching events or processes associated with a CB_ANALYTIC alert.",
+        "array": true
+      }
+    }
+  }
+}

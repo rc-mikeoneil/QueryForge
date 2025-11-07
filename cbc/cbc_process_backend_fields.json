@@ -1,0 +1,10 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_backend_fields": {
+      "backend_timestamp": {
+        "type": "datetime",
+        "description": "Searchable. Timestamp when the Carbon Black Cloud processed and enabled the data for searching; occurs after ingress_time; may differ from device_timestamp by a few minutes due to asynchronous processing"
+      }
+    }
+  }
+}

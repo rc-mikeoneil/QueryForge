@@ -1,0 +1,30 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_fileless_fields": {
+      "fileless_scriptload_cmdline": {
+        "type": "keyword",
+        "description": "Searchable. Deobfuscated script content run in a fileless context by the process  Requires Windows sensor and Windows 10/Server version 1703 or later  For more information see here",
+        "array": true
+      },
+      "fileless_scriptload_cmdline_length": {
+        "type": "integer",
+        "description": "Searchable. Character count of the deobfuscated script content run in a fileless context.  Requires Windows sensor and Windows 10/Server version 1703 or later  For more information see here",
+        "array": true
+      },
+      "fileless_scriptload_cmdline_raw": {
+        "type": "keyword",
+        "description": "Searchable. Deobfuscated command lines of fileless scripts  Note: This field's value is untokenized.  Requires Windows sensor and Windows 10/Server version 1703 or later  For more information see here",
+        "array": true
+      },
+      "fileless_scriptload_hash": {
+        "type": "keyword",
+        "description": "Searchable. SHA-256 hash(es) of the deobfuscated script content run by the process in a fileless context.  Requires Windows sensor and Windows 10/Server version 1703 or later  For more information see here",
+        "array": true
+      },
+      "fileless_scriptload_sha256": {
+        "type": "sha256",
+        "description": "Deprecated. Use fileless_scriptload_hash"
+      }
+    }
+  }
+}

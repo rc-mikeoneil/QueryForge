@@ -1,0 +1,58 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_modload_fields": {
+      "modload_action": {
+        "type": "keyword",
+        "description": "Searchable. Action associated with the modload operation  Requires Enterprise EDR"
+      },
+      "modload_count": {
+        "type": "integer",
+        "description": "Searchable. Count of modload events reported by the sensor since last initialization"
+      },
+      "modload_effective_reputation": {
+        "type": "keyword",
+        "description": "Searchable. Effective reputation(s) of the loaded module(s); applied by the sensor when the event occurred  Requires Enterprise EDR"
+      },
+      "modload_excluded_count": {
+        "type": "integer",
+        "description": "Count of excluded modload events, as reported by the sensor since last initialization"
+      },
+      "modload_file_type": {
+        "type": "keyword",
+        "description": "Searchable. The type of file"
+      },
+      "modload_hash": {
+        "type": "keyword",
+        "description": "Searchable. MD5 or SHA-256 hash(es) of the module(s) loaded by the process  Requires Enterprise EDR",
+        "array": true
+      },
+      "modload_issuer": {
+        "type": "keyword",
+        "description": "Modload certificate issuer names",
+        "array": true
+      },
+      "modload_md5": {
+        "type": "md5",
+        "description": "Searchable. MD5 hash of the module loaded by the process  Requires Enterprise EDR"
+      },
+      "modload_name": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Filesystem path(s) of the module(s) loaded by the process  Requires Enterprise EDR",
+        "array": true
+      },
+      "modload_publisher": {
+        "type": "keyword",
+        "description": "Searchable. Publisher name on the certificate(s) used to sign the Windows or macOS module binary  Requires Enterprise EDR"
+      },
+      "modload_publisher_state": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Digital signature state(s) of the loaded modules' binaries  Requires Enterprise EDR",
+        "array": true
+      },
+      "modload_sha256": {
+        "type": "sha256",
+        "description": "Searchable. SHA-256 hash of the module loaded by the process  Requires Enterprise EDR"
+      }
+    }
+  }
+}

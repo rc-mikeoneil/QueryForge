@@ -1,0 +1,61 @@
+{
+  "metadata": {
+    "source": "SentinelOne Operations Center",
+    "schema_name": "Command Scripts",
+    "extraction_date": "2025-10-21",
+    "description": "Command Scripts event fields for S1QL 2.0 queries",
+    "field_count": 10
+  },
+  "fields": [
+    {
+      "s1ql_field": "cmdScript.applicationName",
+      "description": "Name of application that ran command script",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "cmdScript.content",
+      "description": "The content of the executed command script. Limited up to first 65KB.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "cmdScript.isComplete",
+      "description": "Marks if the command script content is complete or truncated due to size limit. The maximal size limit is 65KB.",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "cmdScript.originalSize",
+      "description": "The size (in bytes) of the complete command script",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "cmdScript.sha256",
+      "description": "The SHA256 hash of the complete command script. This value can be used in Exclusions.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.cmdline",
+      "description": "Command line arguments sent to the source process. For example: In the command line \"runc init\" the source process runc is activated. src.process.cmdline will be \"runc init\" In the command line \"C:\\Windows\\system32\\svchost.exe -k wsappx -p -s AppXSvc\" the source process svchost.exe is activated. src.process.cmdline will be \"C:\\Windows\\system32\\svchost.exe -k wsappx -p -s AppXSvc\"",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.image.md5",
+      "description": "MD5 signature",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.image.path",
+      "description": "Full path of source process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "src.process.image.sha1",
+      "description": "SHA1 signature",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.file.sha1",
+      "description": "SHA1 Signature of File",
+      "data_type": "String"
+    }
+  ]
+}

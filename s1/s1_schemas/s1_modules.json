@@ -1,0 +1,26 @@
+{
+  "metadata": {
+    "source": "SentinelOne Operations Center",
+    "schema_name": "Modules",
+    "extraction_date": "2025-10-21",
+    "description": "Modules event fields for S1QL 2.0 queries",
+    "field_count": 3
+  },
+  "fields": [
+    {
+      "s1ql_field": "module.md5",
+      "description": "Module MD5 Signature",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "module.path",
+      "description": "Module Path",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "module.sha1",
+      "description": "Module SHA1 Signature",
+      "data_type": "String"
+    }
+  ]
+}

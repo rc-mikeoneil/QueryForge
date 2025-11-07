@@ -1,0 +1,64 @@
+{
+  "table": "exposuregraphedges",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-exposuregraphedges-table",
+  "page_date": "2025-10-03",
+  "columns": [
+    {
+      "name": "EdgeId",
+      "type": "string",
+      "description": "Unique identifier for the relationship/edge"
+    },
+    {
+      "name": "EdgeLabel",
+      "type": "string",
+      "description": "The edge label like \"routes traffic to\""
+    },
+    {
+      "name": "SourceNodeId",
+      "type": "string",
+      "description": "Node ID of the edge's source"
+    },
+    {
+      "name": "SourceNodeName",
+      "type": "string",
+      "description": "Source node display name"
+    },
+    {
+      "name": "SourceNodeLabel",
+      "type": "string",
+      "description": "Source node label"
+    },
+    {
+      "name": "SourceNodeCategories",
+      "type": "dynamic",
+      "description": "Categories list of the source node in JSON format"
+    },
+    {
+      "name": "TargetNodeId",
+      "type": "string",
+      "description": "Node ID of the edge's target"
+    },
+    {
+      "name": "TargetNodeName",
+      "type": "string",
+      "description": "Display name of the target node"
+    },
+    {
+      "name": "TargetNodeLabel",
+      "type": "string",
+      "description": "Target node label"
+    },
+    {
+      "name": "TargetNodeCategories",
+      "type": "dynamic",
+      "description": "The categories list of the target node in JSON format"
+    },
+    {
+      "name": "EdgeProperties",
+      "type": "dynamic",
+      "description": "Optional data relevant for the relationship between the nodes in JSON format"
+    }
+  ],
+  "col_count": 11,
+  "generated_at": "2025-10-03T02:10:30.345674Z"
+}

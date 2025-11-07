@@ -1,0 +1,49 @@
+{
+  "table": "devicetvmsoftwarevulnerabilitieskb",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-devicetvmsoftwarevulnerabilitieskb-table",
+  "page_date": "2025-10-03",
+  "columns": [
+    {
+      "name": "CveId",
+      "type": "string",
+      "description": "Unique identifier assigned to the security vulnerability under the Common Vulnerabilities and Exposures (CVE) system"
+    },
+    {
+      "name": "CvssScore",
+      "type": "string",
+      "description": "Severity score assigned to the security vulnerability under the Common Vulnerability Scoring System (CVSS)"
+    },
+    {
+      "name": "IsExploitAvailable",
+      "type": "boolean",
+      "description": "Indicates whether exploit code for the vulnerability is publicly available"
+    },
+    {
+      "name": "VulnerabilitySeverityLevel",
+      "type": "string",
+      "description": "Severity level assigned to the security vulnerability based on the CVSS score and dynamic factors influenced by the threat landscape"
+    },
+    {
+      "name": "LastModifiedTime",
+      "type": "datetime",
+      "description": "Date and time the item or related metadata was last modified"
+    },
+    {
+      "name": "PublishedDate",
+      "type": "datetime",
+      "description": "Date vulnerability was disclosed to the public"
+    },
+    {
+      "name": "VulnerabilityDescription",
+      "type": "string",
+      "description": "Description of the vulnerability and associated risks"
+    },
+    {
+      "name": "AffectedSoftware",
+      "type": "dynamic",
+      "description": "List of all software products affected by the vulnerability"
+    }
+  ],
+  "col_count": 8,
+  "generated_at": "2025-10-03T02:10:26.853838Z"
+}

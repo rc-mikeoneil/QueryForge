@@ -1,0 +1,18 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_report_fields": {
+      "report_id": {
+        "type": "keyword",
+        "description": "Searchable. ID of the watchlist report(s) that detected a hit on the process  Requires Enterprise EDR"
+      },
+      "report_severity": {
+        "type": "integer",
+        "description": "Searchable. Severity rating of the watchlist report; ranges 1-10, where 10 is severe  Requires Enterprise EDR"
+      },
+      "report_watchlist_id": {
+        "type": "keyword",
+        "description": "Deprecated. Use watchlist_id"
+      }
+    }
+  }
+}

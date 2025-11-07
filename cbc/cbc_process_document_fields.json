@@ -1,0 +1,10 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_document_fields": {
+      "document_guid": {
+        "type": "keyword",
+        "description": "Searchable. Unique id of solr document. Built as process_guid+server-side timestamp in epoch milliseconds (1/1/1970 based)."
+      }
+    }
+  }
+}

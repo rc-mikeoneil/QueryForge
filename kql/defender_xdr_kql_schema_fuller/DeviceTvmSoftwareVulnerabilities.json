@@ -1,0 +1,74 @@
+{
+  "table": "devicetvmsoftwarevulnerabilities",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-devicetvmsoftwarevulnerabilities-table",
+  "page_date": "2025-10-03",
+  "columns": [
+    {
+      "name": "DeviceId",
+      "type": "string",
+      "description": "Unique identifier for the device in the service"
+    },
+    {
+      "name": "DeviceName",
+      "type": "string",
+      "description": "Fully qualified domain name (FQDN) of the device"
+    },
+    {
+      "name": "OSPlatform",
+      "type": "string",
+      "description": "Platform of the operating system running on the device. Indicates specific operating systems, including variations within the same family, such as Windows 11, Windows 10, and Windows 7."
+    },
+    {
+      "name": "OSVersion",
+      "type": "string",
+      "description": "Version of the operating system running on the device"
+    },
+    {
+      "name": "OSArchitecture",
+      "type": "string",
+      "description": "Architecture of the operating system running on the device"
+    },
+    {
+      "name": "SoftwareVendor",
+      "type": "string",
+      "description": "Name of the software publisher"
+    },
+    {
+      "name": "SoftwareName",
+      "type": "string",
+      "description": "Name of the software product"
+    },
+    {
+      "name": "SoftwareVersion",
+      "type": "string",
+      "description": "Version number of the software product"
+    },
+    {
+      "name": "CveId",
+      "type": "string",
+      "description": "Unique identifier assigned to the security vulnerability under the Common Vulnerabilities and Exposures (CVE) system"
+    },
+    {
+      "name": "VulnerabilitySeverityLevel",
+      "type": "string",
+      "description": "Severity level assigned to the security vulnerability based on the CVSS score and dynamic factors influenced by the threat landscape"
+    },
+    {
+      "name": "RecommendedSecurityUpdate",
+      "type": "string",
+      "description": "Name or description of the security update provided by the software publisher to address the vulnerability"
+    },
+    {
+      "name": "RecommendedSecurityUpdateId",
+      "type": "string",
+      "description": "Identifier of the applicable security updates or identifier for the corresponding guidance or knowledge base (KB) articles"
+    },
+    {
+      "name": "CveTags",
+      "type": "dynamic",
+      "description": "Array of tags relevant to the CVE; example: ZeroDay, NoSecurityUpdate"
+    }
+  ],
+  "col_count": 13,
+  "generated_at": "2025-10-03T02:10:25.711613Z"
+}

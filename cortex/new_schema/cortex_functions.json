@@ -1,0 +1,112 @@
+{
+  "cortex_xdr_query_schema": {
+    "xql_functions": {
+      "dataset": {
+        "description": "Select the data source for the query",
+        "syntax": "dataset = <dataset_name>",
+        "position": "first",
+        "required": true,
+        "examples": [
+          "dataset = xdr_data",
+          "dataset = firewall_logs"
+        ]
+      },
+      "filter": {
+        "description": "Apply filtering conditions to narrow results",
+        "syntax": "| filter <condition>",
+        "position": "any",
+        "multiple_allowed": true,
+        "examples": [
+          "| filter event_type = ENUM.PROCESS",
+          "| filter agent_hostname contains 'server'",
+          "| filter _time > current_time() - interval '1 hour'"
+        ]
+      },
+      "fields": {
+        "description": "Select specific fields to return in results",
+        "syntax": "| fields <field1>, <field2>, ...",
+        "position": "any",
+        "examples": [
+          "| fields agent_hostname, actor_process_image_name, _time",
+          "| fields action_file_path as FilePath, agent_hostname as Hostname"
+        ]
+      },
+      "alter": {
+        "description": "Create new fields or modify existing ones",
+        "syntax": "| alter <new_field> = <expression>",
+        "position": "any",
+        "examples": [
+          "| alter Username = action_evtlog_data_fields->TargetUserName",
+          "| alter FileSize_MB = action_file_size / 1048576"
+        ]
+      },
+      "comp": {
+        "description": "Perform aggregations and computations",
+        "syntax": "| comp <aggregation>(<field>) [as <alias>] [by <grouping_field>]",
+        "position": "any",
+        "aggregations": [
+          "count",
+          "sum",
+          "avg",
+          "min",
+          "max",
+          "values",
+          "unique"
+        ],
+        "examples": [
+          "| comp count() as total_events",
+          "| comp count() by agent_hostname",
+          "| comp sum(action_upload) as total_upload by actor_process_image_name"
+        ]
+      },
+      "sort": {
+        "description": "Sort results by one or more fields",
+        "syntax": "| sort [asc|desc] <field>",
+        "position": "any",
+        "examples": [
+          "| sort desc _time",
+          "| sort asc agent_hostname, desc event_timestamp"
+        ]
+      },
+      "limit": {
+        "description": "Restrict the number of returned results",
+        "syntax": "| limit <number>",
+        "position": "typically last",
+        "examples": [
+          "| limit 100",
+          "| limit 1000"
+        ]
+      },
+      "join": {
+        "description": "Combine data from multiple datasets",
+        "syntax": "| join [type=<join_type>] (<dataset_query>) as <alias> <join_condition>",
+        "types": [
+          "inner",
+          "left",
+          "right"
+        ],
+        "examples": [
+          "| join (dataset = endpoints | fields endpoint_name, group_names) as ep ep.endpoint_name = agent_hostname",
+          "| join type=left (preset=ad_users | fields security_identifier, member_of) as ad ad.security_identifier = auth_identity_sid"
+        ]
+      },
+      "dedup": {
+        "description": "Remove duplicate records based on specified fields",
+        "syntax": "| dedup <field1>, <field2>, ...",
+        "position": "any",
+        "examples": [
+          "| dedup agent_hostname",
+          "| dedup agent_hostname, actor_process_image_name"
+        ]
+      },
+      "arrayexpand": {
+        "description": "Expand array fields into separate rows",
+        "syntax": "| arrayexpand <array_field>",
+        "position": "any",
+        "examples": [
+          "| arrayexpand dns_resolutions"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_triggered_fields": {
+      "triggered_alert_id": {
+        "type": "keyword",
+        "description": "Triggered alert IDs associated with the process (including silent alerts)"
+      }
+    }
+  }
+}

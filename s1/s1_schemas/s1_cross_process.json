@@ -1,0 +1,171 @@
+{
+  "metadata": {
+    "source": "SentinelOne Operations Center",
+    "schema_name": "Cross Process",
+    "extraction_date": "2025-10-21",
+    "description": "Cross Process event fields for S1QL 2.0 queries",
+    "field_count": 32
+  },
+  "fields": [
+    {
+      "s1ql_field": "k8sCluster.containerImage.id",
+      "description": "Container Image ID",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "k8sCluster.containerImage.sha256",
+      "description": "Container Image Sha256",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.accessRights",
+      "description": "Type of access granted to process by cross process",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "tgt.process.activeContent.hash",
+      "description": "Active Content SHA1 for target process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.activeContent.id",
+      "description": "Active Content file unique ID for target process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.activeContent.path",
+      "description": "Active Content file path of source process was the target of the event",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.activeContent.signedStatus",
+      "description": "Active Content file signed status for target process",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "tgt.process.activeContentType",
+      "description": "Active Content type of target process",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "tgt.process.cmdline",
+      "description": "Full command line sent with the target process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.displayName",
+      "description": "Display name of target process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.image.binaryIsExecutable",
+      "description": "Is binary backing the target process an executable",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "tgt.process.image.md5",
+      "description": "MD5 of target process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.image.path",
+      "description": "Image path of target process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.image.sha1",
+      "description": "SHA1 of target process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.image.sha256",
+      "description": "SHA256 of target process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.integrityLevel",
+      "description": "Integrity level of target process",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "tgt.process.isNative64Bit",
+      "description": "Is target process compiled natively for 64-Bit or runs as WoW",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "tgt.process.isRedirectCmdProcessor",
+      "description": "Is interpreter for target process with stdout redirection",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "tgt.process.isStorylineRoot",
+      "description": "Indicates if the target process is the root of Storyline",
+      "data_type": "Boolean"
+    },
+    {
+      "s1ql_field": "tgt.process.name",
+      "description": "The file name of the target process. When process A creates process B, the target process name in the process creation event will be of process B.",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.pid",
+      "description": "PID for target process",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "tgt.process.publisher",
+      "description": "Publisher that digitally signed the binary being invoked as part of the target process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.reasonSignatureInvalid",
+      "description": "Indicates the reason the target process signature is not valid",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.relation",
+      "description": "Relationship between source process and target process",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "tgt.process.sessionId",
+      "description": "ID of the terminal (cmd, shell, other) session of target process",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "tgt.process.signedStatus",
+      "description": "Signature status of target process",
+      "data_type": "Enum"
+    },
+    {
+      "s1ql_field": "tgt.process.startTime",
+      "description": "Start time of target process. Format: epoch time (milliseconds since 1.1.1970), Timezone: UTC",
+      "data_type": "Numeric"
+    },
+    {
+      "s1ql_field": "tgt.process.storyline.id",
+      "description": "Storyline ID of target event",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.subsystem",
+      "description": "Subsystem of target process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.uid",
+      "description": "Unique ID of target process",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.user",
+      "description": "Username under which target process ran",
+      "data_type": "String"
+    },
+    {
+      "s1ql_field": "tgt.process.verifiedStatus",
+      "description": "Verification status of signature of the target process",
+      "data_type": "Enum"
+    }
+  ]
+}

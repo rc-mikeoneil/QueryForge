@@ -1,0 +1,306 @@
+{
+  "metadata": {
+    "source": "SentinelOne Operations Center",
+    "extraction_date": "2025-10-21",
+    "description": "Regular expressions reference for S1QL queries - compatible with traditional Java and Python libraries",
+    "documentation_url": "https://community.sentinelone.com"
+  },
+  "conventions": {
+    "regex_library": "java.util.regex",
+    "python_library": "re",
+    "case_sensitivity": "Case-insensitive by default ([A-Z] = [a-z])",
+    "group_naming": "Not supported",
+    "back_reference_syntax": {
+      "collector_redaction_rules": "\\1 and \\2",
+      "parsers": "$1 and $2 (also supports $0)"
+    },
+    "escaping_rules": {
+      "general": "Double escaping required everywhere except $\"regex\" syntax in Search and PowerQueries",
+      "shorthand_format": "Regex does not need to be escaped. Example: $\"\\d+\\.\\d+\\.\\d+\\.\\d+\"",
+      "full_syntax": "Regex must be escaped. Example: dst.ip.address matches \"\\\\d+\\\\.\\\\d+\\\\.\\\\d+\\\\.\\\\d+\"",
+      "four_backslashes": "In some cases, four backslashes (\\\\\\\\) are needed to properly escape. First backslash is the character (\\), second escapes first, last two denote special character"
+    },
+    "max_regex_size": "1000 bytes",
+    "restrictions": {
+      "lookaheads": "Positive and negative look aheads are restricted due to performance issues",
+      "lookbehinds": "Positive and negative look behinds are restricted due to performance issues"
+    }
+  },
+  "characters": [
+    {
+      "character": "\\d",
+      "legend": "One digit from 0 to 9",
+      "example": "log_\\\\d\\\\d",
+      "sample_match": "log_25"
+    },
+    {
+      "character": "\\w",
+      "legend": "Word character: ASCII letter, digit or underscore",
+      "example": "\\\\w-\\\\w\\\\w\\\\w",
+      "sample_match": "A-b_1"
+    },
+    {
+      "character": "\\s",
+      "legend": "Whitespace character: space, tab, newline, carriage return, vertical tab",
+      "example": "a\\\\sb\\\\sc",
+      "sample_match": "a bc"
+    },
+    {
+      "character": "\\D",
+      "legend": "One character that is not a digit as defined by \\d",
+      "example": "\\\\D\\\\D\\\\D",
+      "sample_match": "ABC"
+    },
+    {
+      "character": "\\W",
+      "legend": "One character that is not a word character as defined by \\w",
+      "example": "\\\\W\\\\W\\\\W\\\\W\\\\W",
+      "sample_match": "*-+=)"
+    },
+    {
+      "character": "\\S",
+      "legend": "One character that is not a whitespace character as defined by \\s",
+      "example": "\\\\S\\\\S\\\\S\\\\S",
+      "sample_match": "Yoyo"
+    },
+    {
+      "character": "\\u\\X",
+      "legend": "Match specific or ranges of unicode characters",
+      "example": ".*[\\u00A8]",
+      "sample_match": "‰p ò†…¨2020-08-28T20:28:34.343-0500"
+    },
+    {
+      "character": ".",
+      "legend": "Any character except line break",
+      "example": "a.c",
+      "sample_match": "abc"
+    },
+    {
+      "character": ".*",
+      "legend": "Any character except line break (zero or more times)",
+      "example": ".*",
+      "sample_match": "whatever, man."
+    },
+    {
+      "character": "\\.",
+      "legend": "A period (special character: needs to be escaped by backslash)",
+      "example": "a\\\\.c",
+      "sample_match": "a.c"
+    },
+    {
+      "character": "\\",
+      "legend": "Escapes a special character",
+      "example": "\\\\.\\\\*\\\\+\\\\? \\\\$\\\\^\\\\/\\\\\\\\",
+      "sample_match": ".*+? $^\\/\\"
+    },
+    {
+      "character": "\\[\\{\\(\\)\\}\\]",
+      "legend": "Escapes bracket characters",
+      "example": "\\\\[\\\\{\\\\(\\\\)\\\\}\\\\]",
+      "sample_match": "[{()}]"
+    }
+  ],
+  "quantifiers": [
+    {
+      "character": "+",
+      "legend": "One or more",
+      "example": "Version \\\\w-\\\\w+",
+      "sample_match": "Version A-b1_1",
+      "greedy": true
+    },
+    {
+      "character": "{3}",
+      "legend": "Exactly three times",
+      "example": "\\\\D{3}",
+      "sample_match": "ABC"
+    },
+    {
+      "character": "{2,4}",
+      "legend": "Two to four times",
+      "example": "\\\\d{2,4}",
+      "sample_match": "156"
+    },
+    {
+      "character": "{3,}",
+      "legend": "Three or more times",
+      "example": "\\\\w{3,}",
+      "sample_match": "regex_tutorial"
+    },
+    {
+      "character": "*",
+      "legend": "Zero or more times",
+      "example": "A*B*C*",
+      "sample_match": "AAACC",
+      "greedy": true
+    },
+    {
+      "character": "?",
+      "legend": "Once or none",
+      "example": "plurals?",
+      "sample_match": "plural"
+    },
+    {
+      "character": "+?",
+      "legend": "Makes + quantifier lazy (one or more)",
+      "example": "\\\\d+?",
+      "sample_match": "1 in 12345",
+      "greedy": false
+    },
+    {
+      "character": "*?",
+      "legend": "Makes * quantifier lazy (zero or more)",
+      "example": "A*?",
+      "sample_match": "empty in AAA",
+      "greedy": false
+    },
+    {
+      "character": "{2,4}?",
+      "legend": "Makes range quantifier lazy",
+      "example": "\\\\w{2,4}?",
+      "sample_match": "ab in abcd",
+      "greedy": false
+    }
+  ],
+  "logic": [
+    {
+      "character": "|",
+      "legend": "Alternation / OR operand",
+      "example": "22|33",
+      "sample_match": "33"
+    },
+    {
+      "character": "( … )",
+      "legend": "Capturing group",
+      "example": "A(nt|pple)",
+      "sample_match": "Apple (captures \"pple\")"
+    },
+    {
+      "character": "\\1 or $1",
+      "legend": "Contents of Group 1",
+      "example": "parser: r(\\\\w)g$1x | agent: r(\\\\w)g\\\\1x",
+      "sample_match": "regex"
+    },
+    {
+      "character": "\\2 or $2",
+      "legend": "Contents of Group 2",
+      "example": "parser: r(\\\\w)g$1x2 | agent: r(\\\\w)g\\\\1x2",
+      "sample_match": "regex2"
+    }
+  ],
+  "whitespace": [
+    {
+      "character": "\\n",
+      "legend": "New line",
+      "example": "stack trace\\\\ntrace",
+      "sample_match": "stack trace\ntrace"
+    }
+  ],
+  "character_classes": [
+    {
+      "character": "[ … ]",
+      "legend": "One of the characters in the brackets",
+      "example": "[AEIOU]",
+      "sample_match": "One uppercase vowel"
+    },
+    {
+      "character": "[ao]",
+      "legend": "One of the characters in the brackets",
+      "example": "T[ao]p",
+      "sample_match": "Tap or Top"
+    },
+    {
+      "character": "-",
+      "legend": "Range indicator",
+      "example": "[a-z]",
+      "sample_match": "One lowercase letter"
+    },
+    {
+      "character": "[x-y]",
+      "legend": "One of the characters in the range from x to y",
+      "example": "[A-Z]+",
+      "sample_match": "GREAT"
+    },
+    {
+      "character": "[AB1-5w-z]",
+      "legend": "One of the characters in multiple ranges",
+      "example": "[AB1-5w-z]",
+      "sample_match": "One of either: A,B,1,2,3,4,5,w,x,y,z"
+    },
+    {
+      "character": "[ -~]",
+      "legend": "Characters in the printable section of ASCII table",
+      "example": "[ -~]+",
+      "sample_match": "Characters in the printable section of the ASCII table"
+    },
+    {
+      "character": "[^x]",
+      "legend": "One character that is not x",
+      "example": "[^a-z]{3}",
+      "sample_match": "A1!"
+    },
+    {
+      "character": "[^x-y]",
+      "legend": "One of the characters not in the range from x to y",
+      "example": "[^ -~]+",
+      "sample_match": "Characters not in printable ASCII"
+    },
+    {
+      "character": "[\\d\\D]",
+      "legend": "One character that is a digit or a non-digit",
+      "example": "[\\\\d\\\\D]+",
+      "sample_match": "Any characters, including new lines, which the regular dot doesn't match"
+    }
+  ],
+  "anchors_and_boundaries": [
+    {
+      "character": "^ or \"regex\" in parser",
+      "legend": "Start of string or start of line depending on multiline mode (But when [^inside brackets], it means \"not\")",
+      "example": "^start.*end$ or \"start.*the end\"",
+      "sample_match": "abc (line start)"
+    },
+    {
+      "character": "$ or \"regex\" in parser",
+      "legend": "End of string or end of line depending on multiline mode",
+      "example": ".*? the end$ OR \".*the end\"",
+      "sample_match": "this is the end"
+    }
+  ],
+  "usage_in_search": {
+    "shorthand_syntax": {
+      "format": "$\"regex\"",
+      "description": "Searches the message field for logs ingested by Collector",
+      "example": "$\"tomcat\"",
+      "equivalent_to": "message matches \"regex\"",
+      "escaping_required": false
+    },
+    "full_syntax": {
+      "format": "fieldname matches \"regex\"",
+      "example": "dst.ip.address matches \"\\\\d+\\\\.\\\\d+\\\\.\\\\d+\\\\.\\\\d+\"",
+      "escaping_required": true
+    }
+  },
+  "testing_tools": {
+    "free_text_parser": {
+      "description": "Paste in log data and confirm that your parser works as expected",
+      "video_url": "https://youtu.be/uNOiu8CVnJU?t=72"
+    },
+    "live_data_parser": {
+      "description": "Debug the workings of your format statements using live data",
+      "access_methods": [
+        "User menu > Parsers > Edit or Create buttons",
+        "Search view > Select log line > Inspect Fields > Edit Parser"
+      ],
+      "video_url": "https://youtu.be/uNOiu8CVnJU?t=161"
+    }
+  },
+  "examples": {
+    "ip_address": {
+      "shorthand": "$\"\\\\d+\\\\.\\\\d+\\\\.\\\\d+\\\\.\\\\d+\"",
+      "full_syntax": "dst.ip.address matches \"\\\\d+\\\\.\\\\d+\\\\.\\\\d+\\\\.\\\\d+\""
+    },
+    "windows_temp_path": {
+      "description": "Searching for target file path in Windows temp directory",
+      "example": "tgt.file.path matches '^C:\\\\\\\\Windows\\\\\\\\Temp\\\\\\\\[a-z]{8}\\\\.tmp$'"
+    }
+  }
+}

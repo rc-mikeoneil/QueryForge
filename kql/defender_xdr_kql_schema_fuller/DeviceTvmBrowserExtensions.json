@@ -1,0 +1,59 @@
+{
+  "table": "devicetvmbrowserextensions",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-devicetvmbrowserextensions-table",
+  "page_date": "2025-10-03",
+  "columns": [
+    {
+      "name": "DeviceId",
+      "type": "string",
+      "description": "Unique identifier for the device in the service"
+    },
+    {
+      "name": "BrowserName",
+      "type": "string",
+      "description": "Name of the web browser with the extension"
+    },
+    {
+      "name": "ExtensionId",
+      "type": "string",
+      "description": "Unique identifier for the browser extension"
+    },
+    {
+      "name": "ExtensionName",
+      "type": "string",
+      "description": "Name of the extension"
+    },
+    {
+      "name": "ExtensionDescription",
+      "type": "string",
+      "description": "Description from the publisher about the extension"
+    },
+    {
+      "name": "ExtensionVersion",
+      "type": "string",
+      "description": "Version number of the extension"
+    },
+    {
+      "name": "ExtensionRisk",
+      "type": "string",
+      "description": "Risk level for the extension based on the permissions it has requested"
+    },
+    {
+      "name": "ExtensionVendor",
+      "type": "string",
+      "description": "Name of the vendor offering the extension"
+    },
+    {
+      "name": "IsActivated",
+      "type": "string",
+      "description": "Whether the extension is turned on or off on the devices"
+    },
+    {
+      "name": "InstallationTime",
+      "type": "datetime",
+      "description": "Date and time when the browser extension was first installed"
+    }
+  ],
+  "col_count": 10,
+  "generated_at": "2025-10-03T02:10:13.710983Z"
+}

@@ -1,0 +1,69 @@
+{
+  "table": "devicebaselinecomplianceassessment",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-devicebaselinecomplianceassessment-table",
+  "page_date": "2025-10-03",
+  "columns": [
+    {
+      "name": "DeviceId",
+      "type": "string",
+      "description": "Unique identifier for the device in the service"
+    },
+    {
+      "name": "DeviceName",
+      "type": "string",
+      "description": "Fully qualified domain name (FQDN) of the device"
+    },
+    {
+      "name": "OSPlatform",
+      "type": "string",
+      "description": "Platform of the operating system running on the device. This indicates specific operating systems, including variations within the same family, such as Windows 11, Windows 10 and Windows 7."
+    },
+    {
+      "name": "OSVersion",
+      "type": "string",
+      "description": "Version of the operating system running on the device"
+    },
+    {
+      "name": "ConfigurationId",
+      "type": "string",
+      "description": "Unique identifier for a specific configuration"
+    },
+    {
+      "name": "ProfileId",
+      "type": "string",
+      "description": "Unique identifier for the profile"
+    },
+    {
+      "name": "IsCompliant",
+      "type": "nullable bool",
+      "description": "Indicates whether the device that initiated the event is compliant or not"
+    },
+    {
+      "name": "IsApplicable",
+      "type": "boolean",
+      "description": "Indicates whether the configuration or policy is applicable"
+    },
+    {
+      "name": "Source",
+      "type": "dynamic",
+      "description": "The registry path or other location used to determine the current device setting"
+    },
+    {
+      "name": "RecommendedValue",
+      "type": "dynamic",
+      "description": "Set of expected values for the current device setting to be compliant"
+    },
+    {
+      "name": "CurrentValue",
+      "type": "dynamic",
+      "description": "Set of detected values found on the device"
+    },
+    {
+      "name": "IsExempt",
+      "type": "boolean",
+      "description": "Indicates whether the device is exempt from having the baseline configuration"
+    }
+  ],
+  "col_count": 12,
+  "generated_at": "2025-10-03T02:10:09.245280Z"
+}

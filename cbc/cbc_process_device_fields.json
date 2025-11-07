@@ -1,0 +1,66 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_device_fields": {
+      "device_external_ip": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. IP address of the endpoint according to the Carbon Black Cloud; can differ from device_internal_ip due to network proxy or NAT; either IPv4 (dotted decimal notation) or IPv6 (proprietary format documented below)"
+      },
+      "device_group": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Sensor group to which the endpoint was assigned when the sensor recorded the event data"
+      },
+      "device_group_id": {
+        "type": "integer",
+        "description": "Searchable. ID assigned to the device_group by Carbon Black Cloud; will match on the ad_group_id on the Devices API"
+      },
+      "device_id": {
+        "type": "integer",
+        "description": "Searchable. ID assigned to the endpoint by Carbon Black Cloud; unique across all Carbon Black Cloud environments"
+      },
+      "device_installed_by": {
+        "type": "keyword",
+        "description": "Searchable. The Carbon Black Cloud user who was logged in to the endpoint when the sensor was installed (e.g. pat.malarkey@email.com, DOMAIN\\pmalarkey or pmalarkey)"
+      },
+      "device_internal_ip": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. IP address of the endpoint reported by the sensor; either IPv4 (dotted decimal notation) or IPv6 (proprietary format, documented below)"
+      },
+      "device_location": {
+        "type": "keyword",
+        "description": "The endpoints current location relative to the organizations network, based on the current IP address and the devices registered DNS domain suffix"
+      },
+      "device_name": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Hostname of the endpoint recorded by the sensor when last initialized"
+      },
+      "device_os": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. The operating system of the endpoint"
+      },
+      "device_os_version": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. The operating system and version of the endpoint  Requires Windows sensor"
+      },
+      "device_policy": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Policy applied to the endpoint in the Carbon Black Cloud"
+      },
+      "device_policy_id": {
+        "type": "integer",
+        "description": "Searchable. ID assigned to the device_policy by the Carbon Black Cloud"
+      },
+      "device_sensor_version": {
+        "type": "keyword",
+        "description": "Searchable. Version of the sensor installed on the device"
+      },
+      "device_target_priority": {
+        "type": "keyword",
+        "description": "The Target value configured in the policy assigned to the sensor  Requires Endpoint Standard"
+      },
+      "device_timestamp": {
+        "type": "datetime",
+        "description": "Searchable. Sensor-reported timestamp of the batch of events in which this record was submitted to Carbon Black Cloud"
+      }
+    }
+  }
+}

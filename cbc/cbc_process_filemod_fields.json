@@ -1,0 +1,74 @@
+{
+  "carbonblack_edr_query_schema": {
+    "process_filemod_fields": {
+      "filemod_action": {
+        "type": "keyword",
+        "description": "Action(s) associated with the filemod operation"
+      },
+      "filemod_count": {
+        "type": "integer",
+        "description": "Searchable. Count of filemod events reported by the sensor since last initialization"
+      },
+      "filemod_effective_reputation": {
+        "type": "keyword",
+        "description": "Reputation of the actor that modified the file"
+      },
+      "filemod_excluded_count": {
+        "type": "integer",
+        "description": "Count of excluded filemod events, as reported by the sensor since last initialization"
+      },
+      "filemod_file_type": {
+        "type": "keyword",
+        "description": "Searchable. The type of file e.g. EXECUTABLE_IMAGE, EXECUTABLE_LIBRARY or SCRIPT"
+      },
+      "filemod_hash": {
+        "type": "keyword",
+        "description": "Searchable. MD5 and/or SHA-256 hash(es) of the file(s) modified by the actor process",
+        "array": true
+      },
+      "filemod_issuer": {
+        "type": "keyword",
+        "description": "Filemod certificate issuer names",
+        "array": true
+      },
+      "filemod_md5": {
+        "type": "md5",
+        "description": "Searchable. MD5 hash of the file modified by the actor process"
+      },
+      "filemod_name": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. Filesystem path of the file modified by the process"
+      },
+      "filemod_new_name": {
+        "type": "keyword",
+        "description": "Searchable. Filesystem path of the new file modified by the process during ACTION_FILE_RENAME"
+      },
+      "filemod_old_name": {
+        "type": "keyword",
+        "description": "Searchable. Filesystem path of the old file modified by the process during ACTION_FILE_RENAME"
+      },
+      "filemod_publisher": {
+        "type": "keyword",
+        "description": "Searchable. Publisher name on the certificate(s) used to sign the target file of the filemod",
+        "array": true
+      },
+      "filemod_publisher_state": {
+        "type": "keyword",
+        "description": "Searchable. Value-Searchable. State of the digital signature(s) of the target file of the filemod; checks signatures on Powershell scripts and .MSI/.MSP files",
+        "array": true
+      },
+      "filemod_reputation": {
+        "type": "keyword",
+        "description": "Reputation of the target file"
+      },
+      "filemod_sha256": {
+        "type": "sha256",
+        "description": "Searchable. SHA-256 hash of the file modified by the actor process"
+      },
+      "filemod_type": {
+        "type": "keyword",
+        "description": "Type of file involved in the filemod operation  Requires Enterprise EDR"
+      }
+    }
+  }
+}

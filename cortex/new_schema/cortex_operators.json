@@ -1,0 +1,137 @@
+{
+  "cortex_xdr_query_schema": {
+    "operators": {
+      "logical": {
+        "AND": {
+          "syntax": [
+            "and",
+            "AND"
+          ],
+          "description": "Boolean AND operator - combines conditions where both must be true",
+          "examples": [
+            "event_type = ENUM.PROCESS and agent_hostname = 'server01'",
+            "action_file_extension = 'exe' AND digsig_result = 'unsigned'"
+          ]
+        },
+        "OR": {
+          "syntax": [
+            "or",
+            "OR"
+          ],
+          "description": "Boolean OR operator - combines conditions where either can be true",
+          "examples": [
+            "actor_process_image_name = 'powershell.exe' or actor_process_image_name = 'cmd.exe'",
+            "event_type = ENUM.FILE OR event_type = ENUM.PROCESS"
+          ]
+        },
+        "NOT": {
+          "syntax": [
+            "not",
+            "NOT",
+            "!="
+          ],
+          "description": "Boolean NOT operator - excludes matching records",
+          "examples": [
+            "actor_process_image_name != 'svchost.exe'",
+            "NOT agent_hostname contains 'test'"
+          ]
+        }
+      },
+      "comparison": {
+        "EQUALS": {
+          "symbol": "=",
+          "description": "Exact match comparison",
+          "examples": [
+            "event_type = ENUM.PROCESS",
+            "agent_id = '12345'"
+          ]
+        },
+        "NOT_EQUALS": {
+          "symbol": "!=",
+          "description": "Not equal comparison",
+          "examples": [
+            "event_sub_type != ENUM.PROCESS_START"
+          ]
+        },
+        "GREATER_THAN": {
+          "symbol": ">",
+          "description": "Greater than comparison for numbers and timestamps",
+          "examples": [
+            "_time > current_time() - interval '1 hour'",
+            "action_upload > 1000000"
+          ]
+        },
+        "LESS_THAN": {
+          "symbol": "<",
+          "description": "Less than comparison for numbers and timestamps",
+          "examples": [
+            "clipboard_data_size < 1024"
+          ]
+        },
+        "GREATER_EQUAL": {
+          "symbol": ">=",
+          "description": "Greater than or equal comparison",
+          "examples": [
+            "http_rsp_code >= 400"
+          ]
+        },
+        "LESS_EQUAL": {
+          "symbol": "<=",
+          "description": "Less than or equal comparison",
+          "examples": [
+            "http_rsp_code <= 599"
+          ]
+        }
+      },
+      "string": {
+        "CONTAINS": {
+          "syntax": "contains",
+          "description": "Check if string field contains substring (case-insensitive by default)",
+          "examples": [
+            "action_process_image_command_line contains 'powershell'",
+            "agent_hostname contains 'server'"
+          ]
+        },
+        "REGEX_MATCH": {
+          "syntax": "~=",
+          "description": "Regular expression pattern matching",
+          "examples": [
+            "action_process_image_name ~= '.*\\.(?:pdf|docx)\\.exe'",
+            "dns_query_name ~= '^[0-9a-f]{32}\\.(com|net)$'"
+          ]
+        },
+        "IN": {
+          "syntax": "in",
+          "description": "Check if value exists in a list",
+          "examples": [
+            "actor_process_image_name in ('powershell.exe', 'cmd.exe', 'wscript.exe')",
+            "event_type in (ENUM.FILE, ENUM.PROCESS)"
+          ]
+        },
+        "NOT_IN": {
+          "syntax": "not in",
+          "description": "Check if value does not exist in a list",
+          "examples": [
+            "action_file_extension not in ('dll', 'sys')"
+          ]
+        }
+      },
+      "special": {
+        "IS_NULL": {
+          "syntax": "= null",
+          "description": "Check if field is null/empty",
+          "examples": [
+            "action_evtlog_data_fields != null"
+          ]
+        },
+        "BETWEEN": {
+          "syntax": "between",
+          "description": "Range check for numeric or timestamp values",
+          "examples": [
+            "_time between timestamp('2024-01-01') and timestamp('2024-01-31')"
+          ]
+        }
+      }
+    }
+  }
+}

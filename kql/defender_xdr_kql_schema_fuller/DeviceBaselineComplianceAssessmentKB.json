@@ -1,0 +1,64 @@
+{
+  "table": "devicebaselinecomplianceassessmentkb",
+  "source_url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-devicebaselinecomplianceassessmentkb-table",
+  "page_date": "2025-10-03",
+  "columns": [
+    {
+      "name": "ConfigurationId",
+      "type": "string",
+      "description": "Unique identifier for a specific configuration"
+    },
+    {
+      "name": "ConfigurationName",
+      "type": "string",
+      "description": "Display name of the configuration"
+    },
+    {
+      "name": "ConfigurationDescription",
+      "type": "string",
+      "description": "Description of the configuration"
+    },
+    {
+      "name": "ConfigurationRationale",
+      "type": "string",
+      "description": "Description of any associated risks and rationale behind the configuration"
+    },
+    {
+      "name": "ConfigurationCategory",
+      "type": "string",
+      "description": "Category or grouping to which the configuration belongs"
+    },
+    {
+      "name": "BenchmarkProfileLevels",
+      "type": "dynamic",
+      "description": "List of benchmark compliance levels for which the configuration is applicable"
+    },
+    {
+      "name": "CCEReference",
+      "type": "string",
+      "description": "Unique Common Configuration Enumeration (CCE) identifier for the configuration"
+    },
+    {
+      "name": "RemediationOptions",
+      "type": "string",
+      "description": "Recommended actions to reduce or address any associated risks"
+    },
+    {
+      "name": "ConfigurationBenchmark",
+      "type": "string",
+      "description": "Industry benchmark recommending the configuration"
+    },
+    {
+      "name": "Source",
+      "type": "dynamic",
+      "description": "The registry path or other location used to determine the current device setting"
+    },
+    {
+      "name": "RecommendedValue",
+      "type": "dynamic",
+      "description": "Set of expected values for the current device setting to be compliant"
+    }
+  ],
+  "col_count": 11,
+  "generated_at": "2025-10-03T02:10:10.351750Z"
+}

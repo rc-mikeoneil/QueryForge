@@ -1,0 +1,112 @@
+{
+  "comprehensive_security_patterns": {
+    "description": "Multi-indicator detection patterns for common security concepts",
+    "patterns": {
+      "rdp_detection": {
+        "description": "Comprehensive Remote Desktop Protocol detection across multiple indicators",
+        "indicators": ["ports", "processes", "command_line", "domains"],
+        "query": "(netconn_port:3389 OR netconn_port:3388 OR process_name:mstsc.exe OR process_name:rdpclip.exe OR process_name:termsrv.dll OR process_name:rdpinit.exe OR process_cmdline:*mstsc* OR process_cmdline:*/v:* OR process_cmdline:*/admin* OR netconn_domain:*rdp* OR netconn_domain:*remote*desktop*)",
+        "search_type": "process_search",
+        "notes": "Detects RDP activity via standard port 3389, alternate port 3388, RDP client processes, and command-line parameters"
+      },
+      "smb_lateral_movement": {
+        "description": "SMB-based lateral movement detection",
+        "indicators": ["ports", "processes", "command_line", "network"],
+        "query": "(netconn_port:445 OR netconn_port:139 OR process_name:net.exe OR process_name:net1.exe OR process_name:psexec.exe OR process_name:paexec.exe OR process_cmdline:*\\\\admin$* OR process_cmdline:*\\\\c$* OR process_cmdline:*net use* OR process_cmdline:*net share* OR netconn_domain:*\\\\\\\\*)",
+        "search_type": "process_search",
+        "notes": "Detects SMB lateral movement via ports 445/139, administrative shares, and tools like net.exe and psexec"
+      },
+      "powershell_execution": {
+        "description": "Comprehensive PowerShell execution detection",
+        "indicators": ["processes", "command_line", "parent_process"],
+        "query": "(process_name:powershell.exe OR process_name:pwsh.exe OR process_name:powershell_ise.exe OR process_cmdline:*-enc* OR process_cmdline:*-encodedcommand* OR process_cmdline:*-w hidden* OR process_cmdline:*-windowstyle hidden* OR process_cmdline:*-nop* OR process_cmdline:*-noprofile* OR process_cmdline:*-ep bypass* OR process_cmdline:*-executionpolicy bypass* OR process_cmdline:*invoke-expression* OR process_cmdline:*iex* OR process_cmdline:*downloadstring* OR process_cmdline:*downloadfile*)",
+        "search_type": "process_search",
+        "notes": "Detects PowerShell execution with common evasion/obfuscation techniques and remote download patterns"
+      },
+      "wmi_execution": {
+        "description": "Windows Management Instrumentation execution detection",
+        "indicators": ["processes", "command_line", "parent_process"],
+        "query": "(process_name:wmic.exe OR process_name:wmiprvse.exe OR process_name:scrcons.exe OR process_cmdline:*wmic* OR process_cmdline:*/node:* OR process_cmdline:*process call create* OR childproc_name:wmic.exe OR parent_name:wmiprvse.exe)",
+        "search_type": "process_search",
+        "notes": "Detects WMI usage for process execution, often used for lateral movement and persistence"
+      },
+      "scheduled_task_persistence": {
+        "description": "Scheduled task creation for persistence",
+        "indicators": ["processes", "command_line"],
+        "query": "(process_name:schtasks.exe OR process_name:at.exe OR process_cmdline:*schtasks* OR process_cmdline:*/create* OR process_cmdline:*/sc * OR process_cmdline:*/tn * OR regmod_name:*\\\\software\\\\microsoft\\\\windows\\\\currentversion\\\\run* OR regmod_name:*\\\\software\\\\microsoft\\\\windows nt\\\\currentversion\\\\winlogon*)",
+        "search_type": "process_search",
+        "notes": "Detects scheduled task creation and registry run key modifications for persistence"
+      },
+      "credential_dumping": {
+        "description": "Credential dumping tools and techniques",
+        "indicators": ["processes", "command_line", "loaded_modules"],
+        "query": "(process_name:mimikatz.exe OR process_name:procdump.exe OR process_name:sqldumper.exe OR process_cmdline:*sekurlsa* OR process_cmdline:*lsass* OR process_cmdline:*procdump*lsass* OR modload_name:*vaultcli.dll* OR modload_name:*samlib.dll* OR process_cmdline:*comsvcs.dll*minidump* OR regmod_name:*\\\\sam\\\\* OR regmod_name:*\\\\security\\\\*)",
+        "search_type": "process_search",
+        "notes": "Detects credential dumping via Mimikatz, process dumping of LSASS, and SAM/SECURITY registry access"
+      },
+      "webshell_activity": {
+        "description": "Web shell detection via suspicious web server child processes",
+        "indicators": ["processes", "parent_process", "command_line"],
+        "query": "((parent_name:w3wp.exe OR parent_name:httpd.exe OR parent_name:nginx.exe OR parent_name:apache.exe OR parent_name:tomcat*.exe) AND (childproc_name:cmd.exe OR childproc_name:powershell.exe OR childproc_name:wscript.exe OR childproc_name:cscript.exe OR childproc_name:net.exe OR childproc_name:whoami.exe OR childproc_name:ipconfig.exe))",
+        "search_type": "process_search",
+        "notes": "Detects suspicious child processes spawned by web servers, indicative of web shell activity"
+      },
+      "service_creation": {
+        "description": "Windows service creation for persistence or execution",
+        "indicators": ["processes", "command_line", "registry"],
+        "query": "(process_name:sc.exe OR process_cmdline:*sc * create* OR process_cmdline:*sc * config* OR process_cmdline:*new-service* OR regmod_name:*\\\\system\\\\currentcontrolset\\\\services\\\\*)",
+        "search_type": "process_search",
+        "notes": "Detects Windows service creation and modification via sc.exe or PowerShell"
+      },
+      "dll_hijacking": {
+        "description": "DLL hijacking and side-loading detection",
+        "indicators": ["loaded_modules", "processes", "file_paths"],
+        "query": "(modload_name:*\\\\appdata\\\\*.dll OR modload_name:*\\\\temp\\\\*.dll OR modload_name:*\\\\public\\\\*.dll OR modload_name:*\\\\programdata\\\\*.dll OR filemod_name:*\\\\system32\\\\*.dll OR filemod_name:*\\\\syswow64\\\\*.dll)",
+        "search_type": "process_search",
+        "notes": "Detects DLL loading from suspicious directories or DLL writes to system directories"
+      },
+      "dns_tunneling": {
+        "description": "DNS tunneling and exfiltration detection",
+        "indicators": ["domains", "domain_length", "query_volume"],
+        "query": "(netconn_domain:*\\.*\\.*\\.*\\.*\\.*\\.*\\.*\\.*\\.*\\.*\\.*\\.*\\.*\\.*\\.*\\.*\\.*\\.*\\.*\\.*)",
+        "search_type": "process_search",
+        "notes": "Detects unusually long domain names that may indicate DNS tunneling"
+      },
+      "registry_run_key_persistence": {
+        "description": "Registry Run key persistence mechanisms",
+        "indicators": ["registry_modifications"],
+        "query": "(regmod_name:*\\\\microsoft\\\\windows\\\\currentversion\\\\run* OR regmod_name:*\\\\microsoft\\\\windows\\\\currentversion\\\\runonce* OR regmod_name:*\\\\microsoft\\\\windows nt\\\\currentversion\\\\winlogon\\\\userinit* OR regmod_name:*\\\\microsoft\\\\windows nt\\\\currentversion\\\\winlogon\\\\shell*)",
+        "search_type": "process_search",
+        "notes": "Detects modifications to common registry persistence locations"
+      },
+      "suspicious_downloads": {
+        "description": "Suspicious file downloads from internet",
+        "indicators": ["processes", "command_line", "domains"],
+        "query": "((process_name:powershell.exe OR process_name:cmd.exe OR process_name:wscript.exe OR process_name:cscript.exe OR process_name:mshta.exe OR process_name:rundll32.exe OR process_name:regsvr32.exe) AND (process_cmdline:*http://* OR process_cmdline:*https://* OR process_cmdline:*ftp://* OR process_cmdline:*downloadfile* OR process_cmdline:*downloadstring* OR process_cmdline:*invoke-webrequest* OR process_cmdline:*wget* OR process_cmdline:*curl* OR process_cmdline:*bitstransfer*))",
+        "search_type": "process_search",
+        "notes": "Detects file downloads via scripting engines and LOLBins"
+      },
+      "process_injection": {
+        "description": "Process injection technique detection",
+        "indicators": ["cross_process_activity", "loaded_modules"],
+        "query": "(crossproc_type:remotethread OR crossproc_type:processhollowing OR modload_name:*ntdll.dll* OR process_cmdline:*virtualalloc* OR process_cmdline:*writeprocessmemory* OR process_cmdline:*createremotethread*)",
+        "search_type": "process_search",
+        "notes": "Detects process injection via remote threads, process hollowing, and memory manipulation APIs"
+      },
+      "bypass_uac": {
+        "description": "UAC bypass techniques detection",
+        "indicators": ["processes", "registry", "command_line"],
+        "query": "(process_cmdline:*eventvwr.exe* OR process_cmdline:*fodhelper.exe* OR process_cmdline:*computerdefaults.exe* OR regmod_name:*\\\\ms-settings\\\\shell\\\\open\\\\command* OR regmod_name:*\\\\exefile\\\\shell\\\\runas\\\\command\\\\isolatedcommand* OR process_name:dism.exe OR process_cmdline:*wusa.exe*)",
+        "search_type": "process_search",
+        "notes": "Detects common UAC bypass techniques using trusted Windows binaries"
+      },
+      "lolbins_execution": {
+        "description": "Living Off the Land Binaries execution",
+        "indicators": ["processes", "command_line"],
+        "query": "(process_name:mshta.exe OR process_name:regsvr32.exe OR process_name:rundll32.exe OR process_name:certutil.exe OR process_name:msiexec.exe OR process_name:installutil.exe OR process_name:regasm.exe OR process_name:regsvcs.exe OR process_name:msxsl.exe OR process_name:odbcconf.exe OR process_cmdline:*javascript:* OR process_cmdline:*vbscript:* OR process_cmdline:*-decode* OR process_cmdline:*installutil* OR process_cmdline:*/i:http*)",
+        "search_type": "process_search",
+        "notes": "Detects abuse of legitimate Windows binaries for code execution"
+      }
+    }
+  }
+}
