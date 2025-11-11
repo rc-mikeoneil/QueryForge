@@ -1,0 +1,105 @@
+{
+  "family": "mcp-query-builder",
+  "executionRoleArn": "arn:aws:iam::340047602715:role/test-MCP-cemhoff",
+  "taskRoleArn": "arn:aws:iam::340047602715:role/test-MCP-logging-cemhoff",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "1024",
+  "memory": "2048",
+  "containerDefinitions": [
+    {
+      "name": "mcp-server",
+      "image": "340047602715.dkr.ecr.us-east-2.amazonaws.com/mcp-query-builder:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        {
+          "name": "MCP_TRANSPORT",
+          "value": "sse"
+        },
+        {
+          "name": "MCP_HOST",
+          "value": "0.0.0.0"
+        },
+        {
+          "name": "MCP_PORT",
+          "value": "8080"
+        },
+        {
+          "name": "LITELLM_BASE_URL",
+          "value": "https://llm.utility-prod.ohio.redcanary.io"
+        },
+        {
+          "name": "LITELLM_EMBEDDING_MODEL",
+          "value": "text-embedding-3-large"
+        },
+        {
+          "name": "CACHE_DIR",
+          "value": "/app/.cache"
+        }
+      ],
+      "secrets": [
+        {
+          "name": "LITELLM_API_KEY",
+          "valueFrom": "arn:aws:secretsmanager:us-east-2:340047602715:secret:mcp-query-builder/litellm-api-key-QiHLdy"
+        }
+      ],
+      "healthCheck": {
+        "command": [
+          "CMD-SHELL",
+          "curl -f http://localhost:8080/health || exit 1"
+        ],
+        "interval": 30,
+        "timeout": 10,
+        "retries": 3,
+        "startPeriod": 60
+      },
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/mcp-query-builder",
+          "awslogs-region": "us-east-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "mountPoints": [],
+      "volumesFrom": []
+    }
+  ],
+  "volumes": [],
+  "placementConstraints": [],
+  "requiresAttributes": [
+    {
+      "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+    },
+    {
+      "name": "ecs.capability.execution-role-awslogs"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.task-iam-role"
+    },
+    {
+      "name": "ecs.capability.execution-role-ecr-pull"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+    },
+    {
+      "name": "ecs.capability.task-eni"
+    }
+  ],
+  "compatibilities": ["EC2", "FARGATE"],
+  "requiresCompatibilities": ["FARGATE"],
+  "runtimePlatform": {
+    "cpuArchitecture": "X86_64",
+    "operatingSystemFamily": "LINUX"
+  }
+}

@@ -64,7 +64,8 @@ def main() -> None:
         host = os.getenv("MCP_HOST", "0.0.0.0")
         port = int(os.getenv("MCP_PORT", "8080"))
 
-        app = mcp.http_app(path="/sse", transport="sse")
+        # Mount FastMCP at root so /messages/ and other endpoints work correctly
+        app = mcp.http_app(path="/", transport="sse")
 
         @app.route("/health", methods=["GET"])
         async def healthcheck(_: Request) -> JSONResponse:
@@ -72,7 +73,9 @@ def main() -> None:
 
             return JSONResponse({"status": "ok"})
 
-        logger.info("🌐 Running MCP server on http://%s:%s/sse", host, port)
+        logger.info("🌐 Running MCP server on http://%s:%s", host, port)
+        logger.info("📡 SSE endpoint available at /sse")
+        logger.info("💬 Messages endpoint available at /messages/")
         uvicorn.run(app, host=host, port=port)
     else:
         logger.info("📡 Running MCP server in STDIO mode")
