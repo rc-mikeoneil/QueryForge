@@ -3,9 +3,9 @@ Tests for Carbon Black Response (CBR) query validator.
 """
 
 import pytest
-from cbr.validator import CBRValidator
-from cbr.query_builder import build_cbr_query
-from shared.validation import ValidationSeverity
+from queryforge.platforms.cbr.validator import CBRValidator
+from queryforge.platforms.cbr.query_builder import build_cbr_query
+from queryforge.shared.validation import ValidationSeverity
 
 
 # Mock CBR schema for testing

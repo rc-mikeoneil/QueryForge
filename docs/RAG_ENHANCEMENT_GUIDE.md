@@ -66,7 +66,7 @@ The RAG (Retrieval-Augmented Generation) Enhancement system bridges the gap betw
 
 ## Key Components
 
-### 1. RAG Context Parser (`shared/rag_context_parser.py`)
+### 1. RAG Context Parser (`src/src/queryforge/shared/rag_context_parser.py`)
 
 The parser extracts actionable query components from RAG retrieval results.
 
@@ -189,8 +189,8 @@ except Exception as e:
 ### Example 1: Basic Usage
 
 ```python
-from shared.rag_context_parser import create_rag_context_parser
-from cbc.query_builder import build_cbc_query
+from queryforge.shared.rag_context_parser import create_rag_context_parser
+from queryforge.platforms.cbc.query_builder import build_cbc_query
 
 # RAG retrieval results
 rag_context = [
@@ -215,7 +215,7 @@ query, metadata = build_cbc_query(
 ### Example 2: Direct Parser Usage
 
 ```python
-from shared.rag_context_parser import create_rag_context_parser
+from queryforge.shared.rag_context_parser import create_rag_context_parser
 
 # Create parser
 parser = create_rag_context_parser("cbc")

@@ -12,7 +12,7 @@ current_dir = os.path.dirname(os.path.realpath(__file__))
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
-from cbc.query_builder import build_cbc_query
+from queryforge.platforms.cbc.query_builder import build_cbc_query
 
 
 def test_rdp_query_enhancement():

@@ -10,9 +10,9 @@ This document summarizes the security fixes implemented to address critical vuln
 **Issue**: Cache files used weak signatures (mtime/size) that could be forged.
 
 **Files Modified**:
-- `queryforge/cbc/schema_loader.py`
-- `queryforge/kql/schema_loader.py`
-- `queryforge/shared/rag.py`
+- `src/queryforge/platforms/src/queryforge/platforms/cbc/schema_loader.py`
+- `src/queryforge/platforms/src/queryforge/platforms/kql/schema_loader.py`
+- `src/src/queryforge/shared/rag.py`
 
 **Changes Made**:
 - Replaced BLAKE2s-16 with HMAC-SHA256 of actual file contents
@@ -30,9 +30,9 @@ This document summarizes the security fixes implemented to address critical vuln
 **Issue**: Schema paths were not validated, allowing potential path traversal attacks.
 
 **Files Modified**:
-- Created `queryforge/shared/security.py` (new file)
-- `queryforge/cbc/schema_loader.py`
-- `queryforge/kql/schema_loader.py`
+- Created `src/queryforge/shared/security.py` (new file)
+- `src/queryforge/platforms/src/queryforge/platforms/cbc/schema_loader.py`
+- `src/queryforge/platforms/src/queryforge/platforms/kql/schema_loader.py`
 
 **Changes Made**:
 - Created `validate_schema_path()` function with whitelist-based validation
@@ -50,9 +50,9 @@ This document summarizes the security fixes implemented to address critical vuln
 **Issue**: Multiple regex patterns with catastrophic backtracking could cause server hangs.
 
 **Files Modified**:
-- `queryforge/kql/query_builder.py`
-- `queryforge/cbc/query_builder.py`
-- `queryforge/s1/query_builder.py`
+- `src/queryforge/platforms/kql/query_builder.py`
+- `src/queryforge/platforms/cbc/query_builder.py`
+- `src/queryforge/platforms/s1/query_builder.py`
 
 **Critical Changes**:
 
@@ -148,7 +148,7 @@ This document summarizes the security fixes implemented to address critical vuln
 ### Security Validation Commands
 ```bash
 # Test input length limits
-python -c "from queryforge.kql.query_builder import _nl_to_structured; _nl_to_structured({}, 'a' * 20000)"
+python -c "from queryforge.platforms.kql.query_builder import _nl_to_structured; _nl_to_structured({}, 'a' * 20000)"
 
 # Test path validation
 python -c "from queryforge.shared.security import validate_schema_path; validate_schema_path(Path('../../etc/passwd'))"
@@ -195,15 +195,15 @@ export LITELLM_BASE_URL="http://your-llm-proxy:4000"
 ## Files Created/Modified Summary
 
 ### New Files
-- `queryforge/shared/security.py` - Path validation utilities
+- `src/queryforge/shared/security.py` - Path validation utilities
 
 ### Modified Files
-1. `queryforge/cbc/schema_loader.py` - HMAC + path validation
-2. `queryforge/kql/schema_loader.py` - HMAC + path validation + file size limits
-3. `queryforge/shared/rag.py` - File size limits on cache loading
-4. `queryforge/kql/query_builder.py` - ReDoS fixes + input validation
-5. `queryforge/cbc/query_builder.py` - ReDoS fixes + input validation
-6. `queryforge/s1/query_builder.py` - Critical ReDoS fix + input validation
+1. `src/queryforge/platforms/src/queryforge/platforms/cbc/schema_loader.py` - HMAC + path validation
+2. `src/queryforge/platforms/src/queryforge/platforms/kql/schema_loader.py` - HMAC + path validation + file size limits
+3. `src/src/queryforge/shared/rag.py` - File size limits on cache loading
+4. `src/queryforge/platforms/kql/query_builder.py` - ReDoS fixes + input validation
+5. `src/queryforge/platforms/cbc/query_builder.py` - ReDoS fixes + input validation
+6. `src/queryforge/platforms/s1/query_builder.py` - Critical ReDoS fix + input validation
 
 **Total**: 1 new file, 6 modified files
 

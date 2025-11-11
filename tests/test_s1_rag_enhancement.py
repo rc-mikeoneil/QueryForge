@@ -1,7 +1,7 @@
 """Tests for SentinelOne RAG-enhanced query building."""
 
 import pytest
-from s1.query_builder import build_s1_query
+from queryforge.platforms.s1.query_builder import build_s1_query
 
 
 def test_s1_query_without_rag_context():

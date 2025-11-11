@@ -197,7 +197,7 @@ Maintain a changelog for each schema:
 
 2. **Update schema files**:
    ```bash
-   cd queryforge/kql/defender_xdr_kql_schema_fuller/
+   cd src/queryforge/platforms/kql/defender_xdr_kql_schema_fuller/
    # Edit relevant JSON files
    ```
 
@@ -220,7 +220,7 @@ Maintain a changelog for each schema:
 
 4. **Test changes**:
    ```bash
-   python -c "from queryforge.kql.schema_loader import SchemaCache; \
+   python -c "from queryforge.platforms.kql.schema_loader import SchemaCache; \
               cache = SchemaCache('path/to/cache.json'); \
               schema = cache.load_or_refresh(); \
               print(list(schema.keys()))"
@@ -279,7 +279,7 @@ def update_schema():
 
 3. **Test**:
    ```python
-   from queryforge.cbc.schema_loader import CBCSchemaCache
+   from queryforge.platforms.cbc.schema_loader import CBCSchemaCache
 
    cache = CBCSchemaCache("path/to/cbc_schema.json")
    schema = cache.load()
@@ -319,7 +319,7 @@ def update_schema():
 
 3. **Test**:
    ```python
-   from queryforge.cortex.schema_loader import CortexSchemaCache
+   from queryforge.platforms.cortex.schema_loader import CortexSchemaCache
 
    cache = CortexSchemaCache("path/to/cortex_xdr_schema.json")
    datasets = cache.datasets()
@@ -356,7 +356,7 @@ def update_schema():
 
 3. **Test**:
    ```python
-   from queryforge.s1.schema_loader import S1SchemaCache
+   from queryforge.platforms.s1.schema_loader import S1SchemaCache
 
    cache = S1SchemaCache("path/to/s1_schemas/")
    datasets = cache.datasets()
@@ -415,9 +415,9 @@ def validate_schema(schema: Dict[str, Any], platform: str) -> List[str]:
 def main():
     """Validate all schemas."""
     schemas = {
-        "KQL": Path("queryforge/kql/defender_xdr_kql_schema_fuller"),
-        "CBC": Path("queryforge/cbc/cbc_schema.json"),
-        "Cortex": Path("queryforge/cortex/cortex_xdr_schema.json"),
+        "KQL": Path("src/queryforge/platforms/kql/defender_xdr_kql_schema_fuller"),
+        "CBC": Path("src/queryforge/platforms/cbc/cbc_schema.json"),
+        "Cortex": Path("src/queryforge/platforms/cortex/cortex_xdr_schema.json"),
         "S1": Path("s1_builder/s1_schemas"),
     }
 
@@ -541,12 +541,13 @@ result = client.call_tool("kql_refresh_schema")
 rm .cache/*.json .cache/*.pkl
 
 # Restart server (rebuilds cache)
-python server.py
+export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
+python -m queryforge.server.server
 ```
 
 **Programmatically**:
 ```python
-from queryforge.kql.schema_loader import SchemaCache
+from queryforge.platforms.kql.schema_loader import SchemaCache
 
 cache = SchemaCache("path/to/cache.json")
 cache.refresh(force=True)
@@ -618,7 +619,7 @@ def get_cache_info() -> Dict[str, Any]:
 
 1. **Commit schema changes separately**:
    ```bash
-   git add queryforge/kql/defender_xdr_kql_schema_fuller/
+   git add src/queryforge/platforms/kql/defender_xdr_kql_schema_fuller/
    git commit -m "Update KQL schema: Add new DeviceEvents table"
    ```
 
@@ -709,7 +710,7 @@ def get_cache_info() -> Dict[str, Any]:
 
 ### Microsoft Defender KQL
 
-**Schema Location**: `queryforge/kql/defender_xdr_kql_schema_fuller/`
+**Schema Location**: `src/queryforge/platforms/kql/defender_xdr_kql_schema_fuller/`
 
 **Update Frequency**: Monthly (as Microsoft updates tables)
 
@@ -724,7 +725,7 @@ def get_cache_info() -> Dict[str, Any]:
 
 ### Carbon Black Cloud
 
-**Schema Location**: `queryforge/cbc/cbc_schema.json`
+**Schema Location**: `src/queryforge/platforms/cbc/cbc_schema.json`
 
 **Update Frequency**: Quarterly (as CBC releases new versions)
 
@@ -739,7 +740,7 @@ def get_cache_info() -> Dict[str, Any]:
 
 ### Cortex XDR
 
-**Schema Location**: `queryforge/cortex/cortex_xdr_schema.json`
+**Schema Location**: `src/queryforge/platforms/cortex/cortex_xdr_schema.json`
 
 **Update Frequency**: With each Cortex XDR release
 
@@ -776,7 +777,7 @@ def get_cache_info() -> Dict[str, Any]:
 **Solution**:
 1. Check file permissions:
    ```bash
-   ls -la queryforge/kql/defender_xdr_kql_schema_fuller/
+   ls -la src/queryforge/platforms/kql/defender_xdr_kql_schema_fuller/
    ```
 
 2. Validate JSON syntax:

@@ -10,7 +10,7 @@
 
 This document outlines the implementation plan for optional enhancements to the Query Validation feature in QueryForge. The core validation feature is complete and functional, including:
 
-- ✅ Shared validation framework (`shared/validation.py`)
+- ✅ Shared validation framework (`src/src/queryforge/shared/validation.py`)
 - ✅ Platform-specific validators (S1, KQL, CBC, Cortex)
 - ✅ MCP tool integration (4 validation tools)
 - ✅ Comprehensive validation categories (syntax, schema, operators, performance, best practices)
@@ -145,7 +145,7 @@ Test SentinelOne S1QL validator.
 **Example Test Structure**:
 ```python
 import pytest
-from queryforge.s1.validator import S1Validator
+from queryforge.platforms.s1.validator import S1Validator
 
 # Mock schema (reuse from test_s1_query_builder.py)
 MOCK_S1_SCHEMA = {
@@ -1631,11 +1631,11 @@ from unittest.mock import Mock, MagicMock, patch
 from typing import Dict, Any
 
 from fastmcp import FastMCP
-from queryforge.server_runtime import ServerRuntime
-from queryforge.server_tools_s1 import register_s1_tools
-from queryforge.server_tools_kql import register_kql_tools
-from queryforge.server_tools_cbc import register_cbc_tools
-from queryforge.server_tools_cortex import register_cortex_tools
+from queryforge.server.server_runtime import ServerRuntime
+from queryforge.server.server_tools_s1 import register_s1_tools
+from queryforge.server.server_tools_kql import register_kql_tools
+from queryforge.server.server_tools_cbc import register_cbc_tools
+from queryforge.server.server_tools_cortex import register_cortex_tools
 
 # Mock schemas
 from tests.test_s1_query_builder import MOCK_S1_SCHEMA
@@ -1732,7 +1732,7 @@ class TestS1ValidationToolExecution:
         # This is a simplified test - actual MCP tool execution would require
         # more complex setup with FastMCP's testing utilities
 
-        from queryforge.s1.validator import S1Validator
+        from queryforge.platforms.s1.validator import S1Validator
 
         validator = S1Validator(MOCK_S1_SCHEMA)
         result = validator.validate(
@@ -1746,7 +1746,7 @@ class TestS1ValidationToolExecution:
 
     def test_invalid_query_returns_errors(self, mock_runtime):
         """Test validation of invalid query."""
-        from queryforge.s1.validator import S1Validator
+        from queryforge.platforms.s1.validator import S1Validator
 
         validator = S1Validator(MOCK_S1_SCHEMA)
         result = validator.validate(
@@ -1759,7 +1759,7 @@ class TestS1ValidationToolExecution:
 
     def test_validation_with_metadata(self, mock_runtime):
         """Test validation with query metadata."""
-        from queryforge.s1.validator import S1Validator
+        from queryforge.platforms.s1.validator import S1Validator
 
         validator = S1Validator(MOCK_S1_SCHEMA)
 
@@ -1782,8 +1782,8 @@ class TestValidationWorkflows:
 
     def test_build_then_validate_workflow(self):
         """Test building a query then validating it."""
-        from queryforge.s1.query_builder import build_s1_query
-        from queryforge.s1.validator import S1Validator
+        from queryforge.platforms.s1.query_builder import build_s1_query
+        from queryforge.platforms.s1.validator import S1Validator
 
         # Build query
         query, metadata = build_s1_query(
@@ -1801,7 +1801,7 @@ class TestValidationWorkflows:
 
     def test_validation_catches_manual_query_errors(self):
         """Test that validation catches errors in manually written queries."""
-        from queryforge.s1.validator import S1Validator
+        from queryforge.platforms.s1.validator import S1Validator
 
         validator = S1Validator(MOCK_S1_SCHEMA)
 
@@ -1818,7 +1818,7 @@ class TestValidationErrorHandling:
 
     def test_validation_handles_schema_load_failure(self):
         """Test graceful handling of schema loading failures."""
-        from queryforge.s1.validator import S1Validator
+        from queryforge.platforms.s1.validator import S1Validator
 
         # Empty schema
         validator = S1Validator({})
@@ -1831,7 +1831,7 @@ class TestValidationErrorHandling:
 
     def test_validation_handles_malformed_input(self):
         """Test handling of malformed input."""
-        from queryforge.s1.validator import S1Validator
+        from queryforge.platforms.s1.validator import S1Validator
 
         validator = S1Validator(MOCK_S1_SCHEMA)
 
@@ -1850,7 +1850,7 @@ class TestValidationResponseFormat:
 
     def test_response_has_required_fields(self):
         """Test that validation response has all required fields."""
-        from queryforge.s1.validator import S1Validator
+        from queryforge.platforms.s1.validator import S1Validator
 
         validator = S1Validator(MOCK_S1_SCHEMA)
         result = validator.validate("test", {})
@@ -1874,7 +1874,7 @@ class TestValidationResponseFormat:
 
     def test_issue_structure(self):
         """Test that validation issues have correct structure."""
-        from queryforge.s1.validator import S1Validator
+        from queryforge.platforms.s1.validator import S1Validator
 
         validator = S1Validator(MOCK_S1_SCHEMA)
         result = validator.validate("bad query with 'unbalanced quotes", {})
@@ -1932,10 +1932,10 @@ Run with:
 """
 
 import pytest
-from queryforge.s1.validator import S1Validator
-from queryforge.kql.validator import KQLValidator
-from queryforge.cbc.validator import CBCValidator
-from queryforge.cortex.validator import CortexValidator
+from queryforge.platforms.s1.validator import S1Validator
+from queryforge.platforms.kql.validator import KQLValidator
+from queryforge.platforms.cbc.validator import CBCValidator
+from queryforge.platforms.cortex.validator import CortexValidator
 
 # Mock schemas (reuse from test files)
 from tests.test_s1_query_builder import MOCK_S1_SCHEMA

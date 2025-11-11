@@ -81,7 +81,7 @@ def main():
         traceback.print_exc()
     
     try:
-        import server
+        from queryforge.server import server
         print("Server import: SUCCESS", flush=True)
     except Exception as e:
         print(f"Server import: FAILED - {e}", flush=True)
@@ -94,12 +94,12 @@ def main():
     
     # Start the server
     print("\n=== Attempting to start server ===", flush=True)
-    print(f"Running: python -m server", flush=True)
+    print(f"Running: python -m queryforge.server.server", flush=True)
     sys.stdout.flush()
     sys.stderr.flush()
     
     # Replace this process with the server
-    os.execvp(sys.executable, [sys.executable, '-m', 'server'])
+    os.execvp(sys.executable, [sys.executable, '-m', 'queryforge.server.server'])
 
 if __name__ == '__main__':
     try:

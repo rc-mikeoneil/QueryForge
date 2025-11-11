@@ -1,7 +1,7 @@
 """Tests for Cortex RAG-enhanced query building."""
 
 import pytest
-from cortex.query_builder import build_cortex_query
+from queryforge.platforms.cortex.query_builder import build_cortex_query
 
 
 def test_cortex_query_without_rag_context():

@@ -13,7 +13,7 @@ This document summarizes the accuracy fixes implemented to ensure QueryForge pro
 
 **Issue**: Hardcoded operator fallbacks could fail for valid operators, causing false errors.
 
-**File Modified**: `queryforge/s1/query_builder.py`
+**File Modified**: `src/queryforge/platforms/s1/query_builder.py`
 
 **Problem**:
 - Old code only checked for "==" → "=" and "contains ignorecase" → "contains anycase"
@@ -49,7 +49,7 @@ def _normalize_operator(operator: str, operator_map: Dict[str, str]) -> str:
 
 **Issue**: Duplicate WHERE conditions could appear in final queries when combining explicit filters with natural language-derived filters.
 
-**File Modified**: `queryforge/kql/query_builder.py`
+**File Modified**: `src/queryforge/platforms/kql/query_builder.py`
 
 **Problem**:
 - User provides: `where=["DeviceName == 'SERVER'"]` AND natural language: "device name is SERVER"
@@ -96,7 +96,7 @@ where = _deduplicate_where_conditions(explicit_where + derived_where)
 
 **Issue**: Pattern values appeared both as structured fields AND as keyword searches, creating duplicate/redundant query conditions.
 
-**File Modified**: `queryforge/cbc/query_builder.py`
+**File Modified**: `src/queryforge/platforms/cbc/query_builder.py`
 
 **Problem**:
 - Input: "show me processes with cmd.exe"
@@ -151,7 +151,7 @@ if natural_language_intent:
 
 **Issue**: Could generate queries with `None` as field names, creating syntactically invalid queries.
 
-**File Modified**: `queryforge/cortex/query_builder.py`
+**File Modified**: `src/queryforge/platforms/cortex/query_builder.py`
 
 **Problem**:
 - `_field_if_available()` returns `None` when no suitable field exists
@@ -193,7 +193,7 @@ def _format_filter(field: str, operator: str, value: Any) -> str:
 
 **Issue**: Could generate empty queries that would match ALL records (millions of results), causing performance issues and unexpected behavior.
 
-**File Modified**: `queryforge/s1/query_builder.py`
+**File Modified**: `src/queryforge/platforms/s1/query_builder.py`
 
 **Problem**:
 - Complex validation logic had edge cases allowing empty queries
@@ -347,19 +347,19 @@ DEBUG: Skipping semantically equivalent condition: DeviceName =~ 'SERVER' (alrea
 
 ## Files Modified
 
-1. **`queryforge/s1/query_builder.py`**
+1. **`src/queryforge/platforms/s1/query_builder.py`**
    - Enhanced operator normalization (5-stage matching)
    - Added empty query validation
 
-2. **`queryforge/kql/query_builder.py`**
+2. **`src/queryforge/platforms/kql/query_builder.py`**
    - Added WHERE clause deduplication functions
    - Integrated deduplication into query building
 
-3. **`queryforge/cbc/query_builder.py`**
+3. **`src/queryforge/platforms/cbc/query_builder.py`**
    - Added pattern value deduplication
    - Prevents structured values appearing as keywords
 
-4. **`queryforge/cortex/query_builder.py`**
+4. **`src/queryforge/platforms/cortex/query_builder.py`**
    - Added field validation to _format_filter
    - Prevents None field names in queries
 

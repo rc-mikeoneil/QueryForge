@@ -32,7 +32,7 @@ cd queryforge
 ### Generate Embeddings
 ```bash
 python -c "
-from server import rag_service
+from queryforge.server.server import rag_service
 import logging
 logging.basicConfig(
     level=logging.INFO,
@@ -89,10 +89,10 @@ The Dockerfile has been updated to automatically include the `.cache` directory.
 
 ```bash
 # Rebuild the image with pre-generated embeddings
-docker-compose build unified-mcp
+docker-compose build queryforge
 
 # Deploy the updated container
-docker-compose up -d unified-mcp
+docker-compose up -d queryforge
 ```
 
 ## Step 3: Verify Instant Startup
@@ -100,7 +100,7 @@ docker-compose up -d unified-mcp
 Check the logs to confirm fast startup:
 
 ```bash
-docker logs -f unified-query-builder
+docker logs -f queryforge
 ```
 
 Expected logs with pre-generated embeddings:
@@ -142,8 +142,8 @@ git pull origin main
 
 3. **Rebuild and deploy**:
 ```bash
-docker-compose build unified-mcp
-docker-compose up -d unified-mcp
+docker-compose build queryforge
+docker-compose up -d queryforge
 ```
 
 ### Fallback Behavior

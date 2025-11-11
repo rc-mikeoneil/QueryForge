@@ -54,10 +54,12 @@ Comprehensive guide for deploying QueryForge in various environments.
 4. **Run the server**:
    ```bash
    # stdio transport (default)
-   python server.py
+   export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
+python -m queryforge.server.server
 
    # SSE transport
-   MCP_TRANSPORT=sse python server.py
+   MCP_TRANSPORT=sse export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
+python -m queryforge.server.server
    ```
 
 5. **Verify deployment**:
@@ -88,7 +90,8 @@ CACHE_DIR=.cache
 Load environment:
 ```bash
 export $(cat .env | xargs)
-python server.py
+export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
+python -m queryforge.server.server
 ```
 
 ## Docker Deployment
@@ -393,7 +396,7 @@ services:
 1. **Create service file** (`/etc/systemd/system/mcp-builder.service`):
    ```ini
    [Unit]
-   Description=MCP Unified Query Builder
+   Description=MCP QueryForge
    After=network.target
 
    [Service]
@@ -404,7 +407,8 @@ services:
    Environment="PATH=/opt/mcp-builder/.venv/bin"
    Environment="MCP_TRANSPORT=sse"
    Environment="MCP_PORT=8080"
-   ExecStart=/opt/mcp-builder/.venv/bin/python server.py
+   ExecStart=/opt/mcp-builder/.venv/bin/export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
+python -m queryforge.server.server
    Restart=always
    RestartSec=10
 

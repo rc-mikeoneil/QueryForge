@@ -1,6 +1,6 @@
 # API Reference
 
-Complete reference for all MCP tools exposed by the Unified Query Builder server.
+Complete reference for all MCP tools exposed by the QueryForge server.
 
 ## Table of Contents
 
@@ -15,7 +15,7 @@ Complete reference for all MCP tools exposed by the Unified Query Builder server
 
 ## Overview
 
-The Unified Query Builder exposes 30+ MCP tools organized into platform-specific namespaces:
+QueryForge exposes 30+ MCP tools organized into platform-specific namespaces:
 
 | Namespace | Tools | Purpose |
 |-----------|-------|---------|

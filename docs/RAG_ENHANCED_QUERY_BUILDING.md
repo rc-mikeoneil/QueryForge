@@ -61,7 +61,7 @@ User receives enhanced, validated query
 
 #### 1.1 Create RAG Context Parser Module
 
-**File:** `shared/rag_context_parser.py`
+**File:** `src/src/queryforge/shared/rag_context_parser.py`
 
 ```python
 class RAGContextParser:
@@ -147,7 +147,7 @@ def cbc_build_query(...):
 ```
 
 **Deliverables:**
-- [ ] `shared/rag_context_parser.py` created with base class
+- [ ] `src/src/queryforge/shared/rag_context_parser.py` created with base class
 - [ ] All 4 query builders accept `rag_context` parameter
 - [ ] All 4 server tools pass RAG context to builders
 - [ ] Unit tests for RAG context parser
@@ -161,7 +161,7 @@ def cbc_build_query(...):
 
 #### 2.1 Implement CBC RAG Context Parser
 
-**File:** `shared/rag_context_parser.py` (add subclass)
+**File:** `src/src/queryforge/shared/rag_context_parser.py` (add subclass)
 
 ```python
 class CBCRAGContextParser(RAGContextParser):
@@ -261,7 +261,7 @@ def test_no_rag_context_backward_compatibility():
 #### 3.1 KQL Implementation
 
 **Files:**
-- `shared/rag_context_parser.py` - Add `KQLRAGContextParser`
+- `src/src/queryforge/shared/rag_context_parser.py` - Add `KQLRAGContextParser`
 - `kql/query_builder.py` - Enhance `build_kql_query()`
 - `tests/test_kql_rag_enhancement.py` - Test suite
 
@@ -274,7 +274,7 @@ def test_no_rag_context_backward_compatibility():
 #### 3.2 Cortex Implementation
 
 **Files:**
-- `shared/rag_context_parser.py` - Add `CortexRAGContextParser`
+- `src/src/queryforge/shared/rag_context_parser.py` - Add `CortexRAGContextParser`
 - `cortex/query_builder.py` - Enhance `build_cortex_query()`
 - `tests/test_cortex_rag_enhancement.py` - Test suite
 
@@ -287,7 +287,7 @@ def test_no_rag_context_backward_compatibility():
 #### 3.3 SentinelOne Implementation
 
 **Files:**
-- `shared/rag_context_parser.py` - Add `S1RAGContextParser`
+- `src/src/queryforge/shared/rag_context_parser.py` - Add `S1RAGContextParser`
 - `s1/query_builder.py` - Enhance `build_s1_query()`
 - `tests/test_s1_rag_enhancement.py` - Test suite
 
@@ -393,7 +393,7 @@ Implemented test scenarios:
 4. ✅ **Phase 4:** Integration tests, performance optimizations, and documentation
 
 **Key Deliverables:**
-- ✅ `shared/rag_context_parser.py` - Full implementation with performance optimizations
+- ✅ `src/src/queryforge/shared/rag_context_parser.py` - Full implementation with performance optimizations
 - ✅ `tests/test_rag_integration.py` - Comprehensive integration test suite
 - ✅ `docs/RAG_ENHANCEMENT_GUIDE.md` - Developer guide
 - ✅ `docs/SECURITY_CONCEPTS.md` - Security patterns reference

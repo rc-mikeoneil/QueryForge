@@ -1,5 +1,5 @@
 import pytest
-from s1.query_builder import build_s1_query
+from queryforge.platforms.s1.query_builder import build_s1_query
 from tests.base_query_builder_test import (
     BaseQueryBuilderTest,
     SecurityValidationMixin,

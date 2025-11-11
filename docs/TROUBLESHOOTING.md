@@ -108,7 +108,8 @@ OSError: [Errno 98] Address already in use
 
 3. Or use a different port:
    ```bash
-   MCP_PORT=8081 python server.py
+   MCP_PORT=8081 export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
+python -m queryforge.server.server
    ```
 
 ### Issue: RAG service initialization hangs
@@ -142,12 +143,12 @@ FileNotFoundError: [Errno 2] No such file or directory: 'defender_xdr_kql_schema
 **Solution**:
 1. Verify directory structure:
    ```bash
-   ls queryforge/kql/
+   ls src/queryforge/platforms/kql/
    ```
 
 2. Check if schema files exist:
    ```bash
-   ls queryforge/kql/defender_xdr_kql_schema_fuller/
+   ls src/queryforge/platforms/kql/defender_xdr_kql_schema_fuller/
    ```
 
 3. Re-clone repository if files are missing
@@ -168,7 +169,8 @@ PermissionError: [Errno 13] Permission denied: '.cache'
 2. Or delete and recreate:
    ```bash
    rm -rf .cache/
-   python server.py  # Will recreate
+   export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
+python -m queryforge.server.server  # Will recreate
    ```
 
 ## Connection Issues
@@ -189,7 +191,8 @@ PermissionError: [Errno 13] Permission denied: '.cache'
 
 3. Verify transport mode:
    ```bash
-   MCP_TRANSPORT=sse python server.py
+   MCP_TRANSPORT=sse export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
+python -m queryforge.server.server
    ```
 
 4. Check firewall rules:
@@ -210,9 +213,9 @@ PermissionError: [Errno 13] Permission denied: '.cache'
    {
      "cline.mcpServers": [
        {
-         "name": "Unified Query Builder",
+         "name": "QueryForge",
          "type": "stdio",
-         "command": ["python", "/full/path/to/server.py"]
+         "command": ["python", "-m", "queryforge.server.server"]
        }
      ]
    }
@@ -362,7 +365,8 @@ Use supported formats:
 2. Delete cache and restart:
    ```bash
    rm .cache/kql_schema_cache.json
-   python server.py
+   export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
+python -m queryforge.server.server
    ```
 
 3. Update schema files from source
@@ -500,7 +504,7 @@ Exception during RAG index build: ...
 
 3. Ensure RAG context parser is working:
    ```python
-   from shared.rag_context_parser import create_rag_context_parser
+   from queryforge.shared.rag_context_parser import create_rag_context_parser
    parser = create_rag_context_parser("cbc")
    
    # Check cache stats
@@ -510,7 +514,7 @@ Exception during RAG index build: ...
 
 4. Clear RAG parser cache if stale:
    ```python
-   from shared.rag_context_parser import RAGContextParser
+   from queryforge.shared.rag_context_parser import RAGContextParser
    RAGContextParser.clear_cache()
    ```
 
@@ -529,7 +533,7 @@ Exception during RAG index build: ...
 **Solution**:
 1. Check RAG parser cache statistics:
    ```python
-   from shared.rag_context_parser import RAGContextParser
+   from queryforge.shared.rag_context_parser import RAGContextParser
    stats = RAGContextParser.get_cache_stats()
    print(f"Cache size: {stats['size']}/{stats['max_size']}")
    print(f"TTL: {stats['ttl_seconds']}s")
@@ -539,7 +543,7 @@ Exception during RAG index build: ...
 
 3. Adjust parsing limits if needed:
    ```python
-   from shared.rag_context_parser import create_rag_context_parser
+   from queryforge.shared.rag_context_parser import create_rag_context_parser
    parser = create_rag_context_parser("cbc")
    parser.max_fields = 7  # Reduce from default 10
    parser.max_values_per_field = 3  # Reduce from default 5
@@ -574,13 +578,13 @@ Exception during RAG index build: ...
 
 2. Check platform-specific field patterns:
    ```python
-   from shared.rag_context_parser import FIELD_PATTERNS
+   from queryforge.shared.rag_context_parser import FIELD_PATTERNS
    print(FIELD_PATTERNS["cbc"])  # Check regex pattern
    ```
 
 3. Test field extraction directly:
    ```python
-   from shared.rag_context_parser import create_rag_context_parser
+   from queryforge.shared.rag_context_parser import create_rag_context_parser
    parser = create_rag_context_parser("cbc")
    
    rag_docs = [{"text": "process_name:cmd.exe", "score": 0.9}]
@@ -646,7 +650,7 @@ Exception during RAG index build: ...
 
 2. Check cache key generation:
    ```python
-   from shared.rag_context_parser import create_rag_context_parser
+   from queryforge.shared.rag_context_parser import create_rag_context_parser
    parser = create_rag_context_parser("cbc")
    
    # Same inputs should generate same cache key
@@ -657,14 +661,14 @@ Exception during RAG index build: ...
 
 3. Monitor cache growth:
    ```python
-   from shared.rag_context_parser import RAGContextParser
+   from queryforge.shared.rag_context_parser import RAGContextParser
    stats = RAGContextParser.get_cache_stats()
    print(f"Cache: {stats['size']}/{stats['max_size']}")
    ```
 
 4. Clear and rebuild if corrupted:
    ```python
-   from shared.rag_context_parser import RAGContextParser
+   from queryforge.shared.rag_context_parser import RAGContextParser
    RAGContextParser.clear_cache()
    ```
 
@@ -679,7 +683,7 @@ Empty enhancement result returned
 **Solution**:
 1. Check parsing timeout setting:
    ```python
-   from shared.rag_context_parser import create_rag_context_parser
+   from queryforge.shared.rag_context_parser import create_rag_context_parser
    parser = create_rag_context_parser("cbc")
    print(f"Timeout: {parser.parsing_timeout}s")
    ```
@@ -713,7 +717,7 @@ Error response from daemon: Container ... is not running
 **Solution**:
 1. Check logs:
    ```bash
-   docker compose logs unified-query-builder
+   docker compose logs queryforge
    ```
 
 2. Verify Dockerfile syntax:
@@ -736,7 +740,7 @@ PermissionError: [Errno 13] Permission denied: '/app/.cache/...'
 **Solution**:
 1. Check volume permissions:
    ```bash
-   docker compose exec unified-query-builder ls -la /app/.cache
+   docker compose exec queryforge ls -la /app/.cache
    ```
 
 2. Fix in Dockerfile:
@@ -782,7 +786,7 @@ Container is unhealthy
 **Solution**:
 1. Check health check endpoint manually:
    ```bash
-   docker compose exec unified-query-builder curl http://localhost:8080/sse
+   docker compose exec queryforge curl http://localhost:8080/sse
    ```
 
 2. Increase health check interval in docker-compose.yml:
@@ -1021,10 +1025,11 @@ curl http://localhost:8080/sse
 docker compose logs -f
 
 # Test query building
-python -c "from queryforge.kql.query_builder import build_kql_query; print(build_kql_query({}, natural_language_intent='test'))"
+python -c "from queryforge.platforms.kql.query_builder import build_kql_query; print(build_kql_query({}, natural_language_intent='test'))"
 
 # Rebuild RAG cache
-rm .cache/*_rag_*.pkl && python server.py
+rm .cache/*_rag_*.pkl && export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
+python -m queryforge.server.server
 ```
 
 ### Environment Variables

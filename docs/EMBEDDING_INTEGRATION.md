@@ -2,14 +2,14 @@
 
 ## Overview
 
-This document describes the integration of OpenAI embeddings via LiteLLM proxy for semantic search capabilities in the Unified Query Builder.
+This document describes the integration of OpenAI embeddings via LiteLLM proxy for semantic search capabilities in QueryForge.
 
 ## Architecture
 
 ### Components
 
-1. **Configuration (`shared/config.py`)**: Manages LiteLLM credentials and settings
-2. **Embedding Service (`shared/embeddings.py`)**: Handles embedding generation and similarity calculation
+1. **Configuration (`src/src/queryforge/shared/config.py`)**: Manages LiteLLM credentials and settings
+2. **Embedding Service (`src/src/queryforge/shared/embeddings.py`)**: Handles embedding generation and similarity calculation
 3. **RAG Service (`shared/rag.py`)**: Unified retrieval with semantic search and RapidFuzz fallback
 
 ### Flow Diagram

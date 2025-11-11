@@ -8,10 +8,10 @@ import time
 import pytest
 from typing import Dict, List, Any
 
-from cbc.query_builder import build_cbc_query
-from kql.query_builder import build_kql_query
-from cortex.query_builder import build_cortex_query
-from s1.query_builder import build_s1_query
+from queryforge.platforms.cbc.query_builder import build_cbc_query
+from queryforge.platforms.kql.query_builder import build_kql_query
+from queryforge.platforms.cortex.query_builder import build_cortex_query
+from queryforge.platforms.s1.query_builder import build_s1_query
 
 
 # Mock schemas for testing
