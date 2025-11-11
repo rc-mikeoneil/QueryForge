@@ -152,8 +152,8 @@ Potential improvements:
 
 ## Files Modified
 
-1. `queryforge/cortex/schema_loader.py` - Added `time_filters()` method
-2. `queryforge/cortex/query_builder.py` - Integrated schema-based time filter logic
+1. `src/queryforge/platforms/src/queryforge/platforms/cortex/schema_loader.py` - Added `time_filters()` method
+2. `src/queryforge/platforms/cortex/query_builder.py` - Integrated schema-based time filter logic
 3. `test_time_filter_integration.py` - Comprehensive test coverage
 
 ## Backward Compatibility

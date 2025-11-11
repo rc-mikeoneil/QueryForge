@@ -15,7 +15,7 @@ from pathlib import Path
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from cbr.schema_loader import CBResponseSchemaCache, normalise_search_type
+from queryforge.platforms.cbr.schema_loader import CBResponseSchemaCache, normalise_search_type
 
 
 def test_schema_loading():

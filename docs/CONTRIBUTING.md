@@ -78,7 +78,8 @@ git merge upstream/main
 
 3. Run the server:
    ```bash
-   python server.py
+   export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
+python -m queryforge.server.server
    ```
 
 ### Docker Development
@@ -401,12 +402,12 @@ from typing import Dict, Any, Optional, List
 from fastmcp import FastMCP
 from pydantic import BaseModel, Field
 
-from queryforge.platform_name.query_builder import (
+from queryforge.platforms.platform_name.query_builder import (
     build_platform_query,
     QueryBuildError as PlatformQueryBuildError,
     DEFAULT_DATASET as PLATFORM_DEFAULT_DATASET,
 )
-from queryforge.server_runtime import ServerRuntime
+from queryforge.server.server_runtime import ServerRuntime
 
 logger = logging.getLogger(__name__)
 
@@ -517,10 +518,10 @@ def register_platform_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
 
 ### 7. Update ServerRuntime
 
-Edit `server_runtime.py` to add the new platform:
+Edit `src/queryforge/server/server_runtime.py` to add the new platform:
 
 ```python
-from queryforge.platform_name.schema_loader import (
+from queryforge.platforms.platform_name.schema_loader import (
     PlatformSchemaCache,
     build_platform_documents,
 )
@@ -584,7 +585,7 @@ class ServerRuntime:
 Edit `server.py`:
 
 ```python
-from queryforge.server_tools_platform import register_platform_tools
+from queryforge.server.server_tools_platform import register_platform_tools
 
 # ... existing imports and setup ...
 
@@ -603,7 +604,7 @@ Create `tests/test_platform_query_builder.py`:
 
 ```python
 import pytest
-from queryforge.platform_name.query_builder import (
+from queryforge.platforms.platform_name.query_builder import (
     build_platform_query,
     QueryBuildError,
 )
@@ -750,7 +751,7 @@ Follow PEP 8 with these additions:
    from fastmcp import FastMCP
    from pydantic import BaseModel
 
-   from queryforge.kql.schema_loader import SchemaCache
+   from queryforge.platforms.kql.schema_loader import SchemaCache
    ```
 
 2. **Type hints**: Use for all function signatures

@@ -1,7 +1,7 @@
 """Tests for KQL RAG-enhanced query building."""
 
 import pytest
-from kql.query_builder import build_kql_query
+from queryforge.platforms.kql.query_builder import build_kql_query
 
 
 def test_kql_query_without_rag_context():

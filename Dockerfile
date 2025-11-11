@@ -29,6 +29,7 @@ FROM python:3.12-slim
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONPATH=/app/src \
     APP_USER=app \
     APP_UID=10001 \
     APP_GID=10001 \
@@ -61,13 +62,8 @@ import fastmcp, pydantic
 print("Deps OK. FastMCP:", getattr(fastmcp, "__version__", "unknown"))
 PY
 
-COPY server*.py entrypoint.sh ./
-COPY cbc ./cbc
-COPY cbr ./cbr
-COPY cortex ./cortex
-COPY kql ./kql
-COPY s1 ./s1
-COPY shared ./shared
+COPY entrypoint.sh ./
+COPY src ./src
 
 # Copy pre-generated embeddings cache for instant startup
 COPY .cache ${CACHE_DIR}
@@ -85,4 +81,4 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
 EXPOSE 8080
 
 ENTRYPOINT ["./entrypoint.sh"]
-CMD ["python", "-m", "server"]
+CMD ["python", "-m", "queryforge.server.server"]

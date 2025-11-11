@@ -6,12 +6,26 @@
 
 ### 1. ALWAYS Use MCP Query Builder Tools
 
-You MUST use the appropriate MCP query builder tool for the platform:
+You MUST use the appropriate MCP query builder tool for the platform.
 
-- **Carbon Black Cloud**: `cbc_build_query`
-- **Cortex XDR**: `cortex_build_query`
-- **Microsoft Defender/KQL**: `kql_build_query`
-- **SentinelOne**: `s1_build_query`
+**DEFAULT: Use Combined Build+Validate Tools** (RECOMMENDED for all queries):
+
+- **Carbon Black Cloud**: `cbc_build_query_validated`
+- **Cortex XDR**: `cortex_build_query_validated`
+- **Microsoft Defender/KQL**: `kql_build_query_validated`
+- **SentinelOne**: `s1_build_query_validated`
+
+**Benefits:**
+- ✅ **10x faster** - Single API call instead of build → validate → rebuild cycles
+- ✅ **Automatic corrections** - Built-in retry logic applies fixes without LLM reasoning delays
+- ✅ **Validation included** - Returns both the query and validation results
+- ✅ **Caching enabled** - Repeated/similar queries validate instantly from cache
+
+**Alternative: Traditional Two-Step Tools** (only if you need fine-grained control):
+- `cbc_build_query` → `cbc_validate_query`
+- `cortex_build_query` → `cortex_validate_query`
+- `kql_build_query` → `kql_validate_query`
+- `s1_build_query` → `s1_validate_query`
 
 ### 2. NEVER Manually Write Query Syntax
 
@@ -65,20 +79,9 @@ Manually writing:
 
 ## Query Development Workflow
 
-### RECOMMENDED: Use Optimized Combined Build+Validate Tools
+### DEFAULT: Use Combined Build+Validate Tools
 
-For best performance, use the new combined build+validate tools that automatically handle validation and retries:
-
-- **Carbon Black Cloud**: `cbc_build_query_validated`
-- **Cortex XDR**: `cortex_build_query_validated`
-- **Microsoft Defender/KQL**: `kql_build_query_validated`
-- **SentinelOne**: `s1_build_query_validated`
-
-**Benefits:**
-- ✅ **10x faster** - Single API call instead of build → validate → rebuild → revalidate cycles
-- ✅ **Automatic corrections** - Built-in retry logic applies fixes without LLM reasoning delays
-- ✅ **Validation included** - Returns both the query and validation results
-- ✅ **Caching enabled** - Repeated/similar queries validate instantly from cache
+The combined build+validate tools automatically handle validation and retries in a single operation:
 
 **Example Usage:**
 ```
@@ -94,9 +97,20 @@ result = call_tool("s1_build_query_validated", {
 # - result["corrections_applied"]: List of automatic fixes
 ```
 
-### Alternative: Traditional Two-Step Workflow
+**Standard Workflow:**
+1. Understand the user's intent
+2. Identify the appropriate platform and dataset
+3. Call the combined `*_build_query_validated` tool with parameters
+4. The tool automatically:
+   - Builds the initial query
+   - Validates it
+   - Applies corrections if needed (up to 3 retries)
+   - Returns the validated query
+5. Present the validated query to the user
 
-If you need fine-grained control, you can use the traditional approach:
+### Alternative: Traditional Two-Step Workflow (Advanced Use Only)
+
+If you need fine-grained control over each step, you can use the traditional approach:
 
 1. Understand the user's intent
 2. Identify the appropriate platform and dataset

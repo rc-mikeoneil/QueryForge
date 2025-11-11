@@ -20,7 +20,9 @@ docker run -d -p 8080:8080 --name queryforge queryforge:latest
 
 **Local Python:**
 ```bash
-pip install -r requirements.txt && python server.py
+pip install -r requirements.txt
+export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
+python -m queryforge.server.server
 ```
 
 ## Table of Contents
@@ -42,7 +44,6 @@ pip install -r requirements.txt && python server.py
   - [Getting Started (Local Python)](#getting-started-local-python)
   - [Running with Docker](#running-with-docker)
     - [QueryForge](#queryforge-2)
-    - [Running Multiple Builders Together](#running-multiple-builders-together)
   - [Connecting from VS Code Cline](#connecting-from-vs-code-cline)
   - [Testing](#testing)
   - [Additional Resources](#additional-resources)
@@ -79,18 +80,26 @@ Comprehensive documentation is available to help you get started and understand 
 - **[CONTRIBUTING.md](docs/CONTRIBUTING.md)** - Guidelines for contributing code, adding platforms, and development workflow
 
 ## Repository Layout
+The project follows a clean, organized structure with clear separation of concerns:
+
 | Path | Description |
 | --- | --- |
-| `server.py` | FastMCP entry point with minimal orchestration logic |
-| `server_runtime.py` | Runtime coordination, schema management, and two-phase initialization |
-| `server_tools_*.py` | Modular tool registration files, one per platform (kql, cbc, cortex, s1, shared) |
-| `cbc/` | Carbon Black Cloud schema loaders, query builders, and RAG document builders |
-| `cortex/` | Cortex XDR dataset loaders, pipeline builders, function/operator references |
-| `kql/` | Defender KQL schema cache, query builder, and example query catalog |
-| `s1/` | SentinelOne schema loader, dataset inference helpers, and query builder utilities |
-| `shared/` | Shared components including unified RAG service, configuration, and security utilities |
+| `src/queryforge/` | Main application package |
+| `src/queryforge/server/` | MCP server implementation and tool registration |
+| `├── server.py` | FastMCP entry point with minimal orchestration logic |
+| `├── server_runtime.py` | Runtime coordination, schema management, and two-phase initialization |
+| `├── server_tools_*.py` | Modular tool registration files, one per platform (kql, cbc, cortex, s1, shared) |
+| `src/queryforge/platforms/` | Platform-specific implementations |
+| `├── cbc/` | Carbon Black Cloud schema loaders, query builders, and RAG document builders |
+| `├── cbr/` | Carbon Black Response schema loaders and query builders |
+| `├── cortex/` | Cortex XDR dataset loaders, pipeline builders, function/operator references |
+| `├── kql/` | Defender KQL schema cache, query builder, and example query catalog |
+| `├── s1/` | SentinelOne schema loader, dataset inference helpers, and query builder utilities |
+| `src/queryforge/shared/` | Shared components including unified RAG service, configuration, and security utilities |
 | `tests/` | Pytest suite covering builders, schema caching, RAG behavior, and transport guards |
 | `docs/` | Comprehensive documentation including architecture, API reference, deployment guides, and fix summaries |
+| `ecs/` | AWS ECS deployment configurations and Terraform scripts |
+| `scripts/` | Utility scripts for schema management and maintenance |
 
 ## Service Capabilities
 
@@ -150,7 +159,8 @@ See **[SECURITY_CONCEPTS.md](docs/SECURITY_CONCEPTS.md)** for the full list of r
    ```
 3. **Run the MCP server**:
    ```bash
-   python server.py
+   export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
+   python -m queryforge.server.server
    ```
    - The server auto-creates a `.cache/` directory to persist schema metadata and embeddings.
    - Set `MCP_TRANSPORT=stdio` to prefer stdio transport when integrating with terminal-first clients.
@@ -192,7 +202,7 @@ docker run -d -p 8080:8080 --name queryforge queryforge:latest
      ]
    }
    ```
-   - Use `type: "stdio"` with a `command` array instead if you prefer running the Python script directly (`"command": ["python", "server.py"]`).
+   - Use `type: "stdio"` with a `command` array instead if you prefer running the Python script directly (`"command": ["python", "-m", "queryforge.server.server"]`, with appropriate `PYTHONPATH` set).
 4. **Reload VS Code** (or run “Cline: Reload MCP Servers”) so the extension discovers the new endpoint.
 5. **Connect and explore tools** from the Cline side panel; all 30+ MCP tools from QueryForge (KQL, CBC, Cortex, S1) are available.
 

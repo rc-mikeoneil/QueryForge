@@ -14,8 +14,8 @@ import pytest
 from unittest.mock import MagicMock, patch
 
 from fastmcp import FastMCP
-from server_runtime import ServerRuntime
-from server_tools_cbr import (
+from queryforge.server.server_runtime import ServerRuntime
+from queryforge.server.server_tools_cbr import (
     register_cbr_tools,
     _extract_cbr_corrections,
     _apply_field_corrections,

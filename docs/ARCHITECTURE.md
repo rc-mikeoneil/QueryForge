@@ -16,7 +16,7 @@ The MCP Security Query Builders project is a suite of Model Context Protocol (MC
                       │ MCP Protocol (stdio/SSE)
                       │
 ┌─────────────────────▼───────────────────────────────────────┐
-│              Unified Query Builder Server                   │
+│                  QueryForge Server                          │
 │                    (FastMCP Entry Point)                    │
 │                                                             │
 │  ┌────────────┐  ┌────────────┐  ┌────────────┐  ┌───────┐  │
@@ -44,7 +44,7 @@ The MCP Security Query Builders project is a suite of Model Context Protocol (MC
 
 #### 1. MCP Server Layer (FastMCP)
 
-**Location**: `queryforge/server.py`
+**Location**: `src/queryforge/server/server.py`
 
 The server layer is built on FastMCP and provides:
 - 30+ MCP tools organized by platform namespace
@@ -64,27 +64,27 @@ The server layer is built on FastMCP and provides:
 
 Each platform has a dedicated query builder module responsible for:
 
-**KQL Builder** (`queryforge/kql/query_builder.py`)
+**KQL Builder** (`src/queryforge/platforms/kql/query_builder.py`)
 - Regex-based natural language parsing
 - Table and column validation
 - Time window extraction and normalization
 - WHERE clause construction
 - Query guardrails (SQL injection, limit enforcement)
 
-**CBC Builder** (`queryforge/cbc/query_builder.py`)
+**CBC Builder** (`src/queryforge/platforms/cbc/query_builder.py`)
 - Search-type aware query construction
 - Boolean operator handling
 - Field validation and suggestion
 - Best practices enforcement
 
-**Cortex Builder** (`queryforge/cortex/query_builder.py`)
+**Cortex Builder** (`src/queryforge/platforms/cortex/query_builder.py`)
 - XQL pipeline assembly
 - Dataset validation
 - Filter expression construction
 - Field projection management
 - Operator and enum validation
 
-**S1 Builder** (`queryforge/s1/query_builder.py`)
+**S1 Builder** (`src/queryforge/platforms/s1/query_builder.py`)
 - Dataset inference from context
 - S1QL query construction
 - Boolean operator defaults
@@ -118,7 +118,7 @@ class SchemaCache:
 
 #### 4. RAG (Retrieval-Augmented Generation) Layer
 
-**Location**: `queryforge/shared/rag.py`
+**Location**: `src/src/queryforge/shared/rag.py`
 
 The RAG service provides semantic search across all platform schemas.
 
@@ -421,7 +421,7 @@ if table not in schema:
 
 4. **Update ServerRuntime**:
    ```python
-   # server_runtime.py
+   # src/queryforge/server/server_runtime.py
    class ServerRuntime:
        def __init__(self, data_dir: Path):
            # ... existing initialization ...
@@ -447,7 +447,7 @@ if table not in schema:
 5. **Register in main server**:
    ```python
    # server.py
-   from queryforge.server_tools_platform import register_platform_tools
+   from queryforge.server.server_tools_platform import register_platform_tools
    
    runtime = ServerRuntime()
    register_platform_tools(mcp, runtime)
@@ -539,7 +539,7 @@ tests/
 │                 │                       │
 │  ┌──────────────▼─────────────────────┐ │
 │  │   FastMCP Application              │ │
-│  │   (Unified Query Builder)          │ │
+│  │   (QueryForge)                     │ │
 │  └──────────────┬─────────────────────┘ │
 │                 │                       │
 │  ┌──────────────▼─────────────────────┐ │

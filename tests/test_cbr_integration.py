@@ -5,9 +5,9 @@ Tests end-to-end workflows: build → validate → retry
 
 import pytest
 from pathlib import Path
-from cbr.schema_loader import CBResponseSchemaCache
-from cbr.query_builder import build_cbr_query
-from cbr.validator import CBRValidator
+from queryforge.platforms.cbr.schema_loader import CBResponseSchemaCache
+from queryforge.platforms.cbr.query_builder import build_cbr_query
+from queryforge.platforms.cbr.validator import CBRValidator
 
 
 @pytest.fixture

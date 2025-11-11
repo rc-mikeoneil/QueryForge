@@ -1,7 +1,7 @@
 """Tests for CBC RAG-enhanced query building."""
 
 import pytest
-from cbc.query_builder import build_cbc_query
+from queryforge.platforms.cbc.query_builder import build_cbc_query
 
 
 def test_cbc_query_without_rag_context():
