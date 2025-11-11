@@ -37,6 +37,7 @@ print("Deps OK. FastMCP:", getattr(fastmcp, "__version__", "unknown"))
 PY
 
 COPY server*.py ./
+COPY cbr ./cbr
 COPY cbc ./cbc
 COPY cortex ./cortex
 COPY kql ./kql
@@ -44,7 +45,7 @@ COPY s1 ./s1
 COPY shared ./shared
 
 # Copy pre-generated embeddings cache for instant startup
-COPY unified_query_builder/.cache ${CACHE_DIR}
+COPY .cache ${CACHE_DIR}
 
 # Copy the Python debug entrypoint
 COPY ecs/debug_entrypoint.py ./debug_entrypoint.py

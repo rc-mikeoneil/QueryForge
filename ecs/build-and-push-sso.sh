@@ -6,9 +6,9 @@
 set -e
 
 # Configuration
-AWS_ACCOUNT_ID="340047602715"
+AWS_ACCOUNT_ID="287762355596"
 AWS_REGION="us-east-2"
-ECR_REPOSITORY="mcp-query-builder"
+ECR_REPOSITORY="queryforge"
 IMAGE_TAG="latest"
 AWS_PROFILE="${AWS_PROFILE:-}"  # Use environment variable or can be overridden
 
@@ -178,8 +178,8 @@ echo "1. Verify your task-definition.json has this image URI"
 echo "2. Force a new deployment of your ECS service:"
 echo ""
 echo -e "${BLUE}aws ecs update-service \\
-  --cluster mcp-query-builder-cluster \\
-  --service mcp-query-builder-service \\
+  --cluster queryforge-cluster \\
+  --service queryforge-service \\
   --force-new-deployment \\
   --region $AWS_REGION \\
   --profile $AWS_PROFILE${NC}"
