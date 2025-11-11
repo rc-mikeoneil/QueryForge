@@ -1,0 +1,1082 @@
+{
+  "carbonblack_response_query_schema": {
+    "watchlist_hit_process_fields": {
+      "cb_version": {
+        "type": "string",
+        "description": "Carbon Black server version"
+      },
+      "event_timestamp": {
+        "type": "string",
+        "description": "Timestamp when event was published"
+      },
+      "watchlist_id": {
+        "type": "integer",
+        "description": "Identifier of the watchlist that matched"
+      },
+      "watchlist_name": {
+        "type": "string",
+        "description": "Name of watchlist that matched"
+      },
+      "server_name": {
+        "type": "string",
+        "description": "Name of the Carbon Black Server"
+      },
+      "docs": {
+        "type": "string",
+        "description": "List of one or more matching process documents; see next table"
+      },
+      "childproc_count": {
+        "type": "integer",
+        "description": "Total count of child processes created by this process"
+      },
+      "cmdline": {
+        "type": "string",
+        "description": "Process command line"
+      },
+      "filemod_count": {
+        "type": "integer",
+        "description": "Total count of file modifications made by this process"
+      },
+      "group": {
+        "type": "string",
+        "description": "Sensor group this sensor was assigned to at time of process execution"
+      },
+      "host_type": {
+        "type": "string",
+        "description": "Type of the computer: server, workstation, domain controller"
+      },
+      "hostname": {
+        "type": "string",
+        "description": "Hostname of the computer on which the process executed (at time of execution)"
+      },
+      "last_update": {
+        "type": "string",
+        "description": "Last activity in this process is endpoint local time.  Example: 2014-02-04T16:23:22.547Z"
+      },
+      "modload_count": {
+        "type": "integer",
+        "description": "Total count of module loads in this process."
+      },
+      "netconn_count": {
+        "type": "integer",
+        "description": "Total count of network connections made and received by this process."
+      },
+      "os_type": {
+        "type": "string",
+        "description": "Operating system type of the endpoint, e.g. Windows, Linux, Osx."
+      },
+      "parent_name": {
+        "type": "string",
+        "description": "Name of the parent process."
+      },
+      "parent_md5": {
+        "type": "string",
+        "description": "MD5 of the parent process."
+      },
+      "parent_pid": {
+        "type": "integer",
+        "description": "PID of parent process."
+      },
+      "parent_unique_id": {
+        "type": "string",
+        "description": "Parent process unique identifer."
+      },
+      "path": {
+        "type": "string",
+        "description": "Full path to the executable file backing this process."
+      },
+      "process_md5": {
+        "type": "string",
+        "description": "MD5 of the executable file backing this process."
+      },
+      "process_name": {
+        "type": "string",
+        "description": "Filename of the executable backing this process."
+      },
+      "process_pid": {
+        "type": "integer",
+        "description": "PID of this process."
+      },
+      "regmod_count": {
+        "type": "integer",
+        "description": "total count of registry modifications made by this process."
+      },
+      "segment_id": {
+        "type": "integer",
+        "description": "For internal use"
+      },
+      "sensor_id": {
+        "type": "integer",
+        "description": "Endpoint identifier."
+      },
+      "start": {
+        "type": "string",
+        "description": "Start time of this process in endpoint local time. Example: 2014-02-04T16:23:22.516Z"
+      },
+      "unique_id": {
+        "type": "string",
+        "description": "Process unique Id"
+      },
+      "username": {
+        "type": "string",
+        "description": "User context in which the process executed."
+      }
+    },
+    "watchlist_hit_binary_fields": {
+      "cb_version": {
+        "type": "string",
+        "description": "Carbon Black server version"
+      },
+      "event_timestamp": {
+        "type": "string",
+        "description": "Timestamp when event was published"
+      },
+      "watchlist_id": {
+        "type": "integer",
+        "description": "Identifier of the watchlist that matched"
+      },
+      "watchlist_name": {
+        "type": "string",
+        "description": "Name of watchlist that matched"
+      },
+      "server_name": {
+        "type": "string",
+        "description": "Name of the Carbon Black Server"
+      },
+      "docs": {
+        "type": "string",
+        "description": "List of one or more matching process documents; see next table"
+      },
+      "copied_mod_len": {
+        "type": "integer",
+        "description": "Number of bytes copied to server"
+      },
+      "endpoint": {
+        "type": "string",
+        "description": "Hostname and sensor ID of the first endpoint on which this binary was observed."
+      },
+      "group": {
+        "type": "string",
+        "description": "First sensor group on which this binary was observed"
+      },
+      "digsig_issuer": {
+        "type": "string",
+        "description": "If digitally signed, the issuer."
+      },
+      "digsig_publisher": {
+        "type": "string",
+        "description": "If digitally signed, the publisher."
+      },
+      "digsig_result": {
+        "type": "string",
+        "description": "If digitally signed, the human-readable status. See notes."
+      },
+      "digsig_result_code": {
+        "type": "integer",
+        "description": "For internal use."
+      },
+      "digsig_sign_time": {
+        "type": "string",
+        "description": "If digitally signed, the sign time."
+      },
+      "digsig_subject": {
+        "type": "string",
+        "description": "If digitally signed, the subject."
+      },
+      "is_executable_image": {
+        "type": "boolean",
+        "description": "True if the binary is a standalone executable (as compared to a library)."
+      },
+      "is_64bit": {
+        "type": "boolean",
+        "description": "True if architecture is x64 (versus x86)"
+      },
+      "md5": {
+        "type": "string",
+        "description": "MD5 of the binary"
+      },
+      "observed_filename": {
+        "type": "string",
+        "description": "Full path to the executable backing the process"
+      },
+      "orig_mod_len": {
+        "type": "integer",
+        "description": "Size in bytes of the binary at the time of observation on the endpoint."
+      },
+      "os_type": {
+        "type": "string",
+        "description": "Operating system type, e.g. Windows, Linux, Osx."
+      },
+      "server_added_timestamp": {
+        "type": "string",
+        "description": "The time this binary was first seen by the server."
+      },
+      "timestamp": {
+        "type": "string",
+        "description": "Time binary was first observed (in endpoint time)"
+      },
+      "watchlists": {
+        "type": "string",
+        "description": "List of matching watchlists."
+      },
+      "file_version": {
+        "type": "string",
+        "description": "File Version (Windows Only)"
+      },
+      "product_name": {
+        "type": "string",
+        "description": "Product Name (Windows Only)"
+      },
+      "company_name": {
+        "type": "string",
+        "description": "Company Name (Windows Only)"
+      },
+      "internal_name": {
+        "type": "string",
+        "description": "Internal Name (Windows Only)"
+      },
+      "original_filename": {
+        "type": "string",
+        "description": "Internal Original Filename (Windows Only)"
+      },
+      "file_desc": {
+        "type": "string",
+        "description": "File Description (Windows only)"
+      },
+      "product_version": {
+        "type": "string",
+        "description": "Product Description (Windows only)"
+      },
+      "comments": {
+        "type": "string",
+        "description": "Comment String (Windows only)"
+      },
+      "legal_copyright": {
+        "type": "string",
+        "description": "Legal copyright string (Windows only)"
+      },
+      "legal_trademark": {
+        "type": "string",
+        "description": "Legal trademark string (Windows only)"
+      },
+      "private_build": {
+        "type": "string",
+        "description": "Private build string (Windows only)"
+      },
+      "Signed": {
+        "type": "string",
+        "description": ""
+      },
+      "Unsigned": {
+        "type": "string",
+        "description": ""
+      },
+      "Expired": {
+        "type": "string",
+        "description": ""
+      },
+      "Ingress": {
+        "type": "string",
+        "description": ""
+      },
+      "Storage": {
+        "type": "string",
+        "description": ""
+      },
+      "Query": {
+        "type": "string",
+        "description": ""
+      }
+    },
+    "feed_ingress_hit_process_fields": {
+      "process_id": {
+        "type": "string",
+        "description": "CB process key.  See Notes."
+      },
+      "report_id": {
+        "type": "string",
+        "description": "Identifier of the report which included the matching IOC.  See notes."
+      },
+      "ioc_type": {
+        "type": "string",
+        "description": "One of \u201cmd5\u201d, \u201cdns\u201d, \u201cipv4\u201d"
+      },
+      "ioc_value": {
+        "type": "string",
+        "description": "The matching IOC."
+      },
+      "ioc_attr": {
+        "type": "string",
+        "description": "Key value pairs of additional attributes related to the hit (if present)."
+      },
+      "sensor_id": {
+        "type": "integer",
+        "description": "Sensor Id of the endpoint on which the event matching the feed occurred."
+      },
+      "hostname": {
+        "type": "string",
+        "description": "Hostname of the endpoint on which the event matching the feed occurred"
+      },
+      "cb_version": {
+        "type": "string",
+        "description": "Carbon Black server version."
+      },
+      "server_name": {
+        "type": "string",
+        "description": "Name of Carbon Black server."
+      },
+      "feed_id": {
+        "type": "integer",
+        "description": "Identifier of the feed that included the matching report.  See notes."
+      },
+      "feed_name": {
+        "type": "string",
+        "description": "The  name of the feed that included the matching report."
+      },
+      "event_timestamp": {
+        "type": "float",
+        "description": "Timestamp of the feed match, measured in number of seconds since the epoch"
+      }
+    },
+    "feed_ingress_hit_binary_fields": {
+      "md5": {
+        "type": "string",
+        "description": "MD5 of the binary."
+      },
+      "report_id": {
+        "type": "string",
+        "description": "Identifier of the report which included the matching IOC."
+      },
+      "ioc_type": {
+        "type": "string",
+        "description": "One of \u201cmd5\u201d, \u201cdns\u201d, \u201cipv4\u201d"
+      },
+      "ioc_value": {
+        "type": "string",
+        "description": "The matching IOC."
+      },
+      "ioc_attr": {
+        "type": "string",
+        "description": "Key value pairs of additional attributes related to the hit (if present)."
+      },
+      "sensor_id": {
+        "type": "integer",
+        "description": "Sensor Id of the endpoint on which the event matching the feed occurred"
+      },
+      "hostname": {
+        "type": "string",
+        "description": "Hostname of the endpoint on which the event matching the feed occurred"
+      },
+      "cb_version": {
+        "type": "string",
+        "description": "Carbon Black server version."
+      },
+      "server_name": {
+        "type": "string",
+        "description": "Name of Carbon Black server."
+      },
+      "feed_id": {
+        "type": "integer",
+        "description": "Identifier of the feed that included the matching report."
+      },
+      "feed_name": {
+        "type": "string",
+        "description": "The  name of the feed that included the matching report."
+      },
+      "event_timestamp": {
+        "type": "float",
+        "description": "Timestamp of the feed match, measured in number of seconds since the epoch"
+      }
+    },
+    "feed_storage_hit_process_fields": {
+      "process_id": {
+        "type": "string",
+        "description": "CB process key.  See Notes."
+      },
+      "segment_id": {
+        "type": "integer",
+        "description": "For internal use"
+      },
+      "report_id": {
+        "type": "string",
+        "description": "Identifier of the report which included the matching IOC.  See notes."
+      },
+      "ioc_type": {
+        "type": "string",
+        "description": "One of \u201cmd5\u201d, \u201cdns\u201d, \u201cipv4\u201d"
+      },
+      "ioc_value": {
+        "type": "string",
+        "description": "The matching IOC."
+      },
+      "ioc_attr": {
+        "type": "string",
+        "description": "Key value pairs of additional attributes related to the hit (if present)."
+      },
+      "sensor_id": {
+        "type": "integer",
+        "description": "Sensor Id of the endpoint on which the event matching the feed occurred"
+      },
+      "hostname": {
+        "type": "string",
+        "description": "Hostname of the endpoint on which the event matching the feed occurred"
+      },
+      "cb_version": {
+        "type": "string",
+        "description": "Carbon Black server version."
+      },
+      "server_name": {
+        "type": "string",
+        "description": "Name of Carbon Black server."
+      },
+      "feed_id": {
+        "type": "integer",
+        "description": "Identifier of the feed that included the matching report.  See notes."
+      },
+      "feed_name": {
+        "type": "string",
+        "description": "The  name of the feed that included the matching report."
+      },
+      "event_timestamp": {
+        "type": "float",
+        "description": "Timestamp of the feed match, measured in number of seconds since the epoch"
+      },
+      "docs": {
+        "type": "string",
+        "description": "List of one or more matching process documents; see next table"
+      },
+      "childproc_count": {
+        "type": "integer",
+        "description": "Total count of child processes created by this process"
+      },
+      "cmdline": {
+        "type": "string",
+        "description": "Process command line"
+      },
+      "filemod_count": {
+        "type": "integer",
+        "description": "Total count of file modifications made by this process"
+      },
+      "group": {
+        "type": "string",
+        "description": "Sensor group this sensor was assigned to at time of process execution"
+      },
+      "host_type": {
+        "type": "string",
+        "description": "Type of the computer: server, workstation, domain controller"
+      },
+      "last_update": {
+        "type": "string",
+        "description": "Last activity in this process is endpoint local time.  Example: 2014-02-04T16:23:22.547Z"
+      },
+      "modload_count": {
+        "type": "integer",
+        "description": "Total count of module loads in this process."
+      },
+      "netconn_count": {
+        "type": "integer",
+        "description": "Total count of network connections made and received by this process."
+      },
+      "os_type": {
+        "type": "string",
+        "description": "Operating system type, e.g. Windows, Linux, Osx."
+      },
+      "parent_name": {
+        "type": "string",
+        "description": "Name of the parent process."
+      },
+      "parent_md5": {
+        "type": "string",
+        "description": "MD5 of the parent process."
+      },
+      "parent_pid": {
+        "type": "integer",
+        "description": "PID of parent process."
+      },
+      "parent_unique_id": {
+        "type": "string",
+        "description": "Parent process unique identifer."
+      },
+      "path": {
+        "type": "string",
+        "description": "Full path to the executable file backing this process."
+      },
+      "process_md5": {
+        "type": "string",
+        "description": "MD5 of the executable file backing this process."
+      },
+      "process_name": {
+        "type": "string",
+        "description": "Filename of the executable backing this process."
+      },
+      "process_pid": {
+        "type": "integer",
+        "description": "PID of this process."
+      },
+      "regmod_count": {
+        "type": "integer",
+        "description": "total count of registry modifications made by this process."
+      },
+      "start": {
+        "type": "string",
+        "description": "Start time of this process in endpoint local time. Example: 2014-02-04T16:23:22.516Z"
+      },
+      "unique_id": {
+        "type": "string",
+        "description": "Process unique Id"
+      },
+      "username": {
+        "type": "string",
+        "description": "User context in which the process executed."
+      }
+    },
+    "feed_storage_hit_binary_fields": {
+      "md5": {
+        "type": "string",
+        "description": "MD5 of the binary"
+      },
+      "report_id": {
+        "type": "string",
+        "description": "Identifier of the report which included the matching IOC."
+      },
+      "ioc_type": {
+        "type": "string",
+        "description": "One of \u201cmd5\u201d, \u201cdns\u201d, \u201cipv4\u201d"
+      },
+      "ioc_value": {
+        "type": "string",
+        "description": "The matching IOC."
+      },
+      "ioc_attr": {
+        "type": "string",
+        "description": "Key value pairs of additional attributes related to the hit (if present)."
+      },
+      "sensor_id": {
+        "type": "integer",
+        "description": "Sensor Id of the endpoint on which the event matching the feed occurred"
+      },
+      "hostname": {
+        "type": "string",
+        "description": "Hostname of the endpoint on which the event matching the feed occurred"
+      },
+      "cb_version": {
+        "type": "string",
+        "description": "Carbon Black server version."
+      },
+      "server_name": {
+        "type": "string",
+        "description": "Name of Carbon Black server."
+      },
+      "feed_id": {
+        "type": "integer",
+        "description": "Identifier of the feed that included the matching report."
+      },
+      "feed_name": {
+        "type": "string",
+        "description": "The  name of the feed that included the matching report."
+      },
+      "event_timestamp": {
+        "type": "float",
+        "description": "Timestamp of the feed match, measured in number of seconds since the epoch"
+      },
+      "docs": {
+        "type": "string",
+        "description": "List of one or more matching process documents; see next table"
+      },
+      "copied_mod_len": {
+        "type": "integer",
+        "description": "Number of bytes copied to server"
+      },
+      "endpoint": {
+        "type": "string",
+        "description": "Hostname and sensor ID of the endpoint on which this binary was observed."
+      },
+      "group": {
+        "type": "string",
+        "description": "First sensor group on which this binary was observed"
+      },
+      "digsig_issuer": {
+        "type": "string",
+        "description": "If digitally signed, the issuer."
+      },
+      "digsig_publisher": {
+        "type": "string",
+        "description": "If digitally signed, the publisher."
+      },
+      "digsig_result": {
+        "type": "string",
+        "description": "If digitally signed, the human-readable status. See notes."
+      },
+      "digsig_result_code": {
+        "type": "integer",
+        "description": "For internal use."
+      },
+      "digsig_sign_time": {
+        "type": "string",
+        "description": "If digitally signed, the sign time."
+      },
+      "digsig_subject": {
+        "type": "string",
+        "description": "If digitally signed, the subject."
+      },
+      "is_executable_image": {
+        "type": "boolean",
+        "description": "True if the binary is a standalone executable (as compared to a library)."
+      },
+      "is_64bit": {
+        "type": "boolean",
+        "description": "True if architecture is x64 (versus x86)"
+      },
+      "observed_filename": {
+        "type": "string",
+        "description": "Full path to the executable backing the process"
+      },
+      "orig_mod_len": {
+        "type": "integer",
+        "description": "Size in bytes of the binary at the time of observation on the endpoint."
+      },
+      "os_type": {
+        "type": "string",
+        "description": "Operating system type of the endpoint, e.g. Windows, Linux, Osx."
+      },
+      "server_added_timestamp": {
+        "type": "string",
+        "description": "The time this binary was first seen by the server."
+      },
+      "file_version": {
+        "type": "string",
+        "description": "File Version (Windows Only)"
+      },
+      "product_name": {
+        "type": "string",
+        "description": "Product Name (Windows Only)"
+      },
+      "company_name": {
+        "type": "string",
+        "description": "Company Name (Windows Only)"
+      },
+      "internal_name": {
+        "type": "string",
+        "description": "Internal Name (Windows Only)"
+      },
+      "original_filename": {
+        "type": "string",
+        "description": "Internal Original Filename (Windows Only)"
+      },
+      "file_desc": {
+        "type": "string",
+        "description": "File Description (Windows only)"
+      },
+      "product_version": {
+        "type": "string",
+        "description": "Product Description (Windows only)"
+      },
+      "comments": {
+        "type": "string",
+        "description": "Comment String (Windows only)"
+      },
+      "legal_copyright": {
+        "type": "string",
+        "description": "Legal copyright string (Windows only)"
+      },
+      "legal_trademarkt": {
+        "type": "string",
+        "description": "Legal trademark string (Windows only)"
+      },
+      "private_build": {
+        "type": "string",
+        "description": "Private build string (Windows only)"
+      }
+    },
+    "feed_query_hit_process_fields": {
+      "process_id": {
+        "type": "string",
+        "description": "CB process key.  See Notes."
+      },
+      "sensor_id": {
+        "type": "integer",
+        "description": "Endpoint identifier."
+      },
+      "segment_id": {
+        "type": "integer",
+        "description": "For internal use"
+      },
+      "report_id": {
+        "type": "string",
+        "description": "Identifier of the report which included the matching IOC.  See notes."
+      },
+      "ioc_type": {
+        "type": "string",
+        "description": "Always the value \u201cquery\u201d"
+      },
+      "ioc_value": {
+        "type": "string",
+        "description": "The query string used to look for matches"
+      },
+      "ioc_attr": {
+        "type": "string",
+        "description": "Key value pairs of additional attributes related to the hit (if present)."
+      },
+      "hostname": {
+        "type": "string",
+        "description": "Hostname of the endpoint on which the event matching the feed occurred"
+      },
+      "cb_version": {
+        "type": "string",
+        "description": "Carbon Black server version."
+      },
+      "server_name": {
+        "type": "string",
+        "description": "Name of Carbon Black server."
+      },
+      "feed_id": {
+        "type": "integer",
+        "description": "Identifier of the feed that included the matching report.  See notes."
+      },
+      "feed_name": {
+        "type": "string",
+        "description": "The  name of the feed that included the matching report."
+      },
+      "event_timestamp": {
+        "type": "float",
+        "description": "Timestamp of the feed match, measured in number of seconds since the epoch"
+      },
+      "docs": {
+        "type": "string",
+        "description": "List of one or more matching process documents; see next table"
+      },
+      "childproc_count": {
+        "type": "integer",
+        "description": "Total count of child processes created by this process"
+      },
+      "cmdline": {
+        "type": "string",
+        "description": "Process command line"
+      },
+      "filemod_count": {
+        "type": "integer",
+        "description": "Total count of file modifications made by this process"
+      },
+      "group": {
+        "type": "string",
+        "description": "Sensor group this sensor was assigned to at time of process execution"
+      },
+      "host_type": {
+        "type": "string",
+        "description": "Type of the computer: server, workstation, domain controller"
+      },
+      "last_update": {
+        "type": "string",
+        "description": "Last activity in this process is endpoint local time.  Example: 2014-02-04T16:23:22.547Z"
+      },
+      "modload_count": {
+        "type": "integer",
+        "description": "Total count of module loads in this process."
+      },
+      "netconn_count": {
+        "type": "integer",
+        "description": "Total count of network connections made and received by this process."
+      },
+      "os_type": {
+        "type": "string",
+        "description": "Operating system type, e.g. Windows, Linux, Osx."
+      },
+      "parent_name": {
+        "type": "string",
+        "description": "Name of the parent process."
+      },
+      "parent_md5": {
+        "type": "string",
+        "description": "MD5 of the parent process."
+      },
+      "parent_pid": {
+        "type": "integer",
+        "description": "PID of parent process."
+      },
+      "parent_unique_id": {
+        "type": "string",
+        "description": "Parent process unique identifer."
+      },
+      "path": {
+        "type": "string",
+        "description": "Full path to the executable file backing this process."
+      },
+      "process_md5": {
+        "type": "string",
+        "description": "MD5 of the executable file backing this process."
+      },
+      "process_name": {
+        "type": "string",
+        "description": "Filename of the executable backing this process."
+      },
+      "process_pid": {
+        "type": "integer",
+        "description": "PID of this process."
+      },
+      "regmod_count": {
+        "type": "integer",
+        "description": "total count of registry modifications made by this process."
+      },
+      "start": {
+        "type": "string",
+        "description": "Start time of this process in endpoint local time. Example: 2014-02-04T16:23:22.516Z"
+      },
+      "unique_id": {
+        "type": "string",
+        "description": "Process unique Id"
+      },
+      "username": {
+        "type": "string",
+        "description": "User context in which the process executed."
+      }
+    },
+    "feed_query_hit_binary_fields": {
+      "md5": {
+        "type": "string",
+        "description": "MD5 of the binary"
+      },
+      "report_id": {
+        "type": "string",
+        "description": "Identifier of the report which included the matching IOC."
+      },
+      "ioc_type": {
+        "type": "string",
+        "description": "Always the value \u201cquery\u201d"
+      },
+      "ioc_value": {
+        "type": "string",
+        "description": "The query string used to look for matches"
+      },
+      "ioc_attr": {
+        "type": "string",
+        "description": "Key value pairs of additional attributes related to the hit (if present)."
+      },
+      "sensor_id": {
+        "type": "integer",
+        "description": "Sensor Id of the endpoint on which the event matching the feed occurred"
+      },
+      "hostname": {
+        "type": "string",
+        "description": "Hostname of the endpoint on which the event matching the feed occurred"
+      },
+      "cb_version": {
+        "type": "string",
+        "description": "Carbon Black server version."
+      },
+      "server_name": {
+        "type": "string",
+        "description": "Name of Carbon Black server."
+      },
+      "feed_id": {
+        "type": "integer",
+        "description": "Identifier of the feed that included the matching report."
+      },
+      "feed_name": {
+        "type": "string",
+        "description": "The  name of the feed that included the matching report."
+      },
+      "event_timestamp": {
+        "type": "float",
+        "description": "Timestamp of the feed match, measured in number of seconds since the epoch"
+      },
+      "docs": {
+        "type": "string",
+        "description": "List of one or more matching process documents; see next table"
+      },
+      "comments": {
+        "type": "string",
+        "description": "Comment String (Windows only)"
+      },
+      "company_name": {
+        "type": "string",
+        "description": "Company Name (Windows Only)"
+      },
+      "copied_mod_len": {
+        "type": "integer",
+        "description": "Number of bytes copied to server"
+      },
+      "endpoint": {
+        "type": "string",
+        "description": "Hostname and sensor ID of the endpoint on which this binary was observed."
+      },
+      "file_desc": {
+        "type": "string",
+        "description": "File Description (Windows only)"
+      },
+      "file_version": {
+        "type": "string",
+        "description": "File Version (Windows Only)"
+      },
+      "group": {
+        "type": "string",
+        "description": "First sensor group on which this binary was observed"
+      },
+      "host_count": {
+        "type": "integer",
+        "description": "Number of hosts containing this file"
+      },
+      "digsig_issuer": {
+        "type": "string",
+        "description": "If digitally signed, the issuer."
+      },
+      "digsig_publisher": {
+        "type": "string",
+        "description": "If digitally signed, the publisher."
+      },
+      "digsig_result": {
+        "type": "string",
+        "description": "If digitally signed, the human-readable status. See notes."
+      },
+      "digsig_result_code": {
+        "type": "integer",
+        "description": "For internal use."
+      },
+      "digsig_sign_time": {
+        "type": "string",
+        "description": "If digitally signed, the sign time."
+      },
+      "digsig_subject": {
+        "type": "string",
+        "description": "If digitally signed, the subject."
+      },
+      "internal_name": {
+        "type": "string",
+        "description": "Internal Name (Windows Only)"
+      },
+      "is_executable_image": {
+        "type": "boolean",
+        "description": "True if the binary is a standalone executable (as compared to a library)."
+      },
+      "is_64bit": {
+        "type": "boolean",
+        "description": "True if architecture is x64 (versus x86)"
+      },
+      "last_seen": {
+        "type": "string",
+        "description": "Time last seen"
+      },
+      "legal_copyright": {
+        "type": "string",
+        "description": "Legal copyright string (Windows only)"
+      },
+      "legal_trademark": {
+        "type": "string",
+        "description": "Legal trademark string (Windows only)"
+      },
+      "observed_filename": {
+        "type": "string",
+        "description": "Full path to the executable backing the process"
+      },
+      "orig_mod_len": {
+        "type": "integer",
+        "description": "Size in bytes of the binary at the time of observation on the endpoint."
+      },
+      "original_filename": {
+        "type": "string",
+        "description": "Internal Original Filename (Windows Only)"
+      },
+      "os_type": {
+        "type": "string",
+        "description": "Operating system type of the endpoint, e.g. Windows, Linux, Osx."
+      },
+      "private_build": {
+        "type": "string",
+        "description": "Private build string (Windows only)"
+      },
+      "product_name": {
+        "type": "string",
+        "description": "Product Name (Windows Only)"
+      },
+      "product_version": {
+        "type": "string",
+        "description": "Product Description (Windows only)"
+      },
+      "server_added_timestamp": {
+        "type": "string",
+        "description": "The time this binary was first seen by the server."
+      },
+      "signed": {
+        "type": "string",
+        "description": "If digitally signed"
+      },
+      "timestamp": {
+        "type": "string",
+        "description": "The time this binary was first seen by the server."
+      }
+    },
+    "binaryinfo_observed_fields": {
+      "md5": {
+        "type": "string",
+        "description": "MD5 of the binary"
+      },
+      "event_timestamp": {
+        "type": "float",
+        "description": "Timestamp of the feed match, measured in number of seconds since the epoch"
+      },
+      "scores": {
+        "type": "string",
+        "description": "Dictionary of Alliance feed scores"
+      }
+    },
+    "binaryinfo_host_observed_fields": {
+      "md5": {
+        "type": "string",
+        "description": "MD5 of the binary."
+      },
+      "hostname": {
+        "type": "string",
+        "description": "Hostname of endpoint on which binary was observed"
+      },
+      "sensor_id": {
+        "type": "integer",
+        "description": "Sensor Id of endpoint on which binary was observed"
+      },
+      "event_timestamp": {
+        "type": "float",
+        "description": "Timestamp of the feed match, measured in number of seconds since the epoch"
+      },
+      "scores": {
+        "type": "string",
+        "description": "Dictionary of Alliance feed scores"
+      },
+      "watchlists": {
+        "type": "string",
+        "description": "Dictionary of already-matched watchlists"
+      }
+    },
+    "binaryinfo_group_observed_fields": {
+      "md5": {
+        "type": "string",
+        "description": "MD5 sum of the binary file."
+      },
+      "group": {
+        "type": "string",
+        "description": "Sensor group name on which the binary was observed"
+      },
+      "event_timestamp": {
+        "type": "float",
+        "description": "Timestamp of the binary file addtion, measured in number of seconds since the epoch"
+      },
+      "scores": {
+        "type": "string",
+        "description": "Dictionary of Alliance feed scores"
+      },
+      "watchlists": {
+        "type": "string",
+        "description": "Dictionary of already-matched watchlists"
+      },
+      "size": {
+        "type": "integer",
+        "description": "Size of the original binary, in bytes."
+      },
+      "compressed_size": {
+        "type": "integer",
+        "description": "Size of the zip archive containing the binary file on the Carbon Black server"
+      },
+      "file_path": {
+        "type": "string",
+        "description": "Path, on the server disk, of the copied binary file (zipped)."
+      }
+    }
+  }
+}

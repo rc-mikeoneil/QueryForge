@@ -27,6 +27,7 @@ def get_allowed_schema_dirs() -> List[Path]:
 
     return [
         app_root / "cbc",
+        app_root / "cbr",
         app_root / "cortex",
         app_root / "kql",
         app_root / "s1",

@@ -63,6 +63,7 @@ PY
 
 COPY server*.py entrypoint.sh ./
 COPY cbc ./cbc
+COPY cbr ./cbr
 COPY cortex ./cortex
 COPY kql ./kql
 COPY s1 ./s1

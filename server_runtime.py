@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any, Dict, Optional
 
 from cbc.schema_loader import CBCSchemaCache
+from cbr.schema_loader import CBResponseSchemaCache
 from cortex.schema_loader import CortexSchemaCache
 from kql.schema_loader import SchemaCache
 from s1.schema_loader import S1SchemaCache
@@ -15,6 +16,7 @@ from shared.rag import (
     UnifiedRAGService,
     SchemaSource,
     build_cbc_documents,
+    build_cbr_documents,
     build_cortex_documents,
     build_kql_documents,
     build_s1_documents,
@@ -33,12 +35,14 @@ class ServerRuntime:
 
         base_dir = Path(__file__).parent
         self.cbc_schema_file = base_dir / "cbc" / "cbc_schema.json"
+        self.cbr_schema_dir = base_dir / "cbr"
         self.cortex_schema_file = base_dir / "cortex" / "new_schema" / "cortex_core.json"
         self.kql_schema_dir = base_dir / "kql" / "defender_xdr_kql_schema_fuller"
         self.kql_schema_cache_file = self.data_dir / "kql_schema_cache.json"
         self.s1_schema_dir = base_dir / "s1" / "s1_schemas"
 
         self.cbc_cache = CBCSchemaCache(self.cbc_schema_file, cache_dir=self.data_dir)
+        self.cbr_cache = CBResponseSchemaCache(self.cbr_schema_dir, cache_dir=self.data_dir)
         self.cortex_cache = CortexSchemaCache(self.cortex_schema_file, cache_dir=self.data_dir)
         self.kql_cache = SchemaCache(schema_path=self.kql_schema_cache_file)
         self.s1_cache = S1SchemaCache(self.s1_schema_dir, cache_dir=self.data_dir)
@@ -51,6 +55,13 @@ class ServerRuntime:
                     loader=lambda cache, force=False: cache.load(force_refresh=force),
                     document_builder=build_cbc_documents,
                     version_getter=self._cbc_version,
+                ),
+                SchemaSource(
+                    name="cbr",
+                    schema_cache=self.cbr_cache,
+                    loader=lambda cache, force=False: cache.load(force_refresh=force),
+                    document_builder=build_cbr_documents,
+                    version_getter=self._cbr_version,
                 ),
                 SchemaSource(
                     name="kql",
@@ -107,6 +118,14 @@ class ServerRuntime:
         version = data.get("version") if isinstance(data, dict) else None
         return str(version) if version else None
 
+    def _cbr_version(self, cache: CBResponseSchemaCache) -> Optional[str]:  # pragma: no cover - IO heavy
+        try:
+            data = cache.load()
+        except Exception:  # pragma: no cover - defensive
+            return None
+        version = data.get("version") if isinstance(data, dict) else None
+        return str(version) if version else None
+
     def _kql_version(self, cache: SchemaCache) -> Optional[int]:  # pragma: no cover - IO heavy
         try:
             return cache.version
@@ -137,6 +156,7 @@ class ServerRuntime:
 
             schema_checks = {
                 "CBC": self.cbc_schema_file,
+                "CBR": self.cbr_schema_dir,
                 "Cortex": self.cortex_schema_file,
                 "KQL": self.kql_schema_dir,
                 "S1": self.s1_schema_dir,
@@ -163,6 +183,12 @@ class ServerRuntime:
                 logger.info("✅ CBC schema loaded")
             except Exception as exc:  # pragma: no cover - defensive
                 logger.warning("⚠️ Failed to load CBC schema: %s", exc)
+
+            try:
+                self.cbr_cache.load()
+                logger.info("✅ CBR schema loaded")
+            except Exception as exc:  # pragma: no cover - defensive
+                logger.warning("⚠️ Failed to load CBR schema: %s", exc)
 
             try:
                 self.cortex_cache.load()

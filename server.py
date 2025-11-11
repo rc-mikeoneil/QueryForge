@@ -16,6 +16,7 @@ from starlette.responses import JSONResponse
 
 from server_runtime import ServerRuntime
 from server_tools_cbc import register_cbc_tools
+from server_tools_cbr import register_cbr_tools
 from server_tools_cortex import register_cortex_tools
 from server_tools_kql import register_kql_tools
 from server_tools_s1 import register_s1_tools
@@ -34,6 +35,7 @@ runtime = ServerRuntime()
 rag_service = runtime.rag_service
 
 register_cbc_tools(mcp, runtime)
+register_cbr_tools(mcp, runtime)
 register_cortex_tools(mcp, runtime)
 register_kql_tools(mcp, runtime)
 register_s1_tools(mcp, runtime)

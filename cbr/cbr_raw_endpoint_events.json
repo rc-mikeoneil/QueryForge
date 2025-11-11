@@ -1,0 +1,674 @@
+{
+  "carbonblack_response_query_schema": {
+    "regmod (registry modification)_fields": {
+      "action": {
+        "type": "string",
+        "description": "Type of registry modification. This can be one of: createkey, writeval, delkey, or delval"
+      },
+      "actiontype": {
+        "type": "string",
+        "description": "Enum value of the registry modification: 1=createkey, 2=writeval, 4=delkey, 8=delval"
+      },
+      "cb_server": {
+        "type": "string",
+        "description": "Used to distinguish between multiple EDR servers. Set this in the \u201cserver_name\u201d option of cb-event-forwarder.ini."
+      },
+      "computer_name": {
+        "type": "string",
+        "description": "hostname of the sensor"
+      },
+      "event_type": {
+        "type": "string",
+        "description": "The type of event"
+      },
+      "link_process": {
+        "type": "string",
+        "description": "Deep link to EDR UI for process"
+      },
+      "link_sensor": {
+        "type": "string",
+        "description": "Deep link to EDR UI for sensor"
+      },
+      "md5": {
+        "type": "string",
+        "description": "md5 of process executable"
+      },
+      "path": {
+        "type": "string",
+        "description": "Full registry path"
+      },
+      "pid": {
+        "type": "string",
+        "description": "Endpoint OS Process id of process"
+      },
+      "process_guid": {
+        "type": "string",
+        "description": "Cb Process GUID of process"
+      },
+      "sensor_id": {
+        "type": "string",
+        "description": "Sensor ID of associated sensor"
+      },
+      "timestamp": {
+        "type": "string",
+        "description": "Endpoint timestamp of this event since epoch"
+      },
+      "type": {
+        "type": "string",
+        "description": "The full type of event"
+      }
+    },
+    "filemod (file modification)_fields": {
+      "action": {
+        "type": "string",
+        "description": "Type of file modification: create, write, delete, lastwrite"
+      },
+      "actiontype": {
+        "type": "string",
+        "description": "Enum value of the file modification: 1=create, 2=write, 4=delete, 8=lastwrite"
+      },
+      "cb_server": {
+        "type": "string",
+        "description": "Used to distinguish between multiple EDR servers. Set this in the \u201cserver_name\u201d option of cb-event-forwarder.ini."
+      },
+      "computer_name": {
+        "type": "string",
+        "description": "hostname of the sensor"
+      },
+      "event_type": {
+        "type": "string",
+        "description": "The type of event"
+      },
+      "filetype": {
+        "type": "string",
+        "description": "Enum value of the detected file type of this file. Only valid for \u201clastwrite\u201d actions. See theCbFileType protobuf definitionfor the available values."
+      },
+      "filetype_name": {
+        "type": "string",
+        "description": "The detected file type of this file. Only valid for \u201clastwrite\u201d actions. Currently supported file types: PE, ELF, UniversalBin, Eicar, OfficeLegacy, OfficeOpenXml, PDF, PKZIP, LZH, LZW, RAR, TAR, and 7zip."
+      },
+      "link_process": {
+        "type": "string",
+        "description": "Deep link to EDR UI for process"
+      },
+      "link_sensor": {
+        "type": "string",
+        "description": "Deep link to EDR UI for sensor"
+      },
+      "md5": {
+        "type": "string",
+        "description": "md5 of process executable"
+      },
+      "path": {
+        "type": "string",
+        "description": "Full file path"
+      },
+      "pid": {
+        "type": "string",
+        "description": "Endpoint OS Process id of process"
+      },
+      "process_guid": {
+        "type": "string",
+        "description": "Cb Process GUID of process"
+      },
+      "sensor_id": {
+        "type": "string",
+        "description": "sensor ID of associated sensor"
+      },
+      "timestamp": {
+        "type": "string",
+        "description": "Endpoint timestamp of this event since epoch"
+      },
+      "type": {
+        "type": "string",
+        "description": "The full type of event"
+      }
+    },
+    "netconn (network connection)_fields": {
+      "cb_server": {
+        "type": "string",
+        "description": "Used to distinguish between multiple EDR servers. Set this in the \u201cserver_name\u201d option of cb-event-forwarder.ini."
+      },
+      "computer_name": {
+        "type": "string",
+        "description": "hostname of the sensor"
+      },
+      "direction": {
+        "type": "string",
+        "description": "Direction of the netconn event: inbound or outbound"
+      },
+      "domain": {
+        "type": "string",
+        "description": "The DNS name of the network peer, if available."
+      },
+      "event_type": {
+        "type": "string",
+        "description": "The type of event"
+      },
+      "ipv4": {
+        "type": "string",
+        "description": "remote ipv4 address of network connection. Maintained for backward compatibility for earlier versions of the event forwarder. See local_ip and remote_ip."
+      },
+      "link_process": {
+        "type": "string",
+        "description": "Deep link to EDR UI for process"
+      },
+      "link_sensor": {
+        "type": "string",
+        "description": "Deep link to EDR UI for sensor"
+      },
+      "local_ip": {
+        "type": "string",
+        "description": "Local IP address of network connection (network interface on the endpoint)"
+      },
+      "local_port": {
+        "type": "string",
+        "description": "Local port of the network connection"
+      },
+      "md5": {
+        "type": "string",
+        "description": "md5 of process executable"
+      },
+      "pid": {
+        "type": "string",
+        "description": "Endpoint OS Process id of process"
+      },
+      "port": {
+        "type": "string",
+        "description": "remote port of the network connection. Maintained for backward compatibility for earlier versions of the event forwarder. See local_port and remote_port."
+      },
+      "process_guid": {
+        "type": "string",
+        "description": "Cb Process GUID of process"
+      },
+      "protocol": {
+        "type": "string",
+        "description": "6=TCP, 17=UDP"
+      },
+      "remote_ip": {
+        "type": "string",
+        "description": "IP address of the remote system (peer)"
+      },
+      "remote_port": {
+        "type": "string",
+        "description": "Remote port of the network connection"
+      },
+      "sensor_id": {
+        "type": "string",
+        "description": "sensor ID of associated sensor"
+      },
+      "timestamp": {
+        "type": "string",
+        "description": "Endpoint timestamp of this event since epoch"
+      },
+      "type": {
+        "type": "string",
+        "description": "The full type of event"
+      },
+      "proxy": {
+        "type": "string",
+        "description": "A boolean field for proxy status"
+      },
+      "proxy_ip": {
+        "type": "string",
+        "description": "IP address of the web proxy connection"
+      },
+      "proxy_port": {
+        "type": "string",
+        "description": "Port of the web proxy connection"
+      },
+      "proxy_domain": {
+        "type": "string",
+        "description": "Domain of the web proxy connection, if available"
+      }
+    },
+    "moduleload (module load)_fields": {
+      "cb_server": {
+        "type": "string",
+        "description": "Used to distinguish between multiple EDR servers. Set this in the \u201cserver_name\u201d option of cb-event-forwarder.ini."
+      },
+      "computer_name": {
+        "type": "string",
+        "description": "hostname of the sensor"
+      },
+      "event_type": {
+        "type": "string",
+        "description": "The type of event"
+      },
+      "link_process": {
+        "type": "string",
+        "description": "Deep link to EDR UI for process"
+      },
+      "link_sensor": {
+        "type": "string",
+        "description": "Deep link to EDR UI for sensor"
+      },
+      "md5": {
+        "type": "string",
+        "description": "md5 of the module"
+      },
+      "path": {
+        "type": "string",
+        "description": "Path of the module loaded into the current process"
+      },
+      "pid": {
+        "type": "string",
+        "description": "Endpoint OS Process id of process"
+      },
+      "process_guid": {
+        "type": "string",
+        "description": "Cb Process GUID of process"
+      },
+      "sensor_id": {
+        "type": "string",
+        "description": "sensor ID of associated sensor"
+      },
+      "timestamp": {
+        "type": "string",
+        "description": "Endpoint timestamp of this event since epoch"
+      },
+      "type": {
+        "type": "string",
+        "description": "The full type of event"
+      }
+    },
+    "childproc (child process)_fields": {
+      "cb_server": {
+        "type": "string",
+        "description": "Used to distinguish between multiple EDR servers. Set this in the \u201cserver_name\u201d option of cb-event-forwarder.ini."
+      },
+      "child_process_guid": {
+        "type": "string",
+        "description": "process guid of the child process"
+      },
+      "computer_name": {
+        "type": "string",
+        "description": "hostname of the sensor"
+      },
+      "created": {
+        "type": "string",
+        "description": "Specifies whether this process_guid is the child or the parent"
+      },
+      "event_type": {
+        "type": "string",
+        "description": "The type of event"
+      },
+      "link_child": {
+        "type": "string",
+        "description": "Deep link to EDR UI for child process"
+      },
+      "link_process": {
+        "type": "string",
+        "description": "Deep link to EDR UI for parent process"
+      },
+      "link_sensor": {
+        "type": "string",
+        "description": "Deep link to EDR UI for sensor"
+      },
+      "md5": {
+        "type": "string",
+        "description": "md5 of the module"
+      },
+      "pid": {
+        "type": "string",
+        "description": "Endpoint OS Process id of process"
+      },
+      "process_guid": {
+        "type": "string",
+        "description": "Cb Process GUID of parent process"
+      },
+      "sensor_id": {
+        "type": "string",
+        "description": "sensor ID of associated sensor"
+      },
+      "timestamp": {
+        "type": "string",
+        "description": "Endpoint timestamp of this event since epoch"
+      },
+      "type": {
+        "type": "string",
+        "description": "The full type of event"
+      }
+    },
+    "procstart (process start)_fields": {
+      "cb_server": {
+        "type": "string",
+        "description": "Used to distinguish between multiple EDR servers. Set this in the \u201cserver_name\u201d option of cb-event-forwarder.ini."
+      },
+      "command_line": {
+        "type": "string",
+        "description": "Command Line of the new process"
+      },
+      "computer_name": {
+        "type": "string",
+        "description": "hostname of the sensor"
+      },
+      "event_type": {
+        "type": "string",
+        "description": "type of event"
+      },
+      "expect_followon_w_md5": {
+        "type": "string",
+        "description": "If the md5 could not be calculated in time then EDR will send another procstart with the process md5"
+      },
+      "link_parent": {
+        "type": "string",
+        "description": "Deep link to EDR UI for parent process"
+      },
+      "link_process": {
+        "type": "string",
+        "description": "Deep link to EDR UI for this process"
+      },
+      "link_sensor": {
+        "type": "string",
+        "description": "Deep link to EDR UI for sensor"
+      },
+      "md5": {
+        "type": "string",
+        "description": "MD5 of the executable binary associated with this process"
+      },
+      "parent_create_time": {
+        "type": "string",
+        "description": "seconds since epoch of parent process create time"
+      },
+      "parent_md5": {
+        "type": "string",
+        "description": "MD5 of parent\u2019s executable image"
+      },
+      "parent_path": {
+        "type": "string",
+        "description": "file path of parent\u2019s executable image"
+      },
+      "parent_process_guid": {
+        "type": "string",
+        "description": "Cb Process GUID of parent process"
+      },
+      "path": {
+        "type": "string",
+        "description": "file path of the child processes' executable image"
+      },
+      "pid": {
+        "type": "string",
+        "description": "OS Process id of child process"
+      },
+      "process_guid": {
+        "type": "string",
+        "description": "Cb Process GUID of child process"
+      },
+      "sensor_id": {
+        "type": "string",
+        "description": "sensor ID of associated sensor"
+      },
+      "timestamp": {
+        "type": "string",
+        "description": "Endpoint timestamp of this event since epoch"
+      },
+      "type": {
+        "type": "string",
+        "description": "The full type of event"
+      },
+      "username": {
+        "type": "string",
+        "description": "Username used to create child process"
+      },
+      "logon_type": {
+        "type": "string",
+        "description": "Describes the logon type of the logon session associated with a process. Here value \u20184\u2019 corresponds to \u2018Batch\u2019 which indicates that the process is executed on behalf of a user without their direct intervention (possibly a scheduled task). Possible valid values are 0 and 2 to 13 as perhttps://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-logonsession."
+      }
+    },
+    "crossprocopen (cross process open)_fields": {
+      "cb_server": {
+        "type": "string",
+        "description": "Used to distinguish between multiple EDR servers. Set this in the \u201cserver_name\u201d option of cb-event-forwarder.ini."
+      },
+      "computer_name": {
+        "type": "string",
+        "description": "hostname of the sensor"
+      },
+      "cross_process_type": {
+        "type": "string",
+        "description": "The type of cross process event: either open_process (opening a handle to another process) or open_thread"
+      },
+      "event_type": {
+        "type": "string",
+        "description": "type of event"
+      },
+      "is_target": {
+        "type": "string",
+        "description": "specifies whether process_guid is the target of the cross process event"
+      },
+      "link_target": {
+        "type": "string",
+        "description": "Deep link to EDR UI for target process"
+      },
+      "link_process": {
+        "type": "string",
+        "description": "Deep link to EDR UI for this process"
+      },
+      "link_sensor": {
+        "type": "string",
+        "description": "Deep link to EDR UI for sensor"
+      },
+      "md5": {
+        "type": "string",
+        "description": "md5 of process_guid executable image"
+      },
+      "pid": {
+        "type": "string",
+        "description": "Endpoint OS Process id of process that generated the crossprocopen event"
+      },
+      "process_guid": {
+        "type": "string",
+        "description": "Process guid of child process"
+      },
+      "requested_access": {
+        "type": "string",
+        "description": "Windows bitfield representing the requested access for this process or thread handle (decimal)"
+      },
+      "sensor_id": {
+        "type": "string",
+        "description": "sensor ID of associated sensor"
+      },
+      "target_create_time": {
+        "type": "string",
+        "description": "Target Process create time represented as a 64-bit Windows FILETIME"
+      },
+      "target_md5": {
+        "type": "string",
+        "description": "md5 of target process executable image"
+      },
+      "target_path": {
+        "type": "string",
+        "description": "Path of the target process' executable image"
+      },
+      "target_pid": {
+        "type": "string",
+        "description": "Process ID of the target process"
+      },
+      "target_process_guid": {
+        "type": "string",
+        "description": "process_guid of the target process"
+      },
+      "timestamp": {
+        "type": "string",
+        "description": "Endpoint timestamp of this event since epoch"
+      },
+      "type": {
+        "type": "string",
+        "description": "The full type of event"
+      }
+    },
+    "emetmitigation (emet mitigation)_fields": {
+      "blocked": {
+        "type": "string",
+        "description": "boolean value describing if the action was successfully blocked by EMET"
+      },
+      "cb_server": {
+        "type": "string",
+        "description": "Used to distinguish between multiple EDR servers. Set this in the \u201cserver_name\u201d option of cb-event-forwarder.ini."
+      },
+      "computer_name": {
+        "type": "string",
+        "description": "hostname of the sensor"
+      },
+      "emet_timestamp": {
+        "type": "string",
+        "description": "timestamp of EMET event represented by a 64-bit Windows FILETIME"
+      },
+      "event_type": {
+        "type": "string",
+        "description": "type of event"
+      },
+      "link_process": {
+        "type": "string",
+        "description": "Deep link to EDR UI for process"
+      },
+      "link_sensor": {
+        "type": "string",
+        "description": "Deep link to EDR UI for sensor"
+      },
+      "log_id": {
+        "type": "string",
+        "description": "EMET log ID associated with this emetmitigation event"
+      },
+      "log_message": {
+        "type": "string",
+        "description": "The full log message generated by EMET"
+      },
+      "md5": {
+        "type": "string",
+        "description": "md5 of process_guid executable image"
+      },
+      "mitigation": {
+        "type": "string",
+        "description": "The type of EMET mitigation performed to block the operation. Possible values are Dep, Sehop, Asr, Aslr, NullPage, HeapSpray, MandatoryAslr, Eaf, EafPlus, BottomUpAslr, LoadLibrary, MemoryProtection, SimulateExecFlow, StackPivot, CallerChecks, BannedFunctions, DeepHooks, AntiDetours."
+      },
+      "pid": {
+        "type": "string",
+        "description": "Endpoint OS Process id of process that generated the emetmitigation event"
+      },
+      "process_guid": {
+        "type": "string",
+        "description": "Process GUID of offending process"
+      },
+      "sensor_id": {
+        "type": "string",
+        "description": "sensor ID of associated sensor"
+      },
+      "timestamp": {
+        "type": "string",
+        "description": "Endpoint timestamp of this event since epoch"
+      },
+      "type": {
+        "type": "string",
+        "description": "The full type of event"
+      }
+    },
+    "processblock (process block)_fields": {
+      "blocked_event": {
+        "type": "string",
+        "description": "The type of event that was blocked: either ProcessCreate (the process was terminated immediately upon execution) or RunningProcess (the process was already running on the endpoint when the block was applied)."
+      },
+      "blocked_reason": {
+        "type": "string",
+        "description": "The reason for block action (Md5Hash is the only possible value)"
+      },
+      "blocked_result": {
+        "type": "string",
+        "description": "The result of the blocked action: ProcessTerminated, NotTerminatedCBProcess, NotTerminatedSystemProcess, NotTerminatedCriticalSystemProcess, NotTerminatedWhitelistPath, NotTerminatedOpenProcessError, or NotTerminatedTerminateError."
+      },
+      "cb_server": {
+        "type": "string",
+        "description": "Used to distinguish between multiple EDR servers. Set this in the \u201cserver_name\u201d option of cb-event-forwarder.ini."
+      },
+      "command_line": {
+        "type": "string",
+        "description": "Command line associated with the blocked process"
+      },
+      "computer_name": {
+        "type": "string",
+        "description": "hostname of the sensor"
+      },
+      "event_type": {
+        "type": "string",
+        "description": "type of event"
+      },
+      "md5": {
+        "type": "string",
+        "description": "md5 of the blocked executable"
+      },
+      "path": {
+        "type": "string",
+        "description": "Path of the blocked executable on disk"
+      },
+      "sensor_id": {
+        "type": "string",
+        "description": "sensor ID of associated sensor"
+      },
+      "timestamp": {
+        "type": "string",
+        "description": "Endpoint timestamp of this event since epoch"
+      },
+      "type": {
+        "type": "string",
+        "description": "The full type of event"
+      },
+      "uid": {
+        "type": "string",
+        "description": "Security Identifier of the username name used for process creation"
+      },
+      "username": {
+        "type": "string",
+        "description": "Username that initiated the process creation"
+      }
+    },
+    "tamper (edr tamper)_fields": {
+      "cb_server": {
+        "type": "string",
+        "description": "Used to distinguish between multiple EDR servers. Set this in the \u201cserver_name\u201d option of cb-event-forwarder.ini."
+      },
+      "computer_name": {
+        "type": "string",
+        "description": "hostname of the sensor"
+      },
+      "event_type": {
+        "type": "string",
+        "description": "type of event"
+      },
+      "sensor_id": {
+        "type": "string",
+        "description": "sensor ID of associated sensor"
+      },
+      "tamper_type": {
+        "type": "string",
+        "description": "The activity which triggered this tamper event: CoreDriverUnloaded, NetworkDriverUnloaded, CbServiceStopped, CbProcessTerminated, or CbCodeInjection"
+      },
+      "timestamp": {
+        "type": "string",
+        "description": "Endpoint timestamp of this event since epoch"
+      },
+      "type": {
+        "type": "string",
+        "description": "The full type of event"
+      }
+    },
+    "task.error.logged_fields": {
+      "error_text": {
+        "type": "string",
+        "description": "The text describing the error."
+      },
+      "task_name": {
+        "type": "string",
+        "description": "The name of the task that generated the error."
+      },
+      "task_type": {
+        "type": "string",
+        "description": "The type of task: \u201cTask\u201d refers to a background task in cb-enterprised; \u201cJob\u201d refers to a cron job."
+      },
+      "timestamp": {
+        "type": "string",
+        "description": "The timestamp of the occurence of the error."
+      }
+    }
+  }
+}

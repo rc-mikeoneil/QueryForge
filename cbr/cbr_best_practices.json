@@ -1,0 +1,87 @@
+{
+  "carbonblack_response_query_schema": {
+    "field_usage": {
+      "hash_searches": {
+        "recommendation": "Prefer field-specific hash searches",
+        "good": "md5:5d41402abc4b2a76b9719d911017c592",
+        "avoid": "5d41402abc4b2a76b9719d911017c592",
+        "rationale": "Field-specific searches are more efficient and precise"
+      },
+      "network_searches": {
+        "recommendation": "Use specific network fields for netconn events",
+        "fields": [
+          "remote_ip",
+          "local_ip",
+          "remote_port",
+          "local_port",
+          "domain"
+        ],
+        "example": "remote_ip:192.168.1.100 AND remote_port:443"
+      },
+      "process_searches": {
+        "recommendation": "Use process-specific fields",
+        "fields": [
+          "process_name",
+          "cmdline",
+          "path",
+          "process_guid"
+        ],
+        "example": "process_name:cmd.exe"
+      }
+    },
+    "value_formatting": {
+      "spaces": {
+        "rule": "Quote values containing spaces",
+        "example": "process_name:\"google chrome\""
+      },
+      "backslashes": {
+        "rule": "Escape backslashes in Windows paths",
+        "example": "path:c:\\\\windows\\\\system32\\\\cmd.exe"
+      }
+    },
+    "performance": {
+      "wildcards": {
+        "rule": "Avoid leading wildcards",
+        "good": "domain:*.malicious.com",
+        "avoid": "domain:*malicious*",
+        "rationale": "Leading wildcards prevent index usage and slow queries"
+      },
+      "field_specificity": {
+        "rule": "Prefer field-specific searches over keywords",
+        "good": "md5:abc123 AND process_name:malware.exe",
+        "avoid": "abc123 malware.exe",
+        "rationale": "Field-specific searches use indexes efficiently"
+      }
+    },
+    "dataset_selection": {
+      "server_events": {
+        "use_cases": [
+          "Watchlist hits",
+          "Feed hits",
+          "Binary observations"
+        ],
+        "fields": [
+          "watchlist_name",
+          "feed_name",
+          "md5",
+          "observed_filename"
+        ]
+      },
+      "endpoint_events": {
+        "use_cases": [
+          "Registry modifications",
+          "File modifications",
+          "Network connections",
+          "Process starts"
+        ],
+        "fields": [
+          "regmod",
+          "filemod",
+          "netconn",
+          "procstart",
+          "childproc"
+        ]
+      }
+    }
+  }
+}

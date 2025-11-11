@@ -1405,3 +1405,202 @@ def build_kql_documents(schema: Dict[str, Any]) -> List[Dict[str, Any]]:
                 )
 
     return documents
+
+
+def build_cbr_documents(schema: Dict[str, Any]) -> List[Dict[str, Any]]:
+    """Convert the Carbon Black Response schema into retrieval-friendly documents."""
+
+    documents: List[Dict[str, Any]] = []
+
+    # Platform overview
+    version = schema.get("version")
+    platform = schema.get("platform")
+    updated_at = schema.get("updated_at")
+    
+    overview_lines = ["Carbon Black Response Event Forwarder Schema"]
+    if platform:
+        overview_lines.append(f"Platform: {platform}")
+    if version:
+        overview_lines.append(f"Version: {version}")
+    if updated_at:
+        overview_lines.append(f"Updated: {updated_at}")
+    
+    documents.append({
+        "id": "cbr:overview",
+        "text": "\n".join(overview_lines),
+        "metadata": {"section": "overview"},
+    })
+
+    # Search types overview
+    search_types = schema.get("search_types", {})
+    if isinstance(search_types, dict):
+        for search_type, info in sorted(search_types.items()):
+            if not isinstance(info, dict):
+                continue
+            
+            description = str(info.get("description", ""))
+            datasets = info.get("datasets", [])
+            
+            lines = [f"Search Type: {search_type}"]
+            if description:
+                lines.append(f"Description: {description}")
+            if isinstance(datasets, list) and datasets:
+                lines.append(f"Available Datasets: {len(datasets)}")
+                # Show first few dataset names
+                dataset_preview = ", ".join(datasets[:3])
+                if len(datasets) > 3:
+                    dataset_preview += f", ... ({len(datasets)} total)"
+                lines.append(f"Datasets: {dataset_preview}")
+            
+            documents.append({
+                "id": f"cbr:search_type:{search_type}",
+                "text": "\n".join(lines),
+                "metadata": {
+                    "section": "search_types",
+                    "search_type": search_type,
+                    "description": description,
+                },
+            })
+
+    # Field sets - process each dataset's fields
+    def create_field_document(field_set_name: str, fields: Dict[str, Any], section: str) -> None:
+        if not isinstance(fields, dict) or not fields:
+            return
+        
+        # Extract meaningful name from field set
+        if field_set_name.endswith("_fields"):
+            display_name = field_set_name[:-7].replace("_", " ").title()
+        else:
+            display_name = field_set_name.replace("_", " ").title()
+        
+        field_lines = [f"Dataset: {display_name}"]
+        
+        # Add field information
+        field_count = len(fields)
+        field_lines.append(f"Total Fields: {field_count}")
+        field_lines.append("Fields:")
+        
+        # List fields with their types and descriptions
+        for field_name in sorted(fields.keys()):
+            field_meta = fields.get(field_name)
+            if not isinstance(field_meta, dict):
+                continue
+                
+            field_type = str(field_meta.get("type", ""))
+            description = str(field_meta.get("description", ""))
+            
+            # Format field entry
+            field_entry = field_name
+            if field_type:
+                field_entry += f" ({field_type})"
+            if description:
+                field_entry += f" - {description[:100]}"  # Truncate long descriptions
+                if len(description) > 100:
+                    field_entry += "..."
+            
+            field_lines.append(f"  {field_entry}")
+        
+        documents.append({
+            "id": f"cbr:{section}:{field_set_name}",
+            "text": "\n".join(field_lines),
+            "metadata": {
+                "section": section,
+                "dataset": field_set_name,
+                "field_count": field_count,
+            },
+        })
+
+    # Process all field sets in the schema
+    for key, value in schema.items():
+        if key.endswith("_fields") and isinstance(value, dict):
+            # Determine section based on field set name
+            if any(x in key for x in ["watchlist", "feed", "binaryinfo", "binarystore"]):
+                section = "server_events"
+            elif any(x in key for x in ["regmod", "filemod", "netconn", "moduleload", "childproc", "procstart", "crossprocopen", "emetmitigation", "processblock", "tamper"]):
+                section = "endpoint_events"
+            else:
+                section = "fields"
+            
+            create_field_document(key, value, section)
+
+    # Operators
+    logical_operators = schema.get("logical_operators", {})
+    field_operators = schema.get("field_operators", {})
+    
+    if isinstance(logical_operators, dict) or isinstance(field_operators, dict):
+        lines = ["Carbon Black Response Query Operators"]
+        
+        if isinstance(logical_operators, dict):
+            lines.append("Logical Operators:")
+            for op_name, op_info in sorted(logical_operators.items()):
+                if isinstance(op_info, dict):
+                    desc = str(op_info.get("description", ""))
+                    usage = str(op_info.get("usage", ""))
+                    op_line = f"  {op_name}"
+                    if desc:
+                        op_line += f" - {desc}"
+                    if usage:
+                        op_line += f" (Usage: {usage})"
+                    lines.append(op_line)
+        
+        if isinstance(field_operators, dict):
+            lines.append("Field Operators:")
+            for op_name, op_info in sorted(field_operators.items()):
+                if isinstance(op_info, dict):
+                    desc = str(op_info.get("description", ""))
+                    example = str(op_info.get("example", ""))
+                    op_line = f"  {op_name}"
+                    if desc:
+                        op_line += f" - {desc}"
+                    if example:
+                        op_line += f" (Example: {example})"
+                    lines.append(op_line)
+        
+        # Add operator notes
+        notes = schema.get("notes", [])
+        if isinstance(notes, list) and notes:
+            lines.append("Notes:")
+            for note in notes:
+                lines.append(f"  - {note}")
+        
+        documents.append({
+            "id": "cbr:operators",
+            "text": "\n".join(lines),
+            "metadata": {"section": "operators"},
+        })
+
+    # Best practices
+    best_practices = schema.get("field_usage", {}) or schema.get("best_practices", {})
+    if isinstance(best_practices, dict):
+        lines = ["Carbon Black Response Best Practices"]
+        
+        for category, info in sorted(best_practices.items()):
+            if not isinstance(info, dict):
+                continue
+                
+            lines.append(f"Category: {category.replace('_', ' ').title()}")
+            
+            # Handle different structures
+            for key, value in info.items():
+                if key == "recommendation" and isinstance(value, str):
+                    lines.append(f"  Recommendation: {value}")
+                elif key in ["good", "avoid", "example"] and isinstance(value, str):
+                    lines.append(f"  {key.title()}: {value}")
+                elif key == "fields" and isinstance(value, list):
+                    lines.append(f"  Fields: {', '.join(value)}")
+                elif key == "rationale" and isinstance(value, str):
+                    lines.append(f"  Rationale: {value}")
+                elif isinstance(value, dict):
+                    lines.append(f"  {key.replace('_', ' ').title()}:")
+                    for sub_key, sub_value in value.items():
+                        lines.append(f"    {sub_key}: {sub_value}")
+            
+            lines.append("")
+        
+        documents.append({
+            "id": "cbr:best_practices",
+            "text": "\n".join(lines).strip(),
+            "metadata": {"section": "best_practices"},
+        })
+
+    return documents

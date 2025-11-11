@@ -1,0 +1,38 @@
+{
+  "carbonblack_response_query_schema": {
+    "logical_operators": {
+      "AND": {
+        "description": "Logical AND - all conditions must match",
+        "usage": "field1:value1 AND field2:value2"
+      },
+      "OR": {
+        "description": "Logical OR - any condition must match",
+        "usage": "field1:value1 OR field2:value2"
+      }
+    },
+    "field_operators": {
+      "field:value": {
+        "description": "Exact field match",
+        "example": "md5:5d41402abc4b2a76b9719d911017c592"
+      },
+      "field:\"quoted value\"": {
+        "description": "Field match with quoted value (for values containing spaces)",
+        "example": "process_name:\"google chrome\""
+      },
+      "field:*wildcard*": {
+        "description": "Wildcard matching",
+        "example": "domain:*.malicious.com"
+      },
+      "keyword": {
+        "description": "Unqualified keyword search across all fields",
+        "example": "malware.exe"
+      }
+    },
+    "notes": [
+      "CBR does not support inequality operators (!=, <, >, <=, >=)",
+      "Avoid leading wildcards (*value) for performance reasons",
+      "Use exact field matches when possible for better performance",
+      "Quote values containing spaces"
+    ]
+  }
+}

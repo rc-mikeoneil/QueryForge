@@ -1,0 +1,41 @@
+{
+  "carbonblack_response_query_schema": {
+    "version": "1.0.0",
+    "updated_at": "2025-11-11T15:41:03.893090Z",
+    "platform": "Carbon Black Response",
+    "search_types": {
+      "server_event": {
+        "description": "Server generated events (watchlist hits, feed hits, binary observations)",
+        "datasets": [
+          "watchlist_hit_process_fields",
+          "watchlist_hit_binary_fields",
+          "feed_ingress_hit_process_fields",
+          "feed_ingress_hit_binary_fields",
+          "feed_storage_hit_process_fields",
+          "feed_storage_hit_binary_fields",
+          "feed_query_hit_process_fields",
+          "feed_query_hit_binary_fields",
+          "binaryinfo_observed_fields",
+          "binaryinfo_host_observed_fields",
+          "binaryinfo_group_observed_fields"
+        ]
+      },
+      "endpoint_event": {
+        "description": "Raw endpoint events (regmod, filemod, netconn, etc.)",
+        "datasets": [
+          "regmod (registry modification)_fields",
+          "filemod (file modification)_fields",
+          "netconn (network connection)_fields",
+          "moduleload (module load)_fields",
+          "childproc (child process)_fields",
+          "procstart (process start)_fields",
+          "crossprocopen (cross process open)_fields",
+          "emetmitigation (emet mitigation)_fields",
+          "processblock (process block)_fields",
+          "tamper (edr tamper)_fields",
+          "task.error.logged_fields"
+        ]
+      }
+    }
+  }
+}
