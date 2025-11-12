@@ -14,7 +14,12 @@ from queryforge.platforms.cbr.schema_loader import normalise_search_type
 from queryforge.platforms.cbr.validator import CBRValidator
 from queryforge.server.server_runtime import ServerRuntime
 
-from queryforge.server.server_tools_shared import attach_rag_context, get_rag_enhanced_examples
+from queryforge.server.server_tools_shared import (
+    attach_rag_context,
+    get_rag_enhanced_examples,
+    get_rag_enhanced_fields,
+    get_rag_enhanced_datasets,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -23,17 +28,51 @@ def register_cbr_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
     """Register Carbon Black Response tooling with the MCP runtime."""
 
     @mcp.tool
-    def cbr_list_datasets() -> Dict[str, Any]:
-        """List Carbon Black Response datasets (search types) with their descriptions."""
+    def cbr_list_datasets(query_intent: Optional[str] = None) -> Dict[str, Any]:
+        """
+        List Carbon Black Response datasets (search types) with their descriptions.
+        
+        Args:
+            query_intent: Optional natural language description to find semantically relevant datasets
+                         (e.g., "process execution", "network activity", "file operations")
+        
+        Returns:
+            Dictionary with datasets, either semantically ranked or all datasets
+        """
 
         schema = runtime.cbr_cache.load()
         search_types = schema.get("search_types", {})
+        
+        # If query_intent provided, use RAG-enhanced retrieval
+        if query_intent:
+            logger.info("Using RAG-enhanced dataset discovery for intent: %s", query_intent[:100])
+            return get_rag_enhanced_datasets(
+                runtime=runtime,
+                query_intent=query_intent,
+                source_filter="cbr",
+                all_datasets=search_types,
+                k=10,
+            )
+        
         logger.info("Listing %d CBR datasets", len(search_types))
         return {"datasets": search_types}
 
     @mcp.tool
-    def cbr_get_fields(search_type: str) -> Dict[str, Any]:
-        """Return available fields for a given search type."""
+    def cbr_get_fields(
+        search_type: str,
+        query_intent: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """
+        Return available fields for a given search type.
+        
+        Args:
+            search_type: CBR search type (e.g., 'server_event', 'endpoint_event')
+            query_intent: Optional natural language description to filter semantically relevant fields
+                         (e.g., "network fields", "process execution fields", "registry modification")
+        
+        Returns:
+            Dictionary with fields, either semantically filtered or all fields
+        """
 
         schema = runtime.cbr_cache.load()
         search_type_normalized, log_entries = normalise_search_type(
@@ -41,6 +80,23 @@ def register_cbr_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
             list(schema.get("search_types", {}).keys()),
         )
         fields = runtime.cbr_cache.list_fields(search_type_normalized)
+        
+        # If query_intent provided, use RAG-enhanced field filtering
+        if query_intent:
+            logger.info("Using RAG-enhanced field filtering for intent: %s", query_intent[:100])
+            result = get_rag_enhanced_fields(
+                runtime=runtime,
+                query_intent=query_intent,
+                source_filter="cbr",
+                all_fields=fields,
+                dataset_name=search_type_normalized,
+                k=20,
+            )
+            # Add normalisation info to result
+            result["search_type"] = search_type_normalized
+            result["normalisation"] = log_entries
+            return result
+        
         logger.info(
             "Resolved CBR search type %s (%s) with %d fields",
             search_type,

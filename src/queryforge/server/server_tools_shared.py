@@ -169,3 +169,220 @@ def get_rag_enhanced_examples(
         "retrieval_method": "all_categories_fallback",
         "note": "RAG retrieval unavailable, showing all examples by category"
     }
+
+
+def get_rag_enhanced_fields(
+    runtime: Any,
+    query_intent: Optional[str],
+    source_filter: str,
+    all_fields: List[Dict[str, Any]],
+    dataset_name: str,
+    k: int = 20,
+) -> Dict[str, Any]:
+    """
+    Get semantically relevant fields using RAG retrieval.
+
+    Args:
+        runtime: Server runtime with RAG service
+        query_intent: Natural language description of what fields to find
+        source_filter: RAG source filter (e.g., "cbc", "kql")
+        all_fields: Complete list of fields to filter from
+        dataset_name: Name of the dataset for context
+        k: Number of top fields to retrieve
+
+    Returns:
+        Dictionary with fields, either RAG-filtered or all fields
+    """
+    # If no query intent, return all fields
+    if not query_intent:
+        return {
+            "fields": all_fields,
+            "retrieval_method": "all_fields",
+            "total_fields": len(all_fields),
+            "note": "Provide a query_intent to get semantically relevant fields"
+        }
+    
+    # Try RAG retrieval for semantic field filtering
+    if runtime.rag_service:
+        try:
+            # Enhance query with dataset context
+            enhanced_query = f"{query_intent} in {dataset_name} dataset"
+            
+            logger.info(
+                "Searching for relevant fields using RAG: '%s'",
+                enhanced_query[:100]
+            )
+            
+            rag_results = runtime.rag_service.search(
+                enhanced_query,
+                k=k,
+                source_filter=source_filter
+            )
+            
+            if rag_results:
+                # Extract field names mentioned in RAG results
+                mentioned_fields = set()
+                field_scores = {}
+                
+                for doc in rag_results:
+                    text = doc.get("text", "").lower()
+                    score = doc.get("score", 0.0)
+                    
+                    # Check which fields are mentioned in this document
+                    for field_info in all_fields:
+                        field_name = field_info.get("name", "")
+                        if not field_name:
+                            continue
+                        
+                        # Check if field name appears in the document
+                        if field_name.lower() in text:
+                            mentioned_fields.add(field_name)
+                            # Track highest score for this field
+                            if field_name not in field_scores or score > field_scores[field_name]:
+                                field_scores[field_name] = score
+                
+                # If we found relevant fields, return them sorted by score
+                if mentioned_fields:
+                    relevant_fields = [
+                        f for f in all_fields 
+                        if f.get("name", "") in mentioned_fields
+                    ]
+                    
+                    # Sort by RAG score
+                    relevant_fields.sort(
+                        key=lambda f: field_scores.get(f.get("name", ""), 0.0),
+                        reverse=True
+                    )
+                    
+                    logger.info(
+                        "Retrieved %d semantically relevant fields (top score=%.3f)",
+                        len(relevant_fields),
+                        max(field_scores.values()) if field_scores else 0.0
+                    )
+                    
+                    return {
+                        "query_intent": query_intent,
+                        "fields": relevant_fields,
+                        "retrieval_method": "semantic_rag",
+                        "total_fields": len(all_fields),
+                        "filtered_count": len(relevant_fields),
+                        "top_score": max(field_scores.values()) if field_scores else 0.0,
+                    }
+        
+        except Exception as e:
+            logger.warning(f"RAG-based field filtering failed: {e}, returning all fields")
+    
+    # Fallback: Return all fields
+    return {
+        "query_intent": query_intent,
+        "fields": all_fields,
+        "retrieval_method": "all_fields_fallback",
+        "total_fields": len(all_fields),
+        "note": "RAG retrieval unavailable or no relevant fields found, showing all fields"
+    }
+
+
+def get_rag_enhanced_datasets(
+    runtime: Any,
+    query_intent: str,
+    source_filter: str,
+    all_datasets: Dict[str, Any],
+    k: int = 10,
+) -> Dict[str, Any]:
+    """
+    Get semantically relevant datasets using RAG retrieval.
+
+    Args:
+        runtime: Server runtime with RAG service
+        query_intent: Natural language description of what to find
+        source_filter: RAG source filter (e.g., "cbc", "kql")
+        all_datasets: Dictionary of all available datasets
+        k: Number of top datasets to retrieve
+
+    Returns:
+        Dictionary with datasets, either RAG-ranked or all datasets
+    """
+    if not query_intent:
+        return {
+            "datasets": all_datasets,
+            "retrieval_method": "all_datasets",
+            "note": "Provide a query_intent to get semantically relevant datasets"
+        }
+    
+    # Try RAG retrieval for semantic dataset ranking
+    if runtime.rag_service:
+        try:
+            logger.info(
+                "Searching for relevant datasets using RAG: '%s'",
+                query_intent[:100]
+            )
+            
+            rag_results = runtime.rag_service.search(
+                query_intent,
+                k=k,
+                source_filter=source_filter
+            )
+            
+            if rag_results:
+                # Score datasets based on mentions in RAG results
+                dataset_scores = {}
+                
+                for doc in rag_results:
+                    text = doc.get("text", "").lower()
+                    score = doc.get("score", 0.0)
+                    metadata = doc.get("metadata", {})
+                    
+                    # Check dataset mentioned in metadata
+                    doc_dataset = metadata.get("dataset") or metadata.get("search_type") or metadata.get("table")
+                    if doc_dataset:
+                        if doc_dataset not in dataset_scores or score > dataset_scores[doc_dataset]:
+                            dataset_scores[doc_dataset] = score
+                    
+                    # Also check for dataset names in text
+                    for dataset_key in all_datasets.keys():
+                        if dataset_key.lower() in text:
+                            if dataset_key not in dataset_scores or score > dataset_scores[dataset_key]:
+                                dataset_scores[dataset_key] = score
+                
+                # If we found relevant datasets, return them sorted by score
+                if dataset_scores:
+                    relevant_datasets = {
+                        k: v for k, v in all_datasets.items()
+                        if k in dataset_scores
+                    }
+                    
+                    # Sort by score
+                    sorted_datasets = dict(
+                        sorted(
+                            relevant_datasets.items(),
+                            key=lambda item: dataset_scores.get(item[0], 0.0),
+                            reverse=True
+                        )
+                    )
+                    
+                    logger.info(
+                        "Retrieved %d semantically relevant datasets (top score=%.3f)",
+                        len(sorted_datasets),
+                        max(dataset_scores.values()) if dataset_scores else 0.0
+                    )
+                    
+                    return {
+                        "query_intent": query_intent,
+                        "datasets": sorted_datasets,
+                        "retrieval_method": "semantic_rag",
+                        "total_datasets": len(all_datasets),
+                        "filtered_count": len(sorted_datasets),
+                        "scores": dataset_scores,
+                    }
+        
+        except Exception as e:
+            logger.warning(f"RAG-based dataset ranking failed: {e}, returning all datasets")
+    
+    # Fallback: Return all datasets
+    return {
+        "query_intent": query_intent,
+        "datasets": all_datasets,
+        "retrieval_method": "all_datasets_fallback",
+        "total_datasets": len(all_datasets),
+        "note": "RAG retrieval unavailable or no relevant datasets found, showing all datasets"
+    }

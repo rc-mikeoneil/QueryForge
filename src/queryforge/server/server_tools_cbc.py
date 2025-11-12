@@ -14,7 +14,12 @@ from queryforge.platforms.cbc.schema_loader import normalise_search_type
 from queryforge.platforms.cbc.validator import CBCValidator
 from queryforge.server.server_runtime import ServerRuntime
 
-from queryforge.server.server_tools_shared import attach_rag_context, get_rag_enhanced_examples
+from queryforge.server.server_tools_shared import (
+    attach_rag_context,
+    get_rag_enhanced_examples,
+    get_rag_enhanced_fields,
+    get_rag_enhanced_datasets,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -23,17 +28,51 @@ def register_cbc_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
     """Register Carbon Black Cloud tooling with the MCP runtime."""
 
     @mcp.tool
-    def cbc_list_datasets() -> Dict[str, Any]:
-        """List Carbon Black Cloud datasets (search types) with their descriptions."""
+    def cbc_list_datasets(query_intent: Optional[str] = None) -> Dict[str, Any]:
+        """
+        List Carbon Black Cloud datasets (search types) with their descriptions.
+        
+        Args:
+            query_intent: Optional natural language description to find semantically relevant datasets
+                         (e.g., "process execution", "network activity", "file operations")
+        
+        Returns:
+            Dictionary with datasets, either semantically ranked or all datasets
+        """
 
         schema = runtime.cbc_cache.load()
         search_types = schema.get("search_types", {})
+        
+        # If query_intent provided, use RAG-enhanced retrieval
+        if query_intent:
+            logger.info("Using RAG-enhanced dataset discovery for intent: %s", query_intent[:100])
+            return get_rag_enhanced_datasets(
+                runtime=runtime,
+                query_intent=query_intent,
+                source_filter="cbc",
+                all_datasets=search_types,
+                k=10,
+            )
+        
         logger.info("Listing %d CBC datasets", len(search_types))
         return {"datasets": search_types}
 
     @mcp.tool
-    def cbc_get_fields(search_type: str) -> Dict[str, Any]:
-        """Return available fields for a given search type."""
+    def cbc_get_fields(
+        search_type: str,
+        query_intent: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """
+        Return available fields for a given search type.
+        
+        Args:
+            search_type: CBC search type (e.g., 'process_search', 'binary_search')
+            query_intent: Optional natural language description to filter semantically relevant fields
+                         (e.g., "network fields", "process execution fields", "file modification")
+        
+        Returns:
+            Dictionary with fields, either semantically filtered or all fields
+        """
 
         schema = runtime.cbc_cache.load()
         search_type_normalised, log_entries = normalise_search_type(
@@ -41,6 +80,23 @@ def register_cbc_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
             schema.get("search_types", {}).keys(),
         )
         fields = runtime.cbc_cache.list_fields(search_type_normalised)
+        
+        # If query_intent provided, use RAG-enhanced field filtering
+        if query_intent:
+            logger.info("Using RAG-enhanced field filtering for intent: %s", query_intent[:100])
+            result = get_rag_enhanced_fields(
+                runtime=runtime,
+                query_intent=query_intent,
+                source_filter="cbc",
+                all_fields=fields,
+                dataset_name=search_type_normalised,
+                k=20,
+            )
+            # Add normalisation info to result
+            result["search_type"] = search_type_normalised
+            result["normalisation"] = log_entries
+            return result
+        
         logger.info(
             "Resolved CBC search type %s (%s) with %d fields",
             search_type,

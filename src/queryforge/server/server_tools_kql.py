@@ -14,7 +14,12 @@ from queryforge.platforms.kql.query_builder import (
 from queryforge.platforms.kql.validator import KQLValidator
 from queryforge.server.server_runtime import ServerRuntime
 
-from queryforge.server.server_tools_shared import attach_rag_context, get_rag_enhanced_examples
+from queryforge.server.server_tools_shared import (
+    attach_rag_context,
+    get_rag_enhanced_examples,
+    get_rag_enhanced_fields,
+    get_rag_enhanced_datasets,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -23,10 +28,43 @@ def register_kql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
     """Register Microsoft 365 Defender KQL tooling."""
 
     @mcp.tool
-    def kql_list_datasets(keyword: Optional[str] = None) -> Dict[str, Any]:
-        """List available Advanced Hunting datasets (optionally filter by keyword)."""
+    def kql_list_datasets(
+        keyword: Optional[str] = None,
+        query_intent: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """
+        List available Advanced Hunting datasets (optionally filter by keyword or semantic search).
+        
+        Args:
+            keyword: Optional keyword to filter dataset names (simple text matching)
+            query_intent: Optional natural language description to find semantically relevant datasets
+                         (e.g., "process execution", "network activity", "file operations")
+        
+        Returns:
+            Dictionary with datasets, either filtered/ranked or all datasets
+        """
 
         schema = runtime.kql_cache.load_or_refresh()
+        
+        # Convert schema to format expected by RAG helper (dict with metadata)
+        datasets_dict = {name: {"description": name} for name in schema.keys()}
+        
+        # If query_intent provided, use RAG-enhanced retrieval
+        if query_intent:
+            logger.info("Using RAG-enhanced dataset discovery for intent: %s", query_intent[:100])
+            result = get_rag_enhanced_datasets(
+                runtime=runtime,
+                query_intent=query_intent,
+                source_filter="kql",
+                all_datasets=datasets_dict,
+                k=10,
+            )
+            # Convert back to list format
+            if "datasets" in result and isinstance(result["datasets"], dict):
+                result["datasets"] = sorted(result["datasets"].keys())
+            return result
+        
+        # Legacy keyword filtering
         names = list(schema.keys())
         if keyword:
             kw = keyword.lower()
@@ -35,8 +73,21 @@ def register_kql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
         return {"datasets": sorted(names)}
 
     @mcp.tool
-    def kql_get_fields(dataset: str) -> Dict[str, Any]:
-        """Return fields (columns) and docs URL for a given dataset."""
+    def kql_get_fields(
+        dataset: str,
+        query_intent: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """
+        Return fields (columns) and docs URL for a given dataset.
+        
+        Args:
+            dataset: KQL table name (e.g., 'DeviceProcessEvents', 'DeviceNetworkEvents')
+            query_intent: Optional natural language description to filter semantically relevant fields
+                         (e.g., "network fields", "process execution fields", "file operations")
+        
+        Returns:
+            Dictionary with fields, either semantically filtered or all fields
+        """
 
         schema = runtime.kql_cache.load_or_refresh()
         if dataset not in schema:
@@ -55,22 +106,77 @@ def register_kql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
                 logger.error("rapidfuzz not available for fuzzy matching")
                 return {"error": f"Unknown dataset '{dataset}'"}
 
+        fields = schema[dataset]["columns"]
+        
+        # If query_intent provided, use RAG-enhanced field filtering
+        if query_intent:
+            logger.info("Using RAG-enhanced field filtering for intent: %s", query_intent[:100])
+            result = get_rag_enhanced_fields(
+                runtime=runtime,
+                query_intent=query_intent,
+                source_filter="kql",
+                all_fields=fields,
+                dataset_name=dataset,
+                k=20,
+            )
+            # Add dataset info to result
+            result["dataset"] = dataset
+            result["url"] = schema[dataset]["url"]
+            return result
+        
         logger.info(
             "Retrieved fields for KQL dataset '%s' with %d columns",
             dataset,
-            len(schema[dataset]["columns"]),
+            len(fields),
         )
         return {
             "dataset": dataset,
-            "fields": schema[dataset]["columns"],
+            "fields": fields,
             "url": schema[dataset]["url"],
         }
 
     @mcp.tool
-    def kql_suggest_fields(dataset: str, keyword: Optional[str] = None) -> Dict[str, Any]:
-        """Suggest fields (columns) for a dataset, optionally filtered by keyword."""
+    def kql_suggest_fields(
+        dataset: str,
+        keyword: Optional[str] = None,
+        query_intent: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """
+        Suggest fields (columns) for a dataset, optionally filtered by keyword or semantic search.
+        
+        Args:
+            dataset: KQL table name
+            keyword: Optional keyword to filter field names (simple text matching)
+            query_intent: Optional natural language description for semantic field suggestions
+                         (e.g., "network-related fields", "time-related fields")
+        
+        Returns:
+            Dictionary with field suggestions
+        """
 
         schema = runtime.kql_cache.load_or_refresh()
+        
+        # If query_intent provided, use RAG-enhanced field filtering (similar to get_fields)
+        if query_intent:
+            if dataset not in schema:
+                return {"error": f"Unknown dataset '{dataset}'"}
+            
+            fields = schema[dataset]["columns"]
+            logger.info("Using RAG-enhanced field suggestions for intent: %s", query_intent[:100])
+            result = get_rag_enhanced_fields(
+                runtime=runtime,
+                query_intent=query_intent,
+                source_filter="kql",
+                all_fields=fields,
+                dataset_name=dataset,
+                k=20,
+            )
+            # Rename 'fields' to 'suggestions' for consistency with original API
+            if "fields" in result:
+                result["suggestions"] = result.pop("fields")
+            return result
+        
+        # Legacy keyword-based suggestions
         suggestions = suggest_columns(schema, dataset, keyword)
         logger.info(
             "Found %d KQL field suggestions for dataset '%s'",

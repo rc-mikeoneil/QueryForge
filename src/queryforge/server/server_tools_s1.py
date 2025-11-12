@@ -16,7 +16,12 @@ from queryforge.platforms.s1.query_builder import (
 from queryforge.platforms.s1.validator import S1Validator
 from queryforge.server.server_runtime import ServerRuntime
 
-from queryforge.server.server_tools_shared import attach_rag_context, get_rag_enhanced_examples
+from queryforge.server.server_tools_shared import (
+    attach_rag_context,
+    get_rag_enhanced_examples,
+    get_rag_enhanced_fields,
+    get_rag_enhanced_datasets,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -25,11 +30,51 @@ def register_s1_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
     """Register SentinelOne S1QL tooling."""
 
     @mcp.tool
-    def s1_list_datasets() -> Dict[str, Any]:
-        """List SentinelOne datasets with display names and descriptions."""
+    def s1_list_datasets(query_intent: Optional[str] = None) -> Dict[str, Any]:
+        """
+        List SentinelOne datasets with display names and descriptions.
+        
+        Args:
+            query_intent: Optional natural language description to find semantically relevant datasets
+                         (e.g., "process execution", "network activity", "file operations")
+        
+        Returns:
+            Dictionary with datasets, either semantically ranked or all datasets
+        """
 
         schema = runtime.s1_cache.load()
         datasets = runtime.s1_cache.datasets()
+        
+        # If query_intent provided, use RAG-enhanced retrieval
+        if query_intent:
+            logger.info("Using RAG-enhanced dataset discovery for intent: %s", query_intent[:100])
+            result = get_rag_enhanced_datasets(
+                runtime=runtime,
+                query_intent=query_intent,
+                source_filter="s1",
+                all_datasets=datasets,
+                k=10,
+            )
+            # Convert result back to list format if needed
+            if "datasets" in result and isinstance(result["datasets"], dict):
+                items: List[Dict[str, Any]] = []
+                for key in sorted(result["datasets"].keys()):
+                    meta = result["datasets"].get(key, {})
+                    if not isinstance(meta, dict):
+                        continue
+                    metadata = meta.get("metadata", {})
+                    description = metadata.get("description") if isinstance(metadata, dict) else None
+                    items.append(
+                        {
+                            "key": key,
+                            "name": meta.get("name", key),
+                            "description": description,
+                        }
+                    )
+                result["datasets"] = items
+            return result
+        
+        # Legacy behavior: list all datasets
         items: List[Dict[str, Any]] = []
         for key in sorted(datasets.keys()):
             meta = datasets.get(key, {})
@@ -48,8 +93,21 @@ def register_s1_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
         return {"datasets": items}
 
     @mcp.tool
-    def s1_get_fields(dataset: str) -> Dict[str, Any]:
-        """Return available fields for a SentinelOne dataset."""
+    def s1_get_fields(
+        dataset: str,
+        query_intent: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """
+        Return available fields for a SentinelOne dataset.
+        
+        Args:
+            dataset: S1 dataset name (e.g., 'processes', 'network', 'files')
+            query_intent: Optional natural language description to filter semantically relevant fields
+                         (e.g., "network fields", "process execution fields", "file operations")
+        
+        Returns:
+            Dictionary with fields, either semantically filtered or all fields
+        """
 
         schema = runtime.s1_cache.load()
         dataset_key = infer_dataset(dataset, None, schema)
@@ -57,6 +115,23 @@ def register_s1_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
             return {"error": f"Unknown dataset '{dataset}'"}
 
         fields = runtime.s1_cache.list_fields(dataset_key)
+        
+        # If query_intent provided, use RAG-enhanced field filtering
+        if query_intent:
+            logger.info("Using RAG-enhanced field filtering for intent: %s", query_intent[:100])
+            result = get_rag_enhanced_fields(
+                runtime=runtime,
+                query_intent=query_intent,
+                source_filter="s1",
+                all_fields=fields,
+                dataset_name=dataset_key,
+                k=20,
+            )
+            # Add dataset info to result
+            result["dataset"] = dataset_key
+            result["name"] = schema.get("datasets", {}).get(dataset_key, {}).get("name", dataset_key)
+            return result
+        
         logger.info(
             "Resolved SentinelOne dataset %s (%s) with %d fields",
             dataset,
