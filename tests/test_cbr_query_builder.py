@@ -1,5 +1,6 @@
 import pytest
 from cbr import query_builder as cbr_query_builder
+from urllib.parse import urlparse
 from tests.base_query_builder_test import (
     BaseQueryBuilderTest,
     SecurityValidationMixin,
@@ -480,7 +481,17 @@ class TestCBRQueryBuilder(
         
         assert "443" in query
         assert "1.1.1.1" in query
-        assert "cloudflare.com" in query
+        # Parse out URL(s) in the query and validate the domain
+        import re
+        urls = re.findall(r'(https?://[^\s"\';,]+)', query)
+        # Accept if any URL's hostname is cloudflare.com or ends with .cloudflare.com
+        valid = False
+        for url in urls:
+            host = urlparse(url).hostname
+            if host == "cloudflare.com" or (host and host.endswith(".cloudflare.com")):
+                valid = True
+                break
+        assert valid, f"No valid cloudflare.com URL found in query: {query}"
     
     def test_natural_language_with_process_context(self):
         """Test natural language query with process context."""
