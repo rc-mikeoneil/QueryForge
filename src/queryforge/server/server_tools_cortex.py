@@ -14,7 +14,7 @@ from queryforge.platforms.cortex.schema_loader import normalise_dataset
 from queryforge.platforms.cortex.validator import CortexValidator
 from queryforge.server.server_runtime import ServerRuntime
 
-from queryforge.server.server_tools_shared import attach_rag_context
+from queryforge.server.server_tools_shared import attach_rag_context, get_rag_enhanced_examples
 
 logger = logging.getLogger(__name__)
 
@@ -82,10 +82,48 @@ def register_cortex_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
         return {"field_groups": groups}
 
     @mcp.tool
-    def cortex_get_examples() -> Dict[str, Any]:
-        """Return example XQL queries organized by category (process_execution, network_activity, file_operations, etc.)."""
+    def cortex_get_examples(
+        category: Optional[str] = None,
+        query_intent: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """
+        Return example XQL queries, optionally filtered by category or semantic search.
+
+        Args:
+            category: Optional category to filter examples (e.g., 'process_execution', 'network_activity')
+            query_intent: Optional natural language description to find semantically relevant examples
+                         (e.g., "find lateral movement", "detect file operations")
+
+        Returns:
+            Dictionary with examples, either:
+            - Filtered by category if category provided
+            - Semantically relevant if query_intent provided (uses RAG)
+            - All examples if neither provided
+        """
 
         examples = runtime.cortex_cache.example_queries()
+        
+        # If query_intent provided, use RAG-enhanced retrieval
+        if query_intent:
+            logger.info("Using RAG-enhanced example retrieval for intent: %s", query_intent[:100])
+            return get_rag_enhanced_examples(
+                runtime=runtime,
+                query_intent=query_intent,
+                source_filter="cortex",
+                fallback_examples=examples,
+                k=10,
+            )
+        
+        # Legacy behavior: filter by category
+        if category:
+            key = category
+            if key not in examples:
+                available = ", ".join(sorted(examples.keys()))
+                logger.warning("Unknown Cortex example category %s", key)
+                return {"error": f"Unknown category '{key}'. Available: {available}"}
+            return {"category": key, "examples": examples[key]}
+        
+        # Return all examples
         logger.info("Returning Cortex example queries with %d categories", len(examples))
         return {"examples": examples}
 

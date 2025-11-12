@@ -14,7 +14,7 @@ from queryforge.platforms.cbr.schema_loader import normalise_search_type
 from queryforge.platforms.cbr.validator import CBRValidator
 from queryforge.server.server_runtime import ServerRuntime
 
-from queryforge.server.server_tools_shared import attach_rag_context
+from queryforge.server.server_tools_shared import attach_rag_context, get_rag_enhanced_examples
 
 logger = logging.getLogger(__name__)
 
@@ -73,10 +73,39 @@ def register_cbr_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
         return {"best_practices": best}
 
     @mcp.tool
-    def cbr_get_examples(category: Optional[str] = None) -> Dict[str, Any]:
-        """Return example queries, optionally filtered by category."""
+    def cbr_get_examples(
+        category: Optional[str] = None,
+        query_intent: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """
+        Return example queries, optionally filtered by category or semantic search.
+
+        Args:
+            category: Optional category to filter examples
+            query_intent: Optional natural language description to find semantically relevant examples
+                         (e.g., "find registry modifications", "detect process injection")
+
+        Returns:
+            Dictionary with examples, either:
+            - Filtered by category if category provided
+            - Semantically relevant if query_intent provided (uses RAG)
+            - All examples if neither provided
+        """
 
         examples = runtime.cbr_cache.example_queries()
+        
+        # If query_intent provided, use RAG-enhanced retrieval
+        if query_intent:
+            logger.info("Using RAG-enhanced example retrieval for intent: %s", query_intent[:100])
+            return get_rag_enhanced_examples(
+                runtime=runtime,
+                query_intent=query_intent,
+                source_filter="cbr",
+                fallback_examples=examples,
+                k=10,
+            )
+        
+        # Legacy behavior: filter by category
         if category:
             key = category
             if key not in examples:
@@ -84,6 +113,8 @@ def register_cbr_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
                 logger.warning("Unknown CBR example category %s", key)
                 return {"error": f"Unknown category '{key}'. Available: {available}"}
             return {"category": key, "examples": examples[key]}
+        
+        # Return all examples
         return {"examples": examples}
 
     @mcp.tool

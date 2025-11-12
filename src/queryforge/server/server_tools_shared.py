@@ -1,116 +1,171 @@
+"""Shared utilities for MCP server tools."""
+
 from __future__ import annotations
 
 import logging
-from typing import Any, Dict, Literal, Optional
-
-from fastmcp import FastMCP
-
-from queryforge.server.server_runtime import ServerRuntime
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
 
 def attach_rag_context(
-    *,
-    runtime: ServerRuntime,
+    runtime: Any,
     intent: Optional[str],
     metadata: Dict[str, Any],
-    source_filter: Literal["cbc", "kql", "cortex", "s1"],
+    source_filter: str,
     provider_label: str,
     logger: logging.Logger,
+) -> Dict[str, Any]:
+    """
+    Attach RAG context metadata to query metadata for debugging/transparency.
+
+    Args:
+        runtime: Server runtime with RAG service
+        intent: Natural language intent that was used for RAG search
+        metadata: Query metadata to enhance
+        source_filter: RAG source filter (e.g., "cbc", "kql")
+        provider_label: Human-readable provider name (e.g., "CBC", "KQL")
+        logger: Logger instance
+
+    Returns:
+        Enhanced metadata dictionary
+    """
+    if intent and runtime.rag_service:
+        try:
+            rag_results = runtime.rag_service.search(
+                intent,
+                k=5,  # Just for metadata purposes, not full context
+                source_filter=source_filter
+            )
+            if rag_results:
+                metadata["rag_enhanced"] = {
+                    "intent": intent,
+                    "retrieved_documents": len(rag_results),
+                    "top_scores": [r.get("score", 0.0) for r in rag_results[:3]],
+                    "retrieval_method": rag_results[0].get("retrieval_method") if rag_results else None,
+                }
+                logger.info(
+                    "%s query enhanced with %d RAG documents (top score=%.3f)",
+                    provider_label,
+                    len(rag_results),
+                    rag_results[0].get("score", 0.0) if rag_results else 0.0,
+                )
+        except Exception as e:
+            logger.warning(f"Failed to attach RAG context metadata: {e}")
+    
+    return metadata
+
+
+def get_rag_enhanced_examples(
+    runtime: Any,
+    query_intent: Optional[str],
+    source_filter: str,
+    fallback_examples: Dict[str, Any],
     k: int = 10,
 ) -> Dict[str, Any]:
-    """Augment metadata with RAG context for the provided natural-language intent.
-
-    This helper centralises the defensive logic for fetching semantic context across
-    the different query builders so they remain consistent over time. It lives in the
-    shared layer because callers kept reimplementing slightly different behaviours,
-    which made it hard to reason about why a particular request did or did not have
-    RAG context attached. The central helper keeps the "skip empty prompt", "surface
-    init failures", and "log retrieval issues" conventions aligned everywhere that
-    attaches RAG metadata.
     """
+    Get semantically relevant examples using RAG retrieval.
 
-    if not intent or not intent.strip():
-        return metadata
+    Args:
+        runtime: Server runtime with RAG service
+        query_intent: Natural language description of what to find
+        source_filter: RAG source filter (e.g., "cbc", "kql")
+        fallback_examples: Raw examples dict to use if RAG unavailable
+        k: Number of examples to retrieve
 
-    rag_metadata = dict(metadata)
-
-    if not runtime.ensure_rag_initialized():
-        if runtime.rag_init_failed:
-            rag_metadata.update(
-                {
-                    "rag_context_status": "error",
-                    "rag_context_error": runtime.rag_init_error or "initialization_failed",
-                }
-            )
-            logger.warning(
-                "⚠️ Skipping %s RAG context due to initialization failure: %s",
-                provider_label,
-                runtime.rag_init_error or "unknown error",
-            )
-        else:
-            logger.debug(
-                "⏳ RAG not ready, skipping context retrieval for %s query", provider_label
-            )
-            rag_metadata.setdefault("rag_context_status", "not_ready")
-        return rag_metadata
-
-    try:
-        context = runtime.rag_service.search(
-            intent, k=k, source_filter=source_filter
-        )
-    except Exception as exc:  # pragma: no cover - defensive
-        logger.warning(
-            "⚠️ Unable to attach %s RAG context: %s", provider_label, exc
-        )
-        rag_metadata.update(
-            {
-                "rag_context_status": "error",
-                "rag_context_error": str(exc),
-            }
-        )
-        return rag_metadata
-
-    if context:
-        rag_metadata.update(
-            {
-                "rag_context": context,
-                "rag_context_status": "attached",
-            }
-        )
-    else:
-        rag_metadata.setdefault("rag_context_status", "no_matches")
-
-    return rag_metadata
-
-
-def register_shared_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
-    """Register shared helper tooling for schema retrieval."""
-
-    @mcp.tool
-    def retrieve_context(
-        query: str,
-        k: int = 10,
-        query_type: Optional[Literal["cbc", "kql", "cortex", "s1"]] = None,
-    ) -> Dict[str, object]:
-        """Return relevant schema passages for a natural language query."""
-
-        if not runtime.ensure_rag_initialized():
-            msg = "RAG service is not ready yet. Please try again in a moment."
-            if runtime.rag_init_failed:
-                msg = f"RAG service initialization failed: {runtime.rag_init_error or 'unknown error'}"
-            logger.warning("⚠️ %s", msg)
-            return {"error": msg, "matches": []}
-
+    Returns:
+        Dictionary with examples, either RAG-retrieved or fallback
+    """
+    # If no query intent, return all examples organized by category
+    if not query_intent:
+        return {
+            "examples": fallback_examples,
+            "retrieval_method": "all_categories",
+            "note": "Provide a query intent to get semantically relevant examples"
+        }
+    
+    # Try RAG retrieval for semantic search
+    if runtime.rag_service:
         try:
-            results = runtime.rag_service.search(query, k=k, source_filter=query_type)
             logger.info(
-                "RAG returned %d matches for query with filter=%s",
-                len(results),
-                query_type,
+                "Searching for relevant examples using RAG: '%s'",
+                query_intent[:100]
             )
-            return {"matches": results}
-        except Exception as exc:  # pragma: no cover - defensive
-            logger.warning("⚠️ Failed to retrieve RAG context: %s", exc)
-            return {"error": str(exc), "matches": []}
+            
+            rag_results = runtime.rag_service.search(
+                query_intent,
+                k=k,
+                source_filter=source_filter
+            )
+            
+            if rag_results:
+                # Filter to only example-related documents
+                example_docs = [
+                    r for r in rag_results
+                    if r.get("metadata", {}).get("section") in ["examples", "example_queries"]
+                    or "example" in r.get("id", "").lower()
+                ]
+                
+                if example_docs:
+                    # Format the retrieved examples
+                    formatted_examples: List[Dict[str, Any]] = []
+                    for doc in example_docs:
+                        # Parse the text to extract example details
+                        text = doc.get("text", "")
+                        lines = text.split("\n")
+                        
+                        example_entry = {
+                            "score": doc.get("score", 0.0),
+                            "retrieval_method": doc.get("retrieval_method"),
+                            "source_section": doc.get("metadata", {}).get("section"),
+                        }
+                        
+                        # Try to extract structured information from text
+                        current_example: Dict[str, str] = {}
+                        for line in lines:
+                            line = line.strip()
+                            if line.startswith("- ") or line.startswith("Query:"):
+                                # New example entry
+                                if current_example and "description" in current_example:
+                                    formatted_examples.append({**example_entry, **current_example})
+                                    current_example = {}
+                                
+                                if line.startswith("Query:"):
+                                    current_example["query"] = line.replace("Query:", "").strip()
+                            elif line.startswith("Description:"):
+                                current_example["description"] = line.replace("Description:", "").strip()
+                            elif line.startswith("Use Case:"):
+                                current_example["use_case"] = line.replace("Use Case:", "").strip()
+                            elif ":" in line and not line.startswith("Category:"):
+                                # Try to extract query from generic field:value format
+                                if "query" not in current_example and len(line) > 10:
+                                    current_example["query"] = line
+                        
+                        # Add last example if exists
+                        if current_example and ("query" in current_example or "description" in current_example):
+                            formatted_examples.append({**example_entry, **current_example})
+                    
+                    logger.info(
+                        "Retrieved %d semantically relevant examples (top score=%.3f)",
+                        len(formatted_examples),
+                        formatted_examples[0]["score"] if formatted_examples else 0.0
+                    )
+                    
+                    return {
+                        "query_intent": query_intent,
+                        "examples": formatted_examples,
+                        "retrieval_method": "semantic_rag",
+                        "total_retrieved": len(example_docs),
+                        "formatted_count": len(formatted_examples),
+                    }
+        
+        except Exception as e:
+            logger.warning(f"RAG-based example retrieval failed: {e}, falling back to category-based")
+    
+    # Fallback: Return all examples organized by category
+    return {
+        "query_intent": query_intent,
+        "examples": fallback_examples,
+        "retrieval_method": "all_categories_fallback",
+        "note": "RAG retrieval unavailable, showing all examples by category"
+    }

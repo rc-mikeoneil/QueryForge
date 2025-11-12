@@ -14,7 +14,7 @@ from queryforge.platforms.kql.query_builder import (
 from queryforge.platforms.kql.validator import KQLValidator
 from queryforge.server.server_runtime import ServerRuntime
 
-from queryforge.server.server_tools_shared import attach_rag_context
+from queryforge.server.server_tools_shared import attach_rag_context, get_rag_enhanced_examples
 
 logger = logging.getLogger(__name__)
 
@@ -80,13 +80,47 @@ def register_kql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
         return {"suggestions": suggestions}
 
     @mcp.tool
-    def kql_get_examples(dataset: str) -> Dict[str, Any]:
-        """Return example KQL queries for a given dataset."""
+    def kql_get_examples(
+        dataset: Optional[str] = None,
+        query_intent: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """
+        Return example KQL queries, optionally filtered by dataset or semantic search.
+
+        Args:
+            dataset: Optional dataset to generate examples for (e.g., 'DeviceProcessEvents')
+            query_intent: Optional natural language description to find semantically relevant examples
+                         (e.g., "find PowerShell execution", "detect network connections")
+
+        Returns:
+            Dictionary with examples, either:
+            - Generated for specific dataset if dataset provided
+            - Semantically relevant if query_intent provided (uses RAG)
+            - Error if neither provided
+        """
 
         schema = runtime.kql_cache.load_or_refresh()
-        examples = example_queries_for_table(schema, dataset)
-        logger.info("Generated %d KQL examples for dataset '%s'", len(examples), dataset)
-        return {"examples": examples}
+        
+        # If query_intent provided, use RAG-enhanced retrieval
+        if query_intent:
+            logger.info("Using RAG-enhanced example retrieval for intent: %s", query_intent[:100])
+            # Use empty fallback since KQL examples are generated, not stored
+            return get_rag_enhanced_examples(
+                runtime=runtime,
+                query_intent=query_intent,
+                source_filter="kql",
+                fallback_examples={},
+                k=10,
+            )
+        
+        # Legacy behavior: generate examples for specific dataset
+        if dataset:
+            examples = example_queries_for_table(schema, dataset)
+            logger.info("Generated %d KQL examples for dataset '%s'", len(examples), dataset)
+            return {"examples": examples}
+        
+        # Error if neither provided
+        return {"error": "Must provide either 'dataset' or 'query_intent' parameter"}
 
     @mcp.tool
     def kql_build_query(
