@@ -255,7 +255,8 @@ class TestCBRQueryBuilder(
             natural_language_intent=intent
         )
         
-        assert ("domain:malicious.com" in query or "malicious.com" in query)
+        # Ensure only the correct query token containing exact domain
+        assert "domain:malicious.com" in query
     
     def test_quoted_values_with_spaces(self):
         """Test that values with spaces are properly quoted."""
