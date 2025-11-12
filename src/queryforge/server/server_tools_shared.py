@@ -5,7 +5,72 @@ from __future__ import annotations
 import logging
 from typing import Any, Dict, List, Optional
 
+from fastmcp import FastMCP
+
 logger = logging.getLogger(__name__)
+
+
+def register_shared_tools(mcp: FastMCP, runtime: Any) -> None:
+    """Register shared tools available across all query platforms."""
+
+    @mcp.tool
+    def retrieve_context(
+        query: str,
+        k: int = 10,
+        query_type: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """
+        Return relevant schema passages for a natural language query.
+        
+        Args:
+            query: Natural language description of what to find
+            k: Number of top results to return (default 10)
+            query_type: Optional platform filter ("cbc", "kql", "cortex", "s1")
+        
+        Returns:
+            Dictionary with retrieved documents and metadata
+        """
+        if not runtime.rag_service:
+            return {
+                "error": "RAG service not available",
+                "query": query,
+                "results": []
+            }
+        
+        try:
+            logger.info(
+                "Retrieving RAG context for query: '%s' (k=%d, type=%s)",
+                query[:100],
+                k,
+                query_type or "all"
+            )
+            
+            results = runtime.rag_service.search(
+                query,
+                k=k,
+                source_filter=query_type
+            )
+            
+            logger.info(
+                "Retrieved %d documents (top score=%.3f)",
+                len(results),
+                results[0].get("score", 0.0) if results else 0.0
+            )
+            
+            return {
+                "query": query,
+                "query_type": query_type,
+                "k": k,
+                "results": results,
+                "total_retrieved": len(results)
+            }
+        except Exception as e:
+            logger.error(f"Failed to retrieve RAG context: {e}")
+            return {
+                "error": str(e),
+                "query": query,
+                "results": []
+            }
 
 
 def attach_rag_context(

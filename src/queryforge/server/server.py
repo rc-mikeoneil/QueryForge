@@ -67,11 +67,12 @@ def main() -> None:
         # Mount FastMCP directly at root to expose /messages endpoint (not /sse/messages)
         app = mcp.http_app(path="/", transport="sse")
 
-        @app.route("/health", methods=["GET"])
+        # Add health check endpoint using add_route instead of deprecated @route decorator
         async def healthcheck(_: Request) -> JSONResponse:
             """Lightweight endpoint used for container health checks."""
-
             return JSONResponse({"status": "ok"})
+
+        app.add_route("/health", healthcheck, methods=["GET"])
 
         logger.info("🌐 Running MCP server on http://%s:%s", host, port)
         logger.info(" Messages endpoint available at /messages")

@@ -3,5 +3,5 @@
 fastmcp==2.13.0
 pydantic>=2.7.0,<3.0.0
 rapidfuzz==3.14.0
-uvicorn==0.38.0
+uvicorn==0.38.0  # No [standard] extras - we only need SSE/STDIO, not websockets
 openai==2.7.1
