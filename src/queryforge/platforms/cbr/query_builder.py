@@ -278,7 +278,7 @@ def build_cbr_query(
     detected_concepts: set = set()
     if natural_language_intent:
         try:
-            from shared.security_concepts import detect_security_concepts, generate_concept_hints, get_concept_description
+            from queryforge.shared.security_concepts import detect_security_concepts, generate_concept_hints, get_concept_description
 
             detected_concepts = detect_security_concepts(natural_language_intent)
             if detected_concepts:
@@ -328,7 +328,7 @@ def build_cbr_query(
     rag_enhanced_terms: List[str] = []
     if rag_context and natural_language_intent:
         try:
-            from shared.rag_context_parser import create_rag_context_parser
+            from queryforge.shared.rag_context_parser import create_rag_context_parser
             
             parser = create_rag_context_parser("cbr")
             parsed_context = parser.parse_context(

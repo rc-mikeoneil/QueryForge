@@ -532,7 +532,7 @@ schema: Dict[str, Any] | CortexSchemaCache,
     if cleaned_intent:
         try:
             import logging
-            from shared.security_concepts import detect_security_concepts, generate_concept_hints, get_concept_description
+            from queryforge.shared.security_concepts import detect_security_concepts, generate_concept_hints, get_concept_description
 
             logger = logging.getLogger(__name__)
             detected_concepts = detect_security_concepts(cleaned_intent)
@@ -594,7 +594,7 @@ schema: Dict[str, Any] | CortexSchemaCache,
     if rag_context and cleaned_intent:
         try:
             import logging
-            from shared.rag_context_parser import create_rag_context_parser
+            from queryforge.shared.rag_context_parser import create_rag_context_parser
             
             logger = logging.getLogger(__name__)
             parser = create_rag_context_parser("cortex")

@@ -714,7 +714,7 @@ schema: Dict[str, Any],
     # Security Concept Expansion: Detect and expand security concepts
     if natural_language_intent:
         try:
-            from shared.security_concepts import detect_security_concepts, generate_concept_hints, get_concept_description
+            from queryforge.shared.security_concepts import detect_security_concepts, generate_concept_hints, get_concept_description
 
             detected_concepts = detect_security_concepts(natural_language_intent)
             if detected_concepts:
@@ -776,7 +776,7 @@ schema: Dict[str, Any],
     # RAG-Enhanced Query Building: Extract additional expressions from RAG context
     if rag_context and natural_language_intent:
         try:
-            from shared.rag_context_parser import create_rag_context_parser
+            from queryforge.shared.rag_context_parser import create_rag_context_parser
             
             parser = create_rag_context_parser("s1")
             parsed_context = parser.parse_context(

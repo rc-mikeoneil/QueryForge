@@ -822,7 +822,7 @@ def build_kql_query(
         concept_enhanced_conditions: List[str] = []
         if cleaned_intent:
             try:
-                from shared.security_concepts import detect_security_concepts, generate_concept_hints, get_concept_description
+                from queryforge.shared.security_concepts import detect_security_concepts, generate_concept_hints, get_concept_description
 
                 detected_concepts = detect_security_concepts(cleaned_intent)
                 if detected_concepts:
@@ -874,7 +874,7 @@ def build_kql_query(
         rag_enhanced_conditions: List[str] = []
         if rag_context and cleaned_intent:
             try:
-                from shared.rag_context_parser import create_rag_context_parser
+                from queryforge.shared.rag_context_parser import create_rag_context_parser
                 
                 parser = create_rag_context_parser("kql")
                 parsed_context = parser.parse_context(
