@@ -50,7 +50,6 @@ python -m queryforge.server.server
     - [Quick Links](#quick-links)
     - [For Developers](#for-developers)
     - [For Users](#for-users)
-  - [Support](#support)
 
 ## Highlights
 - **Unified multi-platform service** that exposes Defender KQL, Carbon Black, Cortex XDR, and SentinelOne tooling from a single MCP endpoint with shared caching and retrieval-augmented generation (RAG).
@@ -236,9 +235,3 @@ pytest tests/test_schema_cache.py
 - [Tool Reference](docs/API_REFERENCE.md#table-of-contents) - Find the right tool for your task
 - [Example Queries](docs/API_REFERENCE.md#examples) - Real-world usage examples
 - [Troubleshooting](docs/TROUBLESHOOTING.md) - Common issues and solutions
-
-## Support
-
-- **Issues**: Report bugs or request features on [GitHub Issues](https://github.com/ParadoxReagent/MCPs/issues)
-- **Documentation**: All docs are in this repository and kept up-to-date
-- **Contributing**: See [CONTRIBUTING.md](docs/CONTRIBUTING.md) for guidelines
