@@ -20,11 +20,24 @@ _WHERE_DANGEROUS_PATTERNS = (
     re.compile(r';\s*(?:drop|delete|update|insert|alter|create|truncate)', re.IGNORECASE),
     re.compile(r';\s*(?:exec|execute)\s+', re.IGNORECASE),
     re.compile(r'union\s+select', re.IGNORECASE),
-    re.compile(r'--'),
+    # IMPROVED: Only match SQL-style comments (-- followed by space/non-word), not command flags
+    # Matches: "-- comment" or "--\n" but NOT "--retry" or "--max-time"
+    re.compile(r'--\s*(?:[^-\w]|$)'),
     # SECURITY FIX: Use atomic pattern instead of .*? to prevent ReDoS
     # Changed from: r'/\*.*?\*/' which can cause catastrophic backtracking
     # To: Simpler pattern that doesn't use nested quantifiers
     re.compile(r'/\*[^*]*\*+(?:[^/*][^*]*\*+)*/', re.IGNORECASE),
+)
+
+# Allowlist patterns for legitimate command-line syntax in threat hunting queries
+# These patterns are common in security detections and should not trigger validation errors
+_ALLOWED_COMMAND_PATTERNS = (
+    re.compile(r'--[a-z]+-[a-z]+'),  # Command flags like --retry-delay, --max-time
+    re.compile(r'--[a-z]+'),          # Single-word flags like --retry, --force
+    re.compile(r'\|\|'),              # Shell OR operator
+    re.compile(r'&&'),                # Shell AND operator
+    re.compile(r'>>'),                # Shell redirect append
+    re.compile(r'<<'),                # Shell here-document
 )
 
 _ORDER_BY_PATTERN = re.compile(r'^[a-zA-Z_][a-zA-Z0-9_]*\s+(?:asc|desc)$')
@@ -222,7 +235,7 @@ def _validate_column_names(columns: List[str], schema: Dict[str, Any], table: st
     return validated_columns
 
 def _validate_where_conditions(conditions: List[str]) -> List[str]:
-    """Validate WHERE conditions for safety."""
+    """Validate WHERE conditions for safety with allowlist for legitimate command-line patterns."""
     if not conditions:
         return conditions
 
@@ -238,10 +251,15 @@ def _validate_where_conditions(conditions: List[str]) -> List[str]:
         if not condition:
             continue
 
-        # Basic safety checks - prevent SQL injection-like patterns
+        # Check dangerous patterns, but skip validation if allowlisted patterns are present
         for pattern in _WHERE_DANGEROUS_PATTERNS:
             if pattern.search(condition):
-                raise ValueError(f"WHERE condition contains potentially dangerous pattern: {condition}")
+                # Before failing, check if this is actually an allowlisted pattern
+                is_safe = any(allow_pattern.search(condition) for allow_pattern in _ALLOWED_COMMAND_PATTERNS)
+                if not is_safe:
+                    raise ValueError(f"WHERE condition contains potentially dangerous pattern: {condition}")
+                # Pattern matched but it's allowlisted, so continue validation
+                break
 
         # Check for balanced quotes
         single_quotes = condition.count("'")
