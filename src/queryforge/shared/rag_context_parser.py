@@ -652,11 +652,53 @@ class S1RAGContextParser(RAGContextParser):
         return complete_paths + partial_paths
 
 
+class FQLRAGContextParser(RAGContextParser):
+    """CrowdStrike Falcon Query Language-specific RAG context parser."""
+
+    def __init__(self):
+        super().__init__("fql")
+        # FQL uses similar patterns to other query languages
+        # Field names are typically lowercase with underscores
+        self.field_pattern = re.compile(r'\b([a-z_][a-z0-9_]*)\b', re.IGNORECASE)
+        self.value_pattern = re.compile(
+            r'([a-z_][a-z0-9_]*)\s*(?:=|:|is)\s*["\']?([^"\'\s\,\;]+)["\']?',
+            re.IGNORECASE
+        )
+
+    def extract_fields(
+        self, documents: List[Dict[str, Any]], intent: str
+    ) -> List[str]:
+        """Extract FQL field names with special handling."""
+        fields = super().extract_fields(documents, intent)
+        
+        # FQL-specific field prioritization
+        # Common security fields should be prioritized
+        priority_fields = {
+            "process_name": 10,
+            "command_line": 8,
+            "file_path": 7,
+            "file_hash": 7,
+            "destination_ip": 7,
+            "destination_port": 6,
+            "source_ip": 6,
+            "user_name": 6,
+        }
+        
+        # Adjust field rankings
+        field_scores = {f: 0 for f in fields}
+        for field in fields:
+            if field in priority_fields:
+                field_scores[field] += priority_fields[field]
+        
+        # Re-sort with priorities
+        return sorted(field_scores.keys(), key=lambda f: field_scores[f], reverse=True)
+
+
 def create_rag_context_parser(platform: str) -> RAGContextParser:
     """Factory function to create appropriate parser for platform.
     
     Args:
-        platform: Platform identifier (cbc, kql, cortex, s1)
+        platform: Platform identifier (cbc, kql, cortex, s1, fql)
         
     Returns:
         Platform-specific RAG context parser
@@ -669,6 +711,7 @@ def create_rag_context_parser(platform: str) -> RAGContextParser:
         "kql": KQLRAGContextParser,
         "cortex": CortexRAGContextParser,
         "s1": S1RAGContextParser,
+        "fql": FQLRAGContextParser,
     }
     
     parser_class = parsers.get(platform.lower())

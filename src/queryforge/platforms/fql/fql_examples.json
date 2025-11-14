@@ -1,0 +1,191 @@
+{
+  "examples": [
+    {
+      "category": "process_execution",
+      "title": "PowerShell with Encoded Command",
+      "description": "Find PowerShell execution with encoded commands (potential obfuscation)",
+      "query": "process_name = 'powershell.exe' AND (command_line contains '-enc' OR command_line contains '-EncodedCommand') AND @timestamp >= now() - 24h | select process_name, command_line, user_name, @timestamp | limit 100",
+      "use_case": "Detect potentially malicious PowerShell usage with encoded commands",
+      "severity": "high",
+      "tags": ["powershell", "obfuscation", "encoded", "suspicious"]
+    },
+    {
+      "category": "process_execution",
+      "title": "Suspicious Process Parent-Child",
+      "description": "Detect Office applications spawning command shells",
+      "query": "parent_process_name IN ('winword.exe', 'excel.exe', 'powerpnt.exe', 'outlook.exe') AND process_name IN ('cmd.exe', 'powershell.exe', 'wscript.exe') AND @timestamp >= now() - 7d | select parent_process_name, process_name, command_line, user_name, @timestamp | limit 500",
+      "use_case": "Identify potential macro-based attacks or phishing",
+      "severity": "high",
+      "tags": ["office", "macro", "suspicious parent", "phishing"]
+    },
+    {
+      "category": "process_execution",
+      "title": "Living Off the Land Binaries",
+      "description": "Detect execution of common LOLBins",
+      "query": "process_name IN ('certutil.exe', 'bitsadmin.exe', 'regsvr32.exe', 'rundll32.exe', 'mshta.exe') AND @timestamp >= now() - 24h | select process_name, command_line, parent_process_name, user_name, @timestamp | limit 200",
+      "use_case": "Find potential abuse of legitimate Windows binaries",
+      "severity": "medium",
+      "tags": ["lolbin", "living off the land", "evasion"]
+    },
+    {
+      "category": "network_activity",
+      "title": "Outbound Connections to Rare Ports",
+      "description": "Find connections to uncommon high ports",
+      "query": "event_type = 'network_connection' AND destination_port > 49152 AND @timestamp >= now() - 6h | select process_name, destination_ip, destination_port, @timestamp | limit 100",
+      "use_case": "Detect potential C2 beaconing on non-standard ports",
+      "severity": "medium",
+      "tags": ["network", "c2", "beaconing", "high port"]
+    },
+    {
+      "category": "network_activity",
+      "title": "Failed Network Connections",
+      "description": "Find multiple failed network connection attempts",
+      "query": "event_type = 'network_connection' AND status = 'failed' AND @timestamp >= now() - 1h | stats count by source_ip, destination_ip, destination_port | where count > 10 | limit 50",
+      "use_case": "Identify port scanning or connection issues",
+      "severity": "low",
+      "tags": ["network", "failed connection", "scanning"]
+    },
+    {
+      "category": "file_operations",
+      "title": "Executables in Temp Directories",
+      "description": "Detect executable files created in temporary directories",
+      "query": "(file_path contains '\\Temp\\' OR file_path contains '\\tmp\\' OR file_path contains 'AppData\\Local\\Temp') AND file_name endswith '.exe' AND event_type = 'file_created' AND @timestamp >= now() - 24h | select file_path, file_name, process_name, user_name, @timestamp | limit 100",
+      "use_case": "Find potentially malicious executables staged in temp locations",
+      "severity": "medium",
+      "tags": ["file", "temp", "executable", "staging"]
+    },
+    {
+      "category": "file_operations",
+      "title": "Double Extension Files",
+      "description": "Find files with suspicious double extensions",
+      "query": "file_name =~ /\\.(pdf|doc|xls|jpg|png)\\.(exe|scr|bat|vbs|js)$/ AND event_type = 'file_created' AND @timestamp >= now() - 7d | select file_path, file_name, process_name, user_name, @timestamp | limit 50",
+      "use_case": "Detect files attempting to masquerade as documents",
+      "severity": "high",
+      "tags": ["file", "masquerade", "double extension", "suspicious"]
+    },
+    {
+      "category": "registry_operations",
+      "title": "Autorun Registry Modifications",
+      "description": "Detect modifications to Windows autorun registry keys",
+      "query": "(registry_key contains '\\Run' OR registry_key contains '\\RunOnce') AND event_type IN ('registry_value_set', 'registry_key_created') AND @timestamp >= now() - 24h | select registry_key, registry_value, process_name, user_name, @timestamp | limit 100",
+      "use_case": "Identify persistence mechanisms via registry Run keys",
+      "severity": "high",
+      "tags": ["registry", "persistence", "autorun", "run key"]
+    },
+    {
+      "category": "authentication",
+      "title": "Failed Authentication Storm",
+      "description": "Find multiple failed login attempts (potential brute force)",
+      "query": "event_type = 'authentication' AND status = 'failed' AND @timestamp >= now() - 1h | stats count by user_name, source_ip | where count > 10 | sort count desc | limit 50",
+      "use_case": "Detect brute force or password spraying attacks",
+      "severity": "high",
+      "tags": ["authentication", "brute force", "failed login", "password spray"]
+    },
+    {
+      "category": "authentication",
+      "title": "After Hours Privileged Account Activity",
+      "description": "Detect admin account usage outside business hours",
+      "query": "event_type IN ('authentication', 'logon') AND user_name IN ('Administrator', 'admin', 'root') AND (hour(@timestamp) < 6 OR hour(@timestamp) > 18) AND @timestamp >= now() - 7d | select user_name, source_ip, host, @timestamp | limit 100",
+      "use_case": "Find suspicious privileged account activity during off-hours",
+      "severity": "medium",
+      "tags": ["authentication", "privileged", "after hours", "suspicious timing"]
+    },
+    {
+      "category": "web_activity",
+      "title": "SQL Injection Attempts",
+      "description": "Detect potential SQL injection in HTTP requests",
+      "query": "event_type = 'http_request' AND (http_request contains 'union select' OR http_request contains 'drop table' OR http_request =~ /';.*--/) AND @timestamp >= now() - 24h | select source_ip, http_method, http_request, http_status, @timestamp | limit 100",
+      "use_case": "Identify SQL injection attack attempts",
+      "severity": "high",
+      "tags": ["web", "sql injection", "attack", "sqli"]
+    },
+    {
+      "category": "web_activity",
+      "title": "Suspicious User Agents",
+      "description": "Find requests with bot or scanner user agents",
+      "query": "event_type = 'http_request' AND (http_user_agent contains 'bot' OR http_user_agent contains 'crawler' OR http_user_agent contains 'scanner' OR http_user_agent contains 'nikto') AND @timestamp >= now() - 6h | select source_ip, http_user_agent, http_request, @timestamp | limit 100",
+      "use_case": "Detect automated scanning or bot activity",
+      "severity": "low",
+      "tags": ["web", "user agent", "bot", "scanner"]
+    },
+    {
+      "category": "lateral_movement",
+      "title": "PSExec Activity",
+      "description": "Detect PSExec tool usage for remote execution",
+      "query": "(process_name = 'psexec.exe' OR file_name = 'PSEXESVC.exe' OR process_name = 'psexesvc.exe') AND @timestamp >= now() - 24h | select process_name, command_line, source_ip, destination_ip, user_name, @timestamp | limit 100",
+      "use_case": "Identify lateral movement via PSExec",
+      "severity": "high",
+      "tags": ["lateral movement", "psexec", "remote execution"]
+    },
+    {
+      "category": "lateral_movement",
+      "title": "WMI Remote Execution",
+      "description": "Detect WMI used for remote process execution",
+      "query": "process_name = 'wmic.exe' AND command_line contains '/node:' AND @timestamp >= now() - 24h | select process_name, command_line, user_name, @timestamp | limit 100",
+      "use_case": "Find lateral movement attempts using WMI",
+      "severity": "high",
+      "tags": ["lateral movement", "wmi", "remote execution"]
+    },
+    {
+      "category": "data_exfiltration",
+      "title": "Large Outbound Data Transfers",
+      "description": "Find connections with unusually high data transfer volumes",
+      "query": "event_type = 'network_connection' AND bytes_sent > 100000000 AND @timestamp >= now() - 6h | select process_name, destination_ip, bytes_sent, @timestamp | limit 50",
+      "use_case": "Detect potential data exfiltration",
+      "severity": "medium",
+      "tags": ["exfiltration", "network", "large transfer"]
+    },
+    {
+      "category": "malware_indicators",
+      "title": "Known Malicious File Hashes",
+      "description": "Find files matching known malicious hashes",
+      "query": "file_hash IN ('44d88612fea8a8f36de82e1278abb02f', 'e99a18c428cb38d5f260853678922e03') AND @timestamp >= now() - 30d | select file_path, file_name, file_hash, process_name, @timestamp | limit 100",
+      "use_case": "Detect known malware by hash (update hash list as needed)",
+      "severity": "critical",
+      "tags": ["malware", "ioc", "file hash", "threat intel"]
+    },
+    {
+      "category": "privilege_escalation",
+      "title": "UAC Bypass Attempts",
+      "description": "Detect potential UAC bypass techniques",
+      "query": "(registry_key contains 'eventvwr.exe' OR process_name = 'fodhelper.exe' OR process_name = 'computerdefaults.exe') AND @timestamp >= now() - 24h | select process_name, command_line, registry_key, user_name, @timestamp | limit 100",
+      "use_case": "Identify UAC bypass attempts",
+      "severity": "high",
+      "tags": ["privilege escalation", "uac bypass", "evasion"]
+    },
+    {
+      "category": "persistence",
+      "title": "Scheduled Task Creation",
+      "description": "Detect new scheduled task creation",
+      "query": "event_type = 'scheduled_task_created' AND @timestamp >= now() - 7d | select task_name, task_action, user_name, @timestamp | limit 100",
+      "use_case": "Find persistence via scheduled tasks",
+      "severity": "medium",
+      "tags": ["persistence", "scheduled task", "automation"]
+    },
+    {
+      "category": "credential_access",
+      "title": "LSASS Memory Access",
+      "description": "Detect processes accessing LSASS memory (credential dumping)",
+      "query": "target_process_name = 'lsass.exe' AND event_type = 'process_access' AND @timestamp >= now() - 24h | select process_name, target_process_name, access_rights, user_name, @timestamp | limit 100",
+      "use_case": "Identify potential credential dumping attempts",
+      "severity": "critical",
+      "tags": ["credential access", "lsass", "credential dumping", "mimikatz"]
+    },
+    {
+      "category": "defense_evasion",
+      "title": "Process Injection",
+      "description": "Detect remote thread creation (potential process injection)",
+      "query": "event_type = 'remote_thread_created' AND @timestamp >= now() - 24h | select process_name, target_process_name, user_name, @timestamp | limit 100",
+      "use_case": "Find process injection techniques",
+      "severity": "high",
+      "tags": ["defense evasion", "process injection", "code injection"]
+    }
+  ],
+  "hunting_scenarios": {
+    "ransomware": "process_name IN ('vssadmin.exe', 'wbadmin.exe') AND command_line contains 'delete shadows' AND @timestamp >= now() - 24h",
+    "crypto_mining": "process_name =~ /xmrig|ethminer|cgminer/ OR command_line contains 'stratum+tcp' AND @timestamp >= now() - 7d",
+    "data_staging": "(file_path contains '\\Temp\\' OR file_path contains '\\ProgramData\\') AND file_name =~ /\\.(zip|rar|7z|tar|gz)$/ AND @timestamp >= now() - 24h",
+    "remote_desktop": "event_type = 'network_connection' AND destination_port = 3389 AND @timestamp >= now() - 6h",
+    "dns_tunneling": "event_type = 'dns_query' AND query_length > 100 AND @timestamp >= now() - 1h"
+  }
+}

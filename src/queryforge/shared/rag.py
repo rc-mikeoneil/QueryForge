@@ -648,6 +648,279 @@ def build_s1_documents(schema: Dict[str, Any]) -> List[Dict[str, Any]]:
     return documents
 
 
+def build_fql_documents(schema: Dict[str, Any]) -> List[Dict[str, Any]]:
+    """Convert the CrowdStrike Falcon Query Language schema into retrieval-friendly documents."""
+
+    documents: List[Dict[str, Any]] = []
+
+    # Platform overview
+    core = schema.get("core", {})
+    if isinstance(core, dict):
+        platform = core.get("platform", "CrowdStrike Falcon Query Language (FQL)")
+        version = core.get("version", "placeholder")
+        description = core.get("description", "")
+        
+        overview_lines = [platform]
+        if version:
+            overview_lines.append(f"Version: {version}")
+        if description:
+            overview_lines.append(f"Description: {description}")
+        
+        documents.append({
+            "id": "fql:overview",
+            "text": "\n".join(overview_lines),
+            "metadata": {"section": "overview"},
+        })
+
+    # Datasets
+    datasets = schema.get("datasets", [])
+    if isinstance(datasets, list):
+        for dataset in datasets:
+            if not isinstance(dataset, dict):
+                continue
+            
+            name = dataset.get("name", "")
+            display_name = dataset.get("display_name", name)
+            description = dataset.get("description", "")
+            category = dataset.get("category", "")
+            
+            lines = [f"Dataset: {display_name}"]
+            if description:
+                lines.append(f"Description: {description}")
+            if category:
+                lines.append(f"Category: {category}")
+            
+            documents.append({
+                "id": f"fql:dataset:{name}",
+                "text": "\n".join(lines),
+                "metadata": {
+                    "section": "datasets",
+                    "dataset": name,
+                    "category": category,
+                },
+            })
+
+    # Fields (from field_types.json)
+    placeholder_fields = schema.get("placeholder_fields", {})
+    if isinstance(placeholder_fields, dict):
+        for dataset_name, fields in placeholder_fields.items():
+            if not isinstance(fields, dict):
+                continue
+            
+            lines = [f"Fields for {dataset_name}:"]
+            for field_name in sorted(fields.keys()):
+                field_meta = fields.get(field_name)
+                if not isinstance(field_meta, dict):
+                    continue
+                
+                field_type = field_meta.get("type", "")
+                description = field_meta.get("description", "")
+                indexed = field_meta.get("indexed", False)
+                
+                field_entry = field_name
+                if field_type:
+                    field_entry += f" ({field_type})"
+                if indexed:
+                    field_entry += " [indexed]"
+                if description:
+                    field_entry += f" - {description}"
+                
+                lines.append(f"  {field_entry}")
+            
+            documents.append({
+                "id": f"fql:fields:{dataset_name}",
+                "text": "\n".join(lines),
+                "metadata": {
+                    "section": "fields",
+                    "dataset": dataset_name,
+                },
+            })
+
+    # Operators
+    operators = schema.get("operators", {})
+    if isinstance(operators, dict):
+        operator_list = operators.get("operators", {})
+        if isinstance(operator_list, dict):
+            lines = ["FQL Operator Reference:"]
+            
+            for op_name, op_def in sorted(operator_list.items()):
+                if not isinstance(op_def, dict):
+                    continue
+                
+                normalized = op_def.get("normalized", "")
+                description = op_def.get("description", "")
+                compatible_types = op_def.get("compatible_types", [])
+                example = op_def.get("example", "")
+                
+                op_entry = f"  {op_name}"
+                if normalized:
+                    op_entry += f" (normalized: {normalized})"
+                if description:
+                    op_entry += f" - {description}"
+                if compatible_types:
+                    op_entry += f" | Types: {', '.join(compatible_types)}"
+                if example:
+                    op_entry += f" | Example: {example}"
+                
+                lines.append(op_entry)
+            
+            documents.append({
+                "id": "fql:operators",
+                "text": "\n".join(lines),
+                "metadata": {"section": "operators"},
+            })
+
+    # Best practices
+    best_practices = schema.get("best_practices", [])
+    if isinstance(best_practices, list):
+        for idx, practice in enumerate(best_practices):
+            if not isinstance(practice, dict):
+                continue
+            
+            category = practice.get("category", "")
+            title = practice.get("title", "")
+            description = practice.get("description", "")
+            recommendation = practice.get("recommendation", "")
+            severity = practice.get("severity", "")
+            
+            lines = [f"Best Practice: {title}"]
+            if category:
+                lines.append(f"Category: {category}")
+            if description:
+                lines.append(f"Description: {description}")
+            if recommendation:
+                lines.append(f"Recommendation: {recommendation}")
+            if severity:
+                lines.append(f"Severity: {severity}")
+            
+            # Add examples if available
+            example_good = practice.get("example_good")
+            example_bad = practice.get("example_bad")
+            if example_good:
+                lines.append(f"Good Example: {example_good}")
+            if example_bad:
+                lines.append(f"Bad Example: {example_bad}")
+            
+            documents.append({
+                "id": f"fql:best_practice:{idx}",
+                "text": "\n".join(lines),
+                "metadata": {
+                    "section": "best_practices",
+                    "category": category,
+                    "severity": severity,
+                },
+            })
+
+    # Patterns
+    patterns = schema.get("patterns", {})
+    if isinstance(patterns, dict):
+        for category, category_data in sorted(patterns.items()):
+            if not isinstance(category_data, dict):
+                continue
+            
+            category_patterns = category_data.get("patterns", [])
+            if not isinstance(category_patterns, list):
+                continue
+            
+            for pattern in category_patterns:
+                if not isinstance(pattern, dict):
+                    continue
+                
+                pattern_name = pattern.get("name", "")
+                description = pattern.get("description", "")
+                filter_expr = pattern.get("filter", "")
+                keywords = pattern.get("keywords", [])
+                
+                lines = [f"Pattern: {pattern_name}"]
+                if description:
+                    lines.append(f"Description: {description}")
+                if filter_expr:
+                    lines.append(f"Filter: {filter_expr}")
+                if keywords:
+                    lines.append(f"Keywords: {', '.join(keywords)}")
+                
+                documents.append({
+                    "id": f"fql:pattern:{category}:{pattern_name}",
+                    "text": "\n".join(lines),
+                    "metadata": {
+                        "section": "patterns",
+                        "category": category,
+                        "keywords": keywords,
+                    },
+                })
+
+    # Examples
+    examples = schema.get("examples", [])
+    if isinstance(examples, list):
+        for example in examples:
+            if not isinstance(example, dict):
+                continue
+            
+            category = example.get("category", "")
+            title = example.get("title", "")
+            description = example.get("description", "")
+            query = example.get("query", "")
+            use_case = example.get("use_case", "")
+            severity = example.get("severity", "")
+            tags = example.get("tags", [])
+            
+            lines = [f"Example Query: {title}"]
+            if category:
+                lines.append(f"Category: {category}")
+            if description:
+                lines.append(f"Description: {description}")
+            if use_case:
+                lines.append(f"Use Case: {use_case}")
+            if severity:
+                lines.append(f"Severity: {severity}")
+            if tags:
+                lines.append(f"Tags: {', '.join(tags)}")
+            if query:
+                lines.append(f"Query: {query}")
+            
+            documents.append({
+                "id": f"fql:example:{category}:{title}",
+                "text": "\n".join(lines),
+                "metadata": {
+                    "section": "examples",
+                    "category": category,
+                    "tags": tags,
+                },
+            })
+
+    # Documentation sections
+    documentation = schema.get("documentation", {})
+    if isinstance(documentation, dict):
+        sections = documentation.get("sections", [])
+        if isinstance(sections, list):
+            for section in sections:
+                if not isinstance(section, dict):
+                    continue
+                
+                section_name = section.get("section", "")
+                title = section.get("title", "")
+                content = section.get("content", "")
+                keywords = section.get("keywords", [])
+                
+                lines = [f"Documentation: {title}"]
+                if content:
+                    lines.append(content)
+                if keywords:
+                    lines.append(f"Keywords: {', '.join(keywords)}")
+                
+                documents.append({
+                    "id": f"fql:doc:{section_name}",
+                    "text": "\n".join(lines),
+                    "metadata": {
+                        "section": "documentation",
+                        "doc_section": section_name,
+                        "keywords": keywords,
+                    },
+                })
+
+    return documents
+
+
 def build_cbc_documents(schema: Dict[str, Any]) -> List[Dict[str, Any]]:
     """Convert the CBC schema JSON into retrieval-friendly documents."""
 

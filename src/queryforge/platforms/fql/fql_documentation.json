@@ -1,0 +1,126 @@
+{
+  "documentation": {
+    "overview": {
+      "title": "CrowdStrike Falcon Query Language (FQL)",
+      "description": "FQL is the query language for CrowdStrike Falcon platform, enabling threat hunting and investigation across endpoint telemetry",
+      "platform": "CrowdStrike Falcon",
+      "version": "placeholder",
+      "last_updated": "2024-11-14"
+    },
+    "sections": [
+      {
+        "section": "introduction",
+        "title": "Introduction to FQL",
+        "content": "FQL provides a powerful query interface for searching and analyzing security events in CrowdStrike Falcon. It supports filtering, projection, aggregation, and time-based queries across multiple data sources.",
+        "keywords": ["introduction", "overview", "getting started", "fql basics"]
+      },
+      {
+        "section": "syntax",
+        "title": "Query Syntax",
+        "content": "FQL queries consist of filters, operators, and optional pipeline operations. Basic syntax: field_name operator 'value'. Multiple conditions can be combined with AND/OR. Pipeline operators (|) enable chaining operations like select, limit, stats.",
+        "keywords": ["syntax", "operators", "filters", "pipeline"]
+      },
+      {
+        "section": "fields",
+        "title": "Available Fields",
+        "content": "FQL provides access to numerous telemetry fields including process information (process_name, command_line, pid), network data (source_ip, destination_ip, port), file operations (file_path, file_hash), and more. Field names are case-sensitive.",
+        "keywords": ["fields", "columns", "attributes", "schema"]
+      },
+      {
+        "section": "operators",
+        "title": "Comparison Operators",
+        "content": "FQL supports equality (=, !=), comparison (>, >=, <, <=), string operators (contains, startswith, endswith), list operators (IN, NOT IN), pattern matching (=~, !~), and existence checks (EXISTS, NOT EXISTS).",
+        "keywords": ["operators", "comparison", "equality", "string", "regex"]
+      },
+      {
+        "section": "time_filtering",
+        "title": "Time-based Filtering",
+        "content": "Use @timestamp field for time filtering. Supports absolute timestamps and relative time (now() - 24h, now() - 7d). Always include time bounds for optimal performance.",
+        "keywords": ["time", "timestamp", "date", "temporal", "time range"]
+      },
+      {
+        "section": "aggregation",
+        "title": "Aggregation and Statistics",
+        "content": "Use stats operator for aggregation: | stats count, sum, avg, min, max by field_list. Supports grouping and having clauses for advanced analytics.",
+        "keywords": ["aggregation", "stats", "count", "grouping", "analytics"]
+      },
+      {
+        "section": "projection",
+        "title": "Field Projection",
+        "content": "Use | select field1, field2 to limit returned fields. Improves performance by reducing data transfer. Can include calculated fields and aliases.",
+        "keywords": ["projection", "select", "fields", "columns"]
+      },
+      {
+        "section": "best_practices",
+        "title": "Query Best Practices",
+        "content": "Always include time bounds, use indexed fields for filtering, limit result sets, avoid leading wildcards, use specific patterns over broad regex, quote string values properly.",
+        "keywords": ["best practices", "optimization", "performance", "tips"]
+      },
+      {
+        "section": "hunting",
+        "title": "Threat Hunting",
+        "content": "FQL enables proactive threat hunting through flexible queries across process execution, network activity, file operations, registry changes, and authentication events. Combine multiple indicators for high-fidelity detections.",
+        "keywords": ["hunting", "detection", "threat hunting", "investigation"]
+      },
+      {
+        "section": "process_events",
+        "title": "Process Events",
+        "content": "Query process creation, termination, and modification events. Key fields: process_name, command_line, parent_process_name, user_name, pid, ppid. Useful for detecting suspicious process execution patterns.",
+        "keywords": ["process", "execution", "command line", "process creation"]
+      },
+      {
+        "section": "network_events",
+        "title": "Network Events",
+        "content": "Query network connections, DNS queries, and HTTP requests. Key fields: source_ip, destination_ip, destination_port, protocol, http_user_agent. Useful for C2 detection and lateral movement.",
+        "keywords": ["network", "connection", "dns", "http", "traffic"]
+      },
+      {
+        "section": "file_events",
+        "title": "File Events",
+        "content": "Query file creation, modification, deletion, and hash events. Key fields: file_path, file_name, file_hash, event_type. Useful for malware staging and data exfiltration detection.",
+        "keywords": ["file", "filesystem", "file operations", "hash"]
+      },
+      {
+        "section": "registry_events",
+        "title": "Registry Events",
+        "content": "Query Windows registry modifications. Key fields: registry_key, registry_value, event_type. Useful for persistence mechanism detection and system configuration changes.",
+        "keywords": ["registry", "windows", "persistence", "configuration"]
+      },
+      {
+        "section": "authentication_events",
+        "title": "Authentication Events",
+        "content": "Query login, logoff, and authentication events. Key fields: user_name, source_ip, status, event_type. Useful for detecting brute force attacks and suspicious account activity.",
+        "keywords": ["authentication", "login", "logon", "access", "credentials"]
+      },
+      {
+        "section": "examples",
+        "title": "Query Examples",
+        "content": "Common hunting queries include: PowerShell with encoded commands, suspicious parent-child process relationships, outbound connections to high ports, executable files in temp directories, autorun registry modifications.",
+        "keywords": ["examples", "queries", "use cases", "scenarios"]
+      }
+    ],
+    "links": [
+      {
+        "title": "Official CrowdStrike Falcon Documentation",
+        "url": "https://www.crowdstrike.com/falcon-platform/",
+        "description": "Main documentation portal (placeholder until real docs available)"
+      },
+      {
+        "title": "FQL Query Reference",
+        "url": "https://docs.crowdstrike.com/fql/",
+        "description": "Comprehensive FQL syntax and operator reference (placeholder)"
+      },
+      {
+        "title": "Threat Hunting Guide",
+        "url": "https://docs.crowdstrike.com/hunting/",
+        "description": "Threat hunting methodologies and example queries (placeholder)"
+      }
+    ],
+    "rag_metadata": {
+      "embedding_model": "text-embedding-ada-002",
+      "chunk_strategy": "section_based",
+      "index_fields": ["section", "title", "keywords", "content"],
+      "semantic_search_enabled": true
+    }
+  }
+}

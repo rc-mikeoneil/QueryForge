@@ -218,6 +218,22 @@ PLATFORM_FIELD_MAPPINGS = {
         "registry": "TgtProcRegistryKeyPath",
         "target_process": "TgtProcName",
     },
+    "fql": {
+        "process": "process_name",
+        "parent_process": "parent_process_name",
+        "child_process": "process_name",
+        "cmdline": "command_line",
+        "port_local": "source_port",
+        "port_remote": "destination_port",
+        "domain": "http_host",
+        "registry": "registry_key",
+        "target_process": "process_name",
+        "file": "file_path",
+        "hash": "file_hash",
+        "user": "user_name",
+        "ip": "source_ip",
+        "remote_ip": "destination_ip",
+    },
 }
 
 
@@ -296,7 +312,7 @@ def get_platform_field_name(platform: str, generic_field: str) -> Optional[str]:
     Get platform-specific field name for a generic field type.
 
     Args:
-        platform: Platform identifier ("cbc", "cortex", "kql", "s1")
+        platform: Platform identifier ("cbc", "cortex", "kql", "s1", "fql")
         generic_field: Generic field type (e.g., "process", "cmdline", "port")
 
     Returns:
@@ -307,6 +323,8 @@ def get_platform_field_name(platform: str, generic_field: str) -> Optional[str]:
         "process_name"
         >>> get_platform_field_name("cortex", "cmdline")
         "actor_process_command_line"
+        >>> get_platform_field_name("fql", "process")
+        "process_name"
     """
     platform_lower = platform.lower()
     if platform_lower not in PLATFORM_FIELD_MAPPINGS:

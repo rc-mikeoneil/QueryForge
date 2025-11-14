@@ -10,6 +10,7 @@ from typing import Any, Dict, Optional
 from queryforge.platforms.cbc.schema_loader import CBCSchemaCache
 from queryforge.platforms.cbr.schema_loader import CBResponseSchemaCache
 from queryforge.platforms.cortex.schema_loader import CortexSchemaCache
+from queryforge.platforms.fql.schema_loader import FQLSchemaCache
 from queryforge.platforms.kql.schema_loader import SchemaCache
 from queryforge.platforms.s1.schema_loader import S1SchemaCache
 from queryforge.shared.rag import (
@@ -18,6 +19,7 @@ from queryforge.shared.rag import (
     build_cbc_documents,
     build_cbr_documents,
     build_cortex_documents,
+    build_fql_documents,
     build_kql_documents,
     build_s1_documents,
 )
@@ -37,6 +39,7 @@ class ServerRuntime:
         self.cbc_schema_file = base_dir / "platforms" / "cbc" / "cbc_schema.json"
         self.cbr_schema_dir = base_dir / "platforms" / "cbr"
         self.cortex_schema_file = base_dir / "platforms" / "cortex" / "new_schema" / "cortex_core.json"
+        self.fql_schema_dir = base_dir / "platforms" / "fql"
         self.kql_schema_dir = base_dir / "platforms" / "kql" / "defender_xdr_kql_schema_fuller"
         self.kql_schema_cache_file = self.data_dir / "kql_schema_cache.json"
         self.s1_schema_dir = base_dir / "platforms" / "s1" / "s1_schemas"
@@ -44,6 +47,7 @@ class ServerRuntime:
         self.cbc_cache = CBCSchemaCache(self.cbc_schema_file, cache_dir=self.data_dir)
         self.cbr_cache = CBResponseSchemaCache(self.cbr_schema_dir, cache_dir=self.data_dir)
         self.cortex_cache = CortexSchemaCache(self.cortex_schema_file, cache_dir=self.data_dir)
+        self.fql_cache = FQLSchemaCache(self.fql_schema_dir, cache_dir=self.data_dir)
         self.kql_cache = SchemaCache(schema_path=self.kql_schema_cache_file)
         self.s1_cache = S1SchemaCache(self.s1_schema_dir, cache_dir=self.data_dir)
 
@@ -82,6 +86,13 @@ class ServerRuntime:
                     schema_cache=self.s1_cache,
                     loader=lambda cache, force=False: cache.load(force_refresh=force),
                     document_builder=build_s1_documents,
+                ),
+                SchemaSource(
+                    name="fql",
+                    schema_cache=self.fql_cache,
+                    loader=lambda cache, force=False: cache.load(force_refresh=force),
+                    document_builder=build_fql_documents,
+                    version_getter=self._fql_version,
                 ),
             ],
             cache_dir=self.data_dir,
@@ -139,6 +150,17 @@ class ServerRuntime:
             return None
         version = data.get("version") if isinstance(data, dict) else None
         return str(version) if version else None
+        
+    def _fql_version(self, cache: FQLSchemaCache) -> Optional[str]:  # pragma: no cover - IO heavy
+        try:
+            data = cache.load()
+        except Exception:  # pragma: no cover - defensive
+            return None
+        core = data.get("core", {})
+        if not isinstance(core, dict):
+            return None
+        version = core.get("version")
+        return str(version) if version else None
 
     def _load_kql_schema(self, cache: SchemaCache, force: bool = False) -> Dict[str, Any]:
         if force:
@@ -158,6 +180,7 @@ class ServerRuntime:
                 "CBC": self.cbc_schema_file,
                 "CBR": self.cbr_schema_dir,
                 "Cortex": self.cortex_schema_file,
+                "FQL": self.fql_schema_dir,
                 "KQL": self.kql_schema_dir,
                 "S1": self.s1_schema_dir,
             }
@@ -207,6 +230,12 @@ class ServerRuntime:
                 logger.info("✅ S1 schema loaded")
             except Exception as exc:  # pragma: no cover - defensive
                 logger.warning("⚠️ Failed to load S1 schema: %s", exc)
+                
+            try:
+                self.fql_cache.load()
+                logger.info("✅ FQL schema loaded")
+            except Exception as exc:  # pragma: no cover - defensive
+                logger.warning("⚠️ Failed to load FQL schema: %s", exc)
 
             self._server_ready = True
             logger.info("✅ Critical components initialized - server ready to accept requests")
