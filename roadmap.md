@@ -19,14 +19,6 @@ QueryForge currently provides comprehensive query building capabilities for:
   - Expanded regression test coverage
   - Performance optimization for large result sets
 
-- **Client Configuration Templates**
-  - Streamlined setup guides for popular MCP clients
-
-- **Query Workflow Automation**
-  - Query templating system for common hunting patterns
-  - Query sharing and collaboration features between analysts
-  - Query history and versioning
-
 ### Medium Term (3-6 Months)
 
 - **CrowdStrike Query Builder** 🎯
@@ -52,11 +44,6 @@ QueryForge currently provides comprehensive query building capabilities for:
 - **Additional Platform Support**
   - TrendMicro
   - OpenSearch
-
-- **Enterprise Features**
-  - Role-based access control for query builders
-  - Audit logging for query generation and execution
-  - Compliance reporting and query governance
 
 - **Intelligence Integration**
   - Threat intelligence enrichment in queries
@@ -104,27 +91,3 @@ The implementation will follow the established QueryForge patterns:
 - RAG document builder for CrowdStrike documentation
 - Integration with QueryForge runtime
 - Comprehensive test coverage following existing patterns
-
-### Timeline
-
-- **Q1 2026**: Schema extraction and documentation curation
-- **Q2 2026**: Core query builder implementation
-- **Q3 2026**: RAG integration and example catalog
-- **Q4 2026**: Production release and documentation
-
-## Contributing
-
-We welcome community input on roadmap priorities. To suggest features or provide feedback:
-
-1. Open an issue on GitHub with the `enhancement` label
-2. Join discussions on existing roadmap items
-3. Submit pull requests for documentation improvements
-4. Share real-world use cases and requirements
-
-## Roadmap Updates
-
-This roadmap is reviewed and updated quarterly. Last updated: October 2025
-
----
-
-For questions about the roadmap or to discuss specific features, please open a GitHub issue or refer to [CONTRIBUTING.md](docs/CONTRIBUTING.md).
