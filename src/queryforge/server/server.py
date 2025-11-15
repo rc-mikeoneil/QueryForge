@@ -18,7 +18,7 @@ from queryforge.server.server_runtime import ServerRuntime
 from queryforge.server.server_tools_cbc import register_cbc_tools
 from queryforge.server.server_tools_cbr import register_cbr_tools
 from queryforge.server.server_tools_cortex import register_cortex_tools
-from queryforge.server.server_tools_fql import register_fql_tools
+from queryforge.server.server_tools_cql import register_cql_tools
 from queryforge.server.server_tools_kql import register_kql_tools
 from queryforge.server.server_tools_s1 import register_s1_tools
 from queryforge.server.server_tools_shared import register_shared_tools
@@ -38,7 +38,7 @@ rag_service = runtime.rag_service
 register_cbc_tools(mcp, runtime)
 register_cbr_tools(mcp, runtime)
 register_cortex_tools(mcp, runtime)
-register_fql_tools(mcp, runtime)
+register_cql_tools(mcp, runtime)
 register_kql_tools(mcp, runtime)
 register_s1_tools(mcp, runtime)
 register_shared_tools(mcp, runtime)

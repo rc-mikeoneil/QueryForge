@@ -2,7 +2,7 @@
 
 ## Query Building - MANDATORY
 
-**CRITICAL**: When building queries for any security platform (CBC, Cortex, KQL, S1):
+**CRITICAL**: When building queries for any security platform (CBC, Cortex, KQL, S1, CQL):
 
 ### 1. ALWAYS Use MCP Query Builder Tools
 
@@ -14,6 +14,7 @@ You MUST use the appropriate MCP query builder tool for the platform.
 - **Cortex XDR**: `cortex_build_query_validated`
 - **Microsoft Defender/KQL**: `kql_build_query_validated`
 - **SentinelOne**: `s1_build_query_validated`
+- **CrowdStrike**: `cql_build_query_validated`
 
 **Benefits:**
 - ✅ **10x faster** - Single API call instead of build → validate → rebuild cycles
@@ -26,6 +27,7 @@ You MUST use the appropriate MCP query builder tool for the platform.
 - `cortex_build_query` → `cortex_validate_query`
 - `kql_build_query` → `kql_validate_query`
 - `s1_build_query` → `s1_validate_query`
+- `cql_build_query` → `cql_validate_query`
 
 ### 2. NEVER Manually Write Query Syntax
 

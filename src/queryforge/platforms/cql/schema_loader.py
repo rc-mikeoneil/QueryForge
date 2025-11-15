@@ -1,7 +1,7 @@
 """
-Schema loader for CrowdStrike Falcon Query Language (FQL).
+Schema loader for CrowdStrike Query Language (CQL).
 
-This module provides schema loading and caching functionality for FQL,
+This module provides schema loading and caching functionality for CQL,
 including dataset definitions, field schemas, operators, and best practices.
 """
 
@@ -15,18 +15,18 @@ from typing import Any, Dict, List, Optional
 logger = logging.getLogger(__name__)
 
 
-class FQLSchemaLoader:
-    """Load and provide access to FQL schema definitions."""
+class CQLSchemaLoader:
+    """Load and provide access to CQL schema definitions."""
 
     def __init__(self, schema_dir: Optional[Path] = None) -> None:
         """
-        Initialize FQL schema loader.
+        Initialize CQL schema loader.
 
         Parameters
         ----------
         schema_dir : Optional[Path]
-            Directory containing FQL schema JSON files.
-            Defaults to the fql platform directory.
+            Directory containing CQL schema JSON files.
+            Defaults to the cql platform directory.
         """
         if schema_dir is None:
             schema_dir = Path(__file__).parent
@@ -47,7 +47,7 @@ class FQLSchemaLoader:
             with file_path.open("r", encoding="utf-8") as f:
                 data = json.load(f)
             self._cache[filename] = data
-            logger.debug("Loaded FQL schema: %s", filename)
+            logger.debug("Loaded CQL schema: %s", filename)
             return data
         except (json.JSONDecodeError, IOError) as exc:
             logger.error("Failed to load %s: %s", filename, exc)
@@ -55,7 +55,7 @@ class FQLSchemaLoader:
 
     def get_core_info(self) -> Dict[str, Any]:
         """Get core platform information."""
-        return self._load_json("fql_core.json")
+        return self._load_json("cql_core.json")
 
     def get_datasets(self, query_intent: Optional[str] = None) -> Dict[str, Any]:
         """
@@ -102,7 +102,7 @@ class FQLSchemaLoader:
         Dict[str, Any]
             Dictionary with fields and metadata.
         """
-        field_types = self._load_json("fql_field_types.json")
+        field_types = self._load_json("cql_field_types.json")
         placeholder_fields = field_types.get("placeholder_fields", {})
 
         # Get fields for the specified dataset
@@ -139,20 +139,20 @@ class FQLSchemaLoader:
 
     def get_field_types(self) -> Dict[str, Any]:
         """Get field type definitions and compatible operators."""
-        return self._load_json("fql_field_types.json")
+        return self._load_json("cql_field_types.json")
 
     def get_operators(self) -> Dict[str, Any]:
         """Get operator definitions and normalization rules."""
-        return self._load_json("fql_operators.json")
+        return self._load_json("cql_operators.json")
 
     def get_best_practices(self) -> List[Dict[str, Any]]:
         """Get query best practices."""
-        data = self._load_json("fql_best_practices.json")
+        data = self._load_json("cql_best_practices.json")
         return data.get("best_practices", [])
 
     def get_patterns(self) -> Dict[str, Any]:
         """Get comprehensive query patterns."""
-        return self._load_json("fql_comprehensive_patterns.json")
+        return self._load_json("cql_comprehensive_patterns.json")
 
     def get_examples(self, category: Optional[str] = None, query_intent: Optional[str] = None) -> Dict[str, Any]:
         """
@@ -170,7 +170,7 @@ class FQLSchemaLoader:
         Dict[str, Any]
             Dictionary with examples and metadata.
         """
-        data = self._load_json("fql_examples.json")
+        data = self._load_json("cql_examples.json")
         all_examples = data.get("examples", [])
 
         if category:
@@ -198,7 +198,7 @@ class FQLSchemaLoader:
 
     def get_documentation(self) -> Dict[str, Any]:
         """Get documentation sections for RAG integration."""
-        return self._load_json("fql_documentation.json")
+        return self._load_json("cql_documentation.json")
 
     def normalize_operator(self, operator: str) -> str:
         """

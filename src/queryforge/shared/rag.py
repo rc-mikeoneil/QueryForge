@@ -648,15 +648,15 @@ def build_s1_documents(schema: Dict[str, Any]) -> List[Dict[str, Any]]:
     return documents
 
 
-def build_fql_documents(schema: Dict[str, Any]) -> List[Dict[str, Any]]:
-    """Convert the CrowdStrike Falcon Query Language schema into retrieval-friendly documents."""
+def build_cql_documents(schema: Dict[str, Any]) -> List[Dict[str, Any]]:
+    """Convert the CrowdStrike Query Language schema into retrieval-friendly documents."""
 
     documents: List[Dict[str, Any]] = []
 
     # Platform overview
     core = schema.get("core", {})
     if isinstance(core, dict):
-        platform = core.get("platform", "CrowdStrike Falcon Query Language (FQL)")
+        platform = core.get("platform", "CrowdStrike Query Language (CQL)")
         version = core.get("version", "placeholder")
         description = core.get("description", "")
         
@@ -667,7 +667,7 @@ def build_fql_documents(schema: Dict[str, Any]) -> List[Dict[str, Any]]:
             overview_lines.append(f"Description: {description}")
         
         documents.append({
-            "id": "fql:overview",
+            "id": "cql:overview",
             "text": "\n".join(overview_lines),
             "metadata": {"section": "overview"},
         })
@@ -691,7 +691,7 @@ def build_fql_documents(schema: Dict[str, Any]) -> List[Dict[str, Any]]:
                 lines.append(f"Category: {category}")
             
             documents.append({
-                "id": f"fql:dataset:{name}",
+                "id": f"cql:dataset:{name}",
                 "text": "\n".join(lines),
                 "metadata": {
                     "section": "datasets",
@@ -728,7 +728,7 @@ def build_fql_documents(schema: Dict[str, Any]) -> List[Dict[str, Any]]:
                 lines.append(f"  {field_entry}")
             
             documents.append({
-                "id": f"fql:fields:{dataset_name}",
+                "id": f"cql:fields:{dataset_name}",
                 "text": "\n".join(lines),
                 "metadata": {
                     "section": "fields",
@@ -741,7 +741,7 @@ def build_fql_documents(schema: Dict[str, Any]) -> List[Dict[str, Any]]:
     if isinstance(operators, dict):
         operator_list = operators.get("operators", {})
         if isinstance(operator_list, dict):
-            lines = ["FQL Operator Reference:"]
+            lines = ["CQL Operator Reference:"]
             
             for op_name, op_def in sorted(operator_list.items()):
                 if not isinstance(op_def, dict):
@@ -765,7 +765,7 @@ def build_fql_documents(schema: Dict[str, Any]) -> List[Dict[str, Any]]:
                 lines.append(op_entry)
             
             documents.append({
-                "id": "fql:operators",
+                "id": "cql:operators",
                 "text": "\n".join(lines),
                 "metadata": {"section": "operators"},
             })
@@ -802,7 +802,7 @@ def build_fql_documents(schema: Dict[str, Any]) -> List[Dict[str, Any]]:
                 lines.append(f"Bad Example: {example_bad}")
             
             documents.append({
-                "id": f"fql:best_practice:{idx}",
+                "id": f"cql:best_practice:{idx}",
                 "text": "\n".join(lines),
                 "metadata": {
                     "section": "best_practices",
@@ -840,7 +840,7 @@ def build_fql_documents(schema: Dict[str, Any]) -> List[Dict[str, Any]]:
                     lines.append(f"Keywords: {', '.join(keywords)}")
                 
                 documents.append({
-                    "id": f"fql:pattern:{category}:{pattern_name}",
+                    "id": f"cql:pattern:{category}:{pattern_name}",
                     "text": "\n".join(lines),
                     "metadata": {
                         "section": "patterns",
@@ -879,7 +879,7 @@ def build_fql_documents(schema: Dict[str, Any]) -> List[Dict[str, Any]]:
                 lines.append(f"Query: {query}")
             
             documents.append({
-                "id": f"fql:example:{category}:{title}",
+                "id": f"cql:example:{category}:{title}",
                 "text": "\n".join(lines),
                 "metadata": {
                     "section": "examples",
@@ -909,7 +909,7 @@ def build_fql_documents(schema: Dict[str, Any]) -> List[Dict[str, Any]]:
                     lines.append(f"Keywords: {', '.join(keywords)}")
                 
                 documents.append({
-                    "id": f"fql:doc:{section_name}",
+                    "id": f"cql:doc:{section_name}",
                     "text": "\n".join(lines),
                     "metadata": {
                         "section": "documentation",

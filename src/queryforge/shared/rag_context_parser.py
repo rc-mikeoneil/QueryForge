@@ -652,12 +652,12 @@ class S1RAGContextParser(RAGContextParser):
         return complete_paths + partial_paths
 
 
-class FQLRAGContextParser(RAGContextParser):
-    """CrowdStrike Falcon Query Language-specific RAG context parser."""
+class CQLRAGContextParser(RAGContextParser):
+    """CrowdStrike Query Language-specific RAG context parser."""
 
     def __init__(self):
-        super().__init__("fql")
-        # FQL uses similar patterns to other query languages
+        super().__init__("cql")
+        # CQL uses similar patterns to other query languages
         # Field names are typically lowercase with underscores
         self.field_pattern = re.compile(r'\b([a-z_][a-z0-9_]*)\b', re.IGNORECASE)
         self.value_pattern = re.compile(
@@ -668,10 +668,10 @@ class FQLRAGContextParser(RAGContextParser):
     def extract_fields(
         self, documents: List[Dict[str, Any]], intent: str
     ) -> List[str]:
-        """Extract FQL field names with special handling."""
+        """Extract CQL field names with special handling."""
         fields = super().extract_fields(documents, intent)
         
-        # FQL-specific field prioritization
+        # CQL-specific field prioritization
         # Common security fields should be prioritized
         priority_fields = {
             "process_name": 10,
@@ -698,7 +698,7 @@ def create_rag_context_parser(platform: str) -> RAGContextParser:
     """Factory function to create appropriate parser for platform.
     
     Args:
-        platform: Platform identifier (cbc, kql, cortex, s1, fql)
+        platform: Platform identifier (cbc, kql, cortex, s1, cql)
         
     Returns:
         Platform-specific RAG context parser
@@ -711,7 +711,7 @@ def create_rag_context_parser(platform: str) -> RAGContextParser:
         "kql": KQLRAGContextParser,
         "cortex": CortexRAGContextParser,
         "s1": S1RAGContextParser,
-        "fql": FQLRAGContextParser,
+        "cql": CQLRAGContextParser,
     }
     
     parser_class = parsers.get(platform.lower())

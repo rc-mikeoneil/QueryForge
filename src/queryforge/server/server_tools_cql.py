@@ -1,5 +1,5 @@
 """
-MCP server tools for CrowdStrike Falcon Query Language (FQL).
+MCP server tools for CrowdStrike Query Language (CQL).
 """
 
 from __future__ import annotations
@@ -10,15 +10,15 @@ from typing import Any, Dict, List, Optional, Union
 
 from fastmcp import FastMCP
 
-from queryforge.platforms.fql.schema_loader import FQLSchemaLoader
-from queryforge.platforms.fql.query_builder import (
-    FQLQueryBuilder,
-    DEFAULT_BOOLEAN_OPERATOR as FQL_DEFAULT_BOOLEAN_OPERATOR,
-    DEFAULT_DATASET as FQL_DEFAULT_DATASET,
-    DEFAULT_LIMIT as FQL_DEFAULT_LIMIT,
-    QueryBuildError as FQLQueryBuildError,
+from queryforge.platforms.cql.schema_loader import CQLSchemaLoader
+from queryforge.platforms.cql.query_builder import (
+    CQLQueryBuilder,
+    DEFAULT_BOOLEAN_OPERATOR as CQL_DEFAULT_BOOLEAN_OPERATOR,
+    DEFAULT_DATASET as CQL_DEFAULT_DATASET,
+    DEFAULT_LIMIT as CQL_DEFAULT_LIMIT,
+    QueryBuildError as CQLQueryBuildError,
 )
-from queryforge.platforms.fql.validator import FQLValidator
+from queryforge.platforms.cql.validator import CQLValidator
 from queryforge.server.server_runtime import ServerRuntime
 
 from queryforge.server.server_tools_shared import (
@@ -31,17 +31,17 @@ from queryforge.server.server_tools_shared import (
 logger = logging.getLogger(__name__)
 
 
-def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
-    """Register CrowdStrike Falcon Query Language (FQL) tools."""
+def register_cql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
+    """Register CrowdStrike Query Language (CQL) tools."""
 
-    # Initialize FQL components
-    schema_loader = FQLSchemaLoader()
-    query_builder = FQLQueryBuilder(schema_loader)
+    # Initialize CQL components
+    schema_loader = CQLSchemaLoader()
+    query_builder = CQLQueryBuilder(schema_loader)
 
     @mcp.tool
-    def fql_list_datasets(query_intent: Optional[str] = None) -> Dict[str, Any]:
+    def cql_list_datasets(query_intent: Optional[str] = None) -> Dict[str, Any]:
         """
-        List CrowdStrike Falcon datasets with descriptions.
+        List CrowdStrike datasets with descriptions.
         
         Args:
             query_intent: Optional natural language description to find semantically relevant datasets
@@ -55,7 +55,7 @@ def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
             
             # If query_intent provided, use RAG-enhanced retrieval
             if query_intent:
-                logger.info("Using RAG-enhanced dataset discovery for FQL intent: %s", query_intent[:100])
+                logger.info("Using RAG-enhanced dataset discovery for CQL intent: %s", query_intent[:100])
                 # Convert to format expected by RAG
                 all_datasets = {}
                 for ds in datasets_data.get("datasets", []):
@@ -68,7 +68,7 @@ def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
                 result = get_rag_enhanced_datasets(
                     runtime=runtime,
                     query_intent=query_intent,
-                    source_filter="fql",
+                    source_filter="cql",
                     all_datasets=all_datasets,
                     k=10,
                 )
@@ -89,11 +89,11 @@ def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
             return datasets_data
             
         except Exception as exc:
-            logger.error("Failed to list FQL datasets: %s", exc)
+            logger.error("Failed to list CQL datasets: %s", exc)
             return {"error": str(exc)}
 
     @mcp.tool
-    def fql_get_fields(
+    def cql_get_fields(
         dataset: str,
         query_intent: Optional[str] = None
     ) -> Dict[str, Any]:
@@ -101,7 +101,7 @@ def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
         Return available fields for a CrowdStrike Falcon dataset.
         
         Args:
-            dataset: FQL dataset name (e.g., 'events', 'detections', 'indicators')
+            dataset: CQL dataset name (e.g., 'events', 'detections', 'indicators')
             query_intent: Optional natural language description to filter semantically relevant fields
                          (e.g., "network fields", "process execution fields", "file operations")
         
@@ -113,11 +113,11 @@ def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
             
             # If query_intent provided, use RAG-enhanced field filtering
             if query_intent:
-                logger.info("Using RAG-enhanced field filtering for FQL intent: %s", query_intent[:100])
+                logger.info("Using RAG-enhanced field filtering for CQL intent: %s", query_intent[:100])
                 result = get_rag_enhanced_fields(
                     runtime=runtime,
                     query_intent=query_intent,
-                    source_filter="fql",
+                    source_filter="cql",
                     all_fields=fields_data.get("fields", []),
                     dataset_name=dataset,
                     k=20,
@@ -126,55 +126,55 @@ def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
                 return result
             
             logger.info(
-                "Retrieved %d fields for FQL dataset '%s'",
+                "Retrieved %d fields for CQL dataset '%s'",
                 len(fields_data.get("fields", [])),
                 dataset
             )
             return fields_data
             
         except Exception as exc:
-            logger.error("Failed to get FQL fields for dataset '%s': %s", dataset, exc)
+            logger.error("Failed to get CQL fields for dataset '%s': %s", dataset, exc)
             return {"error": str(exc)}
 
     @mcp.tool
-    def fql_get_operator_reference() -> Dict[str, Any]:
+    def cql_get_operator_reference() -> Dict[str, Any]:
         """
-        Return the FQL operator reference.
+        Return the CQL operator reference.
         
         Returns:
             Dictionary with operator definitions and normalization rules
         """
         try:
             operators = schema_loader.get_operators()
-            logger.info("Retrieved FQL operator reference")
+            logger.info("Retrieved CQL operator reference")
             return operators
         except Exception as exc:
-            logger.error("Failed to get FQL operator reference: %s", exc)
+            logger.error("Failed to get CQL operator reference: %s", exc)
             return {"error": str(exc)}
 
     @mcp.tool
-    def fql_get_best_practices() -> Dict[str, Any]:
+    def cql_get_best_practices() -> Dict[str, Any]:
         """
-        Return FQL query best practices.
+        Return CQL query best practices.
         
         Returns:
             Dictionary with best practice guidelines
         """
         try:
             best_practices = schema_loader.get_best_practices()
-            logger.info("Retrieved FQL best practices")
+            logger.info("Retrieved CQL best practices")
             return {"best_practices": best_practices}
         except Exception as exc:
-            logger.error("Failed to get FQL best practices: %s", exc)
+            logger.error("Failed to get CQL best practices: %s", exc)
             return {"error": str(exc)}
 
     @mcp.tool
-    def fql_get_examples(
+    def cql_get_examples(
         category: Optional[str] = None,
         query_intent: Optional[str] = None,
     ) -> Dict[str, Any]:
         """
-        Return example FQL queries, optionally filtered by category or semantic search.
+        Return example CQL queries, optionally filtered by category or semantic search.
 
         Args:
             category: Optional category to filter examples (e.g., 'process_execution', 'network_activity')
@@ -192,42 +192,42 @@ def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
             
             # If query_intent provided, use RAG-enhanced retrieval
             if query_intent:
-                logger.info("Using RAG-enhanced example retrieval for FQL intent: %s", query_intent[:100])
+                logger.info("Using RAG-enhanced example retrieval for CQL intent: %s", query_intent[:100])
                 return get_rag_enhanced_examples(
                     runtime=runtime,
                     query_intent=query_intent,
-                    source_filter="fql",
+                    source_filter="cql",
                     fallback_examples=examples_data.get("examples", []),
                     k=10,
                 )
             
-            logger.info("Retrieved %d FQL examples", len(examples_data.get("examples", [])))
+            logger.info("Retrieved %d CQL examples", len(examples_data.get("examples", [])))
             return examples_data
             
         except Exception as exc:
-            logger.error("Failed to get FQL examples: %s", exc)
+            logger.error("Failed to get CQL examples: %s", exc)
             return {"error": str(exc)}
 
     @mcp.tool
-    def fql_build_query(
+    def cql_build_query(
         dataset: Optional[str] = None,
         filters: Optional[Union[Dict[str, Any], List[Dict[str, Any]]]] = None,
         fields: Optional[List[str]] = None,
         natural_language_intent: Optional[str] = None,
         time_range: Optional[Union[str, Dict[str, Any]]] = None,
         limit: Optional[int] = None,
-        boolean_operator: str = FQL_DEFAULT_BOOLEAN_OPERATOR,
+        boolean_operator: str = CQL_DEFAULT_BOOLEAN_OPERATOR,
     ) -> Dict[str, Any]:
         """
-        Build a CrowdStrike Falcon FQL query from structured params or natural language.
+        Build a CrowdStrike CQL query from structured params or natural language.
 
         RECOMMENDED WORKFLOW:
-            1. Call fql_build_query to generate the initial query
-            2. Call fql_validate_query on the generated query and metadata
+            1. Call cql_build_query to generate the initial query
+            2. Call cql_validate_query on the generated query and metadata
             3. If validation fails (valid=False):
                - Review error messages and suggestions in validation_results
                - Adjust parameters based on feedback (e.g., fix field names, datasets)
-               - Call fql_build_query again with corrected parameters
+               - Call cql_build_query again with corrected parameters
                - Repeat validation until valid=True
             4. Present the validated query to the user
 
@@ -235,7 +235,7 @@ def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
             Validation is a REQUIRED step, not optional.
         
         Args:
-            dataset: FQL dataset (e.g., 'events', 'detections', 'indicators')
+            dataset: CQL dataset (e.g., 'events', 'detections', 'indicators')
             filters: Structured filter conditions as dict or list of dicts
             fields: List of fields to project in results
             natural_language_intent: Natural language description for RAG enhancement
@@ -260,8 +260,8 @@ def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
             )
             
             logger.info(
-                "Built FQL query for dataset=%s",
-                result["metadata"].get("dataset", FQL_DEFAULT_DATASET)
+                "Built CQL query for dataset=%s",
+                result["metadata"].get("dataset", CQL_DEFAULT_DATASET)
             )
             
             # Attach RAG context metadata
@@ -269,7 +269,7 @@ def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
                 runtime=runtime,
                 intent=natural_language_intent,
                 metadata=result["metadata"],
-                source_filter="fql",
+                source_filter="cql",
                 provider_label="CrowdStrike Falcon",
                 logger=logger,
             )
@@ -277,20 +277,20 @@ def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
             return result
             
         except Exception as exc:
-            logger.error("Failed to build FQL query: %s", exc)
+            logger.error("Failed to build CQL query: %s", exc)
             return {"error": str(exc)}
 
     @mcp.tool
-    def fql_validate_query(
+    def cql_validate_query(
         query: str,
         dataset: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """
-        Validate a CrowdStrike Falcon FQL query for syntax, schema compliance, and best practices.
+        Validate a CrowdStrike CQL query for syntax, schema compliance, and best practices.
 
         Args:
-            query: The FQL query string to validate
+            query: The CQL query string to validate
             dataset: Optional dataset name (for schema validation)
             metadata: Optional metadata from query building (enhances validation)
 
@@ -301,15 +301,15 @@ def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
             When valid=False (validation fails):
             1. Review ALL errors in validation_results for specific issues
             2. Use the 'suggestion' field from each error to understand fixes
-            3. Call fql_build_query again with corrections based on suggestions
-            4. Validate the corrected query with fql_validate_query
+            3. Call cql_build_query again with corrections based on suggestions
+            4. Validate the corrected query with cql_validate_query
             5. Repeat steps 1-4 until valid=True
 
             Common fixes:
             - Field errors: Use suggested field names from error messages
-            - Syntax errors: Follow suggestion text to fix FQL syntax issues
+            - Syntax errors: Follow suggestion text to fix CQL syntax issues
             - Schema errors: Adjust dataset or field names as suggested
-            - Operator errors: Use valid FQL operators for the field type
+            - Operator errors: Use valid CQL operators for the field type
 
             You MUST attempt to fix validation errors before presenting queries to users.
             Do not present invalid queries as final results.
@@ -319,7 +319,7 @@ def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
             result = validator.validate(query, dataset, metadata)
             
             logger.info(
-                "Validated FQL query: valid=%s, errors=%d, warnings=%d",
+                "Validated CQL query: valid=%s, errors=%d, warnings=%d",
                 result["valid"],
                 sum(len(cat["errors"]) for cat in result["validation_results"].values()),
                 sum(len(cat["warnings"]) for cat in result["validation_results"].values())
@@ -328,22 +328,22 @@ def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
             return result
             
         except Exception as exc:
-            logger.error("Failed to validate FQL query: %s", exc)
+            logger.error("Failed to validate CQL query: %s", exc)
             return {"error": str(exc)}
 
     @mcp.tool
-    def fql_build_query_validated(
+    def cql_build_query_validated(
         dataset: Optional[str] = None,
         filters: Optional[Union[Dict[str, Any], List[Dict[str, Any]]]] = None,
         fields: Optional[List[str]] = None,
         natural_language_intent: Optional[str] = None,
         time_range: Optional[Union[str, Dict[str, Any]]] = None,
         limit: Optional[int] = None,
-        boolean_operator: str = FQL_DEFAULT_BOOLEAN_OPERATOR,
+        boolean_operator: str = CQL_DEFAULT_BOOLEAN_OPERATOR,
         max_retries: int = 3,
     ) -> Dict[str, Any]:
         """
-        Build and validate a CrowdStrike Falcon FQL query in a single optimized operation.
+        Build and validate a CrowdStrike CQL query in a single optimized operation.
 
         This tool combines query building and validation with automatic retry logic,
         eliminating multiple round-trips and significantly improving performance.
@@ -355,7 +355,7 @@ def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
             - Recommended for all query generation workflows
 
         Args:
-            dataset: FQL dataset (e.g., 'events', 'detections', 'indicators')
+            dataset: CQL dataset (e.g., 'events', 'detections', 'indicators')
             filters: Structured filter conditions as dict or list of dicts
             fields: List of fields to project in results
             natural_language_intent: Natural language description for RAG enhancement
@@ -366,7 +366,7 @@ def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
 
         Returns:
             {
-                "query": "validated FQL query string",
+                "query": "validated CQL query string",
                 "metadata": {...},
                 "validation": {
                     "valid": True/False,
@@ -401,7 +401,7 @@ def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
                 runtime=runtime,
                 intent=natural_language_intent,
                 metadata=metadata,
-                source_filter="fql",
+                source_filter="cql",
                 provider_label="CrowdStrike Falcon",
                 logger=logger,
             )
@@ -412,7 +412,7 @@ def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
                 validation = validator.validate(query, dataset, metadata)
 
                 logger.info(
-                    "FQL query validation (attempt %d/%d): valid=%s, errors=%d",
+                    "CQL query validation (attempt %d/%d): valid=%s, errors=%d",
                     retry_count + 1,
                     max_retries + 1,
                     validation["valid"],
@@ -430,9 +430,9 @@ def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
                     }
 
                 # Extract corrections from validation errors
-                correction_hints = _extract_fql_corrections(validation)
+                correction_hints = _extract_cql_corrections(validation)
                 if not correction_hints:
-                    logger.warning("No actionable corrections found in FQL validation errors")
+                    logger.warning("No actionable corrections found in CQL validation errors")
                     return {
                         "query": query,
                         "metadata": metadata,
@@ -453,7 +453,7 @@ def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
                     corrected_dataset = correction_hints["suggested_dataset"]
                 
                 if "field_corrections" in correction_hints and filters:
-                    corrected_filters = _apply_fql_field_corrections(
+                    corrected_filters = _apply_cql_field_corrections(
                         filters,
                         correction_hints["field_corrections"]
                     )
@@ -476,7 +476,7 @@ def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
                     runtime=runtime,
                     intent=natural_language_intent,
                     metadata=metadata,
-                    source_filter="fql",
+                    source_filter="cql",
                     provider_label="CrowdStrike Falcon",
                     logger=logger,
                 )
@@ -491,12 +491,12 @@ def register_fql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
             }
 
         except Exception as exc:
-            logger.error("Failed to build and validate FQL query: %s", exc)
+            logger.error("Failed to build and validate CQL query: %s", exc)
             return {"error": str(exc)}
 
 
-def _extract_fql_corrections(validation: Dict[str, Any]) -> Dict[str, Any]:
-    """Extract actionable corrections from FQL validation errors."""
+def _extract_cql_corrections(validation: Dict[str, Any]) -> Dict[str, Any]:
+    """Extract actionable corrections from CQL validation errors."""
     corrections = {}
     field_corrections = {}
 
@@ -527,11 +527,11 @@ def _extract_fql_corrections(validation: Dict[str, Any]) -> Dict[str, Any]:
     return corrections
 
 
-def _apply_fql_field_corrections(
+def _apply_cql_field_corrections(
     filters: Union[Dict[str, Any], List[Dict[str, Any]]],
     corrections: Dict[str, str]
 ) -> Union[Dict[str, Any], List[Dict[str, Any]]]:
-    """Apply field name corrections to FQL filters."""
+    """Apply field name corrections to CQL filters."""
     # Handle single dict
     if isinstance(filters, dict):
         corrected_filter = filters.copy()

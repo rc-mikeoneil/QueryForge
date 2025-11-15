@@ -1,7 +1,7 @@
 """
-CrowdStrike Falcon Query Language (FQL) Query Validator.
+CrowdStrike Query Language (CQL) Query Validator.
 
-Validates FQL queries for syntax, schema compliance, performance, and best practices.
+Validates CQL queries for syntax, schema compliance, performance, and best practices.
 """
 
 from __future__ import annotations
@@ -21,29 +21,29 @@ from queryforge.shared.validation import (
 )
 
 
-# Dangerous characters for FQL queries (security validation)
+# Dangerous characters for CQL queries (security validation)
 DANGEROUS_CHARS = {';', '\n', '\r', '\t', '|'}
 
 # Performance thresholds
 MAX_QUERY_LENGTH = 10000
 UNBOUNDED_WARNING_THRESHOLD = 1000
 
-# Common FQL operators and functions
-FQL_OPERATORS = {'=', '!=', '>', '>=', '<', '<=', 'contains', 'startswith', 'endswith', 'in', 'not in', '=~', '!~'}
-FQL_FUNCTIONS = {'now', 'hour', 'day', 'week', 'month', 'year'}
+# Common CQL operators and functions
+CQL_OPERATORS = {'=', '!=', '>', '>=', '<', '<=', 'contains', 'startswith', 'endswith', 'in', 'not in', '=~', '!~'}
+CQL_FUNCTIONS = {'now', 'hour', 'day', 'week', 'month', 'year'}
 
 
-class FQLValidator(BaseValidator):
-    """Validator for CrowdStrike Falcon Query Language (FQL)."""
+class CQLValidator(BaseValidator):
+    """Validator for CrowdStrike Query Language (CQL)."""
 
     def __init__(self, schema_loader) -> None:
         """
-        Initialize FQL validator.
+        Initialize CQL validator.
 
         Parameters
         ----------
-        schema_loader : FQLSchemaLoader
-            Schema loader instance for accessing FQL schema definitions.
+        schema_loader : CQLSchemaLoader
+            Schema loader instance for accessing CQL schema definitions.
         """
         self.schema_loader = schema_loader
         # Load schema from schema_loader
@@ -55,15 +55,15 @@ class FQLValidator(BaseValidator):
 
     def get_platform_name(self) -> str:
         """Return platform name."""
-        return "fql"
+        return "cql"
 
     def validate_syntax(self, query: str) -> List[ValidationIssue]:
         """
-        Validate FQL query syntax.
+        Validate CQL query syntax.
 
         Checks:
         - Query length within limits
-        - Balanced quotes (single quotes for FQL)
+        - Balanced quotes (single quotes for CQL)
         - Balanced parentheses
         - Dangerous characters
         - Proper operator syntax
@@ -80,7 +80,7 @@ class FQLValidator(BaseValidator):
                 suggestion="Simplify the query or reduce the number of conditions"
             ))
 
-        # Check for balanced quotes (FQL uses single quotes)
+        # Check for balanced quotes (CQL uses single quotes)
         quote_issue = check_balanced_quotes(query, "'")
         if quote_issue:
             issues.append(quote_issue)
@@ -110,7 +110,7 @@ class FQLValidator(BaseValidator):
             issues.append(ValidationIssue(
                 severity=ValidationSeverity.WARNING,
                 category="syntax",
-                message="Query contains single backslashes - FQL may require double backslashes for Windows paths",
+                message="Query contains single backslashes - CQL may require double backslashes for Windows paths",
                 suggestion="Use double backslashes for literal backslashes, e.g., 'C:\\\\Windows\\\\System32'"
             ))
 
@@ -134,7 +134,7 @@ class FQLValidator(BaseValidator):
 
     def validate_schema(self, query: str, metadata: Dict[str, Any]) -> List[ValidationIssue]:
         """
-        Validate query against FQL schema.
+        Validate query against CQL schema.
 
         Checks:
         - Dataset exists
@@ -257,7 +257,7 @@ class FQLValidator(BaseValidator):
                     issues.append(ValidationIssue(
                         severity=ValidationSeverity.WARNING,
                         category="operators",
-                        message=f"Operator '{operator}' may not be recognized by FQL",
+                        message=f"Operator '{operator}' may not be recognized by CQL",
                         location=f"filter[{idx}]",
                         suggestion=f"Common operators: =, !=, >, <, >=, <=, contains, startswith, endswith, IN"
                     ))
@@ -349,7 +349,7 @@ class FQLValidator(BaseValidator):
 
     def validate_best_practices(self, query: str, metadata: Dict[str, Any]) -> List[ValidationIssue]:
         """
-        Check against FQL best practices.
+        Check against CQL best practices.
 
         Checks:
         - Using indexed fields
@@ -426,12 +426,12 @@ class FQLValidator(BaseValidator):
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """
-        Validate an FQL query.
+        Validate a CQL query.
 
         Parameters
         ----------
         query : str
-            FQL query string to validate
+            CQL query string to validate
         dataset : Optional[str]
             Dataset name for schema validation
         metadata : Optional[Dict[str, Any]]
@@ -523,16 +523,16 @@ class FQLValidator(BaseValidator):
         return result
 
 
-def validate_fql_query(
+def validate_cql_query(
     schema_loader,
     query: str,
     dataset: Optional[str] = None,
     metadata: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
     """
-    Validate an FQL query (convenience function).
+    Validate a CQL query (convenience function).
 
-    Parameters match FQLValidator.validate() method.
+    Parameters match CQLValidator.validate() method.
     """
-    validator = FQLValidator(schema_loader)
+    validator = CQLValidator(schema_loader)
     return validator.validate(query, dataset, metadata)

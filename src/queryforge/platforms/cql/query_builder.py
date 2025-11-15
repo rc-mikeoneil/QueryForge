@@ -1,8 +1,8 @@
 """
-Query builder for CrowdStrike Falcon Query Language (FQL).
+Query builder for CrowdStrike Query Language (CQL).
 
 This module translates structured parameters and natural language intent
-into FQL query strings with proper syntax, operators, and field validation.
+into CQL query strings with proper syntax, operators, and field validation.
 """
 
 from __future__ import annotations
@@ -97,17 +97,17 @@ _USERNAME_FIELDS = ["user_name", "username"]
 _PORT_FIELDS = ["destination_port", "remote_port", "port"]
 
 
-class FQLQueryBuilder:
-    """Build FQL queries from structured parameters and natural language."""
+class CQLQueryBuilder:
+    """Build CQL queries from structured parameters and natural language."""
 
     def __init__(self, schema_loader) -> None:
         """
-        Initialize FQL query builder.
+        Initialize CQL query builder.
 
         Parameters
         ----------
-        schema_loader : FQLSchemaLoader
-            Schema loader instance for accessing FQL schema definitions.
+        schema_loader : CQLSchemaLoader
+            Schema loader instance for accessing CQL schema definitions.
         """
         self.schema_loader = schema_loader
 
@@ -123,7 +123,7 @@ class FQLQueryBuilder:
         rag_context: Optional[List[Dict[str, Any]]] = None,
     ) -> Dict[str, Any]:
         """
-        Build an FQL query from structured parameters or natural language.
+        Build a CQL query from structured parameters or natural language.
 
         Parameters
         ----------
@@ -153,7 +153,7 @@ class FQLQueryBuilder:
         -------
         Dict[str, Any]
             Dictionary with keys:
-            - query: FQL query string
+            - query: CQL query string
             - metadata: Query metadata including dataset, filters, etc.
         """
         # Validate boolean operator
@@ -182,7 +182,7 @@ class FQLQueryBuilder:
 
                 detected_concepts = detect_security_concepts(natural_language_intent)
                 if detected_concepts:
-                    concept_hints = generate_concept_hints(detected_concepts, "fql")
+                    concept_hints = generate_concept_hints(detected_concepts, "cql")
                     concept_expressions = self._build_concept_expressions(
                         concept_hints, available_fields
                     )
@@ -191,7 +191,7 @@ class FQLQueryBuilder:
                         {"type": "concept_expansion", "concepts": list(detected_concepts)}
                         for _ in concept_expressions
                     ])
-                    logger.info(f"Added {len(concept_expressions)} concept-based FQL expressions")
+                    logger.info(f"Added {len(concept_expressions)} concept-based CQL expressions")
             except Exception as e:
                 logger.warning(f"Security concept expansion failed: {e}")
 
@@ -200,7 +200,7 @@ class FQLQueryBuilder:
             try:
                 from queryforge.shared.rag_context_parser import create_rag_context_parser
 
-                parser = create_rag_context_parser("fql")
+                parser = create_rag_context_parser("cql")
                 parsed_context = parser.parse_context(
                     rag_context, natural_language_intent, dataset_key
                 )
@@ -370,7 +370,7 @@ class FQLQueryBuilder:
     ) -> List[str]:
         """Build filter expressions from security concept hints."""
         expressions = []
-        # Implementation would map concept hints to FQL expressions
+        # Implementation would map concept hints to CQL expressions
         # Placeholder for now
         return expressions
 
@@ -550,7 +550,7 @@ class FQLQueryBuilder:
         return ""
 
     def _quote(self, value: str) -> str:
-        """Quote a string value for use in FQL queries."""
+        """Quote a string value for use in CQL queries."""
         # Escape backslashes and single quotes
         escaped = value.replace("\\", "\\\\").replace("'", "\\'")
         return f"'{escaped}'"
@@ -568,7 +568,7 @@ class FQLQueryBuilder:
         return ", ".join(formatted)
 
 
-def build_fql_query(
+def build_cql_query(
     schema_loader,
     dataset: Optional[str] = None,
     filters: Optional[Union[Dict[str, Any], List[Dict[str, Any]]]] = None,
@@ -580,11 +580,11 @@ def build_fql_query(
     rag_context: Optional[List[Dict[str, Any]]] = None,
 ) -> Dict[str, Any]:
     """
-    Build an FQL query (convenience function).
+    Build a CQL query (convenience function).
 
-    Parameters match FQLQueryBuilder.build_query() method.
+    Parameters match CQLQueryBuilder.build_query() method.
     """
-    builder = FQLQueryBuilder(schema_loader)
+    builder = CQLQueryBuilder(schema_loader)
     return builder.build_query(
         dataset=dataset,
         filters=filters,

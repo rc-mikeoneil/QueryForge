@@ -75,7 +75,7 @@
     {
       "category": "case_sensitivity",
       "title": "Understand Case Sensitivity",
-      "description": "FQL field names and operators may be case-sensitive or insensitive depending on configuration",
+      "description": "CQL field names and operators may be case-sensitive or insensitive depending on configuration",
       "recommendation": "Use consistent casing for field names; use case-insensitive operators when needed",
       "severity": "low",
       "example_good": "process_name contains 'powershell'",

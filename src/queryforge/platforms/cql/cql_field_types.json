@@ -32,7 +32,7 @@
     }
   },
   "placeholder_fields": {
-    "comment": "Placeholder fields until real FQL schema is available",
+    "comment": "Placeholder fields until real CQL schema is available",
     "events": {
       "@timestamp": {
         "type": "datetime",

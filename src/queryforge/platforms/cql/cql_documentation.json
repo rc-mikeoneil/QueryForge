@@ -1,8 +1,8 @@
 {
   "documentation": {
     "overview": {
-      "title": "CrowdStrike Falcon Query Language (FQL)",
-      "description": "FQL is the query language for CrowdStrike Falcon platform, enabling threat hunting and investigation across endpoint telemetry",
+      "title": "CrowdStrike Query Language (CQL)",
+      "description": "CQL is the query language for CrowdStrike Falcon platform, enabling threat hunting and investigation across endpoint telemetry",
       "platform": "CrowdStrike Falcon",
       "version": "placeholder",
       "last_updated": "2024-11-14"
@@ -10,26 +10,26 @@
     "sections": [
       {
         "section": "introduction",
-        "title": "Introduction to FQL",
-        "content": "FQL provides a powerful query interface for searching and analyzing security events in CrowdStrike Falcon. It supports filtering, projection, aggregation, and time-based queries across multiple data sources.",
-        "keywords": ["introduction", "overview", "getting started", "fql basics"]
+        "title": "Introduction to CQL",
+        "content": "CQL provides a powerful query interface for searching and analyzing security events in CrowdStrike Falcon. It supports filtering, projection, aggregation, and time-based queries across multiple data sources.",
+        "keywords": ["introduction", "overview", "getting started", "cql basics"]
       },
       {
         "section": "syntax",
         "title": "Query Syntax",
-        "content": "FQL queries consist of filters, operators, and optional pipeline operations. Basic syntax: field_name operator 'value'. Multiple conditions can be combined with AND/OR. Pipeline operators (|) enable chaining operations like select, limit, stats.",
+        "content": "CQL queries consist of filters, operators, and optional pipeline operations. Basic syntax: field_name operator 'value'. Multiple conditions can be combined with AND/OR. Pipeline operators (|) enable chaining operations like select, limit, stats.",
         "keywords": ["syntax", "operators", "filters", "pipeline"]
       },
       {
         "section": "fields",
         "title": "Available Fields",
-        "content": "FQL provides access to numerous telemetry fields including process information (process_name, command_line, pid), network data (source_ip, destination_ip, port), file operations (file_path, file_hash), and more. Field names are case-sensitive.",
+        "content": "CQL provides access to numerous telemetry fields including process information (process_name, command_line, pid), network data (source_ip, destination_ip, port), file operations (file_path, file_hash), and more. Field names are case-sensitive.",
         "keywords": ["fields", "columns", "attributes", "schema"]
       },
       {
         "section": "operators",
         "title": "Comparison Operators",
-        "content": "FQL supports equality (=, !=), comparison (>, >=, <, <=), string operators (contains, startswith, endswith), list operators (IN, NOT IN), pattern matching (=~, !~), and existence checks (EXISTS, NOT EXISTS).",
+        "content": "CQL supports equality (=, !=), comparison (>, >=, <, <=), string operators (contains, startswith, endswith), list operators (IN, NOT IN), pattern matching (=~, !~), and existence checks (EXISTS, NOT EXISTS).",
         "keywords": ["operators", "comparison", "equality", "string", "regex"]
       },
       {
@@ -59,7 +59,7 @@
       {
         "section": "hunting",
         "title": "Threat Hunting",
-        "content": "FQL enables proactive threat hunting through flexible queries across process execution, network activity, file operations, registry changes, and authentication events. Combine multiple indicators for high-fidelity detections.",
+        "content": "CQL enables proactive threat hunting through flexible queries across process execution, network activity, file operations, registry changes, and authentication events. Combine multiple indicators for high-fidelity detections.",
         "keywords": ["hunting", "detection", "threat hunting", "investigation"]
       },
       {
@@ -106,9 +106,9 @@
         "description": "Main documentation portal (placeholder until real docs available)"
       },
       {
-        "title": "FQL Query Reference",
-        "url": "https://docs.crowdstrike.com/fql/",
-        "description": "Comprehensive FQL syntax and operator reference (placeholder)"
+        "title": "CQL Query Reference",
+        "url": "https://docs.crowdstrike.com/cql/",
+        "description": "Comprehensive CQL syntax and operator reference (placeholder)"
       },
       {
         "title": "Threat Hunting Guide",
