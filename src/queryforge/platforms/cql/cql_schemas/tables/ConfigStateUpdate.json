@@ -1,0 +1,83 @@
+{
+  "table": "ConfigStateUpdate",
+  "category": "endpoint_configuration",
+  "description": "Falcon sensor configuration state update events. Captures changes to sensor configuration, policy updates, and configuration drift detection.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["ConfigStateUpdate"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win", "Mac", "Lin"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "ConfigBuild",
+      "type": "string",
+      "description": "Falcon sensor configuration build version",
+      "searchable": true,
+      "common_usage": ["version tracking", "update monitoring"]
+    },
+    {
+      "name": "ConfigStateData",
+      "type": "string",
+      "description": "Configuration state data or change details",
+      "searchable": true,
+      "common_usage": ["configuration analysis", "drift detection"]
+    },
+    {
+      "name": "PolicyId",
+      "type": "string",
+      "description": "Policy identifier applied to the endpoint",
+      "searchable": true,
+      "common_usage": ["policy tracking", "compliance verification"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "change tracking"]
+    }
+  ],
+  "col_count": 9,
+  "common_filters": [
+    "ConfigBuild=*"
+  ],
+  "common_fields": ["aid", "ComputerName", "ConfigBuild", "PolicyId"],
+  "common_operations": [
+    "Track sensor configuration changes",
+    "Monitor policy updates and deployments",
+    "Detect configuration drift",
+    "Audit sensor configuration compliance"
+  ],
+  "generated_at": "2025-11-15T00:00:00Z"
+}

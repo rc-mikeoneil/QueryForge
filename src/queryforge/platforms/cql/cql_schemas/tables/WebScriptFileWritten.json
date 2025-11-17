@@ -1,0 +1,125 @@
+{
+  "table": "WebScriptFileWritten",
+  "category": "endpoint_file",
+  "description": "Web script file write events (.js, .vbs, .hta, .wsf, etc.). Captures metadata and hashes for web scripts written to disk, important for detecting script-based malware and living-off-the-land techniques.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["WebScriptFileWritten"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win", "Mac", "Lin"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "UserName",
+      "type": "string",
+      "description": "Username associated with the file write",
+      "searchable": true,
+      "common_usage": ["filtering", "user behavior analysis"]
+    },
+    {
+      "name": "TargetFileName",
+      "type": "string",
+      "description": "Full path to the written script file",
+      "searchable": true,
+      "supports_regex": true,
+      "example_values": ["\\Temp\\payload.js", "\\Users\\user\\AppData\\malware.vbs"],
+      "common_usage": ["filtering", "path-based detection"]
+    },
+    {
+      "name": "FileName",
+      "type": "string",
+      "description": "Base filename of the written script file",
+      "searchable": true,
+      "example_values": ["payload.js", "malware.vbs", "downloader.hta"],
+      "common_usage": ["filtering", "extension analysis"]
+    },
+    {
+      "name": "ContextProcessId",
+      "type": "long",
+      "description": "Falcon's unique process identifier for the writing process",
+      "common_usage": ["correlation", "joining with ProcessRollup2"]
+    },
+    {
+      "name": "WritingProcessFileName",
+      "type": "string",
+      "description": "Base filename of the process that wrote the file",
+      "searchable": true,
+      "example_values": ["powershell.exe", "cmd.exe", "chrome.exe"],
+      "common_usage": ["filtering", "source process analysis"]
+    },
+    {
+      "name": "MD5HashData",
+      "type": "string",
+      "description": "MD5 hash of the written script file",
+      "searchable": true,
+      "common_usage": ["threat intelligence", "IOC matching"]
+    },
+    {
+      "name": "SHA256HashData",
+      "type": "string",
+      "description": "SHA256 hash of the written script file",
+      "searchable": true,
+      "common_usage": ["threat intelligence", "IOC matching"]
+    },
+    {
+      "name": "ZoneIdentifier",
+      "type": "string",
+      "description": "Mark of the Web (MOTW) zone identifier (Windows)",
+      "searchable": true,
+      "common_usage": ["downloaded file detection"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "timeline creation"]
+    }
+  ],
+  "col_count": 14,
+  "common_filters": [
+    "TargetFileName=/\\.js$|\\.vbs$|\\.hta$|\\.wsf$/i",
+    "ZoneIdentifier=3",
+    "TargetFileName=/\\\\Temp\\\\/i"
+  ],
+  "common_fields": ["aid", "ComputerName", "TargetFileName", "WritingProcessFileName"],
+  "common_operations": [
+    "Join with ProcessRollup2 via ContextProcessId for writing process details",
+    "Detect suspicious script files in temp directories",
+    "Identify downloaded scripts (ZoneIdentifier=3)",
+    "Correlate with ScriptControl for script execution",
+    "Hunt for .hta (HTML Application) file abuse",
+    "Detect VBScript and JScript malware"
+  ],
+  "generated_at": "2025-11-15T00:00:00Z"
+}

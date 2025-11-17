@@ -1,0 +1,82 @@
+{
+  "table": "AgentOnline",
+  "category": "endpoint_telemetry",
+  "description": "Agent connectivity and heartbeat events. Generated when the Falcon sensor comes online or reports status. Used for calculating system uptime, boot time, and sensor health monitoring.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["AgentOnline"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win", "Mac", "Lin"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "searchable": true,
+      "common_usage": ["display", "filtering"]
+    },
+    {
+      "name": "BaseTime",
+      "type": "long",
+      "description": "Base time value used for calculating system boot time (Windows-specific)",
+      "common_usage": ["boot time calculation", "uptime analysis"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "last online tracking"]
+    },
+    {
+      "name": "@timestamp",
+      "type": "datetime",
+      "description": "Event timestamp in ISO format",
+      "common_usage": ["display", "time range filtering"]
+    }
+  ],
+  "col_count": 8,
+  "common_filters": [
+    "event_platform=Win",
+    "event_platform=Mac",
+    "event_platform=Lin"
+  ],
+  "common_fields": ["aid", "ComputerName", "BaseTime", "event_platform"],
+  "common_operations": [
+    "Windows boot time calculation using BaseTime",
+    "System uptime calculation (time since last reboot)",
+    "Last online timestamp tracking",
+    "Sensor connectivity monitoring"
+  ],
+  "calculation_formulas": {
+    "LastReboot_Windows": "LastReboot_milli := (BaseTime/1000*1024) + 978307200",
+    "RebootAge": "LastRebootAgo := now() - (LastReboot_milli*1000)",
+    "Usage": "Used with selectLast([BaseTime]) to get most recent boot time per endpoint"
+  },
+  "notes": "BaseTime requires conversion formula to get actual boot timestamp on Windows. The formula accounts for Falcon's internal time representation.",
+  "generated_at": "2025-11-14T23:45:00Z"
+}

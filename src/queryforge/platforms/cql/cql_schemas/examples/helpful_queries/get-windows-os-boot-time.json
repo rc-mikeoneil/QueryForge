@@ -1,0 +1,46 @@
+{
+  "id": "get-windows-os-boot-time",
+  "title": "Get Windows OS Boot Time",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Get Windows OS Boot Time.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "AgentOnline"
+  ],
+  "functions_used": [
+    "drop",
+    "groupBy"
+  ],
+  "operators_used": [
+    "=",
+    "and",
+    "in",
+    "|"
+  ],
+  "fields_referenced": [
+    "field",
+    "function",
+    "locale",
+    "realBootTime",
+    "realBootTimeHuman",
+    "timezone"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "Analysis query for Get Windows OS Boot Time",
+  "query": "// Get Event Required on Windows Platform\n#event_simpleName=AgentOnline event_platform=Win\n// Convert BastTime in epoch Time Stamp\n\n| realBootTime := (((BaseTime/1000)*1024)+978307200)*1000\n\n// Determine Uptime in Days\n\n| uptimeDays := (now()-(realBootTime))/1000/60/60/24\n\n// Round Uptime to Remove Decimal Place\n\n| round(\"uptimeDays\")\n\n// Crate groupBy to organize output\n\n| groupBy(aid, function=([selectLast([realBootTime,uptimeDays])]))\n\n// Convert realBootTime to Human Readable Format and rename output\n\n| realBootTimeHuman := formatTime(\"%Y-%m-%d %H:%M:%S\", field=realBootTime, locale=en_US, timezone=Z)\n\n// Make sure the field realBootTimeHuman has been calculated\n\n| realBootTimeHuman = *\n\n// Drop unnecessary field in epoch time\n\n| drop([\"realBootTime\"])",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "agentonline",
+    "lin",
+    "win"
+  ]
+}

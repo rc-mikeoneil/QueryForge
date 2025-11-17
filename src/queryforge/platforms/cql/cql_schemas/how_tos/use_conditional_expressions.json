@@ -1,0 +1,23 @@
+{
+  "title": "How-To: Use Conditional Expressions",
+  "slug": "use_conditional_expressions",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Demonstrates conditional logic in queries using case, test(), or similar constructs\nto derive new fields or filter events based on complex rules.",
+  "examples": [
+    {
+      "name": "Mark login status",
+      "description": "Sets a loginStatus field based on a combination of conditions.",
+      "language": "logscale",
+      "query": "| case {\n    Status=\"SUCCESS\" | loginStatus := \"success\" ;\n    Status=\"FAILURE\" | loginStatus := \"failure\" ;\n    *                | loginStatus := \"other\" ;\n  }"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "case",
+    "conditional",
+    "logic"
+  ],
+  "difficulty": "intermediate"
+}

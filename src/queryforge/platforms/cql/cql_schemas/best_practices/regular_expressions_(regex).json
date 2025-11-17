@@ -1,0 +1,25 @@
+{
+  "title": "Regular Expressions (regex)",
+  "slug": "regular_expressions_(regex)",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "Regex is powerful for field extraction and pattern matching. Use anchored expressions and named capture groups to keep patterns readable and efficient.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Splits CommandLine into an executable and argument string using a single anchored regex with named groups.",
+      "language": "logscale",
+      "query": "CommandLine=/^(?<exe>[^ ]+) (?<args>.*)$/\n| select([exe, args])"
+    }
+  ],
+  "tags": [
+    "match",
+    "regex"
+  ],
+  "url": "https://library.humio.com/kb/kb-regular-expressions.html",
+  "difficulty": "advanced",
+  "related_functions": [
+    "select"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "title": "Query Monitoring- Blocking and Termination",
+  "slug": "query_monitoring-_blocking_and_termination",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "Use query monitoring controls to detect and block runaway or abusive queries. Monitor query duration and state size, and configure limits to terminate or throttle problematic jobs.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "An administrator might monitor heavy queries by user to identify who is issuing searches that regularly hit state size or runtime thresholds.",
+      "language": "logscale",
+      "query": "#repo=falcon-endpoint\n| groupBy(@user, function=count(as=\"Events\"))"
+    }
+  ],
+  "tags": [
+    "monitoring",
+    "query-monitoring"
+  ],
+  "url": "https://library.humio.com/kb/kb-query-monitoring.html",
+  "difficulty": "intermediate",
+  "related_functions": [
+    "count",
+    "groupBy"
+  ]
+}

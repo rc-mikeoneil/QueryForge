@@ -1,0 +1,60 @@
+{
+  "id": "mean-time-to-react-respond-and-resolve",
+  "title": "Mean Time to React, Respond, and Resolve",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Mean Time to React, Respond, and Resolve.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [],
+  "functions_used": [
+    "avg",
+    "count",
+    "default",
+    "drop",
+    "groupBy",
+    "max",
+    "min",
+    "rename",
+    "sort"
+  ],
+  "operators_used": [
+    "<",
+    "=",
+    "in",
+    "or",
+    "|"
+  ],
+  "fields_referenced": [
+    "Attributes.update_status",
+    "ExternalApiType",
+    "MTTReact",
+    "MTTResolve",
+    "MTTRespond",
+    "OperationName",
+    "SeverityName",
+    "as",
+    "distinct",
+    "field",
+    "function",
+    "limit",
+    "order",
+    "precision",
+    "replaceEmpty",
+    "repo",
+    "value"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "detection",
+  "platforms": [
+    "Cross-platform"
+  ],
+  "use_case": "Detection query for Mean Time to React, Respond, and Resolve",
+  "query": "// Get alert events\n#repo=detections (ExternalApiType=/Event_(Epp|Idp|Mobile)DetectionSummaryEvent/) OR (ExternalApiType=Event_UserActivityAuditEvent OperationName=detection_update)\n| case{\n    ExternalApiType=Event_UserActivityAuditEvent Attributes.update_status=\"closed\" | ResolveTime:=@timestamp;\n    ExternalApiType=Event_UserActivityAuditEvent | UpdateTime:=@timestamp;\n    * | DetectTime:=@timestamp;\n}\n\n// Normalize alert UUID\n| detectID:=Attributes.composite_id \n| detectID:=CompositeId\n\n// Perform aggregation\n| groupBy([detectID], function=([count(ExternalApiType, distinct=true), min(DetectTime, as=DetectTime), min(UpdateTime, as=UpdateTime), max(ResolveTime, as=ResolveTime), selectLast([Attributes.update_status, Attributes.add_tag, Severity, SeverityName])]), limit=max)\n\n// Only evaluablue closed alerts\n| Attributes.update_status=\"closed\"\n\n// Calculate Mean Time To React in millis\n| MTTReact:=UpdateTime-DetectTime\n\n// Calucuate Mean Time To Respond in millis\n| MTTRespond:=ResolveTime-UpdateTime\n\n// Calculate Mean Time To Resolve in millis\n| MTTResolve:=ResolveTime-DetectTime\n\n// Aggregate by Severity\n| case{\n    Severity<20 | Sev:=\"1\";\n    Severity<40 | Sev:=\"2\";\n    Severity<60 | Sev:=\"3\";\n    Severity<80 | Sev:=\"4\";\n    Severity<100 | Sev:=\"5\";\n}\n| groupBy([Sev, SeverityName], function=([count(detectID, as=SampleSize), avg(MTTReact, as=MTTReact), avg(MTTRespond, as=MTTRespond), avg(MTTResolve, as=MTTResolve)]))\n| SeverityName=*\n| sort(Sev, order=desc) \n| drop([Sev])\n\n// Make ouput pretty\n| MTTReact:=round(MTTReact) | formatDuration(field=MTTReact, precision=3, as=MTTReact)\n| MTTRespond:=round(MTTRespond) | formatDuration(field=MTTRespond, precision=3, as=MTTRespond)\n| MTTResolve:=round(MTTResolve) | formatDuration(field=MTTResolve, precision=3, as=MTTResolve)\n| rename([[MTTReact, React], [MTTRespond, Respond], [MTTResolve, Resolve]])\n| default(value=\"-\", field=[React, Respond, Resolve], replaceEmpty=true)",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "cross-platform"
+  ]
+}

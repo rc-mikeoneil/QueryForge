@@ -1,0 +1,23 @@
+{
+  "name": "createEvents",
+  "category": "utility",
+  "description": "Generates temporary events as part of the query, ideal for generating sample data for testing or troubleshooting. It is regarded as an aggregator function and therefore discards all incoming events and outputs the generated ones.",
+  "syntax": "createEvents([event_strings])",
+  "parameters": [
+    {
+      "name": "events",
+      "type": "array",
+      "required": true,
+      "description": "Array of raw event strings to generate"
+    }
+  ],
+  "return_type": "generated_events",
+  "examples": [
+    "createEvents([\"Shape=Square, Color=Red\", \"Shape=Circle, Color=Blue\", \"Shape=Triangle, Color=Green\"])",
+    "createEvents([\"Shape=Square, Color=Red\", \"Shape=Circle, Color=Blue\", \"Shape=Triangle, Color=Green\"])\n| kvParse()"
+  ],
+  "related_functions": ["kvParse", "parseJson"],
+  "use_cases": ["Testing", "Troubleshooting", "Sample data generation", "Query development"],
+  "notes": "Events are generated with no extracted fields but can be combined with parsers like kvParse().",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-createevents.html"
+}

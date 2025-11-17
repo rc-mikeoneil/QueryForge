@@ -1,0 +1,30 @@
+{
+  "name": "avg",
+  "category": "aggregation",
+  "description": "Calculates the average (mean) value of a specified field across events in a group. Typically used within groupBy() function to compute statistical averages.",
+  "syntax": "avg(field, as=output_field)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "Numeric field to calculate the average of"
+    },
+    {
+      "name": "as",
+      "type": "string",
+      "required": false,
+      "description": "Name for the output field containing the average value"
+    }
+  ],
+  "return_type": "numeric",
+  "examples": [
+    "| groupBy([Severity], function=avg(MTTReact, as=avgReactionTime))",
+    "| avg(CpuUsagePercent, as=averageCPU)",
+    "| groupBy([aid], function=([avg(ResponseTime, as=avgResponseTime), count()]))"
+  ],
+  "related_functions": ["max", "min", "sum", "groupBy"],
+  "use_cases": ["Mean time to react/respond", "Performance metrics", "Statistical analysis", "Threshold analysis"],
+  "notes": "Useful for calculating metrics like mean time to respond (MTTR) or average resource utilization.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-avg.html"
+}

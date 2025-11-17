@@ -1,0 +1,26 @@
+{
+  "title": "Formatting query output using select()",
+  "slug": "formatting_query_output_using_select()",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "Use select() to control exactly which fields appear in the final result set and in what order. This is especially useful for dashboards, scheduled searches, and CSV exports.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Restricts output to a small set of analyst\u2011relevant fields in a predictable column order, ideal for dashboards or exports.",
+      "language": "logscale",
+      "query": "#event_simpleName=ProcessRollup2\n| select([@timestamp, ComputerName, UserName, ImageFileName, CommandLine])"
+    }
+  ],
+  "tags": [
+    "export",
+    "formatting",
+    "select"
+  ],
+  "url": "https://library.humio.com/kb/kb-formatting-query-output-select.html",
+  "difficulty": "beginner",
+  "related_functions": [
+    "select"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "id": "enumerate-chrome-edge-browser-extension-on-win-and-mac",
+  "title": "Enumerate Chrome + Edge Browser Extension on Win and Mac",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Enumerate Chrome + Edge Browser Extension on Win and Mac.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "InstalledBrowserExtension"
+  ],
+  "functions_used": [
+    "count",
+    "format",
+    "groupBy",
+    "sort"
+  ],
+  "operators_used": [
+    "!=",
+    "=",
+    "|"
+  ],
+  "fields_referenced": [
+    "BrowserName",
+    "as",
+    "distinct",
+    "field",
+    "function",
+    "limit",
+    "order"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "inventory",
+  "platforms": [
+    "Lin",
+    "Mac",
+    "Win"
+  ],
+  "use_case": "Inventory query for Enumerate Chrome + Edge Browser Extension on Win and Mac",
+  "query": "#event_simpleName=InstalledBrowserExtension BrowserExtensionId!=\"no-extension-available\"\n| groupBy([event_platform, BrowserName, BrowserExtensionId, BrowserExtensionName], function=([count(aid, distinct=true, as=TotalEndpoints)]))\n| format(\"[See Extension](https://chromewebstore.google.com/detail/%s)\", field=[BrowserExtensionId], as=\"Chrome Store Link\")\n| sort(order=desc, TotalEndpoints, limit=1000)\n| case{\n    BrowserName=\"3\" | BrowserName:=\"Chrome\";\n    BrowserName=\"4\" | BrowserName:=\"Edge\";\n    *;\n}",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "installedbrowserextension",
+    "lin",
+    "mac",
+    "win"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "title": "How-To: Reassemble a UDP Syslog Event",
+  "slug": "reassemble_a_udp_syslog_event",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Covers techniques for reassembling multi-line UDP syslog messages that may have been split,\nusing sequence numbers, message IDs, or buffer functions.",
+  "examples": [
+    {
+      "name": "Reassemble by messageId",
+      "description": "Groups fragments by messageId and concatenates them in sequence order.",
+      "language": "logscale",
+      "query": "| groupBy(messageId, function=collectSorted(fragment, sortBy=fragmentIndex) as fragments)\n| fullMessage := join(fragments, \"\")"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "syslog",
+    "udp",
+    "reassembly"
+  ],
+  "difficulty": "advanced",
+  "related_functions": [
+    "collectSorted",
+    "groupBy",
+    "join"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "id": "hunt-pbd-file-paths-in-reflective-net-module-loads",
+  "title": "Hunt PBD File Paths in Reflective .net Module Loads",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Hunt PBD File Paths in Reflective .net Module Loads.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "ReflectiveDotnetModuleLoad"
+  ],
+  "functions_used": [
+    "count",
+    "drop",
+    "format",
+    "groupBy",
+    "in",
+    "selectFromMax",
+    "test"
+  ],
+  "operators_used": [
+    "!=",
+    "<",
+    "=",
+    ">",
+    "and",
+    "in",
+    "|"
+  ],
+  "fields_referenced": [
+    "ImageFileName",
+    "as",
+    "distinct",
+    "field",
+    "function",
+    "id",
+    "include",
+    "values"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "hunting",
+  "platforms": [
+    "Win"
+  ],
+  "use_case": "Hunting query for Hunt PBD File Paths in Reflective .net Module Loads",
+  "query": "// Get ReflectiveDotnetModuleLoad with non-null ManagedPdbBuildPath field.\n#event_simpleName=ReflectiveDotnetModuleLoad event_platform=Win ManagedPdbBuildPath!=\"\"\n\n// Capture FilePath and FileName Fields\n| ImageFileName=/(\\\\Device\\\\HarddiskVolume\\d+)?(?<FilePath>.+\\\\)(?<FileName>.+)/\n\n// Exclude things in Windows and Program Files folders\n| FilePath!=/^\\\\(Windows|Program\\sFiles|Program\\sFiles\\s\\(x86\\))\\\\/\n\n// Aggregate results by FileName and FilePath\n| groupBy([FileName, FilePath], function=([count(aid, distinct=true, as=uniqueEndpoints), count(aid, as=executionCount), count(ManagedPdbBuildPath, distinct=true, as=uniqueManagedPdbBuildPath), collect([AssemblyName, ManagedPdbBuildPath]), selectFromMax(field=\"@timestamp\", include=[aid, ContextProcessId])]))\n\n// Create thresholds for conditions\n| test(uniqueEndpoints<5)\n| test(uniqueManagedPdbBuildPath<10)\n| test(executionCount<100) \n\n// Remove unwanted files that slip through filter\n| !in(field=\"FileName\", values=[\"Docker Desktop Installer.exe\"])\n\n// Add Graph Explorer\n| rootURL := \"https://falcon.crowdstrike.com/\" /* US-1 */\n//| rootURL := \"https://falcon.us-2.crowdstrike.com/\" /* US-2 */\n//| rootURL := \"https://falcon.laggar.gcw.crowdstrike.com/\" /* Gov */\n//| rootURL := \"https://falcon.eu-1.crowdstrike.com/\" /* EU */\n| format(\"[Graph Explorer](%sgraphs/process-explorer/graph?id=pid:%s:%s)\", field=[\"rootURL\", \"aid\", \"ContextProcessId\"], as=\"Last Execution\")\n\n// Drop unnecessary fields\n| drop([rootURL, aid, ContextProcessId])",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "file",
+    "reflectivedotnetmoduleload",
+    "win"
+  ]
+}

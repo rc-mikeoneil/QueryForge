@@ -39,7 +39,7 @@ class ServerRuntime:
         self.cbc_schema_file = base_dir / "platforms" / "cbc" / "cbc_schema.json"
         self.cbr_schema_dir = base_dir / "platforms" / "cbr"
         self.cortex_schema_file = base_dir / "platforms" / "cortex" / "new_schema" / "cortex_core.json"
-        self.cql_schema_dir = base_dir / "platforms" / "cql"
+        self.cql_schema_dir = base_dir / "platforms" / "cql" / "cql_schemas"
         self.kql_schema_dir = base_dir / "platforms" / "kql" / "defender_xdr_kql_schema_fuller"
         self.kql_schema_cache_file = self.data_dir / "kql_schema_cache.json"
         self.s1_schema_dir = base_dir / "platforms" / "s1" / "s1_schemas"

@@ -1,0 +1,24 @@
+{
+  "title": "How-To: Exclude RFC1918 and Non-Routable IP Addresses",
+  "slug": "exclude_rfc1918_and_non_routable_ip_addresses",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Demonstrates query patterns to exclude private or non-routable IP ranges (RFC1918 and similar)\nfrom search results, focusing on fields such as src_ip or dst_ip.",
+  "examples": [
+    {
+      "name": "Filter out private IPv4 ranges",
+      "description": "Excludes events where RemoteIP is in 10.0.0.0/8, 172.16.0.0/12, or 192.168.0.0/16.",
+      "language": "logscale",
+      "query": "RemoteIP!~/^10\\./\nRemoteIP!~/^192\\.168\\./\nRemoteIP!~/^172\\.(1[6-9]|2[0-9]|3[0-1])\\./"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "network",
+    "ioc",
+    "rfc1918",
+    "filtering"
+  ],
+  "difficulty": "beginner"
+}

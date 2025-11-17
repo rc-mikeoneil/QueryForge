@@ -1,0 +1,45 @@
+{
+  "id": "bottom-10-of-networkconnct-port-values",
+  "title": "Bottom 10% of NetworkConnct Port Values",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Bottom 10% of NetworkConnct Port Values.md",
+  "category": "helpful_query",
+  "subcategory": "network",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "NetworkConnectIP4"
+  ],
+  "functions_used": [
+    "count",
+    "drop",
+    "groupBy",
+    "sort",
+    "sum"
+  ],
+  "operators_used": [
+    "<",
+    "=",
+    "|"
+  ],
+  "fields_referenced": [
+    "as",
+    "field",
+    "function",
+    "limit",
+    "order"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Cross-platform"
+  ],
+  "use_case": "Analysis query for Bottom 10% of NetworkConnct Port Values",
+  "query": "#event_simpleName=NetworkConnectIP4\n| groupBy([RemotePort], function=count(as=count), limit=max) \n| [sum(count, as=total), sort(field=RemotePort, order=ascending, limit=20000)] \n| percent := 100 * (count / total) \n| drop([total]) \n| percent < 10",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "cross-platform",
+    "networkconnectip4"
+  ]
+}

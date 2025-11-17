@@ -1,0 +1,72 @@
+{
+  "table": "AssociateTreeIdWithRoot",
+  "category": "endpoint_pattern_matching",
+  "description": "Pattern matching tree association events used internally by CrowdStrike for behavioral pattern tracking. Associates tree identifiers with root processes for pattern-based detection.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["AssociateTreeIdWithRoot"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win", "Mac", "Lin"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "TreeId",
+      "type": "string",
+      "description": "Pattern tree identifier",
+      "searchable": true,
+      "common_usage": ["pattern correlation", "tree tracking"]
+    },
+    {
+      "name": "RootId",
+      "type": "string",
+      "description": "Root identifier for the pattern tree",
+      "searchable": true,
+      "common_usage": ["root process correlation"]
+    },
+    {
+      "name": "TargetProcessId",
+      "type": "long",
+      "description": "Falcon process identifier associated with the tree",
+      "common_usage": ["correlation", "joining with ProcessRollup2"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis"]
+    }
+  ],
+  "col_count": 8,
+  "common_filters": [],
+  "common_fields": ["aid", "TreeId", "RootId", "TargetProcessId"],
+  "common_operations": [
+    "Internal pattern matching correlation",
+    "Join with ProcessRollup2 via TargetProcessId",
+    "Advanced behavioral detection workflows"
+  ],
+  "generated_at": "2025-11-15T00:00:00Z"
+}

@@ -1,0 +1,25 @@
+{
+  "title": "Remove decimal place from timestamp field and convert to human-readable time",
+  "slug": "remove_decimal_place_from_timestamp_field_and_convert_to_human-readable_time",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "Falcon timestamps can arrive as Unix epoch with fractional seconds. Strip decimals and convert to a human\u2011readable timestamp field for easier analysis.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Rounds down a decimal epoch field and parses it into a proper @timestamp for use with time bucket functions and normal visualizations.",
+      "language": "logscale",
+      "query": "epoch := floor(timestamp_decimal)\n| @timestamp := parseTimestamp(epoch, unit=\"seconds\")"
+    }
+  ],
+  "tags": [
+    "timestamp"
+  ],
+  "url": "https://library.humio.com/kb/kb-remove-decimal-timestamp-convert.html",
+  "difficulty": "beginner",
+  "related_functions": [
+    "floor",
+    "parseTimestamp"
+  ]
+}

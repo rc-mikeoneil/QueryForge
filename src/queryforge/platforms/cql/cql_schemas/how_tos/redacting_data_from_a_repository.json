@@ -1,0 +1,23 @@
+{
+  "title": "How-To: Redacting Data from a Repository",
+  "slug": "redacting_data_from_a_repository",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "admin",
+  "description": "Explains how to redact sensitive fields or patterns from existing data in a repository,\ntypically via targeted delete or overwrite operations performed by administrators.",
+  "examples": [
+    {
+      "name": "Conceptual redaction example",
+      "description": "Illustrative example of replacing sensitive values with a redacted marker.",
+      "language": "pseudo",
+      "query": "UPDATE events SET card_number=\"REDACTED\" WHERE card_number IS NOT NULL"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "privacy",
+    "redaction",
+    "admin"
+  ],
+  "difficulty": "beginner"
+}

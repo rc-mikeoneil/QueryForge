@@ -1,0 +1,64 @@
+{
+  "id": "processrollup2-curation",
+  "title": "ProcessRollup2 Curation",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/ProcessRollup2 Curation.md",
+  "category": "helpful_query",
+  "subcategory": "process",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "UserIdentity",
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "count",
+    "format",
+    "groupBy",
+    "in",
+    "join",
+    "table"
+  ],
+  "operators_used": [
+    "!=",
+    "=",
+    ">",
+    "and",
+    "in",
+    "not",
+    "|"
+  ],
+  "fields_referenced": [
+    "ImageFileName",
+    "aid",
+    "as",
+    "by",
+    "field",
+    "function",
+    "include",
+    "index",
+    "start",
+    "values"
+  ],
+  "correlation_patterns": [
+    "join"
+  ],
+  "difficulty": "advanced",
+  "query_type": "hunting",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "Hunting query for ProcessRollup2 Curation",
+  "query": "// Specify data source and simpleName (index)\n#event_simpleName=ProcessRollup2\n\n// search for net.exe and net1.exe (including path, hence the wildcard)\n\n| ImageFileName =~ in(values=[\"*\\\\cmd.exe\", \"*\\\\powershell.exe\"])\n\n// group data and summarize\n\n| groupBy([\"#cid\", \"aid\", \"UserSid\", \"ImageFileName\", \"CommandLine\"], function=[count(as=executionCount), selectLast([\"TargetProcessId\"])])\n\n// enrich sid -> username and aid -> ComputerName, not in the ProcessRollup event when through FDR\n\n| join({#event_simpleName = \"UserIdentity\" | groupBy([\"#cid\", \"aid\", \"UserSid\"], function=selectLast([\"UserName\"]))}, include=\"UserName\", field=[\"#cid\", \"aid\", \"UserSid\"])\n| join({#event_simpleName!=* EventType != \"Event_ExternalApiEvent\" | groupBy([\"#cid\", \"aid\"], function=selectLast([\"ComputerName\"]))}, include=\"ComputerName\", field=[\"#cid\", \"aid\"])\n\n// Create RTR and PE links, Humio supports markdown!\n\n| RTR := format(\"[RTR](https://falcon.eu-1.crowdstrike.com/activity/real-time-response/console/?start=hosts&aid=%s)\",field=[\"aid\"])\n| \"Process Explorer\" := format(\"[Explore](https://falcon.eu-1.crowdstrike.com/investigate/process-explorer/%s/%s)\", field=[\"aid\", \"TargetProcessId\"])\n\n// Split string to only get filename\n\n| FileName := splitString(field=\"ImageFileName\", by=\"\\\\\\\\\", index=\"-1\")\n\n// Table the output!\n\n| table([\"aid\", \"ComputerName\", \"UserName\", \"FileName\", \"UserSid\", \"CommandLine\", \"executionCount\", \"TargetProcessId\", \"RTR\", \"Process Explorer\"])",
+  "key_features": [
+    "Uses join for correlation"
+  ],
+  "related_examples": [],
+  "tags": [
+    "join",
+    "lin",
+    "processrollup2",
+    "useridentity",
+    "win"
+  ]
+}

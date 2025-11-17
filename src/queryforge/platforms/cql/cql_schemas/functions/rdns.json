@@ -1,0 +1,30 @@
+{
+  "name": "rdns",
+  "category": "network",
+  "description": "Resolves hostnames using reverse DNS lookups. If a lookup fails, keeps the event but doesn't add the field. Results are cached internally.",
+  "syntax": "| rdns(ip_field, as=output_field)",
+  "parameters": [
+    {
+      "name": "ip_field",
+      "type": "field",
+      "required": true,
+      "description": "The field containing IP addresses to resolve"
+    },
+    {
+      "name": "as",
+      "type": "field",
+      "required": false,
+      "description": "The name of the output field to store the resolved hostname"
+    }
+  ],
+  "return_type": "enriched_events",
+  "examples": [
+    "| rdns(RemoteAddressIP4, as=rdns)\n| select([RemoteAddressIP4, rdns])",
+    "| rdns(src_ip, as=src_hostname)",
+    "| rdns(dst_ip, as=dst_hostname)"
+  ],
+  "related_functions": ["cidr", "ipLocation"],
+  "use_cases": ["IP address enrichment", "Network investigation", "Hostname resolution", "Security analysis"],
+  "notes": "Limited by MAX_STATE_LIMIT (default 20000 events). Timeout applied to prevent blocking. Results cached for faster subsequent queries. Works better in live queries than static queries due to caching. Failed lookups may succeed on subsequent executions.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-rdns.html"
+}

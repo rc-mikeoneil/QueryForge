@@ -1,0 +1,105 @@
+{
+  "table": "ActiveDirectoryAuditUserModified",
+  "category": "endpoint_active_directory",
+  "description": "Active Directory user modification events. Captures changes to AD user objects including attribute changes, group membership modifications, and privilege changes.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["ActiveDirectoryAuditUserModified"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the domain controller",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the domain controller",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "TargetUserName",
+      "type": "string",
+      "description": "Username of the AD user being modified",
+      "searchable": true,
+      "common_usage": ["filtering", "monitoring privileged accounts"]
+    },
+    {
+      "name": "TargetUserSid",
+      "type": "string",
+      "description": "SID of the AD user being modified",
+      "searchable": true,
+      "common_usage": ["filtering", "correlation"]
+    },
+    {
+      "name": "SubjectUserName",
+      "type": "string",
+      "description": "Username of the account making the modification",
+      "searchable": true,
+      "common_usage": ["actor identification", "audit trail"]
+    },
+    {
+      "name": "SubjectUserSid",
+      "type": "string",
+      "description": "SID of the account making the modification",
+      "searchable": true,
+      "common_usage": ["actor correlation"]
+    },
+    {
+      "name": "AttributeModified",
+      "type": "string",
+      "description": "Name of the AD attribute that was modified",
+      "searchable": true,
+      "common_usage": ["filtering", "change tracking"]
+    },
+    {
+      "name": "AttributeValue",
+      "type": "string",
+      "description": "New value of the modified attribute",
+      "searchable": true,
+      "common_usage": ["change analysis"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "timeline creation"]
+    }
+  ],
+  "col_count": 12,
+  "common_filters": [
+    "TargetUserName=/admin|root/i",
+    "AttributeModified=memberOf"
+  ],
+  "common_fields": ["aid", "TargetUserName", "SubjectUserName", "AttributeModified"],
+  "common_operations": [
+    "Monitor modifications to privileged AD accounts",
+    "Track changes to sensitive AD attributes",
+    "Detect unauthorized AD modifications",
+    "Audit AD user lifecycle changes"
+  ],
+  "generated_at": "2025-11-15T00:00:00Z"
+}

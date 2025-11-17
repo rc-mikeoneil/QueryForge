@@ -1,0 +1,29 @@
+{
+  "title": "How-To: Pass a groupBy() result to timechart()",
+  "slug": "pass_a_groupby_result_to_timechart",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Illustrates how to take grouped results and feed them into timechart() to see how\naggregated metrics evolve over time.",
+  "examples": [
+    {
+      "name": "Group by UserName, then chart counts over time",
+      "description": "Groups first by UserName, then builds a timechart per user.",
+      "language": "logscale",
+      "query": "#event_simpleName=UserLogon\n| groupBy(UserName, function=count() as loginCount)\n| timechart(function=sum(loginCount), groupBy=UserName, span=1h)"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "groupBy",
+    "timechart",
+    "aggregation"
+  ],
+  "difficulty": "intermediate",
+  "related_functions": [
+    "count",
+    "groupBy",
+    "sum",
+    "timechart"
+  ]
+}

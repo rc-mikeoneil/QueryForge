@@ -1,0 +1,28 @@
+{
+  "title": "Creating dynamic text boxes in queries",
+  "slug": "creating_dynamic_text_boxes_in_queries",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "You can use dashboard parameters and assignment to build dynamic text boxes that show summary metrics or context such as selected host, timeframe, or counts.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Creates a text field that can be surfaced in a dashboard widget to narrate what the query results show for a selected host.",
+      "language": "logscale",
+      "query": "#event_simpleName=ProcessRollup2 ComputerName=?host\n| groupBy(ComputerName, function=count(as=\"ProcessEvents\"))\n| text := format(\"Host %s ran %d process events in the selected period\", field=[ComputerName, ProcessEvents])"
+    }
+  ],
+  "tags": [
+    "assignment",
+    "count",
+    "select"
+  ],
+  "url": "https://library.humio.com/kb/kb-dynamic-text-boxes-queries.html",
+  "difficulty": "intermediate",
+  "related_functions": [
+    "count",
+    "format",
+    "groupBy"
+  ]
+}

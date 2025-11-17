@@ -1,0 +1,49 @@
+{
+  "id": "rdp-login-world-map",
+  "title": "RDP Login World Map",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/RDP Login World Map.md",
+  "category": "helpful_query",
+  "subcategory": "visualization",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "UserLogon"
+  ],
+  "functions_used": [
+    "count",
+    "ipLocation",
+    "worldMap"
+  ],
+  "operators_used": [
+    "=",
+    "|"
+  ],
+  "fields_referenced": [
+    "LogonType",
+    "RemoteAddressIP4",
+    "aid",
+    "lat",
+    "lon",
+    "magnitude"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "visualization",
+  "platforms": [
+    "Cross-platform"
+  ],
+  "use_case": "Visualization query for RDP Login World Map",
+  "query": "#event_simpleName=UserLogon LogonType=10\n\n| RemoteAddressIP4 = *\n| ipLocation(RemoteAddressIP4)\n| worldMap(lat=RemoteAddressIP4.lat, lon=RemoteAddressIP4.lon, magnitude=count(aid))",
+  "key_features": [
+    "Geographic visualization",
+    "IP geolocation enrichment"
+  ],
+  "related_examples": [],
+  "tags": [
+    "cross-platform",
+    "login",
+    "rdp",
+    "userlogon",
+    "worldmap"
+  ]
+}

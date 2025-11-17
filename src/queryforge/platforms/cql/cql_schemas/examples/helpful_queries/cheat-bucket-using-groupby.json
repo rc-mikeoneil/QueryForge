@@ -1,0 +1,45 @@
+{
+  "id": "cheat-bucket-using-groupby",
+  "title": "Cheat bucket Using groupBy",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Cheat bucket Using groupBy.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "OsVersionInfo"
+  ],
+  "functions_used": [
+    "count",
+    "groupBy"
+  ],
+  "operators_used": [
+    "=",
+    ">",
+    "match",
+    "|"
+  ],
+  "fields_referenced": [
+    "RFMState",
+    "aid",
+    "field",
+    "function",
+    "limit",
+    "locale",
+    "timezone"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Cross-platform"
+  ],
+  "use_case": "Analysis query for Cheat bucket Using groupBy",
+  "query": "#event_simpleName=OsVersionInfo  RFMState=*\n| day := formatTime(\"%Y-%m-%d\", field=@timestamp, locale=en_US, timezone=Z)\n| groupBy([aid, day], function=(selectLast([RFMState, @timestamp])), limit=max)\n| RFMState match {\n    1 => RFMState := \"True\" ;\n    0 => RFMState := \"False\" ;\n}\n| groupBy([day, RFMState], function=count(aid))",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "cross-platform",
+    "osversioninfo"
+  ]
+}

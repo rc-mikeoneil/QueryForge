@@ -1,0 +1,158 @@
+{
+  "table": "NetworkConnectIP4",
+  "category": "endpoint_network",
+  "description": "IPv4 network connection events from endpoints. Captures outbound TCP/UDP connections for detecting C2 communications, data exfiltration, lateral movement, and network scanning.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["NetworkConnectIP4"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win", "Mac", "Lin"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint making the connection",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "UserName",
+      "type": "string",
+      "description": "Username associated with the process making the connection",
+      "searchable": true,
+      "common_usage": ["filtering", "user behavior analysis"]
+    },
+    {
+      "name": "UserSid",
+      "type": "string",
+      "description": "Windows Security Identifier for the user (Windows only)",
+      "searchable": true,
+      "common_usage": ["filtering", "user correlation"]
+    },
+    {
+      "name": "UID",
+      "type": "string",
+      "description": "Unix User ID (Linux/Mac)",
+      "common_usage": ["filtering", "user tracking on Unix systems"]
+    },
+    {
+      "name": "RemoteAddressIP4",
+      "type": "ip_address",
+      "description": "Destination IPv4 address",
+      "searchable": true,
+      "example_values": ["8.8.8.8", "192.168.1.1"],
+      "common_usage": ["filtering", "CIDR filtering", "threat intel matching", "geolocation"]
+    },
+    {
+      "name": "RemotePort",
+      "type": "long",
+      "description": "Destination TCP/UDP port number",
+      "example_values": ["80", "443", "3389", "445"],
+      "common_usage": ["filtering", "port analysis", "scanning detection"]
+    },
+    {
+      "name": "LocalAddressIP4",
+      "type": "ip_address",
+      "description": "Source IPv4 address on the endpoint",
+      "searchable": true,
+      "common_usage": ["network tracking", "multi-homed system analysis"]
+    },
+    {
+      "name": "LocalPort",
+      "type": "long",
+      "description": "Source port number (ephemeral)",
+      "common_usage": ["connection tracking"]
+    },
+    {
+      "name": "Protocol",
+      "type": "string",
+      "description": "Network protocol",
+      "example_values": ["TCP", "UDP"],
+      "common_usage": ["filtering", "protocol analysis"]
+    },
+    {
+      "name": "ContextProcessId",
+      "type": "long",
+      "description": "Falcon's unique process identifier (UPID) for the process making the connection",
+      "required": true,
+      "common_usage": ["correlation", "joining with ProcessRollup2"]
+    },
+    {
+      "name": "FileName",
+      "type": "string",
+      "description": "Base filename of the process making the connection",
+      "searchable": true,
+      "example_values": ["chrome.exe", "svchost.exe", "python.exe"],
+      "common_usage": ["filtering", "process attribution"]
+    },
+    {
+      "name": "CommandLine",
+      "type": "string",
+      "description": "Command line of the process making the connection",
+      "searchable": true,
+      "common_usage": ["filtering", "behavioral analysis"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "aggregation"]
+    },
+    {
+      "name": "@timestamp",
+      "type": "datetime",
+      "description": "Event timestamp in ISO format",
+      "common_usage": ["display", "time range filtering"]
+    }
+  ],
+  "col_count": 18,
+  "common_filters": [
+    "event_platform=Win",
+    "RemoteAddressIP4=\"8.8.8.8\"",
+    "RemotePort=443",
+    "RemotePort=3389",
+    "RemotePort=445"
+  ],
+  "common_fields": ["aid", "ComputerName", "UserName", "RemoteAddressIP4", "RemotePort", "ContextProcessId", "FileName"],
+  "common_operations": [
+    "Join with ProcessRollup2 via ContextProcessId (matched to TargetProcessId) for process context",
+    "CIDR-based filtering to exclude RFC1918/internal ranges",
+    "Network scanning detection via unique port count analysis",
+    "Port prevalence analysis (bottom 10% of port values)",
+    "C2 communication detection via IP reputation",
+    "Lateral movement detection (RDP port 3389, SMB port 445)",
+    "Process-to-network correlation with selfJoinFilter",
+    "Normalization: falconPID:=ContextProcessId",
+    "Normalization: UserID:=UserSid | UserID:=UID"
+  ],
+  "normalization_patterns": [
+    "falconPID:=TargetProcessId | falconPID:=ContextProcessId - Normalize process ID for joining",
+    "UserID:=UserSid | UserID:=UID - Normalize user ID across platforms"
+  ],
+  "generated_at": "2025-11-14T23:45:00Z"
+}

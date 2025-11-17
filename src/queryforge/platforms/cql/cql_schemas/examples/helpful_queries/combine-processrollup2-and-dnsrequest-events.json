@@ -1,0 +1,51 @@
+{
+  "id": "combine-processrollup2-and-dnsrequest-events",
+  "title": "Combine ProcessRollup2 and DnsRequest Events",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Combine ProcessRollup2 and DnsRequest Events.md",
+  "category": "helpful_query",
+  "subcategory": "network",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "DnsRequest",
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "groupBy",
+    "selfJoinFilter"
+  ],
+  "operators_used": [
+    "=",
+    "or",
+    "|"
+  ],
+  "fields_referenced": [
+    "DomainName",
+    "ImageFileName",
+    "function",
+    "prefilter",
+    "where"
+  ],
+  "correlation_patterns": [
+    "selfJoinFilter"
+  ],
+  "difficulty": "expert",
+  "query_type": "analysis",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "Analysis query for Combine ProcessRollup2 and DnsRequest Events",
+  "query": "(#event_simpleName=ProcessRollup2 event_platform=Win ImageFileName=/\\\\chrome\\.exe$/i) OR (#event_simpleName=DnsRequest DomainName=/\\.ru$/ event_platform=Win)\n| falconPID:=TargetProcessId | falconPID:=ContextProcessId\n| selfJoinFilter([aid, falconPID], where=[{#event_simpleName=ProcessRollup2}, {#event_simpleName=DnsRequest}], prefilter=true)\n| groupBy([aid, falconPID], function=([collect([DomainName, UserName, ImageFileName, CommandLine])]))\n| DomainName=* ImageFileName=*",
+  "key_features": [
+    "Uses selfJoinFilter for correlation",
+    "Advanced correlation techniques"
+  ],
+  "related_examples": [],
+  "tags": [
+    "dnsrequest",
+    "lin",
+    "processrollup2",
+    "win"
+  ]
+}

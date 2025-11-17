@@ -1,0 +1,41 @@
+{
+  "id": "system-network-configuration-discovery-internet-connection-discovery",
+  "title": "(T1016.001) System Network Configuration Discovery - Internet Connection Discovery",
+  "source_file": "Queries-Only/MITRE-ATT&CK-Enterprise/(TA007) Discovery/(T1016) System Network Configuration Discovery/(T1016.001) System Network Configuration Discovery - Internet Connection Discovery.md",
+  "category": "mitre_attack",
+  "subcategory": "network",
+  "description": "https://attack.mitre.org/techniques/T1016/001/",
+  "mitre_attack": {
+    "tactic_code": "TA007",
+    "tactic_name": "Discovery",
+    "technique_id": "T1016",
+    "technique_name": "System Network Configuration Discovery/(T1016",
+    "sub_technique_id": null
+  },
+  "event_types": [
+    "ProcessRollup2"
+  ],
+  "functions_used": [],
+  "operators_used": [
+    "=",
+    "|"
+  ],
+  "fields_referenced": [
+    "ImageFileName"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "basic",
+  "query_type": "utility",
+  "platforms": [
+    "Mac"
+  ],
+  "use_case": "https://attack.mitre.org/techniques/T1016/001/",
+  "query": "#event_simpleName=ProcessRollup2 ImageFileName=/(\\\\|\\/)(traceroute|tracert|ping|ifconfig|ipconfig|nbtstat|route|getmac)(\\.exe)?$/i",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "mac",
+    "network",
+    "processrollup2"
+  ]
+}

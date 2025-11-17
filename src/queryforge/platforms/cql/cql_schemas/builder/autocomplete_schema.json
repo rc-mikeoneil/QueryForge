@@ -1,0 +1,797 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2025-11-15T00:00:00Z",
+  "description": "Autocomplete schema for CrowdStrike Query Language (CQL) query builder - optimized for IDE/UI autocomplete functionality",
+  "event_types": {
+    "description": "Available event types (tables) for CQL queries",
+    "list": [
+      {
+        "name": "ProcessRollup2",
+        "category": "endpoint_process",
+        "priority": "highest",
+        "description": "Process execution events - most frequently used for threat hunting",
+        "example_usage": "#event_simpleName=ProcessRollup2",
+        "common_use_cases": ["Threat hunting", "Process analysis", "Behavioral detection"]
+      },
+      {
+        "name": "OsVersionInfo",
+        "category": "endpoint_inventory",
+        "priority": "high",
+        "description": "OS version and configuration inventory",
+        "example_usage": "#event_simpleName=OsVersionInfo",
+        "common_use_cases": ["Inventory", "Patch management", "Vulnerability assessment"]
+      },
+      {
+        "name": "UserLogon",
+        "category": "endpoint_authentication",
+        "priority": "high",
+        "description": "Successful user logon events",
+        "example_usage": "#event_simpleName=UserLogon",
+        "common_use_cases": ["Authentication tracking", "Lateral movement detection", "Access analysis"]
+      },
+      {
+        "name": "DnsRequest",
+        "category": "endpoint_network",
+        "priority": "medium",
+        "description": "DNS query events",
+        "example_usage": "#event_simpleName=DnsRequest",
+        "common_use_cases": ["Malicious domain detection", "C2 detection", "Data exfiltration"]
+      },
+      {
+        "name": "NetworkConnectIP4",
+        "category": "endpoint_network",
+        "priority": "medium",
+        "description": "IPv4 network connection events",
+        "example_usage": "#event_simpleName=NetworkConnectIP4",
+        "common_use_cases": ["C2 detection", "Lateral movement", "Network analysis"]
+      },
+      {
+        "name": "InstalledBrowserExtension",
+        "category": "endpoint_inventory",
+        "priority": "medium",
+        "description": "Browser extension inventory",
+        "example_usage": "#event_simpleName=InstalledBrowserExtension",
+        "common_use_cases": ["Software inventory", "Malicious extension detection"]
+      },
+      {
+        "name": "AgentOnline",
+        "category": "endpoint_telemetry",
+        "priority": "medium",
+        "description": "Agent connectivity heartbeat events",
+        "example_usage": "#event_simpleName=AgentOnline",
+        "common_use_cases": ["Uptime calculation", "Sensor health monitoring"]
+      },
+      {
+        "name": "UserLogonFailed2",
+        "category": "endpoint_authentication",
+        "priority": "medium",
+        "description": "Failed user logon attempts",
+        "example_usage": "#event_simpleName=UserLogonFailed2",
+        "common_use_cases": ["Brute force detection", "Password spraying", "Authentication failures"]
+      },
+      {
+        "name": "DriverLoad",
+        "category": "endpoint_drivers",
+        "priority": "medium",
+        "description": "Kernel driver load events",
+        "example_usage": "#event_simpleName=DriverLoad",
+        "common_use_cases": ["Rootkit detection", "BYOVD attacks", "Unsigned drivers"]
+      },
+      {
+        "name": "EndOfProcess",
+        "category": "endpoint_process",
+        "priority": "low",
+        "description": "Process termination events",
+        "example_usage": "#event_simpleName=EndOfProcess",
+        "common_use_cases": ["Process lifecycle analysis", "Runtime calculation"]
+      }
+    ]
+  },
+  "fields_by_event_type": {
+    "description": "Field suggestions based on selected event type",
+    "ProcessRollup2": [
+      {"name": "aid", "type": "string", "description": "Agent ID", "usage": "correlation"},
+      {"name": "ComputerName", "type": "string", "description": "Hostname", "usage": "filtering"},
+      {"name": "UserName", "type": "string", "description": "Username", "usage": "filtering"},
+      {"name": "UserSid", "type": "string", "description": "User Security Identifier", "usage": "correlation"},
+      {"name": "ImageFileName", "type": "string", "description": "Full path to executable", "usage": "filtering"},
+      {"name": "FileName", "type": "string", "description": "Base filename", "usage": "filtering"},
+      {"name": "CommandLine", "type": "string", "description": "Command line arguments", "usage": "threat_hunting"},
+      {"name": "TargetProcessId", "type": "long", "description": "Process ID for correlation", "usage": "correlation"},
+      {"name": "ParentProcessId", "type": "long", "description": "Parent process ID", "usage": "correlation"},
+      {"name": "ParentBaseFileName", "type": "string", "description": "Parent process name", "usage": "filtering"},
+      {"name": "ProcessStartTime", "type": "long", "description": "Process start timestamp", "usage": "temporal_analysis"},
+      {"name": "ContextTimeStamp", "type": "long", "description": "Event timestamp (epoch)", "usage": "temporal_analysis"},
+      {"name": "MD5HashData", "type": "string", "description": "MD5 hash", "usage": "ioc_matching"},
+      {"name": "SHA256HashData", "type": "string", "description": "SHA256 hash", "usage": "ioc_matching"},
+      {"name": "SHA1HashData", "type": "string", "description": "SHA1 hash", "usage": "ioc_matching"},
+      {"name": "SignInfoFlags", "type": "long", "description": "Code signature validation flags", "usage": "filtering"},
+      {"name": "ZoneIdentifier", "type": "string", "description": "Mark of the Web", "usage": "filtering"},
+      {"name": "event_platform", "type": "string", "description": "OS platform (Win/Mac/Lin)", "usage": "filtering"},
+      {"name": "UID", "type": "string", "description": "Unix User ID", "usage": "filtering"},
+      {"name": "GID", "type": "string", "description": "Unix Group ID", "usage": "filtering"}
+    ],
+    "OsVersionInfo": [
+      {"name": "aid", "type": "string", "description": "Agent ID", "usage": "correlation"},
+      {"name": "ComputerName", "type": "string", "description": "Hostname", "usage": "filtering"},
+      {"name": "ProductName", "type": "string", "description": "OS product name", "usage": "filtering"},
+      {"name": "ProductType", "type": "string", "description": "Product type (Server/Workstation)", "usage": "filtering"},
+      {"name": "Version", "type": "string", "description": "OS version", "usage": "filtering"},
+      {"name": "AgentVersion", "type": "string", "description": "Falcon sensor version", "usage": "filtering"},
+      {"name": "OSVersionString", "type": "string", "description": "Full OS version string", "usage": "display"},
+      {"name": "OSVersionFileData", "type": "string", "description": "Hex-encoded version data", "usage": "filtering"},
+      {"name": "RFMState", "type": "long", "description": "Reduced Functionality Mode state", "usage": "filtering"},
+      {"name": "aip", "type": "ip_address", "description": "External IP address", "usage": "geolocation"},
+      {"name": "LocalAddressIP4", "type": "ip_address", "description": "Local IP address", "usage": "filtering"},
+      {"name": "MAC", "type": "string", "description": "MAC address", "usage": "filtering"},
+      {"name": "SystemManufacturer", "type": "string", "description": "Hardware manufacturer", "usage": "filtering"},
+      {"name": "SystemProductName", "type": "string", "description": "Hardware model", "usage": "filtering"},
+      {"name": "event_platform", "type": "string", "description": "OS platform (Win/Mac/Lin)", "usage": "filtering"}
+    ],
+    "UserLogon": [
+      {"name": "aid", "type": "string", "description": "Agent ID", "usage": "correlation"},
+      {"name": "ComputerName", "type": "string", "description": "Hostname", "usage": "filtering"},
+      {"name": "UserName", "type": "string", "description": "Username", "usage": "filtering"},
+      {"name": "UserSid", "type": "string", "description": "User Security Identifier", "usage": "correlation"},
+      {"name": "LogonType", "type": "string", "description": "Logon type code", "usage": "filtering"},
+      {"name": "LogonDomain", "type": "string", "description": "Domain name", "usage": "filtering"},
+      {"name": "ClientComputerName", "type": "string", "description": "Client computer name", "usage": "filtering"},
+      {"name": "UserIsAdmin", "type": "string", "description": "Admin privileges indicator", "usage": "filtering"},
+      {"name": "RemoteAccount", "type": "string", "description": "Remote account indicator", "usage": "filtering"},
+      {"name": "AuthenticationPackage", "type": "string", "description": "Auth package (NTLM/Kerberos)", "usage": "filtering"},
+      {"name": "PasswordLastSet", "type": "long", "description": "Password last set timestamp", "usage": "temporal_analysis"},
+      {"name": "aip", "type": "ip_address", "description": "External IP address", "usage": "geolocation"},
+      {"name": "RemoteAddressIP4", "type": "ip_address", "description": "Remote IP for RDP logons", "usage": "geolocation"},
+      {"name": "LocalAddressIP4", "type": "ip_address", "description": "Local IP address", "usage": "filtering"},
+      {"name": "ContextTimeStamp", "type": "long", "description": "Event timestamp (epoch)", "usage": "temporal_analysis"}
+    ],
+    "DnsRequest": [
+      {"name": "aid", "type": "string", "description": "Agent ID", "usage": "correlation"},
+      {"name": "ComputerName", "type": "string", "description": "Hostname", "usage": "filtering"},
+      {"name": "UserName", "type": "string", "description": "Username", "usage": "filtering"},
+      {"name": "DomainName", "type": "string", "description": "Queried domain", "usage": "filtering"},
+      {"name": "ContextProcessId", "type": "long", "description": "Process ID making DNS request", "usage": "correlation"},
+      {"name": "ContextBaseFileName", "type": "string", "description": "Process making DNS request", "usage": "filtering"},
+      {"name": "FileName", "type": "string", "description": "Process filename", "usage": "filtering"},
+      {"name": "ContextTimeStamp", "type": "long", "description": "Event timestamp (epoch)", "usage": "temporal_analysis"},
+      {"name": "event_platform", "type": "string", "description": "OS platform (Win/Mac/Lin)", "usage": "filtering"}
+    ],
+    "NetworkConnectIP4": [
+      {"name": "aid", "type": "string", "description": "Agent ID", "usage": "correlation"},
+      {"name": "ComputerName", "type": "string", "description": "Hostname", "usage": "filtering"},
+      {"name": "UserName", "type": "string", "description": "Username", "usage": "filtering"},
+      {"name": "UserSid", "type": "string", "description": "User Security Identifier", "usage": "correlation"},
+      {"name": "UID", "type": "string", "description": "Unix User ID", "usage": "filtering"},
+      {"name": "RemoteAddressIP4", "type": "ip_address", "description": "Destination IP", "usage": "filtering"},
+      {"name": "RemotePort", "type": "long", "description": "Destination port", "usage": "filtering"},
+      {"name": "LocalAddressIP4", "type": "ip_address", "description": "Source IP", "usage": "filtering"},
+      {"name": "LocalPort", "type": "long", "description": "Source port", "usage": "filtering"},
+      {"name": "Protocol", "type": "string", "description": "Network protocol (TCP/UDP)", "usage": "filtering"},
+      {"name": "ContextProcessId", "type": "long", "description": "Process ID making connection", "usage": "correlation"},
+      {"name": "FileName", "type": "string", "description": "Process making connection", "usage": "filtering"},
+      {"name": "CommandLine", "type": "string", "description": "Command line", "usage": "threat_hunting"},
+      {"name": "ContextTimeStamp", "type": "long", "description": "Event timestamp (epoch)", "usage": "temporal_analysis"},
+      {"name": "event_platform", "type": "string", "description": "OS platform (Win/Mac/Lin)", "usage": "filtering"}
+    ],
+    "InstalledBrowserExtension": [
+      {"name": "aid", "type": "string", "description": "Agent ID", "usage": "correlation"},
+      {"name": "ComputerName", "type": "string", "description": "Hostname", "usage": "filtering"},
+      {"name": "UserName", "type": "string", "description": "Browser profile owner", "usage": "filtering"},
+      {"name": "BrowserExtensionId", "type": "string", "description": "Extension ID", "usage": "filtering"},
+      {"name": "BrowserExtensionName", "type": "string", "description": "Extension name", "usage": "filtering"},
+      {"name": "BrowserName", "type": "string", "description": "Browser type (3=Chrome, 4=Edge)", "usage": "filtering"},
+      {"name": "BrowserProfileId", "type": "string", "description": "Browser profile ID", "usage": "filtering"},
+      {"name": "ContextTimeStamp", "type": "long", "description": "Event timestamp (epoch)", "usage": "temporal_analysis"}
+    ],
+    "AgentOnline": [
+      {"name": "aid", "type": "string", "description": "Agent ID", "usage": "correlation"},
+      {"name": "ComputerName", "type": "string", "description": "Hostname", "usage": "filtering"},
+      {"name": "BaseTime", "type": "long", "description": "Base time for boot calculation", "usage": "temporal_analysis"},
+      {"name": "ContextTimeStamp", "type": "long", "description": "Event timestamp (epoch)", "usage": "temporal_analysis"},
+      {"name": "@timestamp", "type": "datetime", "description": "Event timestamp (ISO format)", "usage": "temporal_analysis"},
+      {"name": "event_platform", "type": "string", "description": "OS platform (Win/Mac/Lin)", "usage": "filtering"}
+    ],
+    "UserLogonFailed2": [
+      {"name": "aid", "type": "string", "description": "Agent ID", "usage": "correlation"},
+      {"name": "ComputerName", "type": "string", "description": "Hostname", "usage": "filtering"},
+      {"name": "UserName", "type": "string", "description": "Failed username", "usage": "filtering"},
+      {"name": "LogonType", "type": "string", "description": "Logon type code", "usage": "filtering"},
+      {"name": "SubStatus", "type": "long", "description": "Failure reason code", "usage": "filtering"},
+      {"name": "SubStatus_hex", "type": "string", "description": "Failure reason (hex)", "usage": "display"},
+      {"name": "LocalAddressIP4", "type": "ip_address", "description": "Local IP address", "usage": "filtering"},
+      {"name": "aip", "type": "ip_address", "description": "External IP address", "usage": "geolocation"},
+      {"name": "ContextTimeStamp", "type": "long", "description": "Event timestamp (epoch)", "usage": "temporal_analysis"}
+    ],
+    "DriverLoad": [
+      {"name": "aid", "type": "string", "description": "Agent ID", "usage": "correlation"},
+      {"name": "ComputerName", "type": "string", "description": "Hostname", "usage": "filtering"},
+      {"name": "FilePath", "type": "string", "description": "Full driver path", "usage": "filtering"},
+      {"name": "ShortFileParth", "type": "string", "description": "Shortened driver path", "usage": "display"},
+      {"name": "FileName", "type": "string", "description": "Driver filename", "usage": "filtering"},
+      {"name": "OriginalFilename", "type": "string", "description": "Original filename from PE", "usage": "filtering"},
+      {"name": "SHA256HashData", "type": "string", "description": "SHA256 hash", "usage": "ioc_matching"},
+      {"name": "SubjectCN", "type": "string", "description": "Code signing subject", "usage": "filtering"},
+      {"name": "IssuerCN", "type": "string", "description": "Code signing issuer", "usage": "filtering"},
+      {"name": "ContextTimeStamp", "type": "long", "description": "Event timestamp (epoch)", "usage": "temporal_analysis"}
+    ],
+    "EndOfProcess": [
+      {"name": "aid", "type": "string", "description": "Agent ID", "usage": "correlation"},
+      {"name": "ComputerName", "type": "string", "description": "Hostname", "usage": "filtering"},
+      {"name": "TargetProcessId", "type": "long", "description": "Terminated process ID", "usage": "correlation"},
+      {"name": "ContextTimeStamp", "type": "long", "description": "Process end timestamp (epoch)", "usage": "temporal_analysis"},
+      {"name": "CLICreationCount", "type": "long", "description": "CLI creation count", "usage": "analysis"},
+      {"name": "ImageFileName", "type": "string", "description": "Process executable path", "usage": "filtering"},
+      {"name": "FileName", "type": "string", "description": "Process filename", "usage": "filtering"},
+      {"name": "@timestamp", "type": "datetime", "description": "Event timestamp (ISO format)", "usage": "temporal_analysis"}
+    ]
+  },
+  "common_fields": {
+    "description": "Fields that appear across multiple event types - useful for correlation",
+    "fields": [
+      {
+        "name": "aid",
+        "type": "string",
+        "appears_in_count": 10,
+        "correlation_potential": "highest",
+        "description": "Agent ID - unique identifier for endpoint, appears in all event types"
+      },
+      {
+        "name": "TargetProcessId",
+        "type": "long",
+        "appears_in_count": 2,
+        "correlation_potential": "high",
+        "description": "Process ID for correlation - joins ProcessRollup2 with EndOfProcess"
+      },
+      {
+        "name": "ContextProcessId",
+        "type": "long",
+        "appears_in_count": 2,
+        "correlation_potential": "high",
+        "description": "Process ID making network/DNS request - joins with ProcessRollup2.TargetProcessId"
+      },
+      {
+        "name": "UserSid",
+        "type": "string",
+        "appears_in_count": 3,
+        "correlation_potential": "high",
+        "description": "User Security Identifier - correlate user activity across logons and processes"
+      },
+      {
+        "name": "ComputerName",
+        "type": "string",
+        "appears_in_count": 10,
+        "correlation_potential": "high",
+        "description": "Hostname - human-readable endpoint identification"
+      },
+      {
+        "name": "@timestamp",
+        "type": "datetime",
+        "appears_in_count": 10,
+        "correlation_potential": "medium",
+        "description": "Universal timestamp field for temporal correlation"
+      }
+    ]
+  },
+  "functions": {
+    "description": "CQL functions organized by category with parameter information",
+    "aggregation": [
+      {
+        "name": "groupBy",
+        "signature": "groupBy([fields], function=[aggregate_functions], limit=max)",
+        "description": "Groups events by fields with aggregate functions",
+        "parameters": ["fields (array)", "function (optional)", "limit (optional)"],
+        "returns": "grouped_events",
+        "usage_count": 63,
+        "example": "groupBy([ComputerName], function=count())"
+      },
+      {
+        "name": "count",
+        "signature": "count(field, as=outputField, distinct=false)",
+        "description": "Counts events or distinct field values",
+        "parameters": ["field (optional)", "as (optional)", "distinct (optional)"],
+        "returns": "_count field",
+        "usage_count": 40,
+        "example": "count(aid, as=endpoints, distinct=true)"
+      },
+      {
+        "name": "bucket",
+        "signature": "bucket(field=@timestamp, span=1h, function=[aggregate])",
+        "description": "Divides time interval into buckets for temporal aggregation",
+        "parameters": ["field", "span", "function (optional)"],
+        "returns": "_bucket field",
+        "usage_count": 15,
+        "example": "bucket(field=@timestamp, span=1h)"
+      },
+      {
+        "name": "top",
+        "signature": "top(limit=10, [fields])",
+        "description": "Returns top N results by count",
+        "parameters": ["limit", "fields"],
+        "returns": "top events",
+        "usage_count": 10,
+        "example": "top(limit=10, [FileName])"
+      }
+    ],
+    "network": [
+      {
+        "name": "ipLocation",
+        "signature": "ipLocation(field, as=prefix)",
+        "description": "Enriches IP addresses with geolocation data",
+        "parameters": ["field", "as (optional)"],
+        "returns": "geo fields (country, city, lat, lon)",
+        "usage_count": 18,
+        "example": "ipLocation(RemoteAddressIP4)"
+      },
+      {
+        "name": "asn",
+        "signature": "asn(field, as=prefix)",
+        "description": "Adds Autonomous System Number data to IP addresses",
+        "parameters": ["field", "as (optional)"],
+        "returns": "asn fields",
+        "usage_count": 5,
+        "example": "asn(RemoteAddressIP4)"
+      },
+      {
+        "name": "cidr",
+        "signature": "cidr(field, subnet=CIDR_notation)",
+        "description": "Filters events using CIDR subnet matching",
+        "parameters": ["field", "subnet"],
+        "returns": "filtered events",
+        "usage_count": 3,
+        "example": "cidr(RemoteAddressIP4, subnet=10.0.0.0/8)"
+      },
+      {
+        "name": "rdns",
+        "signature": "rdns(field, as=outputField)",
+        "description": "Performs reverse DNS lookups on IP addresses",
+        "parameters": ["field", "as (optional)"],
+        "returns": "rdns field",
+        "usage_count": 2,
+        "example": "rdns(RemoteAddressIP4, as=hostname)"
+      },
+      {
+        "name": "geoHash",
+        "signature": "geoHash(lat=field, lon=field, as=outputField)",
+        "description": "Calculates geohash values from lat/lon coordinates",
+        "parameters": ["lat", "lon", "as"],
+        "returns": "geohash field",
+        "usage_count": 4,
+        "example": "geoHash(lat=latitude, lon=longitude, as=geohash)"
+      }
+    ],
+    "string": [
+      {
+        "name": "format",
+        "signature": "format(format=pattern, field=outputField, [args])",
+        "description": "Formats strings using printf-style patterns",
+        "parameters": ["format", "field", "args"],
+        "returns": "formatted string field",
+        "usage_count": 28,
+        "example": "format(format=\"%s:%d\", field=endpoint, [ComputerName, RemotePort])"
+      },
+      {
+        "name": "regex",
+        "signature": "regex(field, regex=pattern, strict=true)",
+        "description": "Pattern matching and field extraction using regex",
+        "parameters": ["field", "regex", "strict (optional)"],
+        "returns": "extracted fields from named groups",
+        "usage_count": 20,
+        "example": "regex(CommandLine, regex=\"(?<flag>-[a-z]+)\")"
+      },
+      {
+        "name": "lower",
+        "signature": "lower(field, as=outputField)",
+        "description": "Converts strings to lowercase",
+        "parameters": ["field", "as (optional)"],
+        "returns": "lowercase field",
+        "usage_count": 8,
+        "example": "lower(UserName, as=username_lower)"
+      },
+      {
+        "name": "concat",
+        "signature": "concat([fields], as=outputField, separator=\" \")",
+        "description": "Concatenates field values into a new field",
+        "parameters": ["fields", "as", "separator (optional)"],
+        "returns": "concatenated field",
+        "usage_count": 12,
+        "example": "concat([UserName, ComputerName], as=user_host, separator=\"@\")"
+      },
+      {
+        "name": "replace",
+        "signature": "replace(field, regex=pattern, with=replacement, flags=i)",
+        "description": "Replaces pattern matches with replacement string",
+        "parameters": ["field", "regex", "with", "flags (optional)"],
+        "returns": "modified field",
+        "usage_count": 6,
+        "example": "replace(CommandLine, regex=\"password\", with=\"***\", flags=i)"
+      },
+      {
+        "name": "splitString",
+        "signature": "splitString(field, by=separator, as=outputField, index=N)",
+        "description": "Splits string by separator and extracts part",
+        "parameters": ["field", "by", "as (optional)", "index (optional)"],
+        "returns": "split field or array",
+        "usage_count": 7,
+        "example": "splitString(ImageFileName, by=\"\\\\\", as=parts)"
+      },
+      {
+        "name": "length",
+        "signature": "length(field, as=outputField)",
+        "description": "Returns character count of string fields",
+        "parameters": ["field", "as"],
+        "returns": "length field",
+        "usage_count": 4,
+        "example": "length(CommandLine, as=cmd_length)"
+      }
+    ],
+    "transformation": [
+      {
+        "name": "drop",
+        "signature": "drop([fields])",
+        "description": "Removes specified fields from results",
+        "parameters": ["fields"],
+        "returns": "events with fields removed",
+        "usage_count": 25,
+        "example": "drop([_raw, @rawstring])"
+      },
+      {
+        "name": "rename",
+        "signature": "rename(field, as=newName)",
+        "description": "Renames fields in results",
+        "parameters": ["field", "as"],
+        "returns": "events with renamed field",
+        "usage_count": 18,
+        "example": "rename(TargetProcessId, as=falconPID)"
+      },
+      {
+        "name": "default",
+        "signature": "default(field=value, [field2=value2])",
+        "description": "Provides default values for missing fields",
+        "parameters": ["field=value pairs"],
+        "returns": "events with defaults applied",
+        "usage_count": 5,
+        "example": "default(UserName=\"Unknown\", ComputerName=\"N/A\")"
+      },
+      {
+        "name": "parseJson",
+        "signature": "parseJson(field=inputField, prefix=outputPrefix)",
+        "description": "Parses JSON data into fields",
+        "parameters": ["field", "prefix (optional)"],
+        "returns": "extracted JSON fields",
+        "usage_count": 8,
+        "example": "parseJson(field=jsonData)"
+      },
+      {
+        "name": "parseXml",
+        "signature": "parseXml(field=inputField, path=xpath)",
+        "description": "Parses XML data into fields",
+        "parameters": ["field", "path (optional)"],
+        "returns": "extracted XML fields",
+        "usage_count": 2,
+        "example": "parseXml(field=xmlData, path=\"//event\")"
+      },
+      {
+        "name": "kvParse",
+        "signature": "kvParse(field, separator=\"=\", tokenizer=\" \")",
+        "description": "Parses key-value pairs into fields",
+        "parameters": ["field", "separator (optional)", "tokenizer (optional)"],
+        "returns": "extracted key-value fields",
+        "usage_count": 3,
+        "example": "kvParse(field=data, separator=\"=\", tokenizer=\" \")"
+      }
+    ],
+    "time": [
+      {
+        "name": "formatTime",
+        "signature": "formatTime(format=pattern, field=timestamp, as=outputField)",
+        "description": "Formats timestamps using custom patterns",
+        "parameters": ["format", "field", "as"],
+        "returns": "formatted time field",
+        "usage_count": 15,
+        "example": "formatTime(format=\"%Y-%m-%d\", field=@timestamp, as=date)"
+      },
+      {
+        "name": "formatDuration",
+        "signature": "formatDuration(field, as=outputField, precision=2)",
+        "description": "Converts durations to human-readable strings",
+        "parameters": ["field", "as", "precision (optional)"],
+        "returns": "formatted duration field",
+        "usage_count": 6,
+        "example": "formatDuration(field=runtime_ms, as=runtime)"
+      },
+      {
+        "name": "timeChart",
+        "signature": "timeChart(span=1h, function=[aggregate], series=field)",
+        "description": "Creates time-series chart with bucketed data",
+        "parameters": ["span", "function", "series (optional)"],
+        "returns": "time-series data",
+        "usage_count": 8,
+        "example": "timeChart(span=1h, function=count())"
+      }
+    ],
+    "advanced": [
+      {
+        "name": "join",
+        "signature": "join(query={subquery}, field=[join_fields], include=[fields], mode=left)",
+        "description": "Joins two queries on matching fields",
+        "parameters": ["query", "field", "include (optional)", "mode (optional)"],
+        "returns": "joined events",
+        "usage_count": 13,
+        "example": "join(query={#event_simpleName=NetworkConnectIP4}, field=[aid, TargetProcessId=ContextProcessId])"
+      },
+      {
+        "name": "selfJoinFilter",
+        "signature": "selfJoinFilter(field=[fields], where=[condition])",
+        "description": "Filters events by correlating with other events in same result set",
+        "parameters": ["field", "where"],
+        "returns": "filtered events",
+        "usage_count": 5,
+        "example": "selfJoinFilter(field=[aid], where=[{UserName=\"admin\"}])"
+      },
+      {
+        "name": "correlate",
+        "signature": "correlate(field=[fields], window=10m, max=1000)",
+        "description": "Correlates events across multiple queries with time windows",
+        "parameters": ["field", "window", "max (optional)"],
+        "returns": "correlated events",
+        "usage_count": 3,
+        "example": "correlate(field=[aid, UserSid], window=5m)"
+      },
+      {
+        "name": "defineTable",
+        "signature": "defineTable(name=tableName, query={subquery})",
+        "description": "Creates in-memory lookup tables from query results",
+        "parameters": ["name", "query"],
+        "returns": "table reference",
+        "usage_count": 2,
+        "example": "defineTable(name=iocs, query={readFile(\"iocs.csv\")})"
+      }
+    ],
+    "utility": [
+      {
+        "name": "table",
+        "signature": "table([fields], limit=100, sortby=field)",
+        "description": "Formats results as table visualization",
+        "parameters": ["fields", "limit (optional)", "sortby (optional)"],
+        "returns": "table output",
+        "usage_count": 22,
+        "example": "table([ComputerName, UserName, CommandLine], limit=50)"
+      },
+      {
+        "name": "in",
+        "signature": "in(field, values=[list])",
+        "description": "Filters events where field matches value list",
+        "parameters": ["field", "values"],
+        "returns": "filtered events",
+        "usage_count": 15,
+        "example": "in(LogonType, values=[2,10])"
+      },
+      {
+        "name": "head",
+        "signature": "head(limit=10)",
+        "description": "Returns first N events",
+        "parameters": ["limit"],
+        "returns": "first N events",
+        "usage_count": 12,
+        "example": "head(limit=100)"
+      },
+      {
+        "name": "tail",
+        "signature": "tail(limit=10)",
+        "description": "Returns last N events",
+        "parameters": ["limit"],
+        "returns": "last N events",
+        "usage_count": 8,
+        "example": "tail(limit=50)"
+      },
+      {
+        "name": "sort",
+        "signature": "sort(field, order=asc, limit=1000)",
+        "description": "Sorts events by field value",
+        "parameters": ["field", "order (optional)", "limit (optional)"],
+        "returns": "sorted events",
+        "usage_count": 14,
+        "example": "sort(_count, order=desc, limit=10)"
+      },
+      {
+        "name": "select",
+        "signature": "select([fields])",
+        "description": "Selects only specified fields",
+        "parameters": ["fields"],
+        "returns": "events with selected fields only",
+        "usage_count": 6,
+        "example": "select([ComputerName, UserName, @timestamp])"
+      }
+    ],
+    "control_flow": [
+      {
+        "name": "case",
+        "signature": "case { condition1 | action1; condition2 | action2; * | default }",
+        "description": "Conditional if-then-else logic for event streams",
+        "parameters": ["conditions and actions"],
+        "returns": "events with conditional fields",
+        "usage_count": 10,
+        "example": "case { event_platform=Win | platform:=\"Windows\"; * | platform:=\"Other\" }"
+      },
+      {
+        "name": "match",
+        "signature": "match(field=value, { case1 => result1, case2 => result2 }, as=outputField)",
+        "description": "Switch-like conditional matching on field values",
+        "parameters": ["field", "cases", "as"],
+        "returns": "matched value field",
+        "usage_count": 16,
+        "example": "match(LogonType, { \"2\" => \"Interactive\", \"10\" => \"RDP\" }, as=logon_type_name)"
+      }
+    ],
+    "array": [
+      {
+        "name": "concatArray",
+        "signature": "concatArray(field, as=outputField, separator=\",\")",
+        "description": "Concatenates array field values into a single field",
+        "parameters": ["field", "as", "separator (optional)"],
+        "returns": "concatenated string field",
+        "usage_count": 4,
+        "example": "concatArray(field=processes, as=process_list, separator=\"; \")"
+      }
+    ]
+  },
+  "operators": {
+    "description": "CQL operators with type compatibility information",
+    "comparison": [
+      {
+        "operator": "=",
+        "name": "equals",
+        "syntax": "field=value",
+        "compatible_types": ["string", "number", "boolean"],
+        "description": "Exact match comparison",
+        "example": "#event_simpleName=ProcessRollup2"
+      },
+      {
+        "operator": "!=",
+        "name": "not_equals",
+        "syntax": "field!=value",
+        "compatible_types": ["string", "number", "boolean"],
+        "description": "Not equal comparison",
+        "example": "UserName!=\"SYSTEM\""
+      },
+      {
+        "operator": ">",
+        "name": "greater_than",
+        "syntax": "field>value",
+        "compatible_types": ["number", "long", "timestamp"],
+        "description": "Greater than comparison",
+        "example": "_count>10"
+      },
+      {
+        "operator": "<",
+        "name": "less_than",
+        "syntax": "field<value",
+        "compatible_types": ["number", "long", "timestamp"],
+        "description": "Less than comparison",
+        "example": "FileSize<1024"
+      },
+      {
+        "operator": ">=",
+        "name": "greater_than_or_equal",
+        "syntax": "field>=value",
+        "compatible_types": ["number", "long", "timestamp"],
+        "description": "Greater than or equal",
+        "example": "_count>=1"
+      },
+      {
+        "operator": "<=",
+        "name": "less_than_or_equal",
+        "syntax": "field<=value",
+        "compatible_types": ["number", "long", "timestamp"],
+        "description": "Less than or equal",
+        "example": "_count<=100"
+      }
+    ],
+    "pattern": [
+      {
+        "operator": "=*",
+        "name": "wildcard_match",
+        "syntax": "field=*pattern*",
+        "compatible_types": ["string"],
+        "description": "Wildcard pattern matching (* for any chars, ? for single char)",
+        "example": "ImageFileName=*powershell*"
+      },
+      {
+        "operator": "=/regex/",
+        "name": "regex_match",
+        "syntax": "field=/pattern/flags",
+        "compatible_types": ["string"],
+        "description": "Regular expression matching (flags: i=case-insensitive, m=multiline)",
+        "example": "CommandLine=/^(sc|net1?)\\.exe/i"
+      },
+      {
+        "operator": "in()",
+        "name": "in_function",
+        "syntax": "in(field, values=[...])",
+        "compatible_types": ["string", "number", "any"],
+        "description": "Multi-value matching (more efficient than OR)",
+        "example": "in(LogonType, values=[2,10])"
+      }
+    ],
+    "assignment": [
+      {
+        "operator": ":=",
+        "name": "assignment",
+        "syntax": "field := expression",
+        "compatible_types": ["any"],
+        "description": "Assigns value or expression to field",
+        "example": "falconPID := TargetProcessId"
+      }
+    ],
+    "logical": [
+      {
+        "operator": "AND",
+        "name": "logical_and",
+        "syntax": "condition1 AND condition2",
+        "compatible_types": ["boolean"],
+        "description": "Logical AND - both conditions must be true",
+        "example": "event_platform=Win AND UserName=\"admin\""
+      },
+      {
+        "operator": "OR",
+        "name": "logical_or",
+        "syntax": "condition1 OR condition2",
+        "compatible_types": ["boolean"],
+        "description": "Logical OR - at least one condition must be true",
+        "example": "LogonType=2 OR LogonType=10"
+      },
+      {
+        "operator": "NOT",
+        "name": "logical_not",
+        "syntax": "NOT condition",
+        "compatible_types": ["boolean"],
+        "description": "Logical negation",
+        "example": "NOT UserName=\"SYSTEM\""
+      }
+    ],
+    "flow": [
+      {
+        "operator": "|",
+        "name": "pipe",
+        "syntax": "step1 | step2 | step3",
+        "compatible_types": ["any"],
+        "description": "Pipes output of one function to input of next",
+        "example": "#event_simpleName=ProcessRollup2 | groupBy([ComputerName]) | table()"
+      }
+    ],
+    "special": [
+      {
+        "operator": "#",
+        "name": "field_prefix",
+        "syntax": "#field_name",
+        "compatible_types": ["any"],
+        "description": "References event field (used for event_simpleName, timestamp, etc.)",
+        "example": "#event_simpleName=ProcessRollup2"
+      },
+      {
+        "operator": "*",
+        "name": "wildcard",
+        "syntax": "*",
+        "compatible_types": ["string"],
+        "description": "Matches zero or more characters in wildcards",
+        "example": "FileName=*.exe"
+      }
+    ]
+  },
+  "usage_tips": {
+    "autocomplete_suggestions": {
+      "after_event_type_selection": "Suggest fields from fields_by_event_type[selected_event]",
+      "after_field_selection": "Suggest operators based on field type (string/number/ip_address)",
+      "after_pipe": "Suggest functions from all categories",
+      "in_groupBy": "Suggest fields that are good for grouping (low cardinality)",
+      "in_join": "Suggest common correlation fields (aid, TargetProcessId, UserSid, etc.)"
+    },
+    "query_construction_patterns": {
+      "basic_filter": "#event_simpleName=<event_type> <field>=<value>",
+      "aggregation": "#event_simpleName=<event_type> | groupBy([<fields>], function=count())",
+      "time_series": "#event_simpleName=<event_type> | bucket(field=@timestamp, span=1h, function=count())",
+      "correlation": "#event_simpleName=ProcessRollup2 | join(query={#event_simpleName=NetworkConnectIP4}, field=[aid, TargetProcessId=ContextProcessId])",
+      "geolocation": "#event_simpleName=UserLogon | ipLocation(RemoteAddressIP4) | groupBy([RemoteAddressIP4.country])"
+    }
+  }
+}

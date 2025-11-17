@@ -1,0 +1,23 @@
+{
+  "name": "stats",
+  "category": "aggregation",
+  "description": "Legacy Event Search function for aggregating query output. In CrowdStrike Query Language (LogScale), use groupBy() instead with aggregate functions. This function name is included for reference and migration purposes.",
+  "syntax": "Use groupBy([fields], function=([aggregate_functions])) instead",
+  "parameters": [
+    {
+      "name": "Note",
+      "type": "migration",
+      "required": false,
+      "description": "This is a legacy function. Use groupBy() with aggregate functions like count(), sum(), avg(), min(), max(), etc."
+    }
+  ],
+  "return_type": "See groupBy",
+  "examples": [
+    "// Legacy: | stats dc(aid) as uniqueEndpoints, count(aid) as totalExecutions by SHA256HashData",
+    "// CQL: | groupBy([SHA256HashData], function=([count(aid, distinct=true, as=uniqueEndpoints), count(aid, as=totalExecutions)]))"
+  ],
+  "related_functions": ["groupBy", "count", "sum", "avg", "max", "min"],
+  "use_cases": ["Legacy query migration", "Statistical aggregation (use groupBy instead)"],
+  "notes": "This function is from Legacy Event Search (Splunk-style). In LogScale/CQL, use groupBy() with aggregate functions instead.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-groupby.html"
+}

@@ -1,0 +1,184 @@
+{
+  "table": "FileWritten",
+  "category": "endpoint_file",
+  "description": "Generic file write events for files not covered by specialized file type events. Provides broad visibility into file system writes, useful for detecting unusual file activity and data staging.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": [
+        "FileWritten"
+      ]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": [
+        "grouping",
+        "filtering",
+        "correlation"
+      ]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": [
+        "grouping",
+        "filtering"
+      ]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": [
+        "Win",
+        "Mac",
+        "Lin"
+      ],
+      "common_usage": [
+        "filtering"
+      ]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "searchable": true,
+      "common_usage": [
+        "display",
+        "filtering",
+        "grouping"
+      ]
+    },
+    {
+      "name": "UserName",
+      "type": "string",
+      "description": "Username associated with the file write",
+      "searchable": true,
+      "common_usage": [
+        "filtering",
+        "user behavior analysis"
+      ]
+    },
+    {
+      "name": "TargetFileName",
+      "type": "string",
+      "description": "Full path to the written file",
+      "searchable": true,
+      "supports_regex": true,
+      "common_usage": [
+        "filtering",
+        "path-based detection"
+      ]
+    },
+    {
+      "name": "FileName",
+      "type": "string",
+      "description": "Base filename of the written file",
+      "searchable": true,
+      "common_usage": [
+        "filtering",
+        "extension analysis"
+      ]
+    },
+    {
+      "name": "ContextProcessId",
+      "type": "long",
+      "description": "Falcon's unique process identifier for the writing process",
+      "common_usage": [
+        "correlation",
+        "joining with ProcessRollup2"
+      ]
+    },
+    {
+      "name": "WritingProcessFileName",
+      "type": "string",
+      "description": "Base filename of the process that wrote the file",
+      "searchable": true,
+      "common_usage": [
+        "filtering",
+        "source process analysis"
+      ]
+    },
+    {
+      "name": "MD5HashData",
+      "type": "string",
+      "description": "MD5 hash of the written file",
+      "searchable": true,
+      "common_usage": [
+        "threat intelligence",
+        "IOC matching"
+      ]
+    },
+    {
+      "name": "SHA256HashData",
+      "type": "string",
+      "description": "SHA256 hash of the written file",
+      "searchable": true,
+      "common_usage": [
+        "threat intelligence",
+        "IOC matching"
+      ]
+    },
+    {
+      "name": "Size",
+      "type": "long",
+      "description": "File size in bytes",
+      "common_usage": [
+        "filtering",
+        "size-based analysis"
+      ]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": [
+        "temporal analysis",
+        "timeline creation"
+      ]
+    },
+    {
+      "name": "IsOnRemovableDisk",
+      "type": "boolean",
+      "description": "Indicates if the file was written to removable media (USB drive, external HDD, etc.)",
+      "searchable": true,
+      "common_usage": [
+        "filtering",
+        "removable media detection",
+        "data exfiltration monitoring"
+      ],
+      "undocumented": true,
+      "note": "Found in production queries but not in official CrowdStrike documentation"
+    }
+  ],
+  "col_count": 15,
+  "common_filters": [
+    "TargetFileName=/\\.txt$|\\.dat$|\\.log$/i",
+    "Size>1000000"
+  ],
+  "common_fields": [
+    "aid",
+    "ComputerName",
+    "TargetFileName",
+    "WritingProcessFileName"
+  ],
+  "common_operations": [
+    "Join with ProcessRollup2 via ContextProcessId for writing process details",
+    "Detect unusual file extensions",
+    "Track large file writes (potential exfiltration)",
+    "Monitor sensitive directory writes",
+    "Catch file types not covered by specialized events",
+    "Monitor writes to removable media for data exfiltration"
+  ],
+  "generated_at": "2025-11-15T00:00:00Z"
+}

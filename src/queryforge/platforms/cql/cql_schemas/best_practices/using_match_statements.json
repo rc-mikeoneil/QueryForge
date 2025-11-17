@@ -1,0 +1,25 @@
+{
+  "title": "Using match statements",
+  "slug": "using_match_statements",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "match statements let you apply different query logic depending on which pattern or condition matches first. They are useful for routing events into categories or normalizing disparate schemas.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Categorizes events by platform using match and then aggregates counts per normalized platform label.",
+      "language": "logscale",
+      "query": "match{\n  event_platform=\"Win\" | platform := \"Windows\";\n  event_platform=\"Mac\" | platform := \"macOS\";\n  event_platform=\"Lin\" | platform := \"Linux\";\n  * | platform := \"Other\";\n}\n| groupBy(platform, function=count())"
+    }
+  ],
+  "tags": [
+    "match"
+  ],
+  "url": "https://library.humio.com/kb/kb-using-match-statements.html",
+  "difficulty": "intermediate",
+  "related_functions": [
+    "count",
+    "groupBy"
+  ]
+}

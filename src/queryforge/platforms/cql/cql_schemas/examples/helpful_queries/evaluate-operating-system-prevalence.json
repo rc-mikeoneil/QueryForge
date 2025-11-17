@@ -1,0 +1,39 @@
+{
+  "id": "evaluate-operating-system-prevalence",
+  "title": "Evaluate Operating System Prevalence",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Evaluate Operating System Prevalence.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "OsVersionInfo"
+  ],
+  "functions_used": [
+    "count",
+    "groupBy",
+    "stats"
+  ],
+  "operators_used": [
+    "=",
+    "|"
+  ],
+  "fields_referenced": [
+    "as",
+    "function"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Win"
+  ],
+  "use_case": "Analysis query for Evaluate Operating System Prevalence",
+  "query": "#event_simpleName=OsVersionInfo event_platform=Win\n\n| groupby(aid, function=selectLast([ProductName]))\n| groupBy([ProductName], function=stats([count(aid, as=\"endpointCount\")]))",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "osversioninfo",
+    "win"
+  ]
+}

@@ -1,0 +1,910 @@
+{
+  "schema_version": "2.0.0",
+  "type": "how_tos",
+  "generated_at": "2025-11-15T00:00:00Z",
+  "total_count": 54,
+  "summary": {
+    "by_category": {
+      "query": 28,
+      "fdr_query": 2,
+      "ui": 1,
+      "graphql": 6,
+      "admin": 8,
+      "collector": 1,
+      "scheduled_search": 1,
+      "api": 1,
+      "integration": 3,
+      "threat_hunting": 3
+    },
+    "by_difficulty": {
+      "beginner": 39,
+      "intermediate": 8,
+      "advanced": 7
+    }
+  },
+  "top_tags": [
+    {
+      "tag": "how-to",
+      "count": 54
+    },
+    {
+      "tag": "admin",
+      "count": 7
+    },
+    {
+      "tag": "graphql",
+      "count": 6
+    },
+    {
+      "tag": "groupBy",
+      "count": 5
+    },
+    {
+      "tag": "ioc",
+      "count": 4
+    },
+    {
+      "tag": "timestamps",
+      "count": 4
+    },
+    {
+      "tag": "aggregation",
+      "count": 3
+    },
+    {
+      "tag": "users",
+      "count": 3
+    },
+    {
+      "tag": "fields",
+      "count": 3
+    },
+    {
+      "tag": "case-insensitive",
+      "count": 3
+    },
+    {
+      "tag": "timechart",
+      "count": 3
+    },
+    {
+      "tag": "dashboards",
+      "count": 3
+    },
+    {
+      "tag": "ingest",
+      "count": 3
+    },
+    {
+      "tag": "threat_hunting",
+      "count": 3
+    },
+    {
+      "tag": "ui",
+      "count": 2
+    },
+    {
+      "tag": "collect",
+      "count": 2
+    },
+    {
+      "tag": "fdr",
+      "count": 2
+    },
+    {
+      "tag": "join",
+      "count": 2
+    },
+    {
+      "tag": "case",
+      "count": 2
+    },
+    {
+      "tag": "queries",
+      "count": 2
+    }
+  ],
+  "top_functions": [
+    {
+      "function": "groupBy",
+      "count": 8
+    },
+    {
+      "function": "count",
+      "count": 6
+    },
+    {
+      "function": "timechart",
+      "count": 5
+    },
+    {
+      "function": "join",
+      "count": 4
+    },
+    {
+      "function": "match",
+      "count": 4
+    },
+    {
+      "function": "lower",
+      "count": 3
+    },
+    {
+      "function": "now",
+      "count": 3
+    },
+    {
+      "function": "format",
+      "count": 2
+    },
+    {
+      "function": "collect",
+      "count": 2
+    },
+    {
+      "function": "avg",
+      "count": 2
+    },
+    {
+      "function": "parseTimestamp",
+      "count": 2
+    },
+    {
+      "function": "collectSorted",
+      "count": 2
+    },
+    {
+      "function": "grantRepositoryPermission",
+      "count": 1
+    },
+    {
+      "function": "blockQuery",
+      "count": 1
+    },
+    {
+      "function": "createDashboard",
+      "count": 1
+    },
+    {
+      "function": "createScheduledSearch",
+      "count": 1
+    },
+    {
+      "function": "updateScheduledSearch",
+      "count": 1
+    },
+    {
+      "function": "max",
+      "count": 1
+    },
+    {
+      "function": "min",
+      "count": 1
+    },
+    {
+      "function": "length",
+      "count": 1
+    }
+  ],
+  "items": [
+    {
+      "slug": "add_a_dynamic_url_to_query_results",
+      "title": "How-To: Add a Dynamic URL to Query Results",
+      "category": "query",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "url",
+        "format",
+        "link",
+        "markdown",
+        "ui",
+        "logscale"
+      ],
+      "file": "how_tos/add_a_dynamic_url_to_query_results.json"
+    },
+    {
+      "slug": "add_a_single_field_to_groupby_results",
+      "title": "How-To: Add a single field to groupBy() results",
+      "category": "query",
+      "difficulty": "intermediate",
+      "tags": [
+        "how-to",
+        "groupBy",
+        "collect",
+        "aggregation",
+        "query"
+      ],
+      "file": "how_tos/add_a_single_field_to_groupby_results.json"
+    },
+    {
+      "slug": "add_computername_or_username_to_falcon_search_results",
+      "title": "How-To: Add ComputerName or UserName to Falcon search results",
+      "category": "fdr_query",
+      "difficulty": "advanced",
+      "tags": [
+        "how-to",
+        "fdr",
+        "aid",
+        "ComputerName",
+        "UserName",
+        "lookup",
+        "join"
+      ],
+      "file": "how_tos/add_computername_or_username_to_falcon_search_results.json"
+    },
+    {
+      "slug": "add_lines_to_a_query",
+      "title": "How-To: Add Lines to a Query",
+      "category": "ui",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "ui",
+        "editor",
+        "keyboard"
+      ],
+      "file": "how_tos/add_lines_to_a_query.json"
+    },
+    {
+      "slug": "add_users_and_groups_to_a_repo_using_graphql",
+      "title": "How-To: Add Users and Groups to a Repo using GraphQL",
+      "category": "graphql",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "graphql",
+        "permissions",
+        "users",
+        "groups",
+        "repos"
+      ],
+      "file": "how_tos/add_users_and_groups_to_a_repo_using_graphql.json"
+    },
+    {
+      "slug": "assign_or_create_a_dynamic_field",
+      "title": "How-To: Assign or Create a Dynamic Field",
+      "category": "query",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "fields",
+        "assignment",
+        "case",
+        "derived_fields"
+      ],
+      "file": "how_tos/assign_or_create_a_dynamic_field.json"
+    },
+    {
+      "slug": "block_queries_using_graphql",
+      "title": "How-To: Block Queries using GraphQL",
+      "category": "graphql",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "graphql",
+        "governance",
+        "queries",
+        "operations"
+      ],
+      "file": "how_tos/block_queries_using_graphql.json"
+    },
+    {
+      "slug": "case_insensitive_searches",
+      "title": "How-To: Case-Insensitive Searches",
+      "category": "query",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "search",
+        "case-insensitive",
+        "lower"
+      ],
+      "file": "how_tos/case_insensitive_searches.json"
+    },
+    {
+      "slug": "compare_the_last_31_60_days_to_the_previous_30_days",
+      "title": "How-To: Compare the Last 31-60 days to the Previous 30 Days",
+      "category": "query",
+      "difficulty": "advanced",
+      "tags": [
+        "how-to",
+        "timechart",
+        "comparison",
+        "windows"
+      ],
+      "file": "how_tos/compare_the_last_31_60_days_to_the_previous_30_days.json"
+    },
+    {
+      "slug": "configuring_a_standalone_installation_to_start_at_boot",
+      "title": "How-To: Configuring a Standalone Installation to Start at Boot",
+      "category": "admin",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "admin",
+        "startup",
+        "systemd"
+      ],
+      "file": "how_tos/configuring_a_standalone_installation_to_start_at_boot.json"
+    },
+    {
+      "slug": "create_a_dashboard_through_graphql",
+      "title": "How-To: Create a Dashboard through GraphQL",
+      "category": "graphql",
+      "difficulty": "intermediate",
+      "tags": [
+        "how-to",
+        "graphql",
+        "dashboards",
+        "automation"
+      ],
+      "file": "how_tos/create_a_dashboard_through_graphql.json"
+    },
+    {
+      "slug": "create_a_scheduled_search_using_graphql",
+      "title": "How-To: Create a Scheduled Search using GraphQL",
+      "category": "graphql",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "graphql",
+        "scheduled_search",
+        "alerts"
+      ],
+      "file": "how_tos/create_a_scheduled_search_using_graphql.json"
+    },
+    {
+      "slug": "create_a_shorthand_process_lineage_in_the_field_processlineage",
+      "title": "How-To: Create a shorthand process lineage in the field processLineage",
+      "category": "fdr_query",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "fdr",
+        "process",
+        "lineage",
+        "forensics"
+      ],
+      "file": "how_tos/create_a_shorthand_process_lineage_in_the_field_processlineage.json"
+    },
+    {
+      "slug": "create_case_insensitive_user_input",
+      "title": "How-To: Create case-insensitive user input",
+      "category": "query",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "dashboards",
+        "parameters",
+        "case-insensitive"
+      ],
+      "file": "how_tos/create_case_insensitive_user_input.json"
+    },
+    {
+      "slug": "deduplicating_compound_fields",
+      "title": "How-To: Deduplicating Compound Fields",
+      "category": "query",
+      "difficulty": "intermediate",
+      "tags": [
+        "how-to",
+        "dedup",
+        "groupBy",
+        "compound_fields"
+      ],
+      "file": "how_tos/deduplicating_compound_fields.json"
+    },
+    {
+      "slug": "delete_data_in_bulk",
+      "title": "How-To: Delete Data in Bulk",
+      "category": "admin",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "admin",
+        "data_retention",
+        "delete"
+      ],
+      "file": "how_tos/delete_data_in_bulk.json"
+    },
+    {
+      "slug": "determining_non_query_download_of_bucket_segments",
+      "title": "How-To: Determining Non-query Download of Bucket Segments",
+      "category": "admin",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "segments",
+        "storage",
+        "troubleshooting"
+      ],
+      "file": "how_tos/determining_non_query_download_of_bucket_segments.json"
+    },
+    {
+      "slug": "downgrading_logscale_collector_from_version_1_8_1_to_1_7_x",
+      "title": "How-To: Downgrading LogScale Collector from Version 1.8.1 to 1.7.x",
+      "category": "collector",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "collector",
+        "downgrade",
+        "admin"
+      ],
+      "file": "how_tos/downgrading_logscale_collector_from_version_1_8_1_to_1_7_x.json"
+    },
+    {
+      "slug": "edit_schedule_and_timestamp_in_scheduled_searches",
+      "title": "How-To: Edit schedule and timestamp in scheduled searches",
+      "category": "scheduled_search",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "scheduled_search",
+        "cron",
+        "time"
+      ],
+      "file": "how_tos/edit_schedule_and_timestamp_in_scheduled_searches.json"
+    },
+    {
+      "slug": "exclude_rfc1918_and_non_routable_ip_addresses",
+      "title": "How-To: Exclude RFC1918 and Non-Routable IP Addresses",
+      "category": "query",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "network",
+        "ioc",
+        "rfc1918",
+        "filtering"
+      ],
+      "file": "how_tos/exclude_rfc1918_and_non_routable_ip_addresses.json"
+    },
+    {
+      "slug": "executing_queries_from_powershell_and_bash",
+      "title": "How-To: Executing Queries from Powershell and Bash",
+      "category": "api",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "api",
+        "bash",
+        "powershell",
+        "automation"
+      ],
+      "file": "how_tos/executing_queries_from_powershell_and_bash.json"
+    },
+    {
+      "slug": "export_a_list_of_users",
+      "title": "How-To: Export a List of Users",
+      "category": "admin",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "admin",
+        "users",
+        "audit"
+      ],
+      "file": "how_tos/export_a_list_of_users.json"
+    },
+    {
+      "slug": "filtering_on_multiple_timestamps",
+      "title": "How-To: Filtering on Multiple Timestamps",
+      "category": "query",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "timestamps",
+        "filters",
+        "multiple_fields"
+      ],
+      "file": "how_tos/filtering_on_multiple_timestamps.json"
+    },
+    {
+      "slug": "get_the_first_and_last_event_of_a_groupby_query",
+      "title": "How-To: Get the first and last event of a groupBy() query",
+      "category": "query",
+      "difficulty": "intermediate",
+      "tags": [
+        "how-to",
+        "groupBy",
+        "first_last",
+        "aggregation"
+      ],
+      "file": "how_tos/get_the_first_and_last_event_of_a_groupby_query.json"
+    },
+    {
+      "slug": "getting_unsupported_fields_for_collect",
+      "title": "How-To: Getting unsupported fields for collect()",
+      "category": "query",
+      "difficulty": "intermediate",
+      "tags": [
+        "how-to",
+        "collect",
+        "fields",
+        "troubleshooting"
+      ],
+      "file": "how_tos/getting_unsupported_fields_for_collect.json"
+    },
+    {
+      "slug": "handling_empty_or_null_values",
+      "title": "How-To: Handling Empty or Null Values",
+      "category": "query",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "null",
+        "default",
+        "data_quality"
+      ],
+      "file": "how_tos/handling_empty_or_null_values.json"
+    },
+    {
+      "slug": "how_to_compare_and_alert_historical_ingest",
+      "title": "How-To: How to Compare and Alert Historical Ingest",
+      "category": "query",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "ingest",
+        "baselines",
+        "alerts"
+      ],
+      "file": "how_tos/how_to_compare_and_alert_historical_ingest.json"
+    },
+    {
+      "slug": "how_to_configure_crowdstream_logscale_destination",
+      "title": "How-To: How to Configure CrowdStream LogScale Destination",
+      "category": "integration",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "cribl",
+        "crowdstream",
+        "destination",
+        "ingest"
+      ],
+      "file": "how_tos/how_to_configure_crowdstream_logscale_destination.json"
+    },
+    {
+      "slug": "manage_users_using_graphql",
+      "title": "How-To: Manage Users using GraphQL",
+      "category": "graphql",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "graphql",
+        "users",
+        "admin"
+      ],
+      "file": "how_tos/manage_users_using_graphql.json"
+    },
+    {
+      "slug": "managing_timestamps",
+      "title": "How-To: Managing timestamps",
+      "category": "query",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "timestamps",
+        "parse",
+        "time"
+      ],
+      "file": "how_tos/managing_timestamps.json"
+    },
+    {
+      "slug": "migrating_from_server_jar_to_launcher_startup",
+      "title": "How-To: Migrating from server.jar to Launcher Startup",
+      "category": "admin",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "migration",
+        "launcher",
+        "admin"
+      ],
+      "file": "how_tos/migrating_from_server_jar_to_launcher_startup.json"
+    },
+    {
+      "slug": "migrating_kafka_to_humio_core_deployment",
+      "title": "How-To: Migrating Kafka to humio-core Deployment",
+      "category": "admin",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "kafka",
+        "deployment",
+        "migration"
+      ],
+      "file": "how_tos/migrating_kafka_to_humio_core_deployment.json"
+    },
+    {
+      "slug": "o365_event_ingest_into_logscale_via_microsoft_graph_using_pre_defined_crowdstream_o365_activity_services",
+      "title": "How-To: O365 Event Ingest into LogScale via Microsoft Graph (using pre-defined CrowdStream O365 Activity/Services)",
+      "category": "integration",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "o365",
+        "graph_api",
+        "cribl",
+        "ingest"
+      ],
+      "file": "how_tos/o365_event_ingest_into_logscale_via_microsoft_graph_using_pre_defined_crowdstream_o365_activity_services.json"
+    },
+    {
+      "slug": "on_correlating_events",
+      "title": "How-To: On Correlating Events",
+      "category": "query",
+      "difficulty": "advanced",
+      "tags": [
+        "how-to",
+        "correlation",
+        "join",
+        "selfJoin"
+      ],
+      "file": "how_tos/on_correlating_events.json"
+    },
+    {
+      "slug": "parse_log_lines_into_fields_with_regex",
+      "title": "How-To: Parse Log Lines into Fields with Regex",
+      "category": "query",
+      "difficulty": "advanced",
+      "tags": [
+        "how-to",
+        "regex",
+        "parsing",
+        "fields"
+      ],
+      "file": "how_tos/parse_log_lines_into_fields_with_regex.json"
+    },
+    {
+      "slug": "parse_unix_timestamps",
+      "title": "How-To: Parse Unix Timestamps",
+      "category": "query",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "timestamps",
+        "unix_epoch",
+        "parse"
+      ],
+      "file": "how_tos/parse_unix_timestamps.json"
+    },
+    {
+      "slug": "pass_a_groupby_result_to_timechart",
+      "title": "How-To: Pass a groupBy() result to timechart()",
+      "category": "query",
+      "difficulty": "intermediate",
+      "tags": [
+        "how-to",
+        "groupBy",
+        "timechart",
+        "aggregation"
+      ],
+      "file": "how_tos/pass_a_groupby_result_to_timechart.json"
+    },
+    {
+      "slug": "pass_two_averages_to_a_timechart",
+      "title": "How-To: Pass Two Averages to a Timechart",
+      "category": "query",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "timechart",
+        "averages",
+        "metrics"
+      ],
+      "file": "how_tos/pass_two_averages_to_a_timechart.json"
+    },
+    {
+      "slug": "reassemble_a_udp_syslog_event",
+      "title": "How-To: Reassemble a UDP Syslog Event",
+      "category": "query",
+      "difficulty": "advanced",
+      "tags": [
+        "how-to",
+        "syslog",
+        "udp",
+        "reassembly"
+      ],
+      "file": "how_tos/reassemble_a_udp_syslog_event.json"
+    },
+    {
+      "slug": "redacting_data_from_a_repository",
+      "title": "How-To: Redacting Data from a Repository",
+      "category": "admin",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "privacy",
+        "redaction",
+        "admin"
+      ],
+      "file": "how_tos/redacting_data_from_a_repository.json"
+    },
+    {
+      "slug": "reformat_a_json_array_using_parsejson",
+      "title": "How-To: Reformat a JSON Array using parseJson()",
+      "category": "query",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "json",
+        "parseJson",
+        "arrays"
+      ],
+      "file": "how_tos/reformat_a_json_array_using_parsejson.json"
+    },
+    {
+      "slug": "return_more_than_200_matching_events_in_a_query",
+      "title": "How-To: Return More than 200 Matching Events in a Query",
+      "category": "query",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "limits",
+        "pagination",
+        "api"
+      ],
+      "file": "how_tos/return_more_than_200_matching_events_in_a_query.json"
+    },
+    {
+      "slug": "round_a_number_by_two_decimal_places",
+      "title": "How-To: Round a Number by Two Decimal Places",
+      "category": "query",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "round",
+        "formatting",
+        "numbers"
+      ],
+      "file": "how_tos/round_a_number_by_two_decimal_places.json"
+    },
+    {
+      "slug": "search_for_domain_indicators_of_compromise_ioc_across_a_data_set_using_lower",
+      "title": "How-To: Search for Domain Indicators of Compromise (IOC) Across a Data Set Using lower()",
+      "category": "threat_hunting",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "ioc",
+        "domains",
+        "lower",
+        "threat_hunting"
+      ],
+      "file": "how_tos/search_for_domain_indicators_of_compromise_ioc_across_a_data_set_using_lower.json"
+    },
+    {
+      "slug": "search_for_ip_indicators_of_compromise_ioc_across_a_data_set",
+      "title": "How-To: Search for IP Indicators of Compromise (IoC) Across a Data Set",
+      "category": "threat_hunting",
+      "difficulty": "advanced",
+      "tags": [
+        "how-to",
+        "ioc",
+        "ip",
+        "threat_hunting"
+      ],
+      "file": "how_tos/search_for_ip_indicators_of_compromise_ioc_across_a_data_set.json"
+    },
+    {
+      "slug": "search_for_url_indicators_of_compromise_ioc_across_a_data_set",
+      "title": "How-To: Search for URL Indicators of Compromise (IoC) Across a Data Set",
+      "category": "threat_hunting",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "ioc",
+        "urls",
+        "threat_hunting"
+      ],
+      "file": "how_tos/search_for_url_indicators_of_compromise_ioc_across_a_data_set.json"
+    },
+    {
+      "slug": "sorting_by_timestamps_within_groupby",
+      "title": "How-To: Sorting by Timestamps within groupBy()",
+      "category": "query",
+      "difficulty": "advanced",
+      "tags": [
+        "how-to",
+        "groupBy",
+        "sorting",
+        "timestamps"
+      ],
+      "file": "how_tos/sorting_by_timestamps_within_groupby.json"
+    },
+    {
+      "slug": "sorting_exported_data",
+      "title": "How-To: Sorting Exported Data",
+      "category": "query",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "export",
+        "sorting",
+        "csv"
+      ],
+      "file": "how_tos/sorting_exported_data.json"
+    },
+    {
+      "slug": "split_a_single_event_into_multiple_events",
+      "title": "How-To: Split a Single Event into Multiple Events",
+      "category": "query",
+      "difficulty": "intermediate",
+      "tags": [
+        "how-to",
+        "split",
+        "events",
+        "arrays"
+      ],
+      "file": "how_tos/split_a_single_event_into_multiple_events.json"
+    },
+    {
+      "slug": "stop_running_queries_using_graphql",
+      "title": "How-To: Stop Running Queries using GraphQL",
+      "category": "graphql",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "graphql",
+        "operations",
+        "queries"
+      ],
+      "file": "how_tos/stop_running_queries_using_graphql.json"
+    },
+    {
+      "slug": "upgrading_from_non_oss_to_oss_beats_log_shippers",
+      "title": "How-To: Upgrading from Non-OSS to OSS Beats Log Shippers",
+      "category": "integration",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "beats",
+        "oss",
+        "upgrade"
+      ],
+      "file": "how_tos/upgrading_from_non_oss_to_oss_beats_log_shippers.json"
+    },
+    {
+      "slug": "use_conditional_expressions",
+      "title": "How-To: Use Conditional Expressions",
+      "category": "query",
+      "difficulty": "intermediate",
+      "tags": [
+        "how-to",
+        "case",
+        "conditional",
+        "logic"
+      ],
+      "file": "how_tos/use_conditional_expressions.json"
+    },
+    {
+      "slug": "using_tag_grouping",
+      "title": "How-To: Using Tag Grouping",
+      "category": "admin",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "tags",
+        "datasources",
+        "performance"
+      ],
+      "file": "how_tos/using_tag_grouping.json"
+    },
+    {
+      "slug": "write_a_query_supporting_a_case_insensitive_dashboard_parameter",
+      "title": "How-To: Write a query supporting a case-insensitive dashboard parameter?",
+      "category": "query",
+      "difficulty": "beginner",
+      "tags": [
+        "how-to",
+        "dashboards",
+        "parameters",
+        "case-insensitive"
+      ],
+      "file": "how_tos/write_a_query_supporting_a_case_insensitive_dashboard_parameter.json"
+    }
+  ]
+}

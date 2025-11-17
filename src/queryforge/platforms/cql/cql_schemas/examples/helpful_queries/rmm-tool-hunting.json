@@ -1,0 +1,47 @@
+{
+  "id": "rmm-tool-hunting",
+  "title": "RMM Tool Hunting",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/RMM Tool Hunting.md",
+  "category": "helpful_query",
+  "subcategory": "process",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "count",
+    "groupBy",
+    "in"
+  ],
+  "operators_used": [
+    "<",
+    "=",
+    ">",
+    "in",
+    "|"
+  ],
+  "fields_referenced": [
+    "FilePath",
+    "as",
+    "distinct",
+    "field",
+    "function",
+    "ignoreCase",
+    "values"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "hunting",
+  "platforms": [
+    "Win"
+  ],
+  "use_case": "Hunting query for RMM Tool Hunting",
+  "query": "#event_simpleName=ProcessRollup2 event_platform=Win\n// Add in additional program names here.\n| in(field=\"FileName\", values=[anydesk.exe, AteraAgent.exe, teamviewer.exe, SRService.exe, SRManager.exe, SRServer.exe, SRAgent.exe, ClientService.exe, \"ScreenConnect.WindowsClient.exe\", ngrok.exe], ignoreCase=true)\n| FilePath=/\\\\Device\\\\HarddiskVolume\\d\\\\(?<ShortFilePath>.+$)/\n| groupBy([FileName, ShortFilePath, SHA256HashData], function=([count(aid, as=TotalExecutions), count(aid, distinct=true, as=UniqueEndpoints), collect([ComputerName])]))\n// Adjust threshold\n| UniqueEndpoints<15",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "processrollup2",
+    "win"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "readFile",
+  "category": "utility",
+  "description": "Reads the contents of a lookup file stored in LogScale.",
+  "syntax": "readFile(\"file_path\")",
+  "parameters": [
+    {
+      "name": "file_path",
+      "type": "string",
+      "required": true,
+      "description": "The path to the lookup file to read"
+    }
+  ],
+  "return_type": "file_contents",
+  "examples": [
+    "readFile(\"falcon/investigate/AsepClass.csv\")",
+    "readFile(\"lookups/threat_intel.csv\")",
+    "readFile(\"config/mappings.json\")"
+  ],
+  "related_functions": ["match", "join"],
+  "use_cases": ["Loading lookup tables", "Reading threat intelligence feeds", "Loading configuration data", "CSV/JSON enrichment"],
+  "documentation_url": "https://library.humio.com/data-analysis/functions-readfile.html"
+}

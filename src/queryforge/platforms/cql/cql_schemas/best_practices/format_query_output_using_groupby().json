@@ -1,0 +1,28 @@
+{
+  "title": "Format query output using groupBy()",
+  "slug": "format_query_output_using_groupby()",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "Combine groupBy() with format() or assignment operators to create human\u2011friendly summary fields and labels, rather than showing raw field names.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Creates a summary text field that reads naturally and can be displayed directly in table or text widgets.",
+      "language": "logscale",
+      "query": "#event_simpleName=ProcessRollup2\n| groupBy(ComputerName, function=count(as=\"ProcessEvents\"))\n| summary := format(\"%s executed %d process events\", field=[ComputerName, ProcessEvents])"
+    }
+  ],
+  "tags": [
+    "assignment",
+    "formatting",
+    "groupby"
+  ],
+  "url": "https://library.humio.com/kb/kb-format-query-output-groupby.html",
+  "difficulty": "intermediate",
+  "related_functions": [
+    "count",
+    "format",
+    "groupBy"
+  ]
+}

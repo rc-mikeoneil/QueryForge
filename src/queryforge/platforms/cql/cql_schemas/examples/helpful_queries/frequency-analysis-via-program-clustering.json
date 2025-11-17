@@ -1,0 +1,49 @@
+{
+  "id": "frequency-analysis-via-program-clustering",
+  "title": "Frequency Analysis via Program Clustering",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Frequency Analysis via Program Clustering.md",
+  "category": "helpful_query",
+  "subcategory": "process",
+  "description": "Manually creating time shards without rounding to leverage groupBy:",
+  "mitre_attack": null,
+  "event_types": [
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "bucket",
+    "count",
+    "test"
+  ],
+  "operators_used": [
+    "=",
+    ">",
+    ">=",
+    "in",
+    "|"
+  ],
+  "fields_referenced": [
+    "FileName",
+    "as",
+    "distinct",
+    "field",
+    "function",
+    "limit",
+    "span"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "hunting",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "Manually creating time shards without rounding to leverage groupBy:",
+  "query": "// Get file names of interest\nevent_platform=Win #event_simpleName=ProcessRollup2 FileName=/(whoami|arp|cmd|net|net1|ipconfig|route|netstat|nslookup|nltest|systeminfo|wmic|tasklist|tracert|ping|adfind|nbtstat|find|ldifde|netsh|wbadmin)\\.exe/i\n\n// Aggregate in 10 minute buckets; set search to 24 hours\n| bucket(span=10min, field=[cid, aid, ComputerName,ParentBaseFileName,ParentProcessId], function=[count(FileName, distinct=true, as=fNameCount), collect([FileName, CommandLine])], limit=500)\n\n// Set threshold at three distinct file name values\n| test(fNameCount>=3)",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "lin",
+    "processrollup2",
+    "win"
+  ]
+}

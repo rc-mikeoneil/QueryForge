@@ -1,0 +1,62 @@
+{
+  "id": "iso_img-written-to-disk-w_-responsible-process",
+  "title": "ISO_IMG Written to Disk w_ Responsible Process",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/ISO_IMG Written to Disk w_ Responsible Process.md",
+  "category": "helpful_query",
+  "subcategory": "process",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "ImgExtensionFileWritten",
+    "ProcessRollup2",
+    "IsoExtensionFileWritten"
+  ],
+  "functions_used": [
+    "format",
+    "join",
+    "match",
+    "table"
+  ],
+  "operators_used": [
+    "<",
+    "=",
+    ">",
+    "match",
+    "or",
+    "|"
+  ],
+  "fields_referenced": [
+    "ImageFileName",
+    "as",
+    "field",
+    "file",
+    "format",
+    "ignoreCase",
+    "include",
+    "key",
+    "strict"
+  ],
+  "correlation_patterns": [
+    "join"
+  ],
+  "difficulty": "advanced",
+  "query_type": "utility",
+  "platforms": [
+    "Lin"
+  ],
+  "use_case": "Utility query for ISO_IMG Written to Disk w_ Responsible Process",
+  "query": "#event_simpleName=ProcessRollup2\n\n| join({#event_simpleName=IsoExtensionFileWritten OR #event_simpleName=ImgExtensionFileWritten}, key=[aid, ContextProcessId], field=[aid, TargetProcessId], include=[TargetFileName])\n| ImageFileName=/(\\/|\\\\)(?<FileName>\\w*\\.?\\w*)$/\n| format(format=\"%s > %s > %s\", field=[GrandParentBaseFileName, ParentBaseFileName, FileName], as=\"processLineage\")\n| match(file=\"fdr_aidmaster.csv\", field=aid, include=ComputerName, ignoreCase=true, strict=false)\n| table([aid, ComputerName, processLineage, CommandLine, TargetFileName])",
+  "key_features": [
+    "Uses join for correlation",
+    "Multi-event correlation (3 event types)"
+  ],
+  "related_examples": [],
+  "tags": [
+    "imgextensionfilewritten",
+    "isoextensionfilewritten",
+    "join",
+    "lin",
+    "process",
+    "processrollup2"
+  ]
+}

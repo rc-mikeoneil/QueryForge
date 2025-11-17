@@ -1,0 +1,24 @@
+{
+  "name": "table",
+  "category": "utility",
+  "description": "Formats query results as a table with specified columns. Similar to select but specifically for table visualization.",
+  "syntax": "| table([field1, field2, field3, ...])",
+  "parameters": [
+    {
+      "name": "fields",
+      "type": "array",
+      "required": true,
+      "description": "Array of field names to display as table columns"
+    }
+  ],
+  "return_type": "table_view",
+  "examples": [
+    "| table([@timestamp, aid, UserSid, ImageFileName, CommandLine])",
+    "| table([aid, ComputerName, UserName, EventTime])",
+    "| table([src_ip, dst_ip, bytes_sent, bytes_received])"
+  ],
+  "related_functions": ["select", "timeChart"],
+  "use_cases": ["Creating table visualizations", "Formatting output", "Reporting", "Data presentation"],
+  "notes": "Primary purpose is visualization. Use select for field filtering in processing pipelines.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-table.html"
+}

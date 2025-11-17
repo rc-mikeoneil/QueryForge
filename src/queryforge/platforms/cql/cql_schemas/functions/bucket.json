@@ -1,0 +1,43 @@
+{
+  "name": "bucket",
+  "category": "aggregation",
+  "description": "Divides the search time interval into buckets. Each event is put into a bucket based on its timestamp value. Events are grouped by their bucket, generating the field '_bucket'. The value of '_bucket' is the corresponding bucket's start time in milliseconds (UTC time).",
+  "syntax": "bucket(interval, field=[fields], function=(aggregate_functions))",
+  "parameters": [
+    {
+      "name": "interval",
+      "type": "time_duration",
+      "required": true,
+      "description": "Time interval for buckets (e.g., 1day, 1h, 5m)"
+    },
+    {
+      "name": "field",
+      "type": "array",
+      "required": false,
+      "description": "Fields to group by within each bucket"
+    },
+    {
+      "name": "function",
+      "type": "aggregation_function",
+      "required": false,
+      "description": "Aggregate functions to apply to each bucket"
+    }
+  ],
+  "return_type": "bucketed_events",
+  "output_fields": [
+    {
+      "name": "_bucket",
+      "type": "long",
+      "description": "Bucket start time in milliseconds (UTC)"
+    }
+  ],
+  "examples": [
+    "| bucket(1day, field=[RFMState], function=(count(field=aid, as=\"endpointCount\")))",
+    "| bucket(1h, function=count())",
+    "| bucket(5m, field=[ComputerName], function=(count(aid, distinct=true)))"
+  ],
+  "related_functions": ["groupBy", "timeChart"],
+  "use_cases": ["Time series analysis", "Trend analysis", "Temporal aggregation"],
+  "notes": "The bucket() function takes all the same parameters as groupBy().",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-bucket.html"
+}

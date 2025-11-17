@@ -1,0 +1,26 @@
+{
+  "title": "How-To: Create case-insensitive user input",
+  "slug": "create_case_insensitive_user_input",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Demonstrates how to accept user-provided dashboard or panel parameters and normalize them\nso that input is treated in a case-insensitive way, using lower() or similar transformations.",
+  "examples": [
+    {
+      "name": "Normalize a dashboard parameter",
+      "description": "Converts the value of a panel parameter userNameParam to lowercase before comparison.",
+      "language": "logscale",
+      "query": "lower(UserName) = lower($\"userNameParam\")"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "dashboards",
+    "parameters",
+    "case-insensitive"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "lower"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "name": "transpose",
+  "category": "transformation",
+  "description": "Transposes rows to columns or columns to rows. Can convert field names to column headers, or pivot data for different viewing perspectives. Useful for reformatting data for display or analysis.",
+  "syntax": "transpose(limit=max, header=field_name)",
+  "parameters": [
+    {
+      "name": "limit",
+      "type": "number",
+      "required": false,
+      "description": "Maximum number of rows/columns to transpose (default: 200)"
+    },
+    {
+      "name": "header",
+      "type": "string",
+      "required": false,
+      "description": "Field to use as column headers in the transposed output"
+    }
+  ],
+  "return_type": "transposed_events",
+  "examples": [
+    "| transpose(limit=1000)",
+    "| transpose(header=column, limit=1000)",
+    "| kvParse() | transpose(limit=1000) | column := upper(column) | transpose(header=column, limit=1000)"
+  ],
+  "related_functions": ["table", "select", "kvParse"],
+  "use_cases": ["Data pivoting", "Field name transformation", "Table reformatting", "Column-to-row conversion"],
+  "notes": "Often used with kvParse() to convert key-value pairs into columnar format. Can be chained to transform and then pivot data.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-transpose.html"
+}

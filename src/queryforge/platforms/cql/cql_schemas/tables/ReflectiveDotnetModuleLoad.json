@@ -1,0 +1,106 @@
+{
+  "table": "ReflectiveDotnetModuleLoad",
+  "category": "endpoint_script",
+  "description": "Reflective .NET module load events capturing in-memory .NET assembly loading. Critical for detecting fileless malware, Cobalt Strike, and other reflective DLL injection techniques.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["ReflectiveDotnetModuleLoad"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "UserName",
+      "type": "string",
+      "description": "Username associated with the loading process",
+      "searchable": true,
+      "common_usage": ["filtering", "user behavior analysis"]
+    },
+    {
+      "name": "ContextProcessId",
+      "type": "long",
+      "description": "Falcon's unique process identifier for the loading process",
+      "common_usage": ["correlation", "joining with ProcessRollup2"]
+    },
+    {
+      "name": "ImageFileName",
+      "type": "string",
+      "description": "Process that loaded the .NET assembly",
+      "searchable": true,
+      "example_values": ["powershell.exe", "rundll32.exe", "regsvr32.exe"],
+      "common_usage": ["filtering", "process attribution"]
+    },
+    {
+      "name": "ModuleName",
+      "type": "string",
+      "description": "Name of the loaded .NET module/assembly",
+      "searchable": true,
+      "common_usage": ["filtering", "module identification"]
+    },
+    {
+      "name": "SHA256HashData",
+      "type": "string",
+      "description": "SHA256 hash of the loaded assembly",
+      "searchable": true,
+      "common_usage": ["threat intelligence", "IOC matching"]
+    },
+    {
+      "name": "AssemblySize",
+      "type": "long",
+      "description": "Size of the loaded assembly in bytes",
+      "common_usage": ["filtering", "size-based analysis"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "timeline creation"]
+    }
+  ],
+  "col_count": 12,
+  "common_filters": [
+    "ImageFileName=/powershell\\.exe|rundll32\\.exe/i",
+    "event_platform=Win"
+  ],
+  "common_fields": ["aid", "ComputerName", "ImageFileName", "ModuleName", "SHA256HashData"],
+  "common_operations": [
+    "Detect reflective DLL injection techniques",
+    "Hunt for Cobalt Strike beacon loading",
+    "Identify fileless malware execution",
+    "Join with ProcessRollup2 via ContextProcessId for process context",
+    "Correlate with PowerShell or other script activity",
+    "Match hashes against threat intelligence"
+  ],
+  "generated_at": "2025-11-15T00:00:00Z"
+}

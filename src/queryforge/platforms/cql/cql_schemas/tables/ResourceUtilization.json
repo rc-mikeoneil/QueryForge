@@ -1,0 +1,107 @@
+{
+  "table": "ResourceUtilization",
+  "category": "endpoint_system",
+  "description": "System resource utilization metrics including CPU, memory, and disk usage. Provides performance monitoring and capacity planning data, useful for detecting resource exhaustion attacks and system anomalies.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["ResourceUtilization"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win", "Mac", "Lin"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "CpuUsagePercent",
+      "type": "double",
+      "description": "CPU utilization percentage",
+      "common_usage": ["filtering", "threshold alerting", "performance analysis"]
+    },
+    {
+      "name": "MemoryUsagePercent",
+      "type": "double",
+      "description": "Memory utilization percentage",
+      "common_usage": ["filtering", "threshold alerting", "capacity planning"]
+    },
+    {
+      "name": "DiskUsagePercent",
+      "type": "double",
+      "description": "Disk utilization percentage",
+      "common_usage": ["filtering", "disk full detection", "capacity planning"]
+    },
+    {
+      "name": "AvailableMemoryMB",
+      "type": "long",
+      "description": "Available memory in megabytes",
+      "common_usage": ["capacity analysis"]
+    },
+    {
+      "name": "AvailableDiskSpaceGB",
+      "type": "long",
+      "description": "Available disk space in gigabytes",
+      "common_usage": ["capacity analysis"]
+    },
+    {
+      "name": "AverageCpuUsage",
+      "type": "double",
+      "description": "Average CPU usage (alternative field name for CpuUsagePercent)",
+      "common_usage": ["performance analysis", "resource monitoring"]
+    },
+    {
+      "name": "AverageUsedRam",
+      "type": "long",
+      "description": "Average RAM used (may require unit conversion)",
+      "common_usage": ["performance analysis", "resource monitoring"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "time series analysis"]
+    }
+  ],
+  "col_count": 13,
+  "common_filters": [
+    "CpuUsagePercent>90",
+    "MemoryUsagePercent>90",
+    "DiskUsagePercent>90"
+  ],
+  "common_fields": ["aid", "ComputerName", "CpuUsagePercent", "MemoryUsagePercent"],
+  "common_operations": [
+    "Detect resource exhaustion attacks (crypto mining, fork bombs)",
+    "Monitor endpoint health and performance",
+    "Capacity planning and trending",
+    "Alert on high resource utilization",
+    "Time series analysis for anomaly detection"
+  ],
+  "generated_at": "2025-11-15T00:00:00Z"
+}

@@ -1,0 +1,58 @@
+{
+  "id": "map-agent-id-values-to-host-group-names",
+  "title": "Map Agent ID values to Host Group Names",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Map Agent ID values to Host Group Names.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [],
+  "functions_used": [
+    "default",
+    "groupBy",
+    "join",
+    "parseJson",
+    "rename",
+    "replace",
+    "split"
+  ],
+  "operators_used": [
+    "=",
+    "|"
+  ],
+  "fields_referenced": [
+    "as",
+    "by",
+    "data_source_name",
+    "field",
+    "group_id",
+    "include",
+    "mode",
+    "name",
+    "prefix",
+    "replaceEmpty",
+    "repo",
+    "separator",
+    "start",
+    "value",
+    "with"
+  ],
+  "correlation_patterns": [
+    "join"
+  ],
+  "difficulty": "advanced",
+  "query_type": "hunting",
+  "platforms": [
+    "Cross-platform"
+  ],
+  "use_case": "Hunting query for Map Agent ID values to Host Group Names",
+  "query": "#repo=sensor_metadata\n#data_source_name=aid-policy\n| parseJson(field=groups, prefix=groups_arr)\n| concatArray(groups_arr, separator=\",\", as=groups_arr)\n| splitString(field=groups_arr, by=\",\", as=group_id)\n| split(group_id)\n| replace(\"[\\[\\]']+\", with=\"\", field=groups)\n| join({\n  $falcon/investigate:group_info()\n}, field=group_id, include=name, mode=left, start=5d)\n| group_name := rename(name)\n| default(field=[group_name],value=\"Default\",replaceEmpty=\"true\")\n| groupBy([aid, group_id, group_name])",
+  "key_features": [
+    "Uses join for correlation"
+  ],
+  "related_examples": [],
+  "tags": [
+    "cross-platform",
+    "join"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "name": "assignment_operator",
+  "display_name": ":=",
+  "category": "operators",
+  "description": "Sets the value of a specified field to a value or the result of a formula. Can be used with functions that take an 'as' parameter.",
+  "syntax": "field := value_or_expression",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "Name of the field to create or modify"
+    },
+    {
+      "name": "value_or_expression",
+      "type": "any",
+      "required": true,
+      "description": "Value or expression to assign to the field"
+    }
+  ],
+  "return_type": "modified_events",
+  "examples": [
+    "| timeDeltaSeconds := (now()*1000)-ProcessStartTime",
+    "| falconPID := TargetProcessId",
+    "| day := formatTime(\"%Y-%m-%d\", field=@timestamp, locale=en_US, timezone=Z)"
+  ],
+  "related_functions": ["rename", "default"],
+  "use_cases": ["Field creation", "Value transformation", "Calculated fields"],
+  "documentation_url": "https://library.humio.com/data-analysis/syntax-fields.html#syntax-fields-assignment-operator"
+}

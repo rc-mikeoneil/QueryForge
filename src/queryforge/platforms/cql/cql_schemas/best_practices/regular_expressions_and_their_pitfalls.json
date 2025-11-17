@@ -1,0 +1,22 @@
+{
+  "title": "Regular Expressions and their Pitfalls",
+  "slug": "regular_expressions_and_their_pitfalls",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "performance",
+  "description": "Poorly written regex can be slow or incorrect. Avoid catastrophic backtracking, overly broad wildcards, and unnecessary capture groups. Test patterns on representative data.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Removes leading and trailing \".*\" and uses a more specific pattern, reducing backtracking and improving performance.",
+      "language": "logscale",
+      "query": "// Instead of: CommandLine=/.*(powershell).*EncodedCommand.*/\nCommandLine=/powershell.*EncodedCommand/"
+    }
+  ],
+  "tags": [
+    "performance",
+    "regex"
+  ],
+  "url": "https://library.humio.com/kb/kb-avoiding-regex-pitfalls.html",
+  "difficulty": "advanced"
+}

@@ -1,0 +1,26 @@
+{
+  "title": "How-To: Case-Insensitive Searches",
+  "slug": "case_insensitive_searches",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Describe ways to perform case-insensitive searches in LogScale, by using lower() on fields,\nregular expression flags, or dedicated case-insensitive operators/functions.",
+  "examples": [
+    {
+      "name": "Lowercase both field and search term",
+      "description": "Normalizes a field to lowercase and then compares against a lowercase value.",
+      "language": "logscale",
+      "query": "lower(UserName) = \"administrator\""
+    }
+  ],
+  "tags": [
+    "how-to",
+    "search",
+    "case-insensitive",
+    "lower"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "lower"
+  ]
+}

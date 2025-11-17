@@ -1,0 +1,33 @@
+{
+  "name": "defineTable",
+  "category": "advanced",
+  "description": "Executes a subquery that generates an in-memory, ad-hoc table based on its results. The ad-hoc table can be joined with the results of the primary query using the match function.",
+  "syntax": "defineTable(query={subquery}, include=[fields], name=table_name)",
+  "parameters": [
+    {
+      "name": "query",
+      "type": "query",
+      "required": true,
+      "description": "Subquery to execute and convert into a table"
+    },
+    {
+      "name": "include",
+      "type": "array",
+      "required": true,
+      "description": "Fields to include from the subquery results in the table"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "required": true,
+      "description": "Name for the ad-hoc table"
+    }
+  ],
+  "return_type": "table_definition",
+  "examples": [
+    "defineTable(\n    query={ #event_simpleName=ZipFileWritten\n    }, include=[ContextProcessId,TargetFileName,aid],name=\"zip_file_writes\")\n| #event_simpleName=ProcessRollup2\n| match(table=\"zip_file_writes\",field=[aid, TargetProcessId], column=[aid, ContextProcessId])\n| table([@timestamp,ComputerName,FileName, CommandLine, TargetFileName], limit=1000)\n| rename([[FileName,WritingFile], [CommandLine, WritingCmdLine], [TargetFileName, WrittenFile]])"
+  ],
+  "related_functions": ["match", "join"],
+  "use_cases": ["Lookup tables", "Data enrichment", "Cross-event correlation", "In-memory joins"],
+  "documentation_url": "https://library.humio.com/data-analysis/functions-definetable.html"
+}

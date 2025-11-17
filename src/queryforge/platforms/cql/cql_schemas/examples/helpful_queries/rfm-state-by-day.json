@@ -1,0 +1,46 @@
+{
+  "id": "rfm-state-by-day",
+  "title": "RFM State by Day",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/RFM State by Day.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "OsVersionInfo"
+  ],
+  "functions_used": [
+    "bucket",
+    "count",
+    "groupBy"
+  ],
+  "operators_used": [
+    "=",
+    ">",
+    "match",
+    "|"
+  ],
+  "fields_referenced": [
+    "RFMState",
+    "as",
+    "field",
+    "function",
+    "limit",
+    "locale",
+    "timezone"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Cross-platform"
+  ],
+  "use_case": "Analysis query for RFM State by Day",
+  "query": "#event_simpleName=OsVersionInfo  RFMState=*\n\n| day := formatTime(\"%Y-%m-%d\", field=@timestamp, locale=en_US, timezone=Z)\n| groupBy([aid, day], function=(selectLast([RFMState, @timestamp])), limit=max)\n| RFMState match {\n\n    1 => RFMState := \"True\" ;\n    0 => RFMState := \"False\" ;\n}\n\n| bucket(1day, field=[RFMState], function=(count(field=aid, as=\"endpointCount\")))\n| _bucket := formatTime(\"%Y-%m-%d\", field=_bucket, locale=en_US, timezone=Z)",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "cross-platform",
+    "osversioninfo"
+  ]
+}

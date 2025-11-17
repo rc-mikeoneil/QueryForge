@@ -1,0 +1,27 @@
+{
+  "title": "Comparing Repos and Views",
+  "slug": "comparing_repos_and_views",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "Repositories store raw data and indexes while Views are virtual collections built over one or more repos. Use Views to provide role\u2011specific search surfaces or combine multiple datasets without duplicating storage.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Compares event volumes from a single repo versus an aggregate security view to confirm which data sets are included.",
+      "language": "logscale",
+      "query": "#repo=falcon-endpoint or #view=all-security\n| groupBy(#repo, function=count())"
+    }
+  ],
+  "tags": [
+    "collect",
+    "repos",
+    "views"
+  ],
+  "url": "https://library.humio.com/kb/kb-comparing-repos-views.html",
+  "difficulty": "intermediate",
+  "related_functions": [
+    "count",
+    "groupBy"
+  ]
+}

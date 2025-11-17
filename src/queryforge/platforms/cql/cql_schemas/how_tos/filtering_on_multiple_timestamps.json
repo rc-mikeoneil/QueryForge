@@ -1,0 +1,26 @@
+{
+  "title": "How-To: Filtering on Multiple Timestamps",
+  "slug": "filtering_on_multiple_timestamps",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Explores queries that need to consider more than one timestamp field, such as event time\nversus ingestion time, or start and end times in range records.",
+  "examples": [
+    {
+      "name": "Filter by event_time and ingestion_time",
+      "description": "Keeps only events where event_time is within the last 24h and ingestion_time is within 1h of event_time.",
+      "language": "logscale",
+      "query": "event_time > now() - 24h\ningestion_time - event_time < 1h"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "timestamps",
+    "filters",
+    "multiple_fields"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "now"
+  ]
+}

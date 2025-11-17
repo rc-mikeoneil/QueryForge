@@ -1,0 +1,38 @@
+{
+  "id": "files-written-to-removable-media",
+  "title": "Files Written to Removable Media",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Files Written to Removable Media.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [],
+  "functions_used": [
+    "count",
+    "groupBy",
+    "sum"
+  ],
+  "operators_used": [
+    "=",
+    "|"
+  ],
+  "fields_referenced": [
+    "IsOnRemovableDisk",
+    "as",
+    "function",
+    "to"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Win"
+  ],
+  "use_case": "Analysis query for Files Written to Removable Media",
+  "query": "event_platform=Win #event_simpleName=/Written/ IsOnRemovableDisk=1 \n| FileSizeMB:=unit:convert(Size, to=M) \n| groupBy([ComputerName], function=([sum(Size, as=SizeBytes), sum(FileSizeMB, as=FileSizeMB), count(TargetFileName, as=\"File Count\"), collect([TargetFileName])]))",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "win"
+  ]
+}

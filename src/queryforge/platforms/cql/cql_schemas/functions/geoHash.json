@@ -1,0 +1,42 @@
+{
+  "name": "geoHash",
+  "category": "network",
+  "description": "Calculates a geohash value given two fields representing latitude and longitude. Precision can be set from 1 (least precise) to 12 (most precise). Geohashes are useful for spatial indexing and proximity searches.",
+  "syntax": "geoHash(lat=lat_field, lon=lon_field, precision=num)",
+  "parameters": [
+    {
+      "name": "lat",
+      "type": "string",
+      "required": true,
+      "description": "Field containing latitude value"
+    },
+    {
+      "name": "lon",
+      "type": "string",
+      "required": true,
+      "description": "Field containing longitude value"
+    },
+    {
+      "name": "precision",
+      "type": "number",
+      "required": false,
+      "description": "Precision level from 1 (least precise) to 12 (most precise) (default: 6)"
+    }
+  ],
+  "return_type": "enriched_events",
+  "output_fields": [
+    {
+      "name": "geoHash",
+      "type": "string",
+      "description": "Calculated geohash value"
+    }
+  ],
+  "examples": [
+    "| geoHash := geohash(lat=OriginSourceIpAddress.lat, lon=OriginSourceIpAddress.lon, precision=2)",
+    "| geoHash := geohash(lat=RemoteAddressIP4.lat, lon=RemoteAddressIP4.lon, precision=5)"
+  ],
+  "related_functions": ["ipLocation", "worldMap"],
+  "use_cases": ["Spatial indexing", "Geographic clustering", "Proximity analysis", "Location grouping"],
+  "notes": "Often used after ipLocation() to create geographic groupings of IP addresses.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-geohash.html"
+}

@@ -1,0 +1,27 @@
+{
+  "title": "How-To: Executing Queries from Powershell and Bash",
+  "slug": "executing_queries_from_powershell_and_bash",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "api",
+  "description": "Explains how to run LogScale queries via the HTTP/REST API using common CLI tools like curl,\nwith examples for both Bash and PowerShell invoking /api/v1/structured or similar endpoints.",
+  "examples": [
+    {
+      "name": "Execute query with curl (Bash)",
+      "description": "Runs a simple query against a repository using curl and prints JSON results.",
+      "language": "bash",
+      "query": "curl -X POST \"https://logscale.example.com/api/v1/structured/query\" \\\n  -H \"Authorization: Bearer $LOGSCALE_TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"queryString\": \"#level=ERROR | count()\", \"repoName\": \"example-repo\"}'"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "api",
+    "bash",
+    "powershell",
+    "automation"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "count"
+  ]
+}

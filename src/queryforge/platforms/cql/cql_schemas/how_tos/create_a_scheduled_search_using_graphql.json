@@ -1,0 +1,28 @@
+{
+  "title": "How-To: Create a Scheduled Search using GraphQL",
+  "slug": "create_a_scheduled_search_using_graphql",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "graphql",
+  "description": "Demonstrates creating or managing scheduled searches via GraphQL, including query text,\nschedule interval, notification settings, and target repository.",
+  "examples": [
+    {
+      "name": "Create a daily scheduled search",
+      "description": "Sets up a scheduled search that runs once per day and alerts on results.",
+      "language": "graphql",
+      "query": "mutation {\n  createScheduledSearch(\n    input: {\n      searchDomainName: \"example-repo\"\n      name: \"Daily Error Rate Alert\"\n      queryString: \"#level=ERROR | timechart(function=count(), span=1h)\"\n      cronSchedule: \"0 0 * * *\"\n      enabled: true\n    }\n  ) {\n    scheduledSearch { id name enabled }\n  }\n}"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "graphql",
+    "scheduled_search",
+    "alerts"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "count",
+    "createScheduledSearch",
+    "timechart"
+  ]
+}

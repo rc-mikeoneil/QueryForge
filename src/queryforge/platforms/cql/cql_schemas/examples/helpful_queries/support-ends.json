@@ -1,0 +1,47 @@
+{
+  "id": "support-ends",
+  "title": "Support Ends",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Support Ends.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [],
+  "functions_used": [
+    "groupBy",
+    "match",
+    "selectFromMax"
+  ],
+  "operators_used": [
+    "=",
+    "match",
+    "|"
+  ],
+  "fields_referenced": [
+    "as",
+    "column",
+    "data_source_group",
+    "data_source_name",
+    "field",
+    "file",
+    "function",
+    "ignoreCase",
+    "include",
+    "repo",
+    "strict",
+    "timezone"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "hunting",
+  "platforms": [
+    "Cross-platform"
+  ],
+  "use_case": "Hunting query for Support Ends",
+  "query": "#repo=sensor_metadata #data_source_name=aidmaster #data_source_group=aidmaster-api\n| groupBy([aid], function=([selectFromMax(field=\"@timestamp\", include=[ComputerName, Time, Version, ConfigIDBuild, AgentVersion])]))\n| match(file=\"falcon/investigate/sensors_support_info.csv\", field=ConfigIDBuild, column=BUILD, ignoreCase=true, strict=true)\n| parseTimestamp(\"M/d/yy\",field=SUPPORT_ENDS, as=SUPPORT_ENDS_EPOCH, timezone=\"UTC\")",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "cross-platform"
+  ]
+}

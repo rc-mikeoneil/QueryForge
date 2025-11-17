@@ -1,0 +1,60 @@
+{
+  "id": "survival-of-the-fastest",
+  "title": "Survival of the Fastest",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Survival of the Fastest.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [],
+  "functions_used": [
+    "count",
+    "default",
+    "drop",
+    "format",
+    "groupBy",
+    "in",
+    "max",
+    "min",
+    "rename",
+    "table"
+  ],
+  "operators_used": [
+    "!=",
+    "=",
+    "and",
+    "in",
+    "not",
+    "|"
+  ],
+  "fields_referenced": [
+    "Attributes.assign_to_user_id",
+    "Attributes.update_status",
+    "ExternalApiType",
+    "Hostname",
+    "as",
+    "distinct",
+    "field",
+    "format",
+    "function",
+    "limit",
+    "precision",
+    "replaceEmpty",
+    "repo",
+    "value",
+    "values"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "detection",
+  "platforms": [
+    "Lin"
+  ],
+  "use_case": "Detection query for Survival of the Fastest",
+  "query": "// Get events of interest\n#repo=detections \n| in(field=\"ExternalApiType\", values=[Event_UserActivityAuditEvent, Event_EppDetectionSummaryEvent])\n\n// Unify detection UUID\n| detectID:=Attributes.composite_id | detectID:=CompositeId\n\n// Based on event type, set the timestamp value for later calculations.\n| case{\nExternalApiType=Event_UserActivityAuditEvent Attributes.update_status=closed | response_time:=@timestamp;\nExternalApiType=Event_UserActivityAuditEvent Attributes.assign_to_user_id=* | assign_time:=@timestamp;\nExternalApiType=Event_EppDetectionSummaryEvent | detect_time:=@timestamp;\n}\n\n// Perform aggregation against detectID to get required values\n| groupBy([detectID], function=([count(ExternalApiType, distinct=true), selectLast([Hostname, Attributes.update_status]), max(Severity, as=Severity), collect([Tactic, Technique, FalconHostLink, Attributes.add_tag]), min(detect_time, as=FirstDetect), min(assign_time, as=FirstAssign), min(response_time, as=ResolvedTime)]), limit=200000)\n\n// Check to make sure Hostname value is not null; makes sure there isn't only a detection update event.\n| Hostname=*\n\n// This handles when an alert was closed and then reopened\n| case{\nAttributes.update_status!=closed | ResolvedTime:=\"\";\n*;\n}\n\n// Calculate durations\n| ToAssign:=(FirstAssign-FirstDetect) | ToAssign:=formatDuration(field=ToAssign, precision=3)\n| AssignToClose:=(ResolvedTime-FirstAssign) | AssignToClose:=formatDuration(field=AssignToClose, precision=3)\n| DetectToClose:=(ResolvedTime-FirstDetect) | DetectToClose:=formatDuration(field=DetectToClose, precision=3)\n\n// Calculate the age of open alerts\n| case{\n    Attributes.update_status!=\"closed\" | Aging:=now()-FirstDetect | Aging:=formatDuration(Aging, precision=2);\n    *;\n}\n\n// Set default value for field Attributes.update_status; seeing some null values and not sure why\n| default(value=\"new\", field=[Attributes.update_status])\n| default(value=\"-\", field=[FirstAssign, ResolvedTime, ToAssign, AssignToClose, DetectToClose, Aging, Tags], replaceEmpty=true)\n\n\n// Format timestamps out of epoch\n| FirstDetect:=formatTime(format=\"%F %T\", field=\"FirstDetect\")\n| FirstAssign:=formatTime(format=\"%F %T\", field=\"FirstAssign\")\n| ResolvedTime:=formatTime(format=\"%F %T\", field=\"ResolvedTime\")\n\n// Create hyperlink to detection\n| format(\"[Detection Link](%s)\", field=[FalconHostLink], as=\"Detection Link\")\n\n// Drop uneeded fields\n| drop([detectID, _count, FalconHostLink])\n\n// Rename field with silly name\n|rename(field=[[Attributes.update_status, \"CurrentState\"], [\"Attributes.add_tag\", Tags]])\n\n// Order output columns to make them pretty\n| table([Hostname, Tactic, Technique, Severity, CurrentState, Aging, FirstDetect, FirstAssign, ResolvedTime, ToAssign, AssignToClose, DetectToClose, Tags, \"Detection Link\"], limit=20000)",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "lin"
+  ]
+}

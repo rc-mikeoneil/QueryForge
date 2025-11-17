@@ -1,0 +1,26 @@
+{
+  "title": "How-To: Round a Number by Two Decimal Places",
+  "slug": "round_a_number_by_two_decimal_places",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Explains how to round numeric fields such as response times or percentages to a fixed number\nof decimal places for cleaner presentation.",
+  "examples": [
+    {
+      "name": "Round latency to two decimals",
+      "description": "Rounds latency_ms to two decimal places in a new field latency_rounded.",
+      "language": "logscale",
+      "query": "latency_rounded := round(latency_ms, 2)"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "round",
+    "formatting",
+    "numbers"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "round"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "title": "How-To: Search for URL Indicators of Compromise (IoC) Across a Data Set",
+  "slug": "search_for_url_indicators_of_compromise_ioc_across_a_data_set",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "threat_hunting",
+  "description": "Explains how to search URL-based IOCs across HTTP logs, proxies, or other telemetry,\ntypically by inspecting URL or RequestURL fields and matching against an IOC list.",
+  "examples": [
+    {
+      "name": "Match URLs from IOC CSV",
+      "description": "Matches the normalized URL field against a list of known malicious URLs.",
+      "language": "logscale",
+      "query": "| match(file=\"url_iocs.csv\", field=Url, include=Indicator, ignoreCase=true, strict=false)"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "ioc",
+    "urls",
+    "threat_hunting"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "match"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "id": "searching-comma-delineated-list-with-user-input",
+  "title": "Searching Comma Delineated List With User Input",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Searching Comma Delineated List With User Input.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "List must be comma delineated without a space. Example:",
+  "mitre_attack": null,
+  "event_types": [
+    "OsVersionInfo"
+  ],
+  "functions_used": [
+    "drop",
+    "regex",
+    "test"
+  ],
+  "operators_used": [
+    "!=",
+    "<",
+    "=",
+    ">",
+    "regex",
+    "|"
+  ],
+  "fields_referenced": [
+    "ComputerName",
+    "field",
+    "field_temp",
+    "regex",
+    "repeat"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "hunting",
+  "platforms": [
+    "Lin"
+  ],
+  "use_case": "List must be comma delineated without a space. Example:",
+  "query": "#event_simpleName=OsVersionInfo\n| field_temp:= ?{ComputerName=\"*\"}\n| case {\n\tfield_temp != /^\\*$/ | regex(field=field_temp,regex = \"(?<field_matched>.*?)(,|$)\", repeat=\"true\") | test(ComputerName==field_matched) | drop([field_matched,field_temp]) ;\n\tfield_temp = /\\*$/ | ComputerName=* | drop([field_temp]) ;\n}",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "lin",
+    "osversioninfo",
+    "user"
+  ]
+}

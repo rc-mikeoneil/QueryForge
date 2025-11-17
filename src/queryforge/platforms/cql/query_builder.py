@@ -36,6 +36,8 @@ _IPV4_RE = re.compile(r"\b(?:\d{1,3}\.){3}\d{1,3}\b")
 _IPV6_RE = re.compile(r"\b(?:[0-9a-f]{0,4}:){2,7}[0-9a-f]{0,4}\b", re.IGNORECASE)
 _PORT_RE = re.compile(r"\bport\s*(?:=|is|:)?\s*(\d{1,5})\b", re.IGNORECASE)
 _PROCESS_BINARY_RE = re.compile(r"\b([a-zA-Z0-9_\\-]+\.(?:exe|dll|bat|cmd|ps1|vbs|sh))\b", re.IGNORECASE)
+# Additional pattern for common process names without extensions
+_PROCESS_NAME_RE = re.compile(r"\b(powershell|cmd|chrome|firefox|explorer|winword|excel|notepad|calc|msiexec|svchost|rundll32|regsvr32|wscript|cscript|java|python)\b", re.IGNORECASE)
 _FILE_PATH_RE = re.compile(r"([A-Za-z]:\\[^\s'\"]+|/[^\s'\"]+)")
 _USERNAME_RE = re.compile(
     r"user(?:name)?\s+(?:is|=|equals|like)?\s*['\"]?([A-Za-z0-9_.@-]+)['\"]?",
@@ -81,20 +83,13 @@ _DATASET_KEYWORDS = {
     "threat": "indicators",
 }
 
-# Field candidates for common data types
-_HASH_FIELD_CANDIDATES = {
+# Field candidates are now loaded dynamically from schema via get_field_categories()
+# These constants are deprecated and kept only for reference
+_DEPRECATED_HASH_FIELD_CANDIDATES = {
     "md5": ["file_hash", "file_md5", "hash_md5"],
     "sha1": ["file_hash", "file_sha1", "hash_sha1"],
     "sha256": ["file_hash", "file_sha256", "hash_sha256"],
 }
-
-_IP_FIELD_CANDIDATES = ["source_ip", "destination_ip", "remote_ip", "ip_address"]
-_DOMAIN_FIELD_CANDIDATES = ["http_host", "dns_domain", "domain", "destination_domain"]
-_PROCESS_NAME_FIELDS = ["process_name", "parent_process_name"]
-_CMDLINE_FIELDS = ["command_line"]
-_FILE_NAME_FIELDS = ["file_path", "file_name"]
-_USERNAME_FIELDS = ["user_name", "username"]
-_PORT_FIELDS = ["destination_port", "remote_port", "port"]
 
 
 class CQLQueryBuilder:
@@ -110,6 +105,14 @@ class CQLQueryBuilder:
             Schema loader instance for accessing CQL schema definitions.
         """
         self.schema_loader = schema_loader
+        # Load field categories from schema (cached after first load)
+        self._field_categories = None
+    
+    def _get_field_categories(self) -> Dict[str, Any]:
+        """Get field categories from schema (cached)."""
+        if self._field_categories is None:
+            self._field_categories = self.schema_loader.get_field_categories()
+        return self._field_categories
 
     def build_query(
         self,
@@ -156,6 +159,24 @@ class CQLQueryBuilder:
             - query: CQL query string
             - metadata: Query metadata including dataset, filters, etc.
         """
+        # Check for exact matching example query first
+        if natural_language_intent and not filters and not fields:
+            example_match = self._find_exact_example_match(natural_language_intent)
+            if example_match:
+                logger.info(f"Found exact example match: {example_match.get('title', 'Unknown')}")
+                return {
+                    "query": example_match["query"],
+                    "metadata": {
+                        "source": "example_query",
+                        "example_id": example_match.get("id"),
+                        "example_title": example_match.get("title"),
+                        "description": example_match.get("description", ""),
+                        "use_case": example_match.get("use_case", ""),
+                        "dataset": dataset or "events",
+                        "exact_match": True,
+                    }
+                }
+        
         # Validate boolean operator
         operator = boolean_operator.strip().upper()
         if operator not in {"AND", "OR"}:
@@ -428,9 +449,12 @@ class CQLQueryBuilder:
     ) -> List[str]:
         """Extract hash-based filter expressions."""
         expressions = []
+        categories = self._get_field_categories()
+        hash_fields = categories.get("hash_fields", {})
+        
         for label, regex in [("sha256", _SHA256_RE), ("sha1", _SHA1_RE), ("md5", _MD5_RE)]:
             for match in regex.finditer(text):
-                field = self._choose_field(fields, _HASH_FIELD_CANDIDATES.get(label, []))
+                field = self._choose_field(fields, hash_fields.get(label, []))
                 if field:
                     value = match.group(0)
                     expressions.append(f"{field} = {self._quote(value)}")
@@ -441,9 +465,12 @@ class CQLQueryBuilder:
     ) -> List[str]:
         """Extract IP address filter expressions."""
         expressions = []
+        categories = self._get_field_categories()
+        ip_fields = categories.get("ip_fields", [])
+        
         for regex in [_IPV4_RE, _IPV6_RE]:
             for match in regex.finditer(text):
-                field = self._choose_field(fields, _IP_FIELD_CANDIDATES)
+                field = self._choose_field(fields, ip_fields)
                 if field:
                     value = match.group(0)
                     expressions.append(f"{field} = {self._quote(value)}")
@@ -454,8 +481,11 @@ class CQLQueryBuilder:
     ) -> List[str]:
         """Extract domain filter expressions."""
         expressions = []
+        categories = self._get_field_categories()
+        domain_fields = categories.get("domain_fields", [])
+        
         for match in _DOMAIN_RE.finditer(text):
-            field = self._choose_field(fields, _DOMAIN_FIELD_CANDIDATES)
+            field = self._choose_field(fields, domain_fields)
             if field:
                 value = match.group(1)
                 expressions.append(f"{field} contains {self._quote(value)}")
@@ -466,8 +496,11 @@ class CQLQueryBuilder:
     ) -> List[str]:
         """Extract username filter expressions."""
         expressions = []
+        categories = self._get_field_categories()
+        username_fields = categories.get("username_fields", [])
+        
         for match in _USERNAME_RE.finditer(text):
-            field = self._choose_field(fields, _USERNAME_FIELDS)
+            field = self._choose_field(fields, username_fields)
             if field:
                 value = match.group(1)
                 expressions.append(f"{field} contains {self._quote(value)}")
@@ -478,10 +511,21 @@ class CQLQueryBuilder:
     ) -> List[str]:
         """Extract process name filter expressions."""
         expressions = []
-        field = self._choose_field(fields, _PROCESS_NAME_FIELDS)
+        categories = self._get_field_categories()
+        process_fields = categories.get("process_name_fields", [])
+        
+        field = self._choose_field(fields, process_fields)
         if field:
+            # Match full filenames with extensions
             for match in _PROCESS_BINARY_RE.finditer(text):
                 value = match.group(1)
+                expressions.append(f"{field} = {self._quote(value)}")
+            
+            # Match common process names without extensions (add .exe for CQL)
+            for match in _PROCESS_NAME_RE.finditer(text):
+                process_name = match.group(1)
+                # Add .exe extension for Windows processes
+                value = f"{process_name}.exe"
                 expressions.append(f"{field} = {self._quote(value)}")
         return expressions
 
@@ -490,7 +534,10 @@ class CQLQueryBuilder:
     ) -> List[str]:
         """Extract file path filter expressions."""
         expressions = []
-        field = self._choose_field(fields, _FILE_NAME_FIELDS)
+        categories = self._get_field_categories()
+        file_fields = categories.get("file_name_fields", [])
+        
+        field = self._choose_field(fields, file_fields)
         if field:
             for match in _FILE_PATH_RE.finditer(text):
                 value = match.group(1)
@@ -502,7 +549,10 @@ class CQLQueryBuilder:
     ) -> List[str]:
         """Extract command line filter expressions."""
         expressions = []
-        field = self._choose_field(fields, _CMDLINE_FIELDS)
+        categories = self._get_field_categories()
+        cmdline_fields = categories.get("cmdline_fields", [])
+        
+        field = self._choose_field(fields, cmdline_fields)
         if field:
             for match in _QUOTED_RE.finditer(text):
                 value = match.group(1) or match.group(2)
@@ -515,13 +565,71 @@ class CQLQueryBuilder:
     ) -> List[str]:
         """Extract port filter expressions."""
         expressions = []
-        field = self._choose_field(fields, _PORT_FIELDS)
+        categories = self._get_field_categories()
+        port_fields = categories.get("port_fields", [])
+        
+        field = self._choose_field(fields, port_fields)
         if field:
             for match in _PORT_RE.finditer(text):
                 port = int(match.group(1))
                 if 0 < port <= 65535:
                     expressions.append(f"{field} = {port}")
         return expressions
+
+    def _find_exact_example_match(self, natural_language_intent: str) -> Optional[Dict[str, Any]]:
+        """
+        Find an exact matching example query based on natural language intent.
+        
+        This checks if the user's request matches a production-ready example query.
+        Returns the full example query if found, None otherwise.
+        """
+        try:
+            examples = self.schema_loader.get_examples()
+            if not examples or "examples" not in examples:
+                return None
+            
+            # Normalize the intent for comparison
+            intent_lower = natural_language_intent.lower().strip()
+            
+            # Remove common filler words
+            intent_normalized = intent_lower
+            for word in ["show", "give", "me", "get", "find", "list", "display", "a", "an", "the"]:
+                intent_normalized = intent_normalized.replace(f" {word} ", " ")
+            intent_normalized = intent_normalized.strip()
+            
+            # Check each example for a match
+            for example in examples.get("examples", []):
+                # Check title match
+                title = example.get("title", "").lower()
+                if title and intent_normalized in title or title in intent_normalized:
+                    return example
+                
+                # Check description match
+                description = example.get("description", "").lower()
+                if description and intent_normalized in description:
+                    return example
+                
+                # Check use_case match
+                use_case = example.get("use_case", "").lower()
+                if use_case and intent_normalized in use_case:
+                    return example
+                
+                # Check for key phrase matches (more flexible)
+                key_phrases = [
+                    "files written to removable media",
+                    "removable media",
+                    "usb",
+                    "external drive",
+                ]
+                for phrase in key_phrases:
+                    if phrase in intent_normalized and phrase in title:
+                        return example
+            
+            return None
+            
+        except Exception as e:
+            logger.warning(f"Error searching for example match: {e}")
+            return None
 
     def _choose_field(
         self, fields: Dict[str, Dict[str, Any]], candidates: List[str]

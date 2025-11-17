@@ -1,0 +1,541 @@
+{
+  "schema_version": "2.0.0",
+  "type": "best_practices",
+  "generated_at": "2025-11-15T00:00:00Z",
+  "total_count": 34,
+  "summary": {
+    "by_category": {
+      "general": 30,
+      "integration": 1,
+      "performance": 3
+    },
+    "by_difficulty": {
+      "intermediate": 19,
+      "beginner": 11,
+      "advanced": 4
+    }
+  },
+  "top_tags": [
+    {
+      "tag": "collect",
+      "count": 6
+    },
+    {
+      "tag": "groupby",
+      "count": 6
+    },
+    {
+      "tag": "formatting",
+      "count": 5
+    },
+    {
+      "tag": "select",
+      "count": 5
+    },
+    {
+      "tag": "tags",
+      "count": 5
+    },
+    {
+      "tag": "assignment",
+      "count": 4
+    },
+    {
+      "tag": "regex",
+      "count": 4
+    },
+    {
+      "tag": "match",
+      "count": 4
+    },
+    {
+      "tag": "case",
+      "count": 3
+    },
+    {
+      "tag": "repos",
+      "count": 3
+    },
+    {
+      "tag": "views",
+      "count": 3
+    },
+    {
+      "tag": "performance",
+      "count": 3
+    },
+    {
+      "tag": "visualization",
+      "count": 3
+    },
+    {
+      "tag": "monitoring",
+      "count": 3
+    },
+    {
+      "tag": "count",
+      "count": 2
+    },
+    {
+      "tag": "export",
+      "count": 2
+    },
+    {
+      "tag": "cluster",
+      "count": 2
+    },
+    {
+      "tag": "comments",
+      "count": 1
+    },
+    {
+      "tag": "urls",
+      "count": 1
+    },
+    {
+      "tag": "shipper",
+      "count": 1
+    }
+  ],
+  "top_functions": [
+    {
+      "function": "count",
+      "count": 18
+    },
+    {
+      "function": "groupBy",
+      "count": 18
+    },
+    {
+      "function": "select",
+      "count": 7
+    },
+    {
+      "function": "format",
+      "count": 5
+    },
+    {
+      "function": "timechart",
+      "count": 5
+    },
+    {
+      "function": "collect",
+      "count": 4
+    },
+    {
+      "function": "avg",
+      "count": 1
+    },
+    {
+      "function": "sort",
+      "count": 1
+    },
+    {
+      "function": "sum",
+      "count": 1
+    },
+    {
+      "function": "NormalizeUserName",
+      "count": 1
+    },
+    {
+      "function": "TagPrivilegedAccounts",
+      "count": 1
+    },
+    {
+      "function": "in",
+      "count": 1
+    },
+    {
+      "function": "floor",
+      "count": 1
+    },
+    {
+      "function": "parseTimestamp",
+      "count": 1
+    },
+    {
+      "function": "lower",
+      "count": 1
+    }
+  ],
+  "items": [
+    {
+      "slug": "add_a_count()_to_groupby()_results_when_using_collect()",
+      "title": "Add a count() to groupBy() results when using collect()",
+      "category": "general",
+      "difficulty": "intermediate",
+      "tags": [
+        "collect",
+        "count",
+        "groupby"
+      ],
+      "file": "best_practices/add_a_count()_to_groupby()_results_when_using_collect().json"
+    },
+    {
+      "slug": "add_additional_fields_to_groupby()_results",
+      "title": "Add additional fields to groupBy() results",
+      "category": "general",
+      "difficulty": "intermediate",
+      "tags": [
+        "collect",
+        "groupby"
+      ],
+      "file": "best_practices/add_additional_fields_to_groupby()_results.json"
+    },
+    {
+      "slug": "adding_comments_in_query_syntax",
+      "title": "Adding comments in query syntax",
+      "category": "general",
+      "difficulty": "intermediate",
+      "tags": [
+        "comments"
+      ],
+      "file": "best_practices/adding_comments_in_query_syntax.json"
+    },
+    {
+      "slug": "adding_hyperlinks_to_search_output",
+      "title": "Adding hyperlinks to search output",
+      "category": "general",
+      "difficulty": "beginner",
+      "tags": [
+        "case",
+        "formatting",
+        "urls"
+      ],
+      "file": "best_practices/adding_hyperlinks_to_search_output.json"
+    },
+    {
+      "slug": "aggregations_using_field_list_shortcuts",
+      "title": "Aggregations using field list shortcuts",
+      "category": "general",
+      "difficulty": "intermediate",
+      "tags": [],
+      "file": "best_practices/aggregations_using_field_list_shortcuts.json"
+    },
+    {
+      "slug": "choosing_a_log_shipper",
+      "title": "Choosing a Log Shipper",
+      "category": "integration",
+      "difficulty": "intermediate",
+      "tags": [
+        "collect",
+        "select",
+        "shipper"
+      ],
+      "file": "best_practices/choosing_a_log_shipper.json"
+    },
+    {
+      "slug": "comparing_repos_and_views",
+      "title": "Comparing Repos and Views",
+      "category": "general",
+      "difficulty": "intermediate",
+      "tags": [
+        "collect",
+        "repos",
+        "views"
+      ],
+      "file": "best_practices/comparing_repos_and_views.json"
+    },
+    {
+      "slug": "contacting_support",
+      "title": "Contacting Support",
+      "category": "performance",
+      "difficulty": "intermediate",
+      "tags": [
+        "case",
+        "performance",
+        "repos",
+        "views"
+      ],
+      "file": "best_practices/contacting_support.json"
+    },
+    {
+      "slug": "create_a_fixed-width_column_using_format()",
+      "title": "Create a fixed-width column using format()",
+      "category": "general",
+      "difficulty": "intermediate",
+      "tags": [
+        "collect",
+        "formatting",
+        "groupby"
+      ],
+      "file": "best_practices/create_a_fixed-width_column_using_format().json"
+    },
+    {
+      "slug": "create_a_stacked_bar_chart_over_time",
+      "title": "Create a stacked bar chart over time",
+      "category": "general",
+      "difficulty": "intermediate",
+      "tags": [
+        "chart",
+        "groupby",
+        "select",
+        "timechart",
+        "visualization"
+      ],
+      "file": "best_practices/create_a_stacked_bar_chart_over_time.json"
+    },
+    {
+      "slug": "creating_dynamic_text_boxes_in_queries",
+      "title": "Creating dynamic text boxes in queries",
+      "category": "general",
+      "difficulty": "intermediate",
+      "tags": [
+        "assignment",
+        "count",
+        "select"
+      ],
+      "file": "best_practices/creating_dynamic_text_boxes_in_queries.json"
+    },
+    {
+      "slug": "estimating_local_disk_threshold",
+      "title": "Estimating Local Disk Threshold",
+      "category": "general",
+      "difficulty": "beginner",
+      "tags": [
+        "monitoring",
+        "tags"
+      ],
+      "file": "best_practices/estimating_local_disk_threshold.json"
+    },
+    {
+      "slug": "format_query_output_using_groupby()",
+      "title": "Format query output using groupBy()",
+      "category": "general",
+      "difficulty": "intermediate",
+      "tags": [
+        "assignment",
+        "formatting",
+        "groupby"
+      ],
+      "file": "best_practices/format_query_output_using_groupby().json"
+    },
+    {
+      "slug": "formatting_query_output_using_select()",
+      "title": "Formatting query output using select()",
+      "category": "general",
+      "difficulty": "beginner",
+      "tags": [
+        "export",
+        "formatting",
+        "select"
+      ],
+      "file": "best_practices/formatting_query_output_using_select().json"
+    },
+    {
+      "slug": "get_markdown_urls_to_display_as_urls_instead_of_strings_when_using_groupby()",
+      "title": "Get Markdown URLs to display as URLs instead of strings when using groupBy()",
+      "category": "general",
+      "difficulty": "intermediate",
+      "tags": [
+        "groupby",
+        "markdown",
+        "visualization"
+      ],
+      "file": "best_practices/get_markdown_urls_to_display_as_urls_instead_of_strings_when_using_groupby().json"
+    },
+    {
+      "slug": "how_to_write_a_query_that_allows_export_to_csv_in_a_multi-cluster_view",
+      "title": "How to write a query that allows export to CSV in a multi-cluster view",
+      "category": "general",
+      "difficulty": "beginner",
+      "tags": [
+        "cluster",
+        "export",
+        "select",
+        "views"
+      ],
+      "file": "best_practices/how_to_write_a_query_that_allows_export_to_csv_in_a_multi-cluster_view.json"
+    },
+    {
+      "slug": "leveraging_saved_queries_as_functions",
+      "title": "Leveraging saved queries as functions",
+      "category": "general",
+      "difficulty": "intermediate",
+      "tags": [
+        "saved-queries"
+      ],
+      "file": "best_practices/leveraging_saved_queries_as_functions.json"
+    },
+    {
+      "slug": "log_collector_resiliency_and_monitoring",
+      "title": "Log Collector Resiliency and Monitoring",
+      "category": "general",
+      "difficulty": "intermediate",
+      "tags": [
+        "collect",
+        "collector",
+        "monitoring"
+      ],
+      "file": "best_practices/log_collector_resiliency_and_monitoring.json"
+    },
+    {
+      "slug": "omit__decimal_and__readable_dangling_modifiers",
+      "title": "Omit _decimal and _readable dangling modifiers",
+      "category": "general",
+      "difficulty": "beginner",
+      "tags": [],
+      "file": "best_practices/omit__decimal_and__readable_dangling_modifiers.json"
+    },
+    {
+      "slug": "optimizing_string_and_regular_expression_(regex)_search_performance",
+      "title": "Optimizing string and regular expression (regex) search performance",
+      "category": "performance",
+      "difficulty": "advanced",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "file": "best_practices/optimizing_string_and_regular_expression_(regex)_search_performance.json"
+    },
+    {
+      "slug": "query_monitoring-_blocking_and_termination",
+      "title": "Query Monitoring- Blocking and Termination",
+      "category": "general",
+      "difficulty": "intermediate",
+      "tags": [
+        "monitoring",
+        "query-monitoring"
+      ],
+      "file": "best_practices/query_monitoring-_blocking_and_termination.json"
+    },
+    {
+      "slug": "regular_expressions_(regex)",
+      "title": "Regular Expressions (regex)",
+      "category": "general",
+      "difficulty": "advanced",
+      "tags": [
+        "match",
+        "regex"
+      ],
+      "file": "best_practices/regular_expressions_(regex).json"
+    },
+    {
+      "slug": "regular_expressions_and_their_pitfalls",
+      "title": "Regular Expressions and their Pitfalls",
+      "category": "performance",
+      "difficulty": "advanced",
+      "tags": [
+        "performance",
+        "regex"
+      ],
+      "file": "best_practices/regular_expressions_and_their_pitfalls.json"
+    },
+    {
+      "slug": "remove_decimal_place_from_timestamp_field_and_convert_to_human-readable_time",
+      "title": "Remove decimal place from timestamp field and convert to human-readable time",
+      "category": "general",
+      "difficulty": "beginner",
+      "tags": [
+        "timestamp"
+      ],
+      "file": "best_practices/remove_decimal_place_from_timestamp_field_and_convert_to_human-readable_time.json"
+    },
+    {
+      "slug": "tab_to_complete_queries",
+      "title": "Tab to complete queries",
+      "category": "general",
+      "difficulty": "beginner",
+      "tags": [],
+      "file": "best_practices/tab_to_complete_queries.json"
+    },
+    {
+      "slug": "tags_and_datasources",
+      "title": "Tags and Datasources",
+      "category": "general",
+      "difficulty": "intermediate",
+      "tags": [
+        "datasources",
+        "tags"
+      ],
+      "file": "best_practices/tags_and_datasources.json"
+    },
+    {
+      "slug": "upgrading_a_logscale_cluster",
+      "title": "Upgrading a LogScale Cluster",
+      "category": "general",
+      "difficulty": "beginner",
+      "tags": [
+        "cluster",
+        "tags"
+      ],
+      "file": "best_practices/upgrading_a_logscale_cluster.json"
+    },
+    {
+      "slug": "using_case_statements",
+      "title": "Using case statements",
+      "category": "general",
+      "difficulty": "intermediate",
+      "tags": [
+        "assignment",
+        "case",
+        "formatting"
+      ],
+      "file": "best_practices/using_case_statements.json"
+    },
+    {
+      "slug": "using_match_statements",
+      "title": "Using match statements",
+      "category": "general",
+      "difficulty": "intermediate",
+      "tags": [
+        "match"
+      ],
+      "file": "best_practices/using_match_statements.json"
+    },
+    {
+      "slug": "using_regular_expressions_for_field_extractions_and_matching",
+      "title": "Using regular expressions for field extractions and matching",
+      "category": "general",
+      "difficulty": "advanced",
+      "tags": [
+        "match",
+        "regex"
+      ],
+      "file": "best_practices/using_regular_expressions_for_field_extractions_and_matching.json"
+    },
+    {
+      "slug": "using_tags_in_queries",
+      "title": "Using Tags in Queries",
+      "category": "general",
+      "difficulty": "intermediate",
+      "tags": [
+        "repos",
+        "tags"
+      ],
+      "file": "best_practices/using_tags_in_queries.json"
+    },
+    {
+      "slug": "using_the_assignment_operator",
+      "title": "Using the assignment operator",
+      "category": "general",
+      "difficulty": "beginner",
+      "tags": [
+        "assignment"
+      ],
+      "file": "best_practices/using_the_assignment_operator.json"
+    },
+    {
+      "slug": "using_widget_visualizations",
+      "title": "Using widget visualizations",
+      "category": "general",
+      "difficulty": "beginner",
+      "tags": [
+        "match",
+        "visualization"
+      ],
+      "file": "best_practices/using_widget_visualizations.json"
+    },
+    {
+      "slug": "watch_out_for_the_hashtag_on_#event_simplename_and_#cid",
+      "title": "Watch out for the hashtag on #event_simpleName and #cid",
+      "category": "general",
+      "difficulty": "beginner",
+      "tags": [
+        "tags"
+      ],
+      "file": "best_practices/watch_out_for_the_hashtag_on_#event_simplename_and_#cid.json"
+    }
+  ]
+}

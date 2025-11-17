@@ -1,0 +1,28 @@
+{
+  "title": "Get Markdown URLs to display as URLs instead of strings when using groupBy()",
+  "slug": "get_markdown_urls_to_display_as_urls_instead_of_strings_when_using_groupby()",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "When using Markdown in fields, grouped results can show literal Markdown instead of clickable links. Rebuild the Markdown after aggregation or expose separate label and URL fields for visualization widgets.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Builds a Markdown link per detection and then collects it during aggregation so visualizations render the links correctly.",
+      "language": "logscale",
+      "query": "#event_simpleName=DetectionSummaryEvent\n| md := format(\"[%s](https://investigate.example.local/case/%s)\", field=[DetectName, DetectId])\n| groupBy(DetectId, function=collect(md))"
+    }
+  ],
+  "tags": [
+    "groupby",
+    "markdown",
+    "visualization"
+  ],
+  "url": "https://library.humio.com/kb/kb-markdown-display-urls.html",
+  "difficulty": "intermediate",
+  "related_functions": [
+    "collect",
+    "format",
+    "groupBy"
+  ]
+}

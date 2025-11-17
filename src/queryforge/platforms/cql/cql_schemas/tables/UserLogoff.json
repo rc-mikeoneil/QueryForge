@@ -1,0 +1,97 @@
+{
+  "table": "UserLogoff",
+  "category": "endpoint_authentication",
+  "description": "User logoff events on Windows endpoints. Captures session termination events for session duration calculation and activity timeline analysis.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["UserLogoff"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint where logoff occurred",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "UserName",
+      "type": "string",
+      "description": "Username of the account that logged off",
+      "searchable": true,
+      "common_usage": ["filtering", "grouping", "user tracking"]
+    },
+    {
+      "name": "UserSid",
+      "type": "string",
+      "description": "Windows Security Identifier for the user",
+      "searchable": true,
+      "common_usage": ["filtering", "user correlation"]
+    },
+    {
+      "name": "LogonType",
+      "type": "string",
+      "description": "Windows logon type code for the session being terminated",
+      "example_values": ["2", "3", "10"],
+      "common_usage": ["filtering", "session type classification"]
+    },
+    {
+      "name": "LogonDomain",
+      "type": "string",
+      "description": "Domain name for the user account",
+      "searchable": true,
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "SessionId",
+      "type": "string",
+      "description": "Windows session identifier",
+      "common_usage": ["session correlation", "session duration calculation"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "session duration calculation"]
+    }
+  ],
+  "col_count": 11,
+  "common_filters": [
+    "event_platform=Win",
+    "LogonType=10"
+  ],
+  "common_fields": ["aid", "ComputerName", "UserName", "LogonType"],
+  "common_operations": [
+    "Join with UserLogon via SessionId to calculate session duration",
+    "Track RDP session termination (LogonType=10)",
+    "Identify abnormally short or long sessions",
+    "User activity timeline construction"
+  ],
+  "generated_at": "2025-11-15T00:00:00Z"
+}

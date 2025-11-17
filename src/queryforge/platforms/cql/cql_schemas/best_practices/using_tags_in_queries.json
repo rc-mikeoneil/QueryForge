@@ -1,0 +1,26 @@
+{
+  "title": "Using Tags in Queries",
+  "slug": "using_tags_in_queries",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "Use tags to scope searches to particular datasets without hard\u2011coding index or repo names. Tags can represent environments, products, or log types.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Looks only at production web logs using tags and then aggregates by HTTP status code.",
+      "language": "logscale",
+      "query": "#tag=prod and #tag=web\n| groupBy(statusCode, function=count())"
+    }
+  ],
+  "tags": [
+    "repos",
+    "tags"
+  ],
+  "url": "https://library.humio.com/kb/kb-using-tags-in-queries.html",
+  "difficulty": "intermediate",
+  "related_functions": [
+    "count",
+    "groupBy"
+  ]
+}

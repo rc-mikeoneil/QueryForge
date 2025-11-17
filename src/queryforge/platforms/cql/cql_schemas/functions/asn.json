@@ -1,0 +1,34 @@
+{
+  "name": "asn",
+  "category": "network",
+  "description": "Takes a field that contains an IP address and adds Autonomous System Number (ASN) data to the query results. The added data includes the ASN identifier and ASN organization.",
+  "syntax": "asn(field)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "Field containing an IP address (IPv4 or IPv6)"
+    }
+  ],
+  "return_type": "enriched_events",
+  "output_fields": [
+    {
+      "name": "{field}.asn",
+      "type": "string",
+      "description": "Autonomous System Number identifier"
+    },
+    {
+      "name": "{field}.org",
+      "type": "string",
+      "description": "ASN organization name"
+    }
+  ],
+  "examples": [
+    "| asn(RemoteAddressIP4)",
+    "| asn(RemoteAddressIP4)\n| select([RemoteAddressIP4, RemoteAddressIP4.asn, RemoteAddressIP4.org])"
+  ],
+  "related_functions": ["ipLocation", "cidr", "rdns"],
+  "use_cases": ["Network analysis", "Threat intelligence", "IP enrichment"],
+  "documentation_url": "https://library.humio.com/data-analysis/functions-asn.html"
+}

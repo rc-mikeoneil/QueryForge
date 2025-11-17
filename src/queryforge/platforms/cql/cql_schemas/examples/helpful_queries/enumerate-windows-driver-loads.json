@@ -1,0 +1,57 @@
+{
+  "id": "enumerate-windows-driver-loads",
+  "title": "Enumerate Windows Driver Loads",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Enumerate Windows Driver Loads.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "DriverLoad"
+  ],
+  "functions_used": [
+    "default",
+    "groupBy",
+    "in",
+    "selfJoinFilter"
+  ],
+  "operators_used": [
+    "<",
+    "=",
+    ">",
+    "and",
+    "in",
+    "or",
+    "|"
+  ],
+  "fields_referenced": [
+    "ExternalApiType",
+    "FileName",
+    "FilePath",
+    "field",
+    "function",
+    "limit",
+    "repo",
+    "value",
+    "where"
+  ],
+  "correlation_patterns": [
+    "selfJoinFilter"
+  ],
+  "difficulty": "expert",
+  "query_type": "detection",
+  "platforms": [
+    "Win"
+  ],
+  "use_case": "Detection query for Enumerate Windows Driver Loads",
+  "query": "// Get all DriverLoad events and Event_ModuleSummaryInfoEvent events so certificate data can be merged in\n(#event_simpleName=DriverLoad event_platform=Win) OR (#repo=detections ExternalApiType=Event_ModuleSummaryInfoEvent )\n\n// Shorten file path from DriverLoad event\n| case{\n    #event_simpleName=DriverLoad | FilePath=/Device\\\\HarddiskVolume\\d+(?<ShortFileParth>.+$)/;\n    *;\n}\n\n// Create selfJoinFilter\n| selfJoinFilter(field=[SHA256HashData], where=[{#event_simpleName=DriverLoad}, {#repo=detections ExternalApiType=Event_ModuleSummaryInfoEvent}])\n\n// Aggregate\n| groupBy([SHA256HashData], function=([collect([ShortFileParth, FileName, OriginalFilename, SubjectCN, IssuerCN])]), limit=max)\n| FileName=*\n\n// Set default values\n| default(value=\"-\", field=[SubjectCN, IssuerCN, OriginalFilename])",
+  "key_features": [
+    "Uses selfJoinFilter for correlation",
+    "Advanced correlation techniques"
+  ],
+  "related_examples": [],
+  "tags": [
+    "driverload",
+    "win"
+  ]
+}

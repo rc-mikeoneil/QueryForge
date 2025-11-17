@@ -1,0 +1,29 @@
+{
+  "title": "How-To: Add a Dynamic URL to Query Results",
+  "slug": "add_a_dynamic_url_to_query_results",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Create a dynamic, per-row hyperlink field in your query output using format().\nThis lets you click from a table of results directly into another system such as a ticketing tool,\ndocumentation site, or another LogScale query that takes an ID from each event.",
+  "examples": [
+    {
+      "name": "Create link to external system per repo",
+      "description": "Adds a markdown link that points to an external tool using the repo field as a path segment.",
+      "language": "logscale",
+      "query": "format(\"[Open Repo](https://example.internal/repos/%s)\", field=repo, as=repo_link)"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "url",
+    "format",
+    "link",
+    "markdown",
+    "ui",
+    "logscale"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "format"
+  ]
+}

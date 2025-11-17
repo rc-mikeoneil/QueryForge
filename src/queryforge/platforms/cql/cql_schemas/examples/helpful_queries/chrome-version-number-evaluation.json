@@ -1,0 +1,58 @@
+{
+  "id": "chrome-version-number-evaluation",
+  "title": "Chrome Version Number Evaluation",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Chrome Version Number Evaluation.md",
+  "category": "helpful_query",
+  "subcategory": "process",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "PeVersionInfo",
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "groupBy",
+    "join",
+    "match",
+    "table"
+  ],
+  "operators_used": [
+    "<",
+    "<=",
+    "=",
+    ">",
+    "and",
+    "match",
+    "|"
+  ],
+  "fields_referenced": [
+    "FixedFileVersion",
+    "ImageFileName",
+    "field",
+    "file",
+    "function",
+    "ignoreCase",
+    "include",
+    "strict"
+  ],
+  "correlation_patterns": [
+    "join"
+  ],
+  "difficulty": "advanced",
+  "query_type": "analysis",
+  "platforms": [
+    "Win"
+  ],
+  "use_case": "Analysis query for Chrome Version Number Evaluation",
+  "query": "#event_simpleName=ProcessRollup2 event_platform=Win ImageFileName=/\\\\(?<fileName>chrome\\.exe)$/i\n| groupBy([cid, aid, fileName, SHA256HashData])\n| match(file=\"fdr_aidmaster.csv\", field=aid, include=ComputerName, ignoreCase=true, strict=false)\n| join({#event_simpleName=PeVersionInfo event_platform=Win | ImageFileName=/\\\\chrome\\.exe/i | groupBy([SHA256HashData, FixedFileVersion, CompanyName], function=selectLast([ComputerName, FixedFileVersion]))}, include=[FixedFileVersion, CompanyName], field=[SHA256HashData])\n| table([cid, aid, ComputerName, fileName, FixedFileVersion, CompanyName, _count, SHA256HashData])\n| FixedFileVersion=/(?<majorVersion>\\d+)\\.(?<minorVersion>\\d+)\\.(?<buildNumber>\\d+)\\.(?<minorBuildNumber>\\d+)$/i\n| majorVersion < ?majorVersionLessThan AND minorVersion <= ?minorVersionLessThan",
+  "key_features": [
+    "Uses join for correlation"
+  ],
+  "related_examples": [],
+  "tags": [
+    "join",
+    "peversioninfo",
+    "processrollup2",
+    "win"
+  ]
+}

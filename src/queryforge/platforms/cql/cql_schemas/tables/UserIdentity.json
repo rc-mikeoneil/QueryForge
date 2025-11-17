@@ -1,0 +1,112 @@
+{
+  "table": "UserIdentity",
+  "category": "endpoint_authentication",
+  "description": "User identity mapping events providing enrichment data for user accounts. Maps UserSid to UserName and other identity attributes, used for user correlation and enrichment across events.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["UserIdentity"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win", "Mac", "Lin"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "UserName",
+      "type": "string",
+      "description": "Username for the account",
+      "searchable": true,
+      "common_usage": ["enrichment", "user tracking"]
+    },
+    {
+      "name": "UserSid",
+      "type": "string",
+      "description": "Windows Security Identifier for the user",
+      "searchable": true,
+      "example_values": ["S-1-5-21-*"],
+      "common_usage": ["joining", "user correlation", "enrichment key"]
+    },
+    {
+      "name": "UserPrincipal",
+      "type": "string",
+      "description": "User Principal Name (UPN) for domain accounts",
+      "searchable": true,
+      "example_values": ["user@domain.com"],
+      "common_usage": ["enrichment", "domain user identification"]
+    },
+    {
+      "name": "UserCanonical",
+      "type": "string",
+      "description": "Canonical user name including domain",
+      "searchable": true,
+      "common_usage": ["enrichment", "full user identification"]
+    },
+    {
+      "name": "LogonDomain",
+      "type": "string",
+      "description": "Domain name for the user account",
+      "searchable": true,
+      "common_usage": ["filtering", "domain classification"]
+    },
+    {
+      "name": "UID",
+      "type": "string",
+      "description": "Unix User ID (Linux/Mac)",
+      "common_usage": ["enrichment", "user tracking on Unix systems"]
+    },
+    {
+      "name": "GID",
+      "type": "string",
+      "description": "Unix Group ID (Linux/Mac)",
+      "common_usage": ["enrichment", "group membership"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis"]
+    }
+  ],
+  "col_count": 13,
+  "common_filters": [
+    "UserSid=S-1-5-21-*"
+  ],
+  "common_fields": ["aid", "UserName", "UserSid", "UserPrincipal"],
+  "common_operations": [
+    "Join with ProcessRollup2 via UserSid to enrich process events with UserName",
+    "Join with UserLogon via UserSid for user enrichment",
+    "Create user identity lookup table",
+    "Map SIDs to friendly usernames across all events",
+    "Identify domain vs local accounts"
+  ],
+  "generated_at": "2025-11-15T00:00:00Z"
+}

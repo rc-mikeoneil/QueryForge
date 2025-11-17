@@ -1,0 +1,97 @@
+{
+  "table": "ZeroTrustHostAssessment",
+  "category": "endpoint_assessment",
+  "description": "Zero Trust host assessment data including security posture, compliance status, and risk scores. Provides security hygiene metrics for Zero Trust architecture implementation.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["ZeroTrustHostAssessment"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win", "Mac", "Lin"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "AssessmentScore",
+      "type": "long",
+      "description": "Overall security assessment score",
+      "common_usage": ["filtering", "risk analysis", "compliance monitoring"]
+    },
+    {
+      "name": "ComplianceStatus",
+      "type": "string",
+      "description": "Compliance status of the endpoint",
+      "example_values": ["Compliant", "NonCompliant", "Unknown"],
+      "common_usage": ["filtering", "compliance reporting"]
+    },
+    {
+      "name": "RiskLevel",
+      "type": "string",
+      "description": "Risk level classification",
+      "example_values": ["Low", "Medium", "High", "Critical"],
+      "common_usage": ["filtering", "risk-based access control"]
+    },
+    {
+      "name": "OSPatchLevel",
+      "type": "string",
+      "description": "Operating system patch level status",
+      "common_usage": ["patching compliance", "vulnerability management"]
+    },
+    {
+      "name": "SecurityProductsEnabled",
+      "type": "string",
+      "description": "Status of security products (AV, firewall, etc.)",
+      "common_usage": ["security posture assessment"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis"]
+    }
+  ],
+  "col_count": 11,
+  "common_filters": [
+    "ComplianceStatus=NonCompliant",
+    "RiskLevel=/High|Critical/",
+    "AssessmentScore<50"
+  ],
+  "common_fields": ["aid", "ComputerName", "AssessmentScore", "ComplianceStatus", "RiskLevel"],
+  "common_operations": [
+    "Identify non-compliant endpoints",
+    "Risk-based access control decisions",
+    "Security posture reporting",
+    "Compliance dashboard creation",
+    "Alert on high-risk endpoints"
+  ],
+  "generated_at": "2025-11-15T00:00:00Z"
+}

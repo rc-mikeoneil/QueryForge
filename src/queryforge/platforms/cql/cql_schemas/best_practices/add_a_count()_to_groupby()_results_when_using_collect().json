@@ -1,0 +1,28 @@
+{
+  "title": "Add a count() to groupBy() results when using collect()",
+  "slug": "add_a_count()_to_groupby()_results_when_using_collect()",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "When you add a function= argument to groupBy(), the implicit count() aggregation disappears. Explicitly include count() in the function array so grouped results still have a _count field.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Groups events by ComputerName, collects all DomainName values per host, and also returns the number of events in each group via _count.",
+      "language": "logscale",
+      "query": "groupBy(ComputerName, function=[collect(DomainName), count()])"
+    }
+  ],
+  "tags": [
+    "collect",
+    "count",
+    "groupby"
+  ],
+  "url": "https://library.humio.com/kb/kb-add-a-count-to-groupby-results-when-using-collect.html",
+  "difficulty": "intermediate",
+  "related_functions": [
+    "collect",
+    "count",
+    "groupBy"
+  ]
+}

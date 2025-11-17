@@ -1,0 +1,35 @@
+{
+  "name": "rename",
+  "category": "transformation",
+  "description": "Renames a field or multiple fields. Supports both single field renaming and bulk renaming using arrays.",
+  "syntax": "| rename(old_field, as=new_field) OR | rename([[old1, new1], [old2, new2]])",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "field",
+      "required": true,
+      "description": "The field to rename (single field syntax)"
+    },
+    {
+      "name": "as",
+      "type": "field",
+      "required": true,
+      "description": "The new name for the field (single field syntax)"
+    },
+    {
+      "name": "array",
+      "type": "array",
+      "required": false,
+      "description": "Array of [old_name, new_name] pairs for bulk renaming"
+    }
+  ],
+  "return_type": "transformed_events",
+  "examples": [
+    "| rename(aid, as=\"Falcon Agent ID\")",
+    "| rename([[ComputerName, Endpoint], [UserName, User]])",
+    "| rename(src_ip, as=source_address)"
+  ],
+  "related_functions": ["select", "drop"],
+  "use_cases": ["Field standardization", "Making field names more readable", "Bulk field renaming", "Data normalization"],
+  "documentation_url": "https://library.humio.com/data-analysis/functions-rename.html"
+}

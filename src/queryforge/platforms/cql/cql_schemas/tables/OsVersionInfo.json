@@ -1,0 +1,177 @@
+{
+  "table": "OsVersionInfo",
+  "category": "endpoint_inventory",
+  "description": "Operating system version and configuration information. Generated every 24 hours, at sensor start, or at sensor update. Used for inventory, patch management, and vulnerability assessment.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["OsVersionInfo"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win", "Mac", "Lin", "K8S"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "searchable": true,
+      "common_usage": ["display", "filtering"]
+    },
+    {
+      "name": "ProductName",
+      "type": "string",
+      "description": "Windows OS product name",
+      "searchable": true,
+      "example_values": ["Windows 10 Pro", "Windows Server 2019", "Windows 11"],
+      "common_usage": ["OS inventory", "grouping", "prevalence analysis"]
+    },
+    {
+      "name": "ProductType",
+      "type": "string",
+      "description": "Product type classification",
+      "example_values": ["Server", "Workstation", "Pod"],
+      "common_usage": ["filtering", "categorization"]
+    },
+    {
+      "name": "Version",
+      "type": "string",
+      "description": "Operating system version string",
+      "searchable": true,
+      "common_usage": ["version tracking", "patch assessment"]
+    },
+    {
+      "name": "AgentVersion",
+      "type": "string",
+      "description": "Falcon sensor version",
+      "searchable": true,
+      "supports_regex": true,
+      "example_values": ["7.18.17131.0"],
+      "common_usage": ["sensor inventory", "version compliance", "vulnerability assessment"]
+    },
+    {
+      "name": "OSVersionString",
+      "type": "string",
+      "description": "Full OS version string",
+      "searchable": true,
+      "supports_regex": true,
+      "example_values": ["Linux hostname 5.15.0-89-generic"],
+      "common_usage": ["OS identification", "kernel version extraction"]
+    },
+    {
+      "name": "OSVersionFileData",
+      "type": "string",
+      "description": "Hex-encoded OS version file data (requires URL decoding for Linux/Mac)",
+      "searchable": true,
+      "common_usage": ["Linux distro identification", "Mac ProductBuild extraction"]
+    },
+    {
+      "name": "RFMState",
+      "type": "long",
+      "description": "Reduced Functionality Mode state indicator",
+      "example_values": ["0", "1"],
+      "common_usage": ["sensor health monitoring", "compliance checking"]
+    },
+    {
+      "name": "aip",
+      "type": "ip_address",
+      "description": "External/public IP address of the endpoint",
+      "common_usage": ["geolocation", "network analysis"]
+    },
+    {
+      "name": "LocalAddressIP4",
+      "type": "ip_address",
+      "description": "Local IPv4 address of the endpoint",
+      "common_usage": ["network inventory", "IP tracking"]
+    },
+    {
+      "name": "MAC",
+      "type": "string",
+      "description": "MAC address of the primary network interface",
+      "searchable": true,
+      "common_usage": ["hardware tracking", "network identification"]
+    },
+    {
+      "name": "SystemManufacturer",
+      "type": "string",
+      "description": "Hardware manufacturer",
+      "searchable": true,
+      "example_values": ["Dell Inc.", "HP", "VMware, Inc."],
+      "common_usage": ["hardware inventory", "virtual vs physical detection"]
+    },
+    {
+      "name": "SystemProductName",
+      "type": "string",
+      "description": "Hardware product/model name",
+      "searchable": true,
+      "example_values": ["VMware Virtual Platform", "OptiPlex 7090"],
+      "common_usage": ["hardware inventory", "model tracking"]
+    },
+    {
+      "name": "FirstSeen",
+      "type": "long",
+      "description": "Timestamp when endpoint was first seen (epoch)",
+      "common_usage": ["age analysis", "onboarding tracking"]
+    },
+    {
+      "name": "Time",
+      "type": "long",
+      "description": "Last seen timestamp (epoch)",
+      "common_usage": ["activity tracking", "staleness detection"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis"]
+    }
+  ],
+  "col_count": 20,
+  "common_filters": [
+    "event_platform=Win",
+    "event_platform=Lin",
+    "event_platform=Mac",
+    "event_platform=K8S",
+    "RFMState=1"
+  ],
+  "common_fields": ["aid", "ComputerName", "event_platform", "ProductName", "AgentVersion", "RFMState"],
+  "common_operations": [
+    "CVE vulnerability scoping based on AgentVersion",
+    "OS prevalence analysis via ProductName grouping",
+    "RFM state monitoring",
+    "Sensor version compliance checking",
+    "Linux kernel version extraction from OSVersionString",
+    "Linux distro name extraction from OSVersionFileData",
+    "Mac ProductBuild extraction from OSVersionFileData XML",
+    "Match enrichment with aid_master_main.csv"
+  ],
+  "parsing_notes": {
+    "OSVersionFileData_Linux": "Hex-encoded, requires replace() and urlDecode() to extract PRETTY_NAME",
+    "OSVersionFileData_Mac": "Hex-encoded XML plist, requires parseXml() after urlDecode()",
+    "OSVersionString_Linux": "Format: 'Linux <hostname> <kernel_version> ...'",
+    "AgentVersion": "Format: '<major>.<minor>.<build>.<patch>' - can be parsed with regex for version comparison"
+  },
+  "generated_at": "2025-11-14T23:45:00Z"
+}

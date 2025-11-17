@@ -1,0 +1,24 @@
+{
+  "name": "tail",
+  "category": "utility",
+  "description": "Returns a limited number of events, starting with the newest. Equivalent to the command-line tail tool.",
+  "syntax": "| tail(limit)",
+  "parameters": [
+    {
+      "name": "limit",
+      "type": "number",
+      "required": true,
+      "description": "The maximum number of events to return, starting from the newest"
+    }
+  ],
+  "return_type": "events",
+  "examples": [
+    "| tail(5)",
+    "| tail(10)",
+    "| tail(100)"
+  ],
+  "related_functions": ["head", "limit"],
+  "use_cases": ["Getting most recent events", "Limiting query results", "Sampling latest data", "Real-time monitoring"],
+  "notes": "Returns newest events first, opposite of head() which returns oldest events first.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-tail.html"
+}

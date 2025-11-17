@@ -1,0 +1,43 @@
+{
+  "id": "check-for-sensors-in-rfm",
+  "title": "Check for Sensors in RFM",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Check for Sensors in RFM.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "OsVersionInfo"
+  ],
+  "functions_used": [
+    "concat",
+    "groupBy",
+    "selectFromMax"
+  ],
+  "operators_used": [
+    "!=",
+    "=",
+    ">",
+    "match",
+    "|"
+  ],
+  "fields_referenced": [
+    "field",
+    "function",
+    "include"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Lin"
+  ],
+  "use_case": "Analysis query for Check for Sensors in RFM",
+  "query": "#event_simpleName=OsVersionInfo\n| osData:=concat([OSVersionString, ProductName])\n| groupBy([aid], function=([selectFromMax(field=\"@timestamp\", include=[event_platform, RFMState, LinuxSensorBackend, AgentVersion, osData])]))\n| RFMState match {\n    1 => RFMState := \"RFM\" ;\n    0 => RFMState := \"OK\" ;\n}\n| case {\n    event_platform!=Lin | LinuxSensorBackend:=\"NA\";\n    *;\n}\n| LinuxSensorBackend match {\n    1 => LinuxSensorBackend := \"eBPF\" ;\n    0 => LinuxSensorBackend := \"Kernel\" ;\n    \"NA\" => LinuxSensorBackend := \"-\" ;\n}",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "lin",
+    "osversioninfo"
+  ]
+}

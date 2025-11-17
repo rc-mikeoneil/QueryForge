@@ -1,0 +1,28 @@
+{
+  "title": "Create a stacked bar chart over time",
+  "slug": "create_a_stacked_bar_chart_over_time",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "To build stacked bar charts, structure the query to output a time bucket plus a categorical series field. Use timechart() or groupBy() + timechart() and then select a stacked bar visualization in the UI.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Buckets detections by day and series on DetectName so the UI can display stacked bars representing different detection names per day.",
+      "language": "logscale",
+      "query": "#event_simpleName=DetectionSummaryEvent\n| timechart(series=DetectName, span=1d, limit=20)"
+    }
+  ],
+  "tags": [
+    "chart",
+    "groupby",
+    "select",
+    "timechart",
+    "visualization"
+  ],
+  "url": "https://library.humio.com/kb/kb-create-stacked-bar-chart.html",
+  "difficulty": "intermediate",
+  "related_functions": [
+    "timechart"
+  ]
+}

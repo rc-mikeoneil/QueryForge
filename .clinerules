@@ -1,10 +1,58 @@
 # QueryForge Project Rules
 
+## MCP-First Principle - CRITICAL
+
+**ALWAYS USE MCP TOOLS FIRST**: You must ALWAYS use the MCP server tools (`queryforge-local`) for ALL schema, field, example, and query operations. Direct file reading (read_file, search_files on JSON schemas) is FORBIDDEN except in these cases:
+- MCP server is unreachable or returning errors
+- You need to debug the MCP server implementation itself
+- You are modifying schema files as part of development work
+
+**If you read JSON files directly when MCP tools are available, you are violating project rules.**
+
 ## Query Building - MANDATORY
 
 **CRITICAL**: When building queries for any security platform (CBC, Cortex, KQL, S1, CQL):
 
-### 1. ALWAYS Use MCP Query Builder Tools
+### 1. Check for Exact Example Query Matches FIRST
+
+Before building a query from scratch, check if an exact example query exists:
+
+**When to return example queries directly:**
+- User's natural language request matches an example query title, description, or use case
+- No specific filters, fields, or customizations are requested
+- The example query is production-ready and validated
+
+**Example matching criteria:**
+- Match on key phrases in the user's request (e.g., "files written to removable media")
+- Match on security use cases (e.g., "data exfiltration", "lateral movement")
+- Match on event types or behaviors described
+
+**When NOT to use example queries:**
+- User specifies custom filters (device names, IP addresses, specific values)
+- User requests modifications to the query structure
+- User asks for a subset of fields or different aggregations
+- Multiple examples match and user intent is ambiguous
+
+**If an exact match is found:** Return the production-ready example query as-is, including all its complexity (aggregations, transformations, etc.)
+
+### 2. Use MCP Tools for Schema Discovery
+
+Before building any query, use the appropriate MCP tools to discover schema information:
+
+**Dataset/Table Discovery:**
+- `cbc_list_datasets` / `cbr_list_datasets` / `cortex_list_datasets` / `kql_list_datasets` / `cql_list_datasets` / `s1_list_datasets`
+- Use `query_intent` parameter for semantic search to find relevant datasets
+
+**Field Discovery:**
+- `cbc_get_fields` / `cbr_get_fields` / `cortex_get_fields` / `kql_get_fields` / `cql_get_fields` / `s1_get_fields`
+- Use `query_intent` parameter to filter semantically relevant fields
+- NEVER read schema JSON files directly unless MCP server is unavailable
+
+**Example Query Discovery:**
+- `cbc_get_examples` / `cbr_get_examples` / `cortex_get_examples` / `kql_get_examples` / `cql_get_examples` / `s1_get_examples`
+- Use `query_intent` or `category` parameters to find relevant examples
+
+### 3. ALWAYS Use MCP Query Builder Tools
 
 You MUST use the appropriate MCP query builder tool for the platform.
 

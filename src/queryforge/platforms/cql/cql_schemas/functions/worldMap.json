@@ -1,0 +1,36 @@
+{
+  "name": "worldMap",
+  "category": "visualization",
+  "description": "Creates a world map visualization with geographic data points. Requires latitude and longitude coordinates, and can display magnitude/weight for each location. Often used after ipLocation() to visualize network traffic or user locations.",
+  "syntax": "worldMap(lat=latitude_field, lon=longitude_field, magnitude=value)",
+  "parameters": [
+    {
+      "name": "lat",
+      "type": "string",
+      "required": true,
+      "description": "Field containing latitude values"
+    },
+    {
+      "name": "lon",
+      "type": "string",
+      "required": true,
+      "description": "Field containing longitude values"
+    },
+    {
+      "name": "magnitude",
+      "type": "aggregation",
+      "required": false,
+      "description": "Value representing the size/weight of each point (e.g., count, sum)"
+    }
+  ],
+  "return_type": "visualization",
+  "examples": [
+    "| worldMap(lat=RemoteAddressIP4.lat, lon=RemoteAddressIP4.lon, magnitude=count(aid))",
+    "| worldMap(lat=ipAddress.lat, lon=ipAddress.lon, magnitude=sum(Severity))",
+    "| ipLocation(RemoteIP) | worldMap(lat=RemoteIP.lat, lon=RemoteIP.lon)"
+  ],
+  "related_functions": ["ipLocation", "geoHash", "groupBy"],
+  "use_cases": ["Geographic visualization", "Network traffic mapping", "User login locations", "Threat geography"],
+  "notes": "Requires geographic coordinates. Use ipLocation() to enrich IP addresses with lat/lon before using worldMap.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-worldmap.html"
+}

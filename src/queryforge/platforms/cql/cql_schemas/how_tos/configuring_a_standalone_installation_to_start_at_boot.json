@@ -1,0 +1,23 @@
+{
+  "title": "How-To: Configuring a Standalone Installation to Start at Boot",
+  "slug": "configuring_a_standalone_installation_to_start_at_boot",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "admin",
+  "description": "Explains how to configure a standalone LogScale installation so that it starts automatically on boot\nusing the target platform's service manager (for example, systemd on Linux).",
+  "examples": [
+    {
+      "name": "Example systemd service hint",
+      "description": "Create or update a systemd service so LogScale starts at boot.",
+      "language": "shell",
+      "query": "# /etc/systemd/system/logscale.service\n[Unit]\nDescription=Falcon LogScale\n\n[Service]\nExecStart=/opt/logscale/server\n\n[Install]\nWantedBy=multi-user.target"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "admin",
+    "startup",
+    "systemd"
+  ],
+  "difficulty": "beginner"
+}

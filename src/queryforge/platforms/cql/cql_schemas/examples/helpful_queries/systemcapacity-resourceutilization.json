@@ -1,0 +1,48 @@
+{
+  "id": "systemcapacity-resourceutilization",
+  "title": "SystemCapacity & ResourceUtilization",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/SystemCapacity & ResourceUtilization.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [],
+  "functions_used": [
+    "concat",
+    "drop",
+    "format",
+    "groupBy",
+    "match",
+    "select"
+  ],
+  "operators_used": [
+    "=",
+    "and",
+    "match",
+    "|"
+  ],
+  "fields_referenced": [
+    "AvailableDiskSpace",
+    "CpuProcessorName",
+    "as",
+    "field",
+    "file",
+    "function",
+    "ignoreCase",
+    "include",
+    "strict"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Cross-platform"
+  ],
+  "use_case": "Analysis query for SystemCapacity & ResourceUtilization",
+  "query": "#event_simpleName=/^(SystemCapacity|ResourceUtilization)$/\n\n| groupBy(aid, function=([selectLast([CpuProcessorName, PhysicalCoreCount, LogicalCoreCount, AverageCpuUsage, MemoryTotal, MaxUsedRam, AverageUsedRam, MaxUsedRam, AvailableDiskSpace])]))\n| CpuProcessorName=* AND AvailableDiskSpace=*\n| percent := \"%\"\n| gb := \"GB\"\n| MemoryTotal := (MemoryTotal/1074000000)\n| MemoryTotal := format(\"%,.2f\", field=MemoryTotal)\n| MaxUsedRam := (MaxUsedRam/1024)\n| MaxUsedRam := format(\"%,.2f\", field=MaxUsedRam)\n| AverageUsedRam := (AverageUsedRam/1024)\n| AverageUsedRam := format(\"%,.2f\", field=AverageUsedRam)\n| AveragePercentUsedRam := (AverageUsedRam/MemoryTotal)*100\n| AveragePercentUsedRam := format(\"%,.2f\", field=AveragePercentUsedRam)\n| concat([AveragePercentUsedRam, percent], as=\"AveragePercentUsedRam\")\n| concat([MaxUsedRam, gb], as=\"MaxUsedRam\")\n| concat([MemoryTotal, gb], as=\"MemoryTotal\")\n| concat([AverageUsedRam, gb], as=\"AverageUsedRam\")\n| concat([AverageCpuUsage, percent], as=\"AverageCpuUsage\")\n| concat([AvailableDiskSpace, gb], as=\"AvailableDiskSpace\")\n| drop([gb, percent])\n| match(file=\"fdr_aidmaster.csv\", field=aid, include=ComputerName, ignoreCase=true, strict=false)\n| select([aid, ComputerName, CpuProcessorName, PhysicalCoreCount, LogicalCoreCount, AverageCpuUsage, MemoryTotal, MaxUsedRam, AverageUsedRam, AveragePercentUsedRam, MaxUsedRam, AvailableDiskSpace])",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "cross-platform"
+  ]
+}

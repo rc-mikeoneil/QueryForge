@@ -1,0 +1,22 @@
+{
+  "title": "Optimizing string and regular expression (regex) search performance",
+  "slug": "optimizing_string_and_regular_expression_(regex)_search_performance",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "performance",
+  "description": "Prefer simple string searches or prefix searches instead of complex regex when possible. Apply filters early and avoid leading wildcards to keep queries fast.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Uses simple wildcard matching on CommandLine instead of a full regex, reducing CPU overhead for large datasets.",
+      "language": "logscale",
+      "query": "#event_simpleName=ProcessRollup2\n| CommandLine=*powershell* and CommandLine=\"* -enc *\"\n| // avoid heavy .*? style regex when a simple wildcard match works"
+    }
+  ],
+  "tags": [
+    "performance",
+    "regex"
+  ],
+  "url": "https://library.humio.com/kb/kb-regex-vs-string-performance.html",
+  "difficulty": "advanced"
+}

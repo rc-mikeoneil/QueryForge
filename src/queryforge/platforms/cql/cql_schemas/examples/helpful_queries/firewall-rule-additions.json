@@ -1,0 +1,49 @@
+{
+  "id": "firewall-rule-additions",
+  "title": "Firewall Rule Additions",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Firewall Rule Additions.md",
+  "category": "helpful_query",
+  "subcategory": "process",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "ProcessRollup2",
+    "FirewallSetRule"
+  ],
+  "functions_used": [
+    "join",
+    "table"
+  ],
+  "operators_used": [
+    "<",
+    "=",
+    ">",
+    "|"
+  ],
+  "fields_referenced": [
+    "ImageFileName",
+    "field",
+    "include",
+    "key"
+  ],
+  "correlation_patterns": [
+    "join"
+  ],
+  "difficulty": "advanced",
+  "query_type": "utility",
+  "platforms": [
+    "Lin"
+  ],
+  "use_case": "Utility query for Firewall Rule Additions",
+  "query": "#event_simpleName=ProcessRollup2\n\n| join({#event_simpleName=FirewallSetRule}, key=ContextProcessId, field=TargetProcessId, include=[FirewallRule, FirewallRuleId])\n| ImageFileName=/.*\\\\(?<fileName>.*\\..*)/\n| table([aid, UserSid, fileName, FirewallRuleId, FirewallRule, ImageFileName, CommandLine])",
+  "key_features": [
+    "Uses join for correlation"
+  ],
+  "related_examples": [],
+  "tags": [
+    "firewallsetrule",
+    "join",
+    "lin",
+    "processrollup2"
+  ]
+}

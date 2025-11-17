@@ -1,0 +1,23 @@
+{
+  "name": "head",
+  "category": "utility",
+  "description": "Returns a limited number of events, starting with the oldest. Equivalent to the command-line head tool.",
+  "syntax": "| head(limit)",
+  "parameters": [
+    {
+      "name": "limit",
+      "type": "number",
+      "required": true,
+      "description": "The maximum number of events to return, starting from the oldest"
+    }
+  ],
+  "return_type": "events",
+  "examples": [
+    "| head(5)",
+    "| head(10)",
+    "| head(100)"
+  ],
+  "related_functions": ["tail", "limit"],
+  "use_cases": ["Limiting query results", "Sampling oldest data", "Testing queries with small datasets"],
+  "documentation_url": "https://library.humio.com/data-analysis/functions-head.html"
+}

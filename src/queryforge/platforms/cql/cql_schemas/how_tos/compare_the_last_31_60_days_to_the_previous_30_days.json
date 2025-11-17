@@ -1,0 +1,29 @@
+{
+  "title": "How-To: Compare the Last 31-60 days to the Previous 30 Days",
+  "slug": "compare_the_last_31_60_days_to_the_previous_30_days",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Builds a query that compares a recent time window (such as the last 31\u201360 days) to an older window\n(the previous 30 days) to highlight changes in counts, rates, or other metrics.",
+  "examples": [
+    {
+      "name": "Compare failed logins between two windows",
+      "description": "Calculates failed login counts for two ranges and shows the delta.",
+      "language": "logscale",
+      "query": "// Recent window\n#event_simpleName=UserLogon Status=FAILURE\n| timechart(function=count(), span=1d, start=-60d, end=-30d, as=previous)\n| join({\n    #event_simpleName=UserLogon Status=FAILURE\n    | timechart(function=count(), span=1d, start=-30d, end=now(), as=current)\n  }, field=_time, include=current)\n| diff := current - previous"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "timechart",
+    "comparison",
+    "windows"
+  ],
+  "difficulty": "advanced",
+  "related_functions": [
+    "count",
+    "join",
+    "now",
+    "timechart"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "title": "How-To: Add a single field to groupBy() results",
+  "slug": "add_a_single_field_to_groupby_results",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Use groupBy() with collect() to keep one additional field (or set of values) attached\nto your grouped results. This is useful when you want to see a key metric by host or\nfile, but also preserve which domains, users, or other attributes were seen per group.",
+  "examples": [
+    {
+      "name": "Collect DomainName per ComputerName/FileName pair",
+      "description": "Groups by ComputerName and FileName while collecting all DomainName values seen in that group.",
+      "language": "logscale",
+      "query": "groupBy([ComputerName, FileName], function=collect(DomainName))"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "groupBy",
+    "collect",
+    "aggregation",
+    "query"
+  ],
+  "difficulty": "intermediate",
+  "related_functions": [
+    "collect",
+    "groupBy"
+  ]
+}

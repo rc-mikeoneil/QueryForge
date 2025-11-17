@@ -1,0 +1,28 @@
+{
+  "title": "Log Collector Resiliency and Monitoring",
+  "slug": "log_collector_resiliency_and_monitoring",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "Design log collector deployments for redundancy and observability. Monitor queue depth, backpressure, and error logs; implement alerts on ingest gaps and collector health.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Counts warnings and errors per collector host to highlight problematic nodes and validate overall resiliency.",
+      "language": "logscale",
+      "query": "#source=log-collector\n| level in (\"error\", \"warning\")\n| groupBy(host, function=count(as=\"Issues\"))"
+    }
+  ],
+  "tags": [
+    "collect",
+    "collector",
+    "monitoring"
+  ],
+  "url": "https://library.humio.com/kb/kb-log-collector-best-practice.html",
+  "difficulty": "intermediate",
+  "related_functions": [
+    "count",
+    "groupBy",
+    "in"
+  ]
+}

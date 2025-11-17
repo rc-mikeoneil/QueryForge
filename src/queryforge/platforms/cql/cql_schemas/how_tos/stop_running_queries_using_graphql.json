@@ -1,0 +1,26 @@
+{
+  "title": "How-To: Stop Running Queries using GraphQL",
+  "slug": "stop_running_queries_using_graphql",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "graphql",
+  "description": "Explains how to terminate currently running queries via GraphQL, useful for stopping\nunexpectedly expensive searches or cleaning up stuck workloads.",
+  "examples": [
+    {
+      "name": "Terminate a running query",
+      "description": "Calls a GraphQL mutation to stop a specific query by ID.",
+      "language": "graphql",
+      "query": "mutation {\n  stopQuery(input: { queryId: \"<QUERY_ID>\" }) {\n    stoppedQueryId\n  }\n}"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "graphql",
+    "operations",
+    "queries"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "stopQuery"
+  ]
+}

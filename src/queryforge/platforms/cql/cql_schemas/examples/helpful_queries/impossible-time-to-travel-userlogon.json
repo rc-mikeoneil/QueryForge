@@ -1,0 +1,75 @@
+{
+  "id": "impossible-time-to-travel-userlogon",
+  "title": "Impossible Time To Travel (UserLogon)",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Impossible Time To Travel (UserLogon).md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "UserLogon"
+  ],
+  "functions_used": [
+    "cidr",
+    "concat",
+    "drop",
+    "format",
+    "groupBy",
+    "ipLocation",
+    "table",
+    "test"
+  ],
+  "operators_used": [
+    "=",
+    ">",
+    "and",
+    "in",
+    "not",
+    "|"
+  ],
+  "fields_referenced": [
+    "DistanceKm",
+    "LogonDelta",
+    "LogonType",
+    "Mach",
+    "RemoteAddressIP4",
+    "SpeedKph",
+    "UserHash",
+    "as",
+    "field",
+    "format",
+    "function",
+    "isLive",
+    "lat1",
+    "lat2",
+    "limit",
+    "lon1",
+    "lon2",
+    "order",
+    "precision",
+    "prefix"
+  ],
+  "correlation_patterns": [
+    "sequence"
+  ],
+  "difficulty": "intermediate",
+  "query_type": "hunting",
+  "platforms": [
+    "Lin",
+    "Mac",
+    "Win"
+  ],
+  "use_case": "Hunting query for Impossible Time To Travel (UserLogon)",
+  "query": "// Get UserLogon events for Windows RDP sessions\n#event_simpleName=UserLogon event_platform=Win LogonType=10 RemoteAddressIP4=*\n\n// Omit results if the RemoteAddressIP4 field is RFC1819\n| !cidr(RemoteAddressIP4, subnet=[\"224.0.0.0/4\", \"10.0.0.0/8\", \"172.16.0.0/12\", \"192.168.0.0/16\", \"127.0.0.1/32\", \"169.254.0.0/16\", \"0.0.0.0/32\"])\n\n// Create UserName + UserSid Hash\n| UserHash:=concat([UserName, UserSid]) | UserHash:=crypto:md5([UserHash])\n\n// Perform initial aggregation; groupBy() will sort by UserHash then LogonTime\n| groupBy([UserHash, LogonTime], function=[collect([UserName, UserSid, RemoteAddressIP4, ComputerName, aid])], limit=max)\n\n// Get geoIP for Remote IP\n| ipLocation(RemoteAddressIP4)\n\n\n// Use new neighbor() function to get results for previous row\n| neighbor([LogonTime, RemoteAddressIP4, UserHash, RemoteAddressIP4.country, RemoteAddressIP4.lat, RemoteAddressIP4.lon, ComputerName], prefix=prev)\n\n// Make sure neighbor() sequence does not span UserHash values; will occur at the end of a series\n| test(UserHash==prev.UserHash)\n\n// Calculate logon time delta in milliseconds from LogonTime to prev.LogonTime and round\n| LogonDelta:=(LogonTime-prev.LogonTime)*1000\n| LogonDelta:=round(LogonDelta)\n\n// Turn logon time delta from milliseconds to human readable\n| TimeToTravel:=formatDuration(LogonDelta, precision=2)\n\n// Calculate distance between Login 1 and Login 2\n| DistanceKm:=(geography:distance(lat1=\"RemoteAddressIP4.lat\", lat2=\"prev.RemoteAddressIP4.lat\", lon1=\"RemoteAddressIP4.lon\", lon2=\"prev.RemoteAddressIP4.lon\"))/1000 | DistanceKm:=round(DistanceKm)\n\n// Calculate speed required to get from Login 1 to Login 2\n| SpeedKph:=DistanceKm/(LogonDelta/1000/60/60) | SpeedKph:=round(SpeedKph)\n\n// SET THRESHOLD: 1234kph is MACH 1\n| test(SpeedKph>1234)\n\n// Format LogonTime Values\n| LogonTime:=LogonTime*1000           | formatTime(format=\"%F %T %Z\", as=\"LogonTime\", field=\"LogonTime\")\n| prev.LogonTime:=prev.LogonTime*1000 | formatTime(format=\"%F %T %Z\", as=\"prev.LogonTime\", field=\"prev.LogonTime\")\n\n// Make fields easier to read\n| Travel:=format(format=\"%s → %s\", field=[prev.RemoteAddressIP4.country, RemoteAddressIP4.country])\n| IPs:=format(format=\"%s → %s\", field=[prev.RemoteAddressIP4, RemoteAddressIP4])\n| Logons:=format(format=\"%s → %s\", field=[prev.LogonTime, LogonTime])\n\n// Output results to table and sort by highest speed\n| table([aid, ComputerName, UserName, UserSid, System, IPs, Travel, DistanceKm, Logons, TimeToTravel, SpeedKph], limit=20000, sortby=SpeedKph, order=desc)\n\n// Express SpeedKph as a value of MACH\n| Mach:=SpeedKph/1234 | Mach:=round(Mach)\n| Speed:=format(format=\"MACH %s\", field=[Mach])\n\n// Format distance and speed fields to include comma and unit of measure\n| format(\"%,.0f km\",field=[\"DistanceKm\"], as=\"DistanceKm\")\n| format(\"%,.0f km/h\",field=[\"SpeedKph\"], as=\"SpeedKph\")\n\n// Intelligence Graph; uncomment out one cloud\n| rootURL  := \"https://falcon.crowdstrike.com/\"\n//rootURL  := \"https://falcon.laggar.gcw.crowdstrike.com/\" \n//rootURL  := \"https://falcon.eu-1.crowdstrike.com/\" \n//rootURL  := \"https://falcon.us-2.crowdstrike.com/\" \n| format(\"[Link](%sinvestigate/dashboards/user-search?isLive=false&sharedTime=true&start=7d&user=%s)\", field=[\"rootURL\", \"UserName\"], as=\"User Search\")\n\n// Drop unwanted fields\n| drop([Mach, rootURL])",
+  "key_features": [
+    "Uses sequence for correlation",
+    "IP geolocation enrichment"
+  ],
+  "related_examples": [],
+  "tags": [
+    "lin",
+    "mac",
+    "userlogon",
+    "win"
+  ]
+}

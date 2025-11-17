@@ -1,0 +1,46 @@
+{
+  "id": "hunting-edr-freeze",
+  "title": "Hunting EDR Freeze",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Hunting EDR Freeze.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "Based on the default command line switching behavior found in the [EDR-Freeze](https://github.com/TwoSevenOneT/EDR-Freeze?tab=readme-ov-file) open source project:",
+  "mitre_attack": null,
+  "event_types": [
+    "FalconProcessHandleOpDetectInfo"
+  ],
+  "functions_used": [
+    "drop",
+    "format",
+    "table"
+  ],
+  "operators_used": [
+    "=",
+    "or",
+    "|"
+  ],
+  "fields_referenced": [
+    "CommandLine",
+    "FileName",
+    "GrandparentCommandLine",
+    "ParentCommandLine",
+    "as",
+    "field",
+    "format",
+    "id"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "detection",
+  "platforms": [
+    "Lin"
+  ],
+  "use_case": "Based on the default command line switching behavior found in the [EDR-Freeze](https://github.com/TwoSevenOneT/EDR-Freeze?tab=readme-ov-file) open source project:",
+  "query": "// Look for process handles opening Falcon\n#event_simpleName=FalconProcessHandleOpDetectInfo FileName=\"WerFaultSecure.exe\"\n\n// Check for command line switching signal\n| GrandparentCommandLine=/\\.exe\"?\\s+\\d+\\s+\\d+$/ OR ParentCommandLine=/\\.exe\"?\\s+\\d+\\s+\\d+$/ OR CommandLine=/\\.exe\"?\\s+\\d+\\s+\\d+$/\n\n// Create process lineage tree for easier reading\n| ProcessLineage:=format(format=\"%s (%s)\\n\\t└ %s (%s)\\n\\t\\t└ %s (%s)\", field=[GrandparentImageFileName, GrandparentCommandLine, ParentImageFileName, ParentCommandLine, ImageFileName, CommandLine])\n\n// Output deatils to table\n| table([@timestamp, aid, ComputerName, ContextProcessId, ProcessLineage])\n\n// Create direct link to Process Explorer - Uncomment the rootURL value that matches your cloud\n| rootURL  := \"https://falcon.crowdstrike.com/\" /* US-1 */\n//| rootURL  := \"https://falcon.us-2.crowdstrike.com/\" /* US-2 */\n//| rootURL  := \"https://falcon.laggar.gcw.crowdstrike.com/\" /* Gov */\n//| rootURL  := \"https://falcon.eu-1.crowdstrike.com/\"  /* EU */\n| format(\"[Responsible Process](%sgraphs/process-explorer/tree?id=pid:%s:%s)\", field=[\"rootURL\", \"aid\", \"ContextProcessId\"], as=\"Process Explorer\") \n\n// Remove unnecessary fields\n| drop([rootURL, ContextProcessId])",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "falconprocesshandleopdetectinfo",
+    "lin"
+  ]
+}

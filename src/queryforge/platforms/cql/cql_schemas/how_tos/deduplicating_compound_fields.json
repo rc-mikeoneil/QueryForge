@@ -1,0 +1,27 @@
+{
+  "title": "How-To: Deduplicating Compound Fields",
+  "slug": "deduplicating_compound_fields",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Explains how to remove duplicate combinations of multiple fields, for example,\ndeduplicating repeated host+user pairs, using groupBy(), collectDistinct(), or dedup.",
+  "examples": [
+    {
+      "name": "Deduplicate host/user pairs",
+      "description": "Returns one entry per unique ComputerName and UserName combination.",
+      "language": "logscale",
+      "query": "groupBy([ComputerName, UserName], function=count())"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "dedup",
+    "groupBy",
+    "compound_fields"
+  ],
+  "difficulty": "intermediate",
+  "related_functions": [
+    "count",
+    "groupBy"
+  ]
+}

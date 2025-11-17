@@ -1,0 +1,572 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2025-11-15T00:00:00Z",
+  "description": "Context-aware example queries for CrowdStrike Query Language (CQL) query builder - provides relevant examples based on user context",
+  "examples_by_event_type": {
+    "description": "Example queries organized by event type - show when user selects an event type",
+    "ProcessRollup2": {
+      "event_description": "Process execution events - most frequently used for threat hunting",
+      "common_use_cases": ["Threat hunting", "Process analysis", "Behavioral detection", "LOLBin detection"],
+      "starter_templates": [
+        {
+          "name": "Basic process filtering",
+          "difficulty": "basic",
+          "query": "#event_simpleName=ProcessRollup2 event_platform=Win FileName=powershell.exe",
+          "description": "Filter processes by filename and platform",
+          "when_to_use": "Starting point for any process analysis"
+        },
+        {
+          "name": "Group processes by endpoint",
+          "difficulty": "basic",
+          "query": "#event_simpleName=ProcessRollup2 | groupBy([ComputerName], function=count())",
+          "description": "Count processes per endpoint",
+          "when_to_use": "Identifying endpoints with unusual process activity"
+        },
+        {
+          "name": "Process frequency analysis",
+          "difficulty": "intermediate",
+          "query": "#event_simpleName=ProcessRollup2 | groupBy([FileName], function=count()) | sort(_count, order=desc, limit=20)",
+          "description": "Find most common processes",
+          "when_to_use": "Baseline analysis and anomaly detection"
+        },
+        {
+          "name": "Parent-child process relationships",
+          "difficulty": "intermediate",
+          "query": "#event_simpleName=ProcessRollup2 ParentBaseFileName=explorer.exe | groupBy([FileName], function=count())",
+          "description": "Analyze processes spawned from explorer.exe",
+          "when_to_use": "User-initiated process analysis"
+        },
+        {
+          "name": "Suspicious command line patterns",
+          "difficulty": "advanced",
+          "query": "#event_simpleName=ProcessRollup2 CommandLine=*-enc* | regex(field=CommandLine, regex=\"-enc[^ ]* (?<encoded>.+)\") | table([ComputerName, UserName, FileName, encoded])",
+          "description": "Detect encoded PowerShell commands",
+          "when_to_use": "Hunting for obfuscated malicious commands"
+        }
+      ],
+      "correlation_examples": [
+        {
+          "name": "Process-to-Network correlation",
+          "difficulty": "intermediate",
+          "query": "#event_simpleName=ProcessRollup2 | join(query={#event_simpleName=NetworkConnectIP4}, field=[aid, TargetProcessId=ContextProcessId], include=[RemoteAddressIP4, RemotePort])",
+          "description": "Link processes to their network connections",
+          "when_to_use": "Identifying processes making network connections"
+        },
+        {
+          "name": "Process-to-DNS correlation",
+          "difficulty": "intermediate",
+          "query": "#event_simpleName=ProcessRollup2 | join(query={#event_simpleName=DnsRequest}, field=[aid, TargetProcessId=ContextProcessId], include=[DomainName])",
+          "description": "Link processes to DNS queries they made",
+          "when_to_use": "Identifying C2 domains and malicious DNS activity"
+        },
+        {
+          "name": "Process runtime calculation",
+          "difficulty": "expert",
+          "query": "#event_simpleName=ProcessRollup2 | join(query={#event_simpleName=EndOfProcess}, field=[aid, TargetProcessId]) | runtime := (ContextTimeStamp - ProcessStartTime*1000) | formatDuration(runtime, as=runtime_formatted)",
+          "description": "Calculate how long processes ran",
+          "when_to_use": "Identifying short-lived suspicious processes"
+        }
+      ]
+    },
+    "UserLogon": {
+      "event_description": "Successful user logon events - authentication tracking",
+      "common_use_cases": ["Authentication tracking", "Lateral movement detection", "RDP monitoring", "Geographic anomaly detection"],
+      "starter_templates": [
+        {
+          "name": "RDP logons",
+          "difficulty": "basic",
+          "query": "#event_simpleName=UserLogon LogonType=10",
+          "description": "Filter for Remote Desktop (RDP) logons",
+          "when_to_use": "Monitoring remote access"
+        },
+        {
+          "name": "Admin logons",
+          "difficulty": "basic",
+          "query": "#event_simpleName=UserLogon UserIsAdmin=1 | groupBy([UserName, ComputerName], function=count())",
+          "description": "Track administrative logons",
+          "when_to_use": "Privileged access monitoring"
+        },
+        {
+          "name": "Geographic RDP analysis",
+          "difficulty": "intermediate",
+          "query": "#event_simpleName=UserLogon LogonType=10 RemoteAddressIP4=* | ipLocation(RemoteAddressIP4) | groupBy([RemoteAddressIP4.country], function=count())",
+          "description": "Analyze RDP logons by country",
+          "when_to_use": "Detecting geographic anomalies in access patterns"
+        },
+        {
+          "name": "Failed followed by successful logon",
+          "difficulty": "advanced",
+          "query": "#event_simpleName=UserLogon | join(query={#event_simpleName=UserLogonFailed2}, field=[aid, UserName], mode=left)",
+          "description": "Correlate failed and successful logons",
+          "when_to_use": "Detecting brute force attempts that succeeded"
+        }
+      ],
+      "correlation_examples": [
+        {
+          "name": "Logon to process activity",
+          "difficulty": "intermediate",
+          "query": "#event_simpleName=UserLogon | join(query={#event_simpleName=ProcessRollup2}, field=[aid, UserSid], include=[FileName, CommandLine])",
+          "description": "Link logons to subsequent process executions",
+          "when_to_use": "Behavioral analysis after authentication"
+        }
+      ]
+    },
+    "NetworkConnectIP4": {
+      "event_description": "IPv4 network connection events - outbound connections",
+      "common_use_cases": ["C2 detection", "Data exfiltration", "Lateral movement", "Network scanning"],
+      "starter_templates": [
+        {
+          "name": "Top destination IPs",
+          "difficulty": "basic",
+          "query": "#event_simpleName=NetworkConnectIP4 | groupBy([RemoteAddressIP4], function=count()) | sort(_count, order=desc, limit=20)",
+          "description": "Most frequently contacted IPs",
+          "when_to_use": "Baseline network activity"
+        },
+        {
+          "name": "Uncommon ports",
+          "difficulty": "intermediate",
+          "query": "#event_simpleName=NetworkConnectIP4 NOT in(RemotePort, values=[80, 443, 53, 22, 3389]) | groupBy([RemotePort, FileName], function=count())",
+          "description": "Connections to non-standard ports",
+          "when_to_use": "Detecting unusual network activity"
+        },
+        {
+          "name": "Geographic connection analysis",
+          "difficulty": "intermediate",
+          "query": "#event_simpleName=NetworkConnectIP4 | ipLocation(RemoteAddressIP4) | groupBy([RemoteAddressIP4.country, RemotePort], function=count())",
+          "description": "Analyze connections by country and port",
+          "when_to_use": "Geographic anomaly detection"
+        }
+      ]
+    },
+    "DnsRequest": {
+      "event_description": "DNS query events - domain resolution requests",
+      "common_use_cases": ["Malicious domain detection", "C2 detection", "Data exfiltration", "DGA detection"],
+      "starter_templates": [
+        {
+          "name": "Top queried domains",
+          "difficulty": "basic",
+          "query": "#event_simpleName=DnsRequest | groupBy([DomainName], function=count()) | sort(_count, order=desc, limit=50)",
+          "description": "Most frequently queried domains",
+          "when_to_use": "Baseline DNS activity"
+        },
+        {
+          "name": "Long domain names (DGA detection)",
+          "difficulty": "intermediate",
+          "query": "#event_simpleName=DnsRequest | length(DomainName, as=domain_length) | domain_length>50 | table([DomainName, domain_length, ContextBaseFileName])",
+          "description": "Detect suspiciously long domains",
+          "when_to_use": "DGA (Domain Generation Algorithm) detection"
+        },
+        {
+          "name": "Rare domains by process",
+          "difficulty": "advanced",
+          "query": "#event_simpleName=DnsRequest | groupBy([DomainName, ContextBaseFileName], function=count()) | _count<=2 | table([DomainName, ContextBaseFileName, _count])",
+          "description": "Identify rarely-seen domain/process combinations",
+          "when_to_use": "Hunting for anomalous DNS activity"
+        }
+      ]
+    },
+    "OsVersionInfo": {
+      "event_description": "Operating system version and configuration inventory",
+      "common_use_cases": ["Inventory", "Patch management", "Vulnerability assessment", "OS distribution analysis"],
+      "starter_templates": [
+        {
+          "name": "OS distribution",
+          "difficulty": "basic",
+          "query": "#event_simpleName=OsVersionInfo | groupBy([event_platform], function=count())",
+          "description": "Count endpoints by OS platform",
+          "when_to_use": "Understanding OS distribution"
+        },
+        {
+          "name": "Windows version breakdown",
+          "difficulty": "intermediate",
+          "query": "#event_simpleName=OsVersionInfo event_platform=Win | groupBy([ProductName, Version], function=count()) | sort(_count, order=desc)",
+          "description": "Windows versions in environment",
+          "when_to_use": "Patch management and upgrade planning"
+        },
+        {
+          "name": "Sensor version compliance",
+          "difficulty": "intermediate",
+          "query": "#event_simpleName=OsVersionInfo | groupBy([AgentVersion], function=count()) | sort(_count, order=desc)",
+          "description": "Falcon sensor version distribution",
+          "when_to_use": "Ensuring sensor compliance"
+        },
+        {
+          "name": "Reduced Functionality Mode hosts",
+          "difficulty": "basic",
+          "query": "#event_simpleName=OsVersionInfo RFMState>0 | table([ComputerName, AgentVersion, RFMState])",
+          "description": "Identify sensors in RFM",
+          "when_to_use": "Troubleshooting sensor issues"
+        }
+      ]
+    },
+    "DriverLoad": {
+      "event_description": "Kernel driver load events - Windows driver activity",
+      "common_use_cases": ["Rootkit detection", "BYOVD attacks", "Unsigned driver detection", "Certificate validation"],
+      "starter_templates": [
+        {
+          "name": "Unsigned drivers",
+          "difficulty": "intermediate",
+          "query": "#event_simpleName=DriverLoad SubjectCN=* NOT | table([ComputerName, FileName, FilePath])",
+          "description": "Detect unsigned kernel drivers",
+          "when_to_use": "Identifying potentially malicious drivers"
+        },
+        {
+          "name": "Rare drivers",
+          "difficulty": "intermediate",
+          "query": "#event_simpleName=DriverLoad | groupBy([FileName, SubjectCN], function=count()) | _count<=3 | table([FileName, SubjectCN, _count])",
+          "description": "Identify rarely-loaded drivers",
+          "when_to_use": "Hunting for anomalous driver activity"
+        }
+      ]
+    }
+  },
+  "examples_by_function": {
+    "description": "Example queries organized by function - show when user is using a specific function",
+    "groupBy": {
+      "description": "Aggregation and grouping examples",
+      "basic_examples": [
+        {
+          "name": "Simple grouping",
+          "query": "#event_simpleName=ProcessRollup2 | groupBy([ComputerName])",
+          "explanation": "Groups all ProcessRollup2 events by ComputerName"
+        },
+        {
+          "name": "Grouping with count",
+          "query": "#event_simpleName=ProcessRollup2 | groupBy([ComputerName], function=count())",
+          "explanation": "Groups events and counts per ComputerName"
+        },
+        {
+          "name": "Multi-field grouping",
+          "query": "#event_simpleName=ProcessRollup2 | groupBy([ComputerName, FileName], function=count())",
+          "explanation": "Groups by multiple fields to see unique combinations"
+        }
+      ],
+      "advanced_examples": [
+        {
+          "name": "Multiple aggregations",
+          "query": "#event_simpleName=ProcessRollup2 | groupBy([FileName], function=[count(aid, distinct=true, as=endpoints), count(UserSid, distinct=true, as=users), collect([CommandLine])])",
+          "explanation": "Groups with multiple aggregation functions - counts unique endpoints and users, collects command lines"
+        },
+        {
+          "name": "Grouping with limit",
+          "query": "#event_simpleName=UserLogon | groupBy([UserName], function=count(), limit=10)",
+          "explanation": "Limit results to top 10 groups"
+        }
+      ]
+    },
+    "join": {
+      "description": "Event correlation examples using join",
+      "basic_examples": [
+        {
+          "name": "Process-to-Network join",
+          "query": "#event_simpleName=ProcessRollup2 | join(query={#event_simpleName=NetworkConnectIP4}, field=[aid, TargetProcessId=ContextProcessId])",
+          "explanation": "Joins process events with network connections to see which processes made connections"
+        }
+      ],
+      "advanced_examples": [
+        {
+          "name": "Join with field inclusion",
+          "query": "#event_simpleName=ProcessRollup2 | join(query={#event_simpleName=NetworkConnectIP4}, field=[aid, TargetProcessId=ContextProcessId], include=[RemoteAddressIP4, RemotePort, Protocol])",
+          "explanation": "Join and include specific fields from secondary event - shows process with its network connection details"
+        },
+        {
+          "name": "User logon to process correlation",
+          "query": "#event_simpleName=UserLogon | join(query={#event_simpleName=ProcessRollup2}, field=[aid, UserSid], include=[ImageFileName, CommandLine])",
+          "explanation": "Correlates user logons with processes executed by that user"
+        }
+      ]
+    },
+    "ipLocation": {
+      "description": "IP geolocation enrichment examples",
+      "basic_examples": [
+        {
+          "name": "Basic IP geolocation",
+          "query": "#event_simpleName=UserLogon LogonType=10 | ipLocation(RemoteAddressIP4)",
+          "explanation": "Adds geolocation fields (country, city, lat, lon) to RDP logon events"
+        },
+        {
+          "name": "Geographic aggregation",
+          "query": "#event_simpleName=UserLogon LogonType=10 | ipLocation(RemoteAddressIP4) | groupBy([RemoteAddressIP4.country], function=count())",
+          "explanation": "Count RDP logons by country"
+        }
+      ],
+      "advanced_examples": [
+        {
+          "name": "World map visualization",
+          "query": "#event_simpleName=UserLogon LogonType=10 RemoteAddressIP4=* | ipLocation(RemoteAddressIP4) | worldMap(lat=RemoteAddressIP4.lat, lon=RemoteAddressIP4.lon, magnitude=count(aid))",
+          "explanation": "Creates geographic visualization of RDP logons"
+        }
+      ]
+    },
+    "regex": {
+      "description": "Regular expression field extraction examples",
+      "basic_examples": [
+        {
+          "name": "Extract filename from path",
+          "query": "#event_simpleName=ProcessRollup2 | regex(field=ImageFileName, regex=\".+\\\\\\\\(?<FileName>.+$)\")",
+          "explanation": "Extracts filename from full path using named capture group"
+        },
+        {
+          "name": "Extract encoded PowerShell",
+          "query": "#event_simpleName=ProcessRollup2 CommandLine=*-enc* | regex(field=CommandLine, regex=\"-enc[^ ]* (?<encoded>.+)\")",
+          "explanation": "Extracts Base64-encoded PowerShell payload"
+        }
+      ]
+    },
+    "formatTime": {
+      "description": "Timestamp formatting examples",
+      "basic_examples": [
+        {
+          "name": "Format to date",
+          "query": "#event_simpleName=ProcessRollup2 | formatTime(format=\"%Y-%m-%d\", field=@timestamp, as=date)",
+          "explanation": "Converts timestamp to date string (YYYY-MM-DD)"
+        },
+        {
+          "name": "Group by date",
+          "query": "#event_simpleName=ProcessRollup2 | formatTime(format=\"%Y-%m-%d\", field=@timestamp, as=date) | groupBy([date], function=count())",
+          "explanation": "Count events per day"
+        }
+      ]
+    },
+    "bucket": {
+      "description": "Time-series bucketing examples",
+      "basic_examples": [
+        {
+          "name": "Hourly buckets",
+          "query": "#event_simpleName=ProcessRollup2 | bucket(field=@timestamp, span=1h, function=count())",
+          "explanation": "Creates hourly time buckets with event counts"
+        },
+        {
+          "name": "Bucket by field",
+          "query": "#event_simpleName=NetworkConnectIP4 | bucket(field=@timestamp, span=5m, function=count()) | groupBy([_bucket, RemotePort], function=count())",
+          "explanation": "Time buckets with additional grouping by port"
+        }
+      ]
+    }
+  },
+  "examples_by_use_case": {
+    "description": "Example queries organized by security use case",
+    "threat_hunting": {
+      "description": "Queries for proactive threat hunting",
+      "examples": [
+        {
+          "name": "Living off the Land Binaries (LOLBins)",
+          "difficulty": "intermediate",
+          "query": "#event_simpleName=ProcessRollup2 event_platform=Win in(FileName, values=[\"certutil.exe\", \"bitsadmin.exe\", \"mshta.exe\", \"regsvr32.exe\", \"rundll32.exe\"]) | table([ComputerName, UserName, FileName, CommandLine])",
+          "description": "Detect usage of commonly abused Windows binaries",
+          "mitre_attack": "Multiple techniques"
+        },
+        {
+          "name": "Suspicious parent-child relationships",
+          "difficulty": "intermediate",
+          "query": "#event_simpleName=ProcessRollup2 event_platform=Win ParentBaseFileName=winword.exe in(FileName, values=[\"powershell.exe\", \"cmd.exe\", \"wscript.exe\", \"cscript.exe\"]) | table([ComputerName, UserName, ParentBaseFileName, FileName, CommandLine])",
+          "description": "Detect Office applications spawning suspicious processes",
+          "mitre_attack": "T1566 (Phishing)"
+        },
+        {
+          "name": "Encoded commands",
+          "difficulty": "advanced",
+          "query": "#event_simpleName=ProcessRollup2 CommandLine=*-enc* | regex(field=CommandLine, regex=\"-enc[^ ]* (?<encoded>.+)\") | table([ComputerName, UserName, FileName, encoded])",
+          "description": "Detect Base64-encoded PowerShell commands",
+          "mitre_attack": "T1027 (Obfuscated Files or Information)"
+        },
+        {
+          "name": "Rare processes making network connections",
+          "difficulty": "expert",
+          "query": "#event_simpleName=ProcessRollup2 | groupBy([FileName], function=count()) | _count<=5 | join(query={#event_simpleName=NetworkConnectIP4}, field=[aid, TargetProcessId=ContextProcessId], include=[RemoteAddressIP4, RemotePort])",
+          "description": "Find rarely-seen processes that made network connections",
+          "mitre_attack": "T1071 (Application Layer Protocol)"
+        }
+      ]
+    },
+    "lateral_movement": {
+      "description": "Detect lateral movement activity",
+      "examples": [
+        {
+          "name": "Remote service creation",
+          "difficulty": "intermediate",
+          "query": "#event_simpleName=ProcessRollup2 event_platform=Win FileName=sc.exe CommandLine=*create* | table([ComputerName, UserName, CommandLine])",
+          "description": "Detect service creation via sc.exe",
+          "mitre_attack": "T1021 (Remote Services)"
+        },
+        {
+          "name": "PsExec usage",
+          "difficulty": "basic",
+          "query": "#event_simpleName=ProcessRollup2 ImageFileName=*psexe* | table([ComputerName, UserName, ImageFileName, CommandLine])",
+          "description": "Detect PsExec execution",
+          "mitre_attack": "T1570 (Lateral Tool Transfer)"
+        },
+        {
+          "name": "Remote logons followed by process execution",
+          "difficulty": "advanced",
+          "query": "#event_simpleName=UserLogon LogonType=3 | join(query={#event_simpleName=ProcessRollup2}, field=[aid, UserSid], include=[FileName, CommandLine])",
+          "description": "Network logons correlated with process execution",
+          "mitre_attack": "T1021 (Remote Services)"
+        }
+      ]
+    },
+    "persistence": {
+      "description": "Detect persistence mechanisms",
+      "examples": [
+        {
+          "name": "Scheduled task creation",
+          "difficulty": "basic",
+          "query": "#event_simpleName=ProcessRollup2 event_platform=Win FileName=schtasks.exe CommandLine=*/create* | table([ComputerName, UserName, CommandLine])",
+          "description": "Detect scheduled task creation",
+          "mitre_attack": "T1053.005 (Scheduled Task/Job)"
+        },
+        {
+          "name": "Registry Run key modifications",
+          "difficulty": "intermediate",
+          "query": "#event_simpleName=ProcessRollup2 event_platform=Win FileName=reg.exe CommandLine=*Run* | table([ComputerName, UserName, CommandLine])",
+          "description": "Detect modifications to registry Run keys",
+          "mitre_attack": "T1547.001 (Registry Run Keys)"
+        }
+      ]
+    },
+    "credential_access": {
+      "description": "Detect credential theft and dumping",
+      "examples": [
+        {
+          "name": "LSASS access",
+          "difficulty": "intermediate",
+          "query": "#event_simpleName=ProcessRollup2 event_platform=Win CommandLine=*lsass* | table([ComputerName, UserName, FileName, CommandLine])",
+          "description": "Detect processes accessing LSASS memory",
+          "mitre_attack": "T1003.001 (LSASS Memory)"
+        },
+        {
+          "name": "Mimikatz indicators",
+          "difficulty": "intermediate",
+          "query": "#event_simpleName=ProcessRollup2 event_platform=Win (FileName=*mimikatz* OR CommandLine=*sekurlsa* OR CommandLine=*lsadump*) | table([ComputerName, UserName, FileName, CommandLine])",
+          "description": "Detect Mimikatz usage patterns",
+          "mitre_attack": "T1003 (OS Credential Dumping)"
+        }
+      ]
+    },
+    "defense_evasion": {
+      "description": "Detect defense evasion techniques",
+      "examples": [
+        {
+          "name": "Disable Windows Defender",
+          "difficulty": "basic",
+          "query": "#event_simpleName=ProcessRollup2 event_platform=Win CommandLine=*Set-MpPreference* CommandLine=*DisableRealtimeMonitoring* | table([ComputerName, UserName, CommandLine])",
+          "description": "Detect attempts to disable Windows Defender",
+          "mitre_attack": "T1562.001 (Disable or Modify Tools)"
+        },
+        {
+          "name": "Clear Windows Event Logs",
+          "difficulty": "basic",
+          "query": "#event_simpleName=ProcessRollup2 event_platform=Win FileName=wevtutil.exe CommandLine=*cl* | table([ComputerName, UserName, CommandLine])",
+          "description": "Detect event log clearing",
+          "mitre_attack": "T1070.001 (Clear Windows Event Logs)"
+        }
+      ]
+    },
+    "inventory": {
+      "description": "Asset inventory and baseline queries",
+      "examples": [
+        {
+          "name": "Endpoint count by OS",
+          "difficulty": "basic",
+          "query": "#event_simpleName=OsVersionInfo | groupBy([event_platform], function=count(aid, distinct=true, as=endpoints))",
+          "description": "Count unique endpoints by platform"
+        },
+        {
+          "name": "Browser extension inventory",
+          "difficulty": "basic",
+          "query": "#event_simpleName=InstalledBrowserExtension | groupBy([BrowserExtensionName, BrowserName], function=count(aid, distinct=true, as=endpoints))",
+          "description": "Inventory of installed browser extensions"
+        },
+        {
+          "name": "Process baseline",
+          "difficulty": "intermediate",
+          "query": "#event_simpleName=ProcessRollup2 | groupBy([FileName], function=[count(), count(aid, distinct=true, as=endpoints)]) | sort(_count, order=desc, limit=100)",
+          "description": "Top 100 processes by frequency and endpoint count"
+        }
+      ]
+    }
+  },
+  "examples_by_mitre_attack": {
+    "description": "Example queries mapped to MITRE ATT&CK techniques",
+    "TA007_Discovery": {
+      "tactic": "TA007 - Discovery",
+      "description": "Adversary attempts to gather information",
+      "techniques": [
+        {
+          "technique_id": "T1087.002",
+          "technique_name": "Account Discovery: Domain Account",
+          "query": "(#event_simpleName=ProcessRollup2 event_platform=Win ImageFileName=/\\\\net1?\\.exe/i CommandLine=/(user|group).+\\/domain/i)",
+          "description": "Detect domain account enumeration using net.exe"
+        },
+        {
+          "technique_id": "T1082",
+          "technique_name": "System Information Discovery",
+          "query": "#event_simpleName=ProcessRollup2 in(FileName, values=[\"systeminfo.exe\", \"hostname.exe\", \"ver.exe\"]) | table([ComputerName, UserName, FileName, CommandLine])",
+          "description": "Detect system information gathering commands"
+        },
+        {
+          "technique_id": "T1083",
+          "technique_name": "File and Directory Discovery",
+          "query": "#event_simpleName=ProcessRollup2 FileName=dir.exe | table([ComputerName, UserName, CommandLine])",
+          "description": "Detect directory listing commands"
+        },
+        {
+          "technique_id": "T1069",
+          "technique_name": "Permission Groups Discovery",
+          "query": "#event_simpleName=ProcessRollup2 event_platform=Win (FileName=net.exe CommandLine=*group* OR CommandLine=*Get-ADGroup*)",
+          "description": "Detect group enumeration"
+        }
+      ]
+    }
+  },
+  "quick_start_templates": {
+    "description": "Quick start templates for common query patterns",
+    "templates": [
+      {
+        "name": "Basic event filter",
+        "pattern": "#event_simpleName=<EVENT_TYPE> <field>=<value>",
+        "example": "#event_simpleName=ProcessRollup2 FileName=cmd.exe",
+        "when_to_use": "Starting point for any CQL query"
+      },
+      {
+        "name": "Event aggregation",
+        "pattern": "#event_simpleName=<EVENT_TYPE> | groupBy([<fields>], function=count())",
+        "example": "#event_simpleName=ProcessRollup2 | groupBy([FileName], function=count())",
+        "when_to_use": "Counting and grouping events"
+      },
+      {
+        "name": "Event correlation (join)",
+        "pattern": "#event_simpleName=<EVENT1> | join(query={#event_simpleName=<EVENT2>}, field=[aid, <field1>=<field2>])",
+        "example": "#event_simpleName=ProcessRollup2 | join(query={#event_simpleName=NetworkConnectIP4}, field=[aid, TargetProcessId=ContextProcessId])",
+        "when_to_use": "Correlating two event types"
+      },
+      {
+        "name": "Time-series analysis",
+        "pattern": "#event_simpleName=<EVENT_TYPE> | bucket(field=@timestamp, span=<duration>, function=count())",
+        "example": "#event_simpleName=ProcessRollup2 | bucket(field=@timestamp, span=1h, function=count())",
+        "when_to_use": "Analyzing events over time"
+      },
+      {
+        "name": "Geolocation analysis",
+        "pattern": "#event_simpleName=<EVENT_TYPE> | ipLocation(<ip_field>) | groupBy([<ip_field>.country], function=count())",
+        "example": "#event_simpleName=UserLogon LogonType=10 | ipLocation(RemoteAddressIP4) | groupBy([RemoteAddressIP4.country], function=count())",
+        "when_to_use": "Geographic analysis of IP addresses"
+      },
+      {
+        "name": "Rare event detection",
+        "pattern": "#event_simpleName=<EVENT_TYPE> | groupBy([<field>], function=count()) | _count<=<threshold>",
+        "example": "#event_simpleName=ProcessRollup2 | groupBy([FileName], function=count()) | _count<=5",
+        "when_to_use": "Finding anomalous or rare events"
+      }
+    ]
+  },
+  "contextualization_strategy": {
+    "description": "How query builder should use these examples",
+    "when_event_type_selected": "Show starter_templates and correlation_examples from examples_by_event_type[selected_event]",
+    "when_function_typed": "Show examples from examples_by_function[typed_function]",
+    "when_use_case_selected": "Show examples from examples_by_use_case[selected_use_case]",
+    "when_mitre_technique_selected": "Show queries from examples_by_mitre_attack matching technique_id",
+    "always_available": "Show quick_start_templates as suggestions in empty query builder",
+    "progressive_disclosure": "Start with basic examples, show advanced examples after user demonstrates proficiency"
+  }
+}

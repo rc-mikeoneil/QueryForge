@@ -1,0 +1,28 @@
+{
+  "title": "How-To: Add Users and Groups to a Repo using GraphQL",
+  "slug": "add_users_and_groups_to_a_repo_using_graphql",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "graphql",
+  "description": "Use the GraphQL API to add users and groups to a LogScale repository with specific roles.\nThis is typically done with a mutation against repositoryPermissions.",
+  "examples": [
+    {
+      "name": "Grant viewer access to a user",
+      "description": "Adds a user as a viewer to a target repository via GraphQL mutation.",
+      "language": "graphql",
+      "query": "mutation {\n  grantRepositoryPermission(\n    input: {\n      repositoryName: \"example-repo\"\n      principal: { userEmail: \"analyst@example.com\" }\n      role: VIEWER\n    }\n  ) {\n    repositoryPermission {\n      repositoryName\n      role\n    }\n  }\n}"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "graphql",
+    "permissions",
+    "users",
+    "groups",
+    "repos"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "grantRepositoryPermission"
+  ]
+}

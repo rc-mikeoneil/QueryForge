@@ -1,0 +1,36 @@
+{
+  "name": "splitString",
+  "category": "string",
+  "description": "Splits a string field into multiple parts based on a delimiter. Can create multiple events or a multi-value field.",
+  "syntax": "| splitString(field=field_name, by=delimiter, as=output_field)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "field",
+      "required": true,
+      "description": "The field containing the string to split"
+    },
+    {
+      "name": "by",
+      "type": "string",
+      "required": true,
+      "description": "The delimiter to split on"
+    },
+    {
+      "name": "as",
+      "type": "field",
+      "required": false,
+      "description": "The output field name for the split values"
+    }
+  ],
+  "return_type": "transformed_events",
+  "examples": [
+    "| splitString(field=CommandLine, by=\",\", as=CommandLine)\n| split(CommandLine)",
+    "| splitString(field=tags, by=\";\", as=tag)",
+    "| CommandLine=/(?<CommandLine>[^,]+)/g\n| groupBy([CommandLine])"
+  ],
+  "related_functions": ["split", "regex", "kvParse"],
+  "use_cases": ["Parsing delimited data", "Splitting comma-separated values", "Processing multi-value fields", "String tokenization"],
+  "notes": "Often used with split() function to create separate events for each value. Can also use regex for more complex splitting patterns.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-splitstring.html"
+}

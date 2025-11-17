@@ -1,0 +1,48 @@
+{
+  "id": "two-whoami-commands-run",
+  "title": "Two whoami Commands Run",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Two whoami Commands Run.md",
+  "category": "helpful_query",
+  "subcategory": "process",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "bucket",
+    "concat",
+    "count",
+    "format",
+    "stats"
+  ],
+  "operators_used": [
+    "<",
+    "=",
+    ">",
+    "|"
+  ],
+  "fields_referenced": [
+    "ImageFileName",
+    "as",
+    "distinct",
+    "field",
+    "format",
+    "function",
+    "timezone"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Lin"
+  ],
+  "use_case": "Analysis query for Two whoami Commands Run",
+  "query": "#event_simpleName=ProcessRollup2\n\n| ImageFileName=/(\\\\|\\/)(?<fileName>whoami+(\\.exe)?$)/i\n| concat([UID, UserSid], as=\"userIdentifier\")\n| format(format=\"%s > %s > %s { %s }\", field=[GrandParentBaseFileName, ParentBaseFileName, fileName, CommandLine], as=\"processLineage\")\n| bucket(60min, field=[aid], function=stats([collect([processLineage]), count(field=userIdentifier, as=\"uidCount\", distinct=true), count(aid, as=\"whoamiCount\")]))\n| whoamiCount > 1\n| formattime(\"%A %d %B %Y, %R\", as=_bucket, field=_bucket, timezone=EST)",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "lin",
+    "processrollup2"
+  ]
+}

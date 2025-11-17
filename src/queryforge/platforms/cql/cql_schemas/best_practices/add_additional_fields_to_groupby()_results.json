@@ -1,0 +1,26 @@
+{
+  "title": "Add additional fields to groupBy() results",
+  "slug": "add_additional_fields_to_groupby()_results",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "By default, groupBy() only returns the fields you group on plus any aggregations. To preserve additional fields, wrap them in collect() so they are carried into the grouped results.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Creates one row per (ComputerName, FileName) combination and carries along related domain and hash fields using collect().",
+      "language": "logscale",
+      "query": "groupBy([ComputerName, FileName], function=collect([DomainName, MD5HashData, SHA256HashData]))"
+    }
+  ],
+  "tags": [
+    "collect",
+    "groupby"
+  ],
+  "url": "https://library.humio.com/kb/kb-add-additional-fields-to-groupby-results.html",
+  "difficulty": "intermediate",
+  "related_functions": [
+    "collect",
+    "groupBy"
+  ]
+}

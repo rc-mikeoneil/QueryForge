@@ -1,0 +1,54 @@
+{
+  "id": "listening-programs-with-low-port-numbers",
+  "title": "Listening Programs with low port numbers",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Listening Programs with low port numbers.md",
+  "category": "helpful_query",
+  "subcategory": "process",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "NetworkListenIP4",
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "groupBy",
+    "match",
+    "selfJoinFilter"
+  ],
+  "operators_used": [
+    "<",
+    "=",
+    "and",
+    "match",
+    "or",
+    "|"
+  ],
+  "fields_referenced": [
+    "column",
+    "field",
+    "file",
+    "function",
+    "include",
+    "where"
+  ],
+  "correlation_patterns": [
+    "selfJoinFilter"
+  ],
+  "difficulty": "expert",
+  "query_type": "inventory",
+  "platforms": [
+    "Win"
+  ],
+  "use_case": "Inventory query for Listening Programs with low port numbers",
+  "query": "// Get Windows events where a program is listening on a port under 10000 and all process execution events\nevent_platform=Win (#event_simpleName=NetworkListenIP4 LocalPort<10000) OR (#event_simpleName=ProcessRollup2)\n// Normalize UPID\n| falconPID:= TargetProcessId | falconPID:=ContextProcessId\n// Use selfJoinFilter to make sure both events occured under an aid/UPID pair\n| selfJoinFilter(field=[aid, falconPID], where=[{#event_simpleName=NetworkListenIP4}, {#event_simpleName=ProcessRollup2}])\n// Aggregate results\n| groupBy([aid, ComputerName, falconPID], function=([collect([UserSid, UserName, ImageFileName, LocalPort, Protocol])]))\n// Merge data from aid_master_main\n| match(file=\"aid_master_main.csv\", field=[aid], column=aid, include=[ProductType, Version])\n// Use Falcon Helper to change decimal values to human-readable values\n| $falcon/helper:enrich(field=ProductType)\n| $falcon/helper:enrich(field=Protocol)",
+  "key_features": [
+    "Uses selfJoinFilter for correlation",
+    "Advanced correlation techniques"
+  ],
+  "related_examples": [],
+  "tags": [
+    "networklistenip4",
+    "processrollup2",
+    "win"
+  ]
+}

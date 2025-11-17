@@ -1,0 +1,30 @@
+{
+  "name": "parseJson",
+  "category": "transformation",
+  "description": "Parses data as JSON. Can parse the @rawstring or a specified field into JSON, extracting fields with optional prefix for field names.",
+  "syntax": "| parseJson(field, prefix=prefix_string)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "field",
+      "required": false,
+      "description": "The field containing JSON data to parse. Defaults to @rawstring if not specified"
+    },
+    {
+      "name": "prefix",
+      "type": "string",
+      "required": false,
+      "description": "Optional prefix to add to extracted field names"
+    }
+  ],
+  "return_type": "parsed_events",
+  "examples": [
+    "| parseJson(@rawstring)",
+    "| replace(regex=\"\\\"SHA1HashData\\\":\\\"0000000000000000000000000000000000000000\\\",\", with=\"\", field=@rawstring, as=@rawstring)\n| parseJson(@rawstring)",
+    "| parseJson(field=jsonData, prefix=json_)"
+  ],
+  "related_functions": ["parseXml", "kvParse"],
+  "use_cases": ["Parsing JSON logs", "Extracting nested JSON fields", "Processing API responses", "Parsing structured data"],
+  "notes": "Can be combined with replace to clean up malformed JSON before parsing.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-parsejson.html"
+}

@@ -1,0 +1,22 @@
+name: Network Events - Connections to Common Remote Access Ports
+visualization:
+  options:
+    autoRotate: true
+    proj: orthographic
+    zLevel: 2
+  type: world-map
+$schema: https://schemas.humio.com/query/v0.1.0
+timeInterval:
+  isLive: false
+  start: 7d
+queryString: |-
+  // Network Events - Connections to Common Remote Access Ports
+
+  // Grab remote network connection events.
+  #event_simpleName=NetworkConnectIP4
+
+  // Look at these specific ports.
+  | RemotePort=/^(21|22|3389|5900|5901)$/
+
+  // Convert to a world map.
+  | worldMap(ip=RemoteAddressIP4)

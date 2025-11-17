@@ -1,0 +1,24 @@
+{
+  "name": "split",
+  "category": "string",
+  "description": "Splits array values into separate events, creating one event per array element. Used after splitString() to expand multi-value fields. Each element of the array becomes a separate event in the result stream.",
+  "syntax": "split(field_name)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "Array field to split into individual events"
+    }
+  ],
+  "return_type": "expanded_events",
+  "examples": [
+    "| splitString(field=IP4Records, by=\";\", as=ipv4Records) | split(ipv4Records)",
+    "| splitString(field=CommandLine, by=\",\", as=CommandLine) | split(CommandLine)",
+    "| split(multiValueField)"
+  ],
+  "related_functions": ["splitString", "concatArray", "groupBy"],
+  "use_cases": ["Multi-value field expansion", "Array element processing", "DNS record analysis", "Comma-separated value parsing"],
+  "notes": "Typically used in combination with splitString(). Each array element becomes a separate event, allowing individual processing.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-split.html"
+}

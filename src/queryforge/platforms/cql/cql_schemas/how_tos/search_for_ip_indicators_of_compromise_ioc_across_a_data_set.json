@@ -1,0 +1,26 @@
+{
+  "title": "How-To: Search for IP Indicators of Compromise (IoC) Across a Data Set",
+  "slug": "search_for_ip_indicators_of_compromise_ioc_across_a_data_set",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "threat_hunting",
+  "description": "Shows how to search for IP-based indicators of compromise across network-related fields,\noften by joining to an IOC list or comparing against a set of known bad IPs.",
+  "examples": [
+    {
+      "name": "Filter events with IPs from IOC list",
+      "description": "Uses match() to find events where RemoteIP exists in an IOC CSV file.",
+      "language": "logscale",
+      "query": "| match(file=\"ip_iocs.csv\", field=RemoteIP, include=Indicator, strict=true)"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "ioc",
+    "ip",
+    "threat_hunting"
+  ],
+  "difficulty": "advanced",
+  "related_functions": [
+    "match"
+  ]
+}

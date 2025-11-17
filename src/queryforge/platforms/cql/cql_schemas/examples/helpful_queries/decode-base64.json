@@ -1,0 +1,56 @@
+{
+  "id": "decode-base64",
+  "title": "Decode Base64",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Decode Base64.md",
+  "category": "helpful_query",
+  "subcategory": "process",
+  "description": "OR",
+  "mitre_attack": null,
+  "event_types": [
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "count",
+    "length",
+    "sort",
+    "stats",
+    "table"
+  ],
+  "operators_used": [
+    "<",
+    "=",
+    ">",
+    "and",
+    "|"
+  ],
+  "fields_referenced": [
+    "CommandLine",
+    "ImageFileName",
+    "as",
+    "b64String",
+    "charset",
+    "decodedCommand",
+    "distinct",
+    "field",
+    "function",
+    "limit",
+    "order",
+    "s"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "OR",
+  "query": "//Get PowerShell Events\n#event_simpleName=ProcessRollup2 event_platform=Win ImageFileName=/\\\\powershell\\.exe/i\n//Look for PS flags that indicate an encoded command\n| CommandLine=/\\s+\\-(e|encoded|encodedcommand|enc)\\s+/i\n//Shorten ImageFileName to fileName\n| ImageFileName=/\\\\(?<fileName>powershell\\.exe$)/i\n//Capture encoded flag used\n| CommandLine=/\\-(?<psEncFlag>(e|encoded|encodedcommand|enc))\\s+/i\n//Calculate commandline length\n| length(\"CommandLine\", as=\"cmdLength\")\n//Group by command frequency\n| groupby([fileName, psEncFlag, cmdLength, CommandLine], function=stats([count(aid, distinct=true, as=\"uniqueEndpointCount\"), count(aid, as=\"executionCount\")]), limit=max)\n| table([fileName, executionCount, uniqueEndpointCount, psEncFlag, cmdLength, CommandLine])\n//Capture commandline prefix and encoded command blob\n| CommandLine=/(?<cmdLinePrefix>.*)\\s+(?<b64String>\\S+$)/i\n//Decode encoded command blob\n| decodedCommand := base64Decode(b64String, charset=\"UTF-16LE\")\n//Calculate Shannon Entropy\n| b64ShannonEntropy := shannonEntropy(b64String)\n//Look for http(s) string\n| decodedCommand=/https?\\:\\/\\//i\n| table([fileName, b64ShannonEntropy, psEncFlag, cmdLength, stdDevCmdLength, executionCount, uniqueEndpointCount, decodedCommand, b64String])\n| sort(field=b64ShannonEntropy, order=desc)",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "lin",
+    "processrollup2",
+    "win"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "name": "selectFromMax",
+  "category": "aggregation",
+  "description": "Selects the event with the maximum value of a specified field within each group, and includes additional fields from that event. Used within groupBy() to get the most recent event (or event with highest value) along with its associated fields.",
+  "syntax": "selectFromMax(field=\"field_name\", include=[field1, field2, ...])",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "Field to find the maximum value of (typically @timestamp for most recent event)"
+    },
+    {
+      "name": "include",
+      "type": "array",
+      "required": true,
+      "description": "Array of field names to include from the selected event"
+    }
+  ],
+  "return_type": "fields",
+  "examples": [
+    "| groupBy([aid, ComputerName], function=selectFromMax(field=\"@timestamp\", include=[UserSid, UserName, ImageFileName, CommandLine]))",
+    "| groupBy([aid], function=selectFromMax(field=\"ContextTimeStamp\", include=[Version, SensorVersion]))",
+    "| selectFromMax(field=\"ProcessStartTime\", include=[CommandLine, SHA256HashData])"
+  ],
+  "related_functions": ["selectFromMin", "groupBy", "max", "selectLast"],
+  "use_cases": ["Deduplication with latest data", "Getting most recent values", "Event consolidation", "Latest state capture"],
+  "notes": "Similar to dedup in Legacy Event Search. Returns fields from the event with the highest value in the specified field.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-selectfrommax.html"
+}

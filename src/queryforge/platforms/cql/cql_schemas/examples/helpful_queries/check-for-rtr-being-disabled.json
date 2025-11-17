@@ -1,0 +1,40 @@
+{
+  "id": "check-for-rtr-being-disabled",
+  "title": "Check for RTR Being Disabled",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Check for RTR Being Disabled.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "SensorHeartbeat"
+  ],
+  "functions_used": [
+    "groupBy"
+  ],
+  "operators_used": [
+    "=",
+    "|"
+  ],
+  "fields_referenced": [
+    "RTR_Locally_Disabled",
+    "field",
+    "function",
+    "limit",
+    "output"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Cross-platform"
+  ],
+  "use_case": "Analysis query for Check for RTR Being Disabled",
+  "query": "#event_simpleName=SensorHeartbeat\n| groupBy([aid], function=selectLast([@timestamp, ComputerName, SensorStateBitMap]), limit=max)\n| bitfield:extractFlags(\nfield=SensorStateBitMap,\n output=[\n   [2, RTR_Locally_Disabled]\n])\n| RTR_Locally_Disabled=\"true\"",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "cross-platform",
+    "sensorheartbeat"
+  ]
+}

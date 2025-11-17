@@ -1,0 +1,124 @@
+{
+  "table": "PeVersionInfo",
+  "category": "endpoint_file",
+  "description": "Portable Executable (PE) version information events containing metadata from Windows executable version resources. Provides file description, product name, company, and version details useful for file attribution and threat hunting.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["PeVersionInfo"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "TargetFileName",
+      "type": "string",
+      "description": "Full path to the PE file",
+      "searchable": true,
+      "supports_regex": true,
+      "common_usage": ["filtering", "file identification"]
+    },
+    {
+      "name": "SHA256HashData",
+      "type": "string",
+      "description": "SHA256 hash of the PE file",
+      "searchable": true,
+      "common_usage": ["correlation", "IOC matching"]
+    },
+    {
+      "name": "FileDescription",
+      "type": "string",
+      "description": "File description from version resource",
+      "searchable": true,
+      "common_usage": ["filtering", "file attribution", "anomaly detection"]
+    },
+    {
+      "name": "ProductName",
+      "type": "string",
+      "description": "Product name from version resource",
+      "searchable": true,
+      "common_usage": ["filtering", "product identification"]
+    },
+    {
+      "name": "CompanyName",
+      "type": "string",
+      "description": "Company name from version resource",
+      "searchable": true,
+      "example_values": ["Microsoft Corporation", "Unknown"],
+      "common_usage": ["filtering", "vendor analysis", "unsigned binary detection"]
+    },
+    {
+      "name": "OriginalFileName",
+      "type": "string",
+      "description": "Original filename from version resource",
+      "searchable": true,
+      "common_usage": ["filtering", "file renaming detection"]
+    },
+    {
+      "name": "FileVersion",
+      "type": "string",
+      "description": "File version from version resource",
+      "searchable": true,
+      "common_usage": ["version tracking", "outdated software detection"]
+    },
+    {
+      "name": "ProductVersion",
+      "type": "string",
+      "description": "Product version from version resource",
+      "searchable": true,
+      "common_usage": ["version tracking"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis"]
+    }
+  ],
+  "col_count": 14,
+  "common_filters": [
+    "CompanyName=Unknown",
+    "FileDescription=*",
+    "OriginalFileName!=TargetFileName"
+  ],
+  "common_fields": ["aid", "ComputerName", "TargetFileName", "CompanyName", "FileDescription"],
+  "common_operations": [
+    "Detect mismatched original vs actual filenames",
+    "Identify files from unknown or suspicious companies",
+    "Join with PeFileWritten or ProcessRollup2 via SHA256HashData",
+    "Enrich file analysis with version metadata",
+    "Hunt for renamed system utilities (masquerading)",
+    "Track software versions across the environment"
+  ],
+  "generated_at": "2025-11-15T00:00:00Z"
+}

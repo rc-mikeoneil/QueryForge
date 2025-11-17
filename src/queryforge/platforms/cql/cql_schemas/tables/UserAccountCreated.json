@@ -1,0 +1,92 @@
+{
+  "table": "UserAccountCreated",
+  "category": "endpoint_user_management",
+  "description": "User account creation events. Captures when new local or domain user accounts are created, important for detecting unauthorized account creation and persistence techniques.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["UserAccountCreated"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win", "Lin"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "UserName",
+      "type": "string",
+      "description": "Username of the newly created account",
+      "searchable": true,
+      "common_usage": ["filtering", "new account tracking"]
+    },
+    {
+      "name": "UserSid",
+      "type": "string",
+      "description": "Windows Security Identifier for the new user",
+      "searchable": true,
+      "common_usage": ["filtering", "correlation"]
+    },
+    {
+      "name": "SubjectUserName",
+      "type": "string",
+      "description": "Username of the account that created the new user",
+      "searchable": true,
+      "common_usage": ["actor identification", "audit trail"]
+    },
+    {
+      "name": "SubjectUserSid",
+      "type": "string",
+      "description": "SID of the account that created the new user",
+      "searchable": true,
+      "common_usage": ["actor correlation"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "timeline creation"]
+    }
+  ],
+  "col_count": 10,
+  "common_filters": [
+    "event_platform=Win",
+    "UserName!=/SYSTEM|Default|Guest/i"
+  ],
+  "common_fields": ["aid", "ComputerName", "UserName", "SubjectUserName"],
+  "common_operations": [
+    "Detect unauthorized account creation",
+    "Monitor for backdoor user accounts",
+    "Track account creation patterns",
+    "Alert on unexpected account creation",
+    "Correlate with privilege escalation activity"
+  ],
+  "generated_at": "2025-11-15T00:00:00Z"
+}

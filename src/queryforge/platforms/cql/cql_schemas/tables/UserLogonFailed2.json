@@ -1,0 +1,139 @@
+{
+  "table": "UserLogonFailed2",
+  "category": "endpoint_authentication",
+  "description": "Failed user logon attempts on Windows endpoints. Used for detecting brute force attacks, password spraying, credential stuffing, and authentication issues.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["UserLogonFailed2"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint where logon failed",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "UserName",
+      "type": "string",
+      "description": "Username that attempted to log on",
+      "searchable": true,
+      "common_usage": ["filtering", "grouping", "brute force detection"]
+    },
+    {
+      "name": "LogonType",
+      "type": "string",
+      "description": "Windows logon type code",
+      "example_values": ["2", "3", "10"],
+      "common_usage": ["filtering", "logon method classification"]
+    },
+    {
+      "name": "SubStatus",
+      "type": "long",
+      "description": "Windows NTSTATUS error code indicating failure reason",
+      "example_values": ["3221225572", "3221225578", "3221226036"],
+      "common_usage": ["failure reason classification", "error analysis"]
+    },
+    {
+      "name": "SubStatus_hex",
+      "type": "string",
+      "description": "Hex representation of SubStatus (calculated field)",
+      "example_values": ["0xC0000064", "0xC000006A", "0xC0000234"],
+      "common_usage": ["human-readable error codes", "documentation lookup"],
+      "notes": "0xC0000064=User does not exist, 0xC000006A=Incorrect password, 0xC0000234=Account locked"
+    },
+    {
+      "name": "LocalAddressIP4",
+      "type": "ip_address",
+      "description": "Local IPv4 address of the endpoint",
+      "common_usage": ["network tracking"]
+    },
+    {
+      "name": "aip",
+      "type": "ip_address",
+      "description": "External/public IP address from which logon was attempted",
+      "common_usage": ["geolocation", "source tracking"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "rate calculation", "time range analysis"]
+    },
+    {
+      "name": "@timestamp",
+      "type": "datetime",
+      "description": "Event timestamp in ISO format",
+      "common_usage": ["display", "time range filtering"]
+    }
+  ],
+  "col_count": 13,
+  "common_filters": [
+    "event_platform=Win",
+    "FailCount > 5",
+    "logonAttemptsPerHour > threshold"
+  ],
+  "common_fields": ["aid", "ComputerName", "UserName", "LogonType", "SubStatus", "SubStatus_hex"],
+  "common_operations": [
+    "Brute force detection via failed login count thresholding",
+    "Failed login rate calculation (attempts per hour)",
+    "SubStatus hex conversion for human-readable error codes",
+    "First and last failed attempt tracking",
+    "IP address collection for source analysis",
+    "Correlation with successful UserLogon events",
+    "Enrichment with $falcon/helper:enrich(field=LogonType)",
+    "Enrichment with $falcon/helper:enrich(field=SubStatus)"
+  ],
+  "calculation_patterns": [
+    "SubStatus_hex:=format(field=SubStatus, \"%x\") - Convert to hex",
+    "SubStatus_hex:=upper(SubStatus_hex) - Uppercase hex",
+    "SubStatus_hex:=format(format=\"0x%s\", field=[SubStatus_hex]) - Add 0x prefix",
+    "firstLastDeltaHours:=((LastLogonAttempt-FirstLogonAttempt)/60/60) - Calculate time span in hours",
+    "logonAttemptsPerHour:=(failCount/firstLastDeltaHours) - Calculate attempt rate"
+  ],
+  "enrichment_helpers": [
+    "$falcon/helper:enrich(field=LogonType) - Converts LogonType codes to human-readable",
+    "$falcon/helper:enrich(field=SubStatus) - Converts SubStatus codes to human-readable"
+  ],
+  "common_substatus_codes": {
+    "0xC0000064": "User name does not exist",
+    "0xC000006A": "User name is correct but password is wrong",
+    "0xC000006D": "Bad user name or password",
+    "0xC000006E": "Account restriction",
+    "0xC000006F": "Invalid logon hours",
+    "0xC0000070": "Invalid workstation",
+    "0xC0000071": "Password expired",
+    "0xC0000072": "Account disabled",
+    "0xC0000193": "Account expiration",
+    "0xC0000224": "Password must change",
+    "0xC0000234": "Account locked out"
+  },
+  "generated_at": "2025-11-14T23:45:00Z"
+}

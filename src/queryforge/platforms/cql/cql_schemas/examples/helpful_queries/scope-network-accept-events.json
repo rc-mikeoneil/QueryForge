@@ -1,0 +1,58 @@
+{
+  "id": "scope-network-accept-events",
+  "title": "Scope Network Accept Events",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Scope Network Accept Events.md",
+  "category": "helpful_query",
+  "subcategory": "network",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "NetworkReceiveAcceptIP4"
+  ],
+  "functions_used": [
+    "asn",
+    "cidr",
+    "count",
+    "groupBy",
+    "in",
+    "ipLocation",
+    "select",
+    "sort"
+  ],
+  "operators_used": [
+    "=",
+    "in",
+    "|"
+  ],
+  "fields_referenced": [
+    "RemoteAddressIP4",
+    "as",
+    "destinationip",
+    "distinct",
+    "field",
+    "function",
+    "limit",
+    "order",
+    "proto",
+    "sourceip",
+    "subnet",
+    "values"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Win"
+  ],
+  "use_case": "Analysis query for Scope Network Accept Events",
+  "query": "#event_simpleName=NetworkReceiveAcceptIP4 event_platform=Win\n| in(field=\"LocalPort\", values=[3389, 21, 22, 5901]) \n| !cidr(RemoteAddressIP4, subnet=[\"224.0.0.0/4\", \"10.0.0.0/8\", \"172.16.0.0/12\", \"192.168.0.0/16\", \"127.0.0.0/32\", \"169.254.0.0/16\", \"0.0.0.0/32\"])\n| communityId(proto=Protocol, sourceip=LocalAddressIP4, destinationip=RemoteAddressIP4, as=communityId)\n| groupBy([communityId, RemoteAddressIP4, LocalPort], function=([count(aid, distinct=true, as=uniqueEndpoints), count(aid, as=totalConnections)])) \n| ipLocation(RemoteAddressIP4)  \n| select([RemoteAddressIP4, hostname, LocalPort, RemoteAddressIP4.country, RemoteAddressIP4.city, uniqueEndpoints, totalConnections, communityId]) \n| rdns(RemoteAddressIP4, as=rdsn) \n| asn(RemoteAddressIP4, as=asn)\n| sort(uniqueEndpoints, order=desc, limit=5000)",
+  "key_features": [
+    "IP geolocation enrichment"
+  ],
+  "related_examples": [],
+  "tags": [
+    "network",
+    "networkreceiveacceptip4",
+    "win"
+  ]
+}

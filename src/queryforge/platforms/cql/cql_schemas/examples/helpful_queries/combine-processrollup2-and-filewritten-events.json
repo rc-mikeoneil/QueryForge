@@ -1,0 +1,56 @@
+{
+  "id": "combine-processrollup2-and-filewritten-events",
+  "title": "Combine ProcessRollup2 and FileWritten Events",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Combine ProcessRollup2 and FileWritten Events.md",
+  "category": "helpful_query",
+  "subcategory": "process",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "ZipFileWritten",
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "count",
+    "drop",
+    "groupBy",
+    "selfJoinFilter"
+  ],
+  "operators_used": [
+    "<",
+    "=",
+    ">",
+    "or",
+    "|"
+  ],
+  "fields_referenced": [
+    "ImageFileName",
+    "TargetFileName",
+    "as",
+    "distinct",
+    "field",
+    "function",
+    "prefilter",
+    "where"
+  ],
+  "correlation_patterns": [
+    "selfJoinFilter"
+  ],
+  "difficulty": "expert",
+  "query_type": "analysis",
+  "platforms": [
+    "Win"
+  ],
+  "use_case": "Analysis query for Combine ProcessRollup2 and FileWritten Events",
+  "query": "(#event_simpleName=ProcessRollup2 event_platform=Win ImageFileName=/(winword|excel)\\.exe/i) OR (#event_simpleName=ZipFileWritten event_platform=Win)\n| falconPID:=ContextProcessId | falconPID:=TargetProcessId\n| selfJoinFilter(field=[aid, falconPID], where=[{#event_simpleName=ProcessRollup2}, {#event_simpleName=ZipFileWritten}], prefilter=true)\n| case{\n    ImageFileName=*  | ImageFileName=/(\\\\Device\\\\HarddiskVolume\\d+|\\/)?(?<ExecutingFilePath>(\\\\|\\/).+(\\\\|\\/))(?<ExecutingFileName>.+)$/i;\n    TargetFileName=* | TargetFileName=/(\\\\Device\\\\HarddiskVolume\\d+|\\/)?(?<WrittenFilePath>(\\\\|\\/).+(\\\\|\\/))(?<WrittenFileName>.+)$/i;\n}\n| groupBy([aid, falconPID], function=([count(#event_simpleName, distinct=true, as=eventCount), collect([ExecutingFileName, WrittenFileName])]))\n| eventCount > 1\n| drop([eventCount])",
+  "key_features": [
+    "Uses selfJoinFilter for correlation",
+    "Advanced correlation techniques"
+  ],
+  "related_examples": [],
+  "tags": [
+    "processrollup2",
+    "win",
+    "zipfilewritten"
+  ]
+}

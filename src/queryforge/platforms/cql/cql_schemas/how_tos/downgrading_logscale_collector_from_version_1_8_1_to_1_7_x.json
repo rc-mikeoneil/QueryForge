@@ -1,0 +1,23 @@
+{
+  "title": "How-To: Downgrading LogScale Collector from Version 1.8.1 to 1.7.x",
+  "slug": "downgrading_logscale_collector_from_version_1_8_1_to_1_7_x",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "collector",
+  "description": "Provides steps and caveats for downgrading the LogScale Collector component from 1.8.1 to 1.7.x,\nincluding configuration backup, package handling, and service restart.",
+  "examples": [
+    {
+      "name": "High-level downgrade sequence",
+      "description": "Stop collector, install older package, restore configuration, start collector.",
+      "language": "shell",
+      "query": "systemctl stop logscale-collector\nrpm -Uvh --oldpackage logscale-collector-1.7.x.rpm\nsystemctl start logscale-collector"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "collector",
+    "downgrade",
+    "admin"
+  ],
+  "difficulty": "beginner"
+}

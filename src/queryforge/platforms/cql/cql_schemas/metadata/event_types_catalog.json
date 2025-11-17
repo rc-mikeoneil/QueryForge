@@ -1,0 +1,302 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2025-11-14T23:45:00Z",
+  "source_repository": "logscale-community-content-main-2",
+  "description": "Catalog of CrowdStrike Falcon event types (tables) extracted from CQL queries",
+  "total_event_types_found": 32,
+  "total_schemas_created": 10,
+  "total_fields_documented": 150,
+  "event_types": [
+    {
+      "name": "ProcessRollup2",
+      "file": "tables/ProcessRollup2.json",
+      "category": "endpoint_process",
+      "description": "Process execution events on Windows/Mac/Linux endpoints",
+      "field_count": 23,
+      "query_occurrences": 85,
+      "priority": "highest",
+      "platforms": ["Win", "Mac", "Lin"],
+      "common_use_cases": ["Threat hunting", "Process tree analysis", "Behavioral analysis"],
+      "correlation_fields": ["TargetProcessId", "aid", "UserSid"]
+    },
+    {
+      "name": "OsVersionInfo",
+      "file": "tables/OsVersionInfo.json",
+      "category": "endpoint_inventory",
+      "description": "Operating system version and configuration information",
+      "field_count": 20,
+      "query_occurrences": 16,
+      "priority": "high",
+      "platforms": ["Win", "Mac", "Lin", "K8S"],
+      "common_use_cases": ["CVE vulnerability scoping", "OS prevalence analysis", "Compliance monitoring"],
+      "correlation_fields": ["aid", "ConfigBuild"]
+    },
+    {
+      "name": "UserLogon",
+      "file": "tables/UserLogon.json",
+      "category": "endpoint_authentication",
+      "description": "User logon events including RDP and interactive sessions",
+      "field_count": 19,
+      "query_occurrences": 14,
+      "priority": "high",
+      "platforms": ["Win"],
+      "common_use_cases": ["RDP tracking", "Impossible travel detection", "User activity monitoring"],
+      "correlation_fields": ["UserSid", "aid", "RemoteAddressIP4"]
+    },
+    {
+      "name": "DnsRequest",
+      "file": "tables/DnsRequest.json",
+      "category": "endpoint_network",
+      "description": "DNS query events from endpoints",
+      "field_count": 12,
+      "query_occurrences": 8,
+      "priority": "medium",
+      "platforms": ["Win", "Mac", "Lin"],
+      "common_use_cases": ["C2 domain detection", "DNS analysis", "Malicious domain hunting"],
+      "correlation_fields": ["ContextProcessId", "aid", "DomainName"]
+    },
+    {
+      "name": "NetworkConnectIP4",
+      "file": "tables/NetworkConnectIP4.json",
+      "category": "endpoint_network",
+      "description": "IPv4 network connection events",
+      "field_count": 18,
+      "query_occurrences": 5,
+      "priority": "medium",
+      "platforms": ["Win", "Mac", "Lin"],
+      "common_use_cases": ["C2 detection", "Lateral movement", "Network scanning"],
+      "correlation_fields": ["ContextProcessId", "RemoteAddressIP4", "aid"]
+    },
+    {
+      "name": "InstalledBrowserExtension",
+      "file": "tables/InstalledBrowserExtension.json",
+      "category": "endpoint_inventory",
+      "description": "Browser extensions installed on endpoints",
+      "field_count": 12,
+      "query_occurrences": 4,
+      "priority": "medium",
+      "platforms": ["Win", "Mac"],
+      "common_use_cases": ["Malicious extension detection", "Software inventory", "Extension prevalence"],
+      "correlation_fields": ["aid", "BrowserExtensionId"]
+    },
+    {
+      "name": "AgentOnline",
+      "file": "tables/AgentOnline.json",
+      "category": "endpoint_telemetry",
+      "description": "Falcon sensor online/heartbeat events",
+      "field_count": 8,
+      "query_occurrences": 4,
+      "priority": "medium",
+      "platforms": ["Win", "Mac", "Lin"],
+      "common_use_cases": ["Boot time calculation", "Uptime analysis", "Sensor connectivity"],
+      "correlation_fields": ["aid"]
+    },
+    {
+      "name": "UserLogonFailed2",
+      "file": "tables/UserLogonFailed2.json",
+      "category": "endpoint_authentication",
+      "description": "Failed user logon attempts with detailed status codes",
+      "field_count": 13,
+      "query_occurrences": 3,
+      "priority": "medium",
+      "platforms": ["Win"],
+      "common_use_cases": ["Brute force detection", "Failed login analysis", "Account lockout tracking"],
+      "correlation_fields": ["UserSid", "aid", "SubStatus"]
+    },
+    {
+      "name": "DriverLoad",
+      "file": "tables/DriverLoad.json",
+      "category": "endpoint_drivers",
+      "description": "Kernel driver load events",
+      "field_count": 14,
+      "query_occurrences": 3,
+      "priority": "medium",
+      "platforms": ["Win"],
+      "common_use_cases": ["BYOVD detection", "Unsigned driver detection", "Rootkit analysis"],
+      "correlation_fields": ["aid", "SHA256HashData"]
+    },
+    {
+      "name": "EndOfProcess",
+      "file": "tables/EndOfProcess.json",
+      "category": "endpoint_process",
+      "description": "Process termination events",
+      "field_count": 11,
+      "query_occurrences": 2,
+      "priority": "low",
+      "platforms": ["Win", "Mac", "Lin"],
+      "common_use_cases": ["Process lifecycle analysis", "Runtime calculation", "CLI activity detection"],
+      "correlation_fields": ["TargetProcessId", "aid"]
+    }
+  ],
+  "additional_event_types_found": [
+    {
+      "name": "ZipFileWritten",
+      "query_occurrences": 2,
+      "status": "not_yet_documented"
+    },
+    {
+      "name": "UserAccountAddedToGroup",
+      "query_occurrences": 2,
+      "status": "not_yet_documented"
+    },
+    {
+      "name": "SystemCapacity",
+      "query_occurrences": 2,
+      "status": "not_yet_documented"
+    },
+    {
+      "name": "SensorHeartbeat",
+      "query_occurrences": 2,
+      "status": "not_yet_documented"
+    },
+    {
+      "name": "ResourceUtilization",
+      "query_occurrences": 2,
+      "status": "not_yet_documented"
+    },
+    {
+      "name": "ReflectiveDotnetModuleLoad",
+      "query_occurrences": 2,
+      "status": "not_yet_documented"
+    },
+    {
+      "name": "NetworkListenIP4",
+      "query_occurrences": 2,
+      "status": "not_yet_documented"
+    },
+    {
+      "name": "ZeroTrustHostAssessment",
+      "query_occurrences": 1,
+      "status": "not_yet_documented"
+    },
+    {
+      "name": "ScriptControlScanInfo",
+      "query_occurrences": 1,
+      "status": "not_yet_documented"
+    },
+    {
+      "name": "PeVersionInfo",
+      "query_occurrences": 1,
+      "status": "not_yet_documented"
+    },
+    {
+      "name": "NetworkReceiveAcceptIP4",
+      "query_occurrences": 1,
+      "status": "not_yet_documented"
+    },
+    {
+      "name": "IsoExtensionFileWritten",
+      "query_occurrences": 1,
+      "status": "not_yet_documented"
+    },
+    {
+      "name": "ImgExtensionFileWritten",
+      "query_occurrences": 1,
+      "status": "not_yet_documented"
+    },
+    {
+      "name": "HttpRequestDetect",
+      "query_occurrences": 1,
+      "status": "not_yet_documented"
+    },
+    {
+      "name": "FsVolumeMounted",
+      "query_occurrences": 1,
+      "status": "not_yet_documented"
+    },
+    {
+      "name": "FirewallSetRule",
+      "query_occurrences": 1,
+      "status": "not_yet_documented"
+    },
+    {
+      "name": "FalconProcessHandleOpDetectInfo",
+      "query_occurrences": 1,
+      "status": "not_yet_documented"
+    },
+    {
+      "name": "Event_RemoteResponseSessionStartEvent",
+      "query_occurrences": 1,
+      "status": "not_yet_documented"
+    },
+    {
+      "name": "DetectionExcluded",
+      "query_occurrences": 1,
+      "status": "not_yet_documented"
+    },
+    {
+      "name": "CriticalEnvironmentVariableChanged",
+      "query_occurrences": 1,
+      "status": "not_yet_documented"
+    },
+    {
+      "name": "CommandHistory",
+      "query_occurrences": 1,
+      "status": "not_yet_documented"
+    },
+    {
+      "name": "AssociateTreeIdWithRoot",
+      "query_occurrences": 1,
+      "status": "not_yet_documented"
+    }
+  ],
+  "by_category": {
+    "endpoint_process": ["ProcessRollup2", "EndOfProcess"],
+    "endpoint_network": ["NetworkConnectIP4", "DnsRequest"],
+    "endpoint_authentication": ["UserLogon", "UserLogonFailed2"],
+    "endpoint_inventory": ["OsVersionInfo", "InstalledBrowserExtension"],
+    "endpoint_drivers": ["DriverLoad"],
+    "endpoint_telemetry": ["AgentOnline"]
+  },
+  "by_priority": {
+    "highest": ["ProcessRollup2"],
+    "high": ["OsVersionInfo", "UserLogon"],
+    "medium": ["DnsRequest", "NetworkConnectIP4", "InstalledBrowserExtension", "AgentOnline", "UserLogonFailed2", "DriverLoad"],
+    "low": ["EndOfProcess"]
+  },
+  "by_platform": {
+    "windows_only": ["UserLogon", "UserLogonFailed2", "DriverLoad"],
+    "cross_platform": ["ProcessRollup2", "OsVersionInfo", "DnsRequest", "NetworkConnectIP4", "AgentOnline", "EndOfProcess"],
+    "windows_mac": ["InstalledBrowserExtension"]
+  },
+  "correlation_patterns": [
+    {
+      "pattern": "Process-to-Network",
+      "events": ["ProcessRollup2", "NetworkConnectIP4"],
+      "join_fields": ["TargetProcessId", "ContextProcessId"],
+      "use_case": "Identify which process made network connections"
+    },
+    {
+      "pattern": "Process-to-DNS",
+      "events": ["ProcessRollup2", "DnsRequest"],
+      "join_fields": ["TargetProcessId", "ContextProcessId"],
+      "use_case": "Link DNS queries to originating processes"
+    },
+    {
+      "pattern": "Process-Lifecycle",
+      "events": ["ProcessRollup2", "EndOfProcess"],
+      "join_fields": ["TargetProcessId", "TargetProcessId"],
+      "use_case": "Calculate process runtime and lifecycle"
+    },
+    {
+      "pattern": "User-Activity",
+      "events": ["UserLogon", "ProcessRollup2"],
+      "join_fields": ["UserSid", "UserSid"],
+      "use_case": "Correlate user logons with process executions"
+    },
+    {
+      "pattern": "Driver-Certificate",
+      "events": ["DriverLoad", "Event_ModuleSummaryInfoEvent"],
+      "join_fields": ["SHA256HashData", "SHA256HashData"],
+      "use_case": "Enrich driver loads with certificate information"
+    }
+  ],
+  "statistics": {
+    "total_queries_analyzed": 123,
+    "total_event_types_found": 32,
+    "schemas_documented": 10,
+    "schemas_pending": 22,
+    "total_fields_documented": 150,
+    "coverage_percentage": 31.25
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "title": "How-To: Search for Domain Indicators of Compromise (IOC) Across a Data Set Using lower()",
+  "slug": "search_for_domain_indicators_of_compromise_ioc_across_a_data_set_using_lower",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "threat_hunting",
+  "description": "Shows how to search for domain indicators of compromise (IOCs) in a case-insensitive manner\nacross fields like DomainName or URL, using lower().",
+  "examples": [
+    {
+      "name": "Search domains from lookup list",
+      "description": "Joins a domain IOC list and compares normalized values using lower().",
+      "language": "logscale",
+      "query": "| match(file=\"domain_iocs.csv\", field=DomainName, include=Indicator, ignoreCase=true, strict=false)"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "ioc",
+    "domains",
+    "lower",
+    "threat_hunting"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "match"
+  ]
+}

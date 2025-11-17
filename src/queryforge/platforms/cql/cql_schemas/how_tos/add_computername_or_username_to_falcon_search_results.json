@@ -1,0 +1,36 @@
+{
+  "title": "How-To: Add ComputerName or UserName to Falcon search results",
+  "slug": "add_computername_or_username_to_falcon_search_results",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "fdr_query",
+  "description": "Augment Falcon Data Replicator (FDR) events with ComputerName and UserName fields at query time.\nComputerName is typically looked up from an aid->hostname CSV, and UserName can be joined from\nlogin events such as UserLogon.",
+  "examples": [
+    {
+      "name": "Add ComputerName via lookup file",
+      "description": "Uses match() against a maintained CSV (fdr_aidmaster.csv) to add ComputerName for each aid.",
+      "language": "logscale",
+      "query": "| match(file=\"fdr_aidmaster.csv\", field=aid, include=ComputerName, ignoreCase=true, strict=false)"
+    },
+    {
+      "name": "Add UserName from UserLogon events",
+      "description": "Left-joins UserLogon events on aid to add the last known UserName to each event.",
+      "language": "logscale",
+      "query": "| join({#event_simpleName=UserLogon}, field=aid, include=UserName, mode=left)"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "fdr",
+    "aid",
+    "ComputerName",
+    "UserName",
+    "lookup",
+    "join"
+  ],
+  "difficulty": "advanced",
+  "related_functions": [
+    "join",
+    "match"
+  ]
+}

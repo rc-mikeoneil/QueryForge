@@ -1,0 +1,54 @@
+{
+  "id": "user-added-to-group",
+  "title": "User Added to Group",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/User Added to Group.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "Another Option:",
+  "mitre_attack": null,
+  "event_types": [
+    "UserAccountAddedToGroup"
+  ],
+  "functions_used": [
+    "drop",
+    "format",
+    "groupBy",
+    "join",
+    "selectFromMin"
+  ],
+  "operators_used": [
+    "=",
+    "|"
+  ],
+  "fields_referenced": [
+    "as",
+    "endian",
+    "field",
+    "format",
+    "function",
+    "id",
+    "include",
+    "query",
+    "radix"
+  ],
+  "correlation_patterns": [
+    "join"
+  ],
+  "difficulty": "advanced",
+  "query_type": "hunting",
+  "platforms": [
+    "Win"
+  ],
+  "use_case": "Another Option:",
+  "query": "#event_simpleName=UserAccountAddedToGroup\n| parseInt(GroupRid, as=\"GroupRid\", radix=\"16\", endian=\"big\")\n| parseInt(UserRid, as=\"UserRid\", radix=\"16\", endian=\"big\")\n| UserSid:=format(format=\"%s-%s\", field=[DomainSid, UserRid])\n| groupBy([aid, UserSid], function=([selectFromMin(field=\"@timestamp\", include=[RpcClientProcessId]), collect([ComputerName, DomainSid, UserRid])]))\n| ContextTimeStamp:=ContextTimeStamp*1000\n| ContextTimeStamp:=formatTime(format=\"%F %T\", field=\"ContextTimeStamp\")\n| join(query={$falcon/investigate:usersid_username_win()}, field=[UserSid], include=UserName)\n// Process Explorer - Uncomment the rootURL value that matches your cloud\n| rootURL  := \"https://falcon.crowdstrike.com/\" /* US-1 */\n//| rootURL  := \"https://falcon.us-2.crowdstrike.com/\" /* US-2 */\n//| rootURL  := \"https://falcon.laggar.gcw.crowdstrike.com/\" /* Gov */\n//| rootURL  := \"https://falcon.eu-1.crowdstrike.com/\"  /* EU */\n| format(\"[Responsible Process](%sgraphs/process-explorer/tree?id=pid:%s:%s)\", field=[\"rootURL\", \"aid\", \"RpcClientProcessId\"], as=\"Process Explorer\") \n| drop([rootURL, RpcClientProcessId])",
+  "key_features": [
+    "Uses join for correlation"
+  ],
+  "related_examples": [],
+  "tags": [
+    "join",
+    "user",
+    "useraccountaddedtogroup",
+    "win"
+  ]
+}

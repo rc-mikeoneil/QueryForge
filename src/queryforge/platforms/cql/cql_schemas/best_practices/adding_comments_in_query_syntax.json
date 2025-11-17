@@ -1,0 +1,25 @@
+{
+  "title": "Adding comments in query syntax",
+  "slug": "adding_comments_in_query_syntax",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "Use comments in queries to document intent, clarify complex logic, and aid handoff between analysts. Single-line comments are handy for step\u2011by\u2011step annotations.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Adds comments before each logical step so other analysts quickly understand the purpose of each part of the query.",
+      "language": "logscale",
+      "query": "// Find suspicious process launches\n#event_simpleName=ProcessRollup2\n| CommandLine=*powershell* and CommandLine=*EncodedCommand*\n// Summarize by host\n| groupBy(ComputerName, function=count())"
+    }
+  ],
+  "tags": [
+    "comments"
+  ],
+  "url": "https://library.humio.com/kb/kb-adding-comments-in-query-syntax.html",
+  "difficulty": "intermediate",
+  "related_functions": [
+    "count",
+    "groupBy"
+  ]
+}

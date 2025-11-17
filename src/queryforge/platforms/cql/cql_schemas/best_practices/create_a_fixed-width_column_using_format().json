@@ -1,0 +1,29 @@
+{
+  "title": "Create a fixed-width column using format()",
+  "slug": "create_a_fixed-width_column_using_format()",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "Use format() with width specifiers to align text in terminal\u2011style output. This is especially helpful when using collect() with groupBy() to produce readable tabular summaries.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Pads the severity field to a fixed width and appends detectionName so all detections line up nicely in a single formatted column.",
+      "language": "logscale",
+      "query": "#kind=Primary\n| eventType=K8SDetectionEvent\n| detection := format(\"%-18s %s\", field=[severity, detectionName])\n| groupBy(resourceName, function=[collect([detection, clusterName]), count(as=\"TotalEvents\")])"
+    }
+  ],
+  "tags": [
+    "collect",
+    "formatting",
+    "groupby"
+  ],
+  "url": "https://library.humio.com/kb/kb-create-fixed-width-format.html",
+  "difficulty": "intermediate",
+  "related_functions": [
+    "collect",
+    "count",
+    "format",
+    "groupBy"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "sort",
+  "category": "utility",
+  "description": "Sorts events by one or more fields in ascending or descending order with optional limit on results.",
+  "syntax": "| sort(field, order=asc|desc, limit=number)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "field",
+      "required": true,
+      "description": "The field to sort by"
+    },
+    {
+      "name": "order",
+      "type": "string",
+      "required": false,
+      "description": "Sort order: 'asc' for ascending or 'desc' for descending. Defaults to ascending"
+    },
+    {
+      "name": "limit",
+      "type": "number",
+      "required": false,
+      "description": "Maximum number of sorted events to return"
+    }
+  ],
+  "return_type": "sorted_events",
+  "examples": [
+    "| sort(ImageFileName, order=asc, limit=100)",
+    "| sort(@timestamp, order=desc)",
+    "| sort(count, order=desc, limit=10)"
+  ],
+  "related_functions": ["top", "tail", "head"],
+  "use_cases": ["Ordering results", "Finding top/bottom values", "Chronological sorting", "Ranking results"],
+  "documentation_url": "https://library.humio.com/data-analysis/functions-sort.html"
+}

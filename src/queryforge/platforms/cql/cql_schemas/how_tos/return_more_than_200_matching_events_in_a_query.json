@@ -1,0 +1,23 @@
+{
+  "title": "How-To: Return More than 200 Matching Events in a Query",
+  "slug": "return_more_than_200_matching_events_in_a_query",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Describes how to adjust search limits or UI settings so that more than the default 200\nmatching events are returned or exported, for deeper investigations.",
+  "examples": [
+    {
+      "name": "Increase limit in query options",
+      "description": "Illustrates setting a higher limit parameter when calling the query API.",
+      "language": "bash",
+      "query": "curl -X POST \"https://logscale.example.com/api/v1/structured/query\" \\\n  -H \"Authorization: Bearer $LOGSCALE_TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"queryString\": \"*\", \"repoName\": \"example-repo\", \"limit\": 5000}'"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "limits",
+    "pagination",
+    "api"
+  ],
+  "difficulty": "beginner"
+}

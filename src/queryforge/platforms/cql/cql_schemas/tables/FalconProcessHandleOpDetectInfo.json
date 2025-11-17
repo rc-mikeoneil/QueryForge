@@ -1,0 +1,107 @@
+{
+  "table": "FalconProcessHandleOpDetectInfo",
+  "category": "endpoint_security",
+  "description": "Process handle operation detection events capturing suspicious process handle operations like LSASS credential dumping or process injection attempts.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["FalconProcessHandleOpDetectInfo"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "SourceProcessId",
+      "type": "long",
+      "description": "Falcon process ID of the process opening the handle",
+      "common_usage": ["correlation", "source process tracking"]
+    },
+    {
+      "name": "SourceImageFileName",
+      "type": "string",
+      "description": "Filename of the source process",
+      "searchable": true,
+      "example_values": ["mimikatz.exe", "procdump.exe", "powershell.exe"],
+      "common_usage": ["filtering", "threat hunting"]
+    },
+    {
+      "name": "TargetProcessId",
+      "type": "long",
+      "description": "Falcon process ID of the target process",
+      "common_usage": ["correlation", "target process tracking"]
+    },
+    {
+      "name": "TargetImageFileName",
+      "type": "string",
+      "description": "Filename of the target process",
+      "searchable": true,
+      "example_values": ["lsass.exe", "csrss.exe"],
+      "common_usage": ["filtering", "sensitive process detection"]
+    },
+    {
+      "name": "HandleOperation",
+      "type": "string",
+      "description": "Type of handle operation detected",
+      "example_values": ["OpenProcess", "CreateRemoteThread", "ReadProcessMemory"],
+      "common_usage": ["filtering", "operation analysis"]
+    },
+    {
+      "name": "DetectionSeverity",
+      "type": "string",
+      "description": "Severity of the detection",
+      "example_values": ["Low", "Medium", "High", "Critical"],
+      "common_usage": ["filtering", "prioritization"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "timeline creation"]
+    }
+  ],
+  "col_count": 12,
+  "common_filters": [
+    "TargetImageFileName=/lsass\\.exe/i",
+    "HandleOperation=/OpenProcess|ReadProcessMemory/",
+    "DetectionSeverity=/High|Critical/"
+  ],
+  "common_fields": ["aid", "ComputerName", "SourceImageFileName", "TargetImageFileName", "HandleOperation"],
+  "common_operations": [
+    "Detect LSASS credential dumping attempts",
+    "Identify process injection techniques",
+    "Hunt for suspicious handle operations",
+    "Join with ProcessRollup2 for source and target process details",
+    "Alert on critical severity detections"
+  ],
+  "generated_at": "2025-11-15T00:00:00Z"
+}

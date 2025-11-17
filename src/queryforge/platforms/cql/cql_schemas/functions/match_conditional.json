@@ -1,0 +1,29 @@
+{
+  "name": "match",
+  "category": "control_flow",
+  "description": "Switch-like conditional operation that checks the same field against multiple values. Similar to switch in many programming languages. Enables if-then-else constructs for event streams.",
+  "syntax": "| field match { value1 => action1 ; value2 => action2 ; }",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "field",
+      "required": true,
+      "description": "The field to match against different values"
+    },
+    {
+      "name": "cases",
+      "type": "match_expression",
+      "required": true,
+      "description": "Value-action pairs where each value is matched against the field"
+    }
+  ],
+  "return_type": "conditional_events",
+  "examples": [
+    "| UserIsAdmin match {\n  1 => UserIsAdmin := \"True\" ;\n  0 => UserIsAdmin := \"False\" ;\n}",
+    "| UserIsAdmin match {\n  1 => _UserIsAdmin := \"True\" ;\n  0 => _UserIsAdmin := \"False\" ;\n}"
+  ],
+  "related_functions": ["case", "test"],
+  "use_cases": ["Conditional field transformation", "Value mapping", "Status code interpretation", "Field normalization"],
+  "notes": "Can be destructive (modifying existing fields) or non-destructive (creating new fields with _ prefix). All conditions check the same field, unlike case which can check different conditions.",
+  "documentation_url": "https://library.humio.com/data-analysis/syntax-conditional.html#syntax-conditional-match"
+}

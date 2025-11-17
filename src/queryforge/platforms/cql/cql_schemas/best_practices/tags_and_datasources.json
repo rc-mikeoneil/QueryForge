@@ -1,0 +1,26 @@
+{
+  "title": "Tags and Datasources",
+  "slug": "tags_and_datasources",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "Tags and datasources classify incoming events for easier scoping of queries. Use consistent tag naming and datasource identifiers so dashboards and alerts can reference them reliably.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Counts events per endpoint tag to confirm that datasources are being tagged as expected.",
+      "language": "logscale",
+      "query": "#tag=windows-endpoint or #tag=linux-endpoint\n| groupBy(#tag, function=count())"
+    }
+  ],
+  "tags": [
+    "datasources",
+    "tags"
+  ],
+  "url": "https://library.humio.com/kb/kb-tags-datsources.html",
+  "difficulty": "intermediate",
+  "related_functions": [
+    "count",
+    "groupBy"
+  ]
+}

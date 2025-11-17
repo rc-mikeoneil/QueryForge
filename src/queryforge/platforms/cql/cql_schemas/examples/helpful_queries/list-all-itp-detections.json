@@ -1,0 +1,39 @@
+{
+  "id": "list-all-itp-detections",
+  "title": "List All ITP Detections",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/List All ITP Detections.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "by Weighting...",
+  "mitre_attack": null,
+  "event_types": [],
+  "functions_used": [
+    "format",
+    "rename",
+    "table"
+  ],
+  "operators_used": [
+    "=",
+    "|"
+  ],
+  "fields_referenced": [
+    "ExternalApiType",
+    "as",
+    "field",
+    "limit",
+    "repo"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "detection",
+  "platforms": [
+    "Lin"
+  ],
+  "use_case": "by Weighting...",
+  "query": "#repo=detections ExternalApiType=Event_IdpDetectionSummaryEvent\n| rename([[TargetEndpointHostName, TargetEndpoint], [SourceEndpointHostName, SourceEndpoint], [TargetAccountName, TargetAccount], [SourceAccountName, SourceAccount]])\n| format(\"[Detection](%s)\", field=[FalconHostLink], as=\"Detect Link\")\n| table([@timestamp, SourceEndpoint, SourceAccount, TargetEndpoint, TargetAccount, DetectName, Severity, SeverityName, Tactic, Technique, Objective, \"Detect Link\"], limit=20000)",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "lin"
+  ]
+}

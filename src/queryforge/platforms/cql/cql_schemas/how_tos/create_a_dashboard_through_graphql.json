@@ -1,0 +1,27 @@
+{
+  "title": "How-To: Create a Dashboard through GraphQL",
+  "slug": "create_a_dashboard_through_graphql",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "graphql",
+  "description": "Use the GraphQL API to create dashboards programmatically, specifying name, description, and widgets.\nThis is helpful for automation, templating, and CI/CD pipelines for dashboards.",
+  "examples": [
+    {
+      "name": "Create dashboard with one widget",
+      "description": "Creates a dashboard in a repository using an existing widget ID.",
+      "language": "graphql",
+      "query": "mutation {\n  createDashboard(\n    input: {\n      searchDomainName: \"example-repo\"\n      name: \"API Created Dashboard\"\n      labels: []\n      widgets: [\n        {\n          id: \"<WIDGET_ID>\"\n          x: 0\n          y: 0\n          width: 4\n          height: 4\n          title: \"Methods Widget\"\n          queryOptions: {\n            queryString: \"status=200 | groupBy(method)\"\n            widgetType: \"pie-chart\"\n          }\n        }\n      ]\n      description: \"Dashboard created via GraphQL\"\n    }\n  ) {\n    dashboard { id name }\n  }\n}"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "graphql",
+    "dashboards",
+    "automation"
+  ],
+  "difficulty": "intermediate",
+  "related_functions": [
+    "createDashboard",
+    "groupBy"
+  ]
+}

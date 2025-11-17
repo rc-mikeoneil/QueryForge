@@ -1,0 +1,26 @@
+{
+  "title": "How-To: Write a query supporting a case-insensitive dashboard parameter?",
+  "slug": "write_a_query_supporting_a_case_insensitive_dashboard_parameter",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Shows how to build dashboard queries that treat a parameter value case-insensitively, so\nusers can type values in any case and still get correct results.",
+  "examples": [
+    {
+      "name": "Case-insensitive filter on parameter",
+      "description": "Applies lower() to both the field and the parameter value.",
+      "language": "logscale",
+      "query": "lower(FieldName) = lower($\"paramValue\")"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "dashboards",
+    "parameters",
+    "case-insensitive"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "lower"
+  ]
+}

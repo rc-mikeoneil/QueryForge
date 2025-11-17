@@ -1,0 +1,50 @@
+{
+  "id": "script-content-entropy",
+  "title": "Script Content Entropy",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Script Content Entropy.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "ScriptControlScanInfo"
+  ],
+  "functions_used": [
+    "count",
+    "groupBy",
+    "sort",
+    "table"
+  ],
+  "operators_used": [
+    "<",
+    "=",
+    ">",
+    "and",
+    "|"
+  ],
+  "fields_referenced": [
+    "ScriptContent",
+    "as",
+    "distinct",
+    "endpointCount",
+    "entropy",
+    "field",
+    "function",
+    "order"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Win"
+  ],
+  "use_case": "Analysis query for Script Content Entropy",
+  "query": "#event_simpleName=ScriptControlScanInfo event_platform=Win\n\n| ScriptContent=/FromBase64String/i\n| entropy := shannonEntropy(\"ScriptContent\")\n| groupBy([ScriptContent], function=([collect(entropy), count(ScriptContent, as=appearenceCount), count(aid, distinct=true, as=endpointCount)]))\n| table([entropy, endpointCount, appearenceCount, ScriptContent])\n\n//| entropy > 4.5 AND endpointCount =1 AND appearenceCount < 5\n\n| sort(field=entropy, order=desc)",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "script",
+    "scriptcontrolscaninfo",
+    "win"
+  ]
+}

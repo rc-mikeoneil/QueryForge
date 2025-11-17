@@ -1,0 +1,26 @@
+{
+  "title": "How-To: Manage Users using GraphQL",
+  "slug": "manage_users_using_graphql",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "graphql",
+  "description": "Covers common user-management tasks via GraphQL, including listing users, creating users,\nand changing roles or disabling accounts.",
+  "examples": [
+    {
+      "name": "Disable a user account",
+      "description": "Uses GraphQL mutation to disable a specific user by email.",
+      "language": "graphql",
+      "query": "mutation {\n  updateUser(\n    input: {\n      email: \"user@example.com\"\n      disabled: true\n    }\n  ) {\n    user { email disabled }\n  }\n}"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "graphql",
+    "users",
+    "admin"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "updateUser"
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "table": "DetectionExcluded",
+  "category": "endpoint_security",
+  "description": "Detection exclusion events tracking when detections are excluded or suppressed. Important for security monitoring and ensuring exclusions are properly managed.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["DetectionExcluded"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win", "Mac", "Lin"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "DetectionId",
+      "type": "string",
+      "description": "Unique identifier for the detection that was excluded",
+      "searchable": true,
+      "common_usage": ["detection tracking", "correlation"]
+    },
+    {
+      "name": "ExclusionReason",
+      "type": "string",
+      "description": "Reason for the exclusion",
+      "searchable": true,
+      "common_usage": ["audit trail", "exclusion analysis"]
+    },
+    {
+      "name": "FileName",
+      "type": "string",
+      "description": "Filename that was excluded",
+      "searchable": true,
+      "common_usage": ["filtering", "exclusion tracking"]
+    },
+    {
+      "name": "SHA256HashData",
+      "type": "string",
+      "description": "SHA256 hash of the excluded file",
+      "searchable": true,
+      "common_usage": ["IOC tracking", "correlation"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "audit trail"]
+    }
+  ],
+  "col_count": 10,
+  "common_filters": [
+    "ExclusionReason=*"
+  ],
+  "common_fields": ["aid", "ComputerName", "DetectionId", "ExclusionReason", "FileName"],
+  "common_operations": [
+    "Track detection exclusion activity",
+    "Audit exclusion configurations",
+    "Monitor for exclusion abuse",
+    "Correlate exclusions with other security events"
+  ],
+  "generated_at": "2025-11-15T00:00:00Z"
+}

@@ -1,0 +1,35 @@
+{
+  "name": "timeChart",
+  "category": "time",
+  "description": "Creates a time-based chart by grouping events into time buckets and applying aggregate functions. Essential for time-series visualization.",
+  "syntax": "| timeChart(series_field, function=aggregate_function, span=time_span)",
+  "parameters": [
+    {
+      "name": "series",
+      "type": "field",
+      "required": false,
+      "description": "Field to create separate series for in the chart"
+    },
+    {
+      "name": "function",
+      "type": "aggregate_function",
+      "required": true,
+      "description": "Aggregate function to apply (e.g., count, avg, sum)"
+    },
+    {
+      "name": "span",
+      "type": "time_span",
+      "required": false,
+      "description": "Time bucket size (e.g., 1d, 1h, 5m)"
+    }
+  ],
+  "return_type": "time_series",
+  "examples": [
+    "| timeChart(LogonType, function=count(aid),span=1d)",
+    "| timeChart(function=count(), span=1h)",
+    "| timeChart(event_simpleName, function=count(), span=5m)"
+  ],
+  "related_functions": ["bucket", "groupBy", "table"],
+  "use_cases": ["Time-series visualization", "Trend analysis", "Monitoring over time", "Temporal patterns"],
+  "documentation_url": "https://library.humio.com/data-analysis/functions-timechart.html"
+}

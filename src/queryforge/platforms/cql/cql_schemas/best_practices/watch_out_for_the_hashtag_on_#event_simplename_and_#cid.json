@@ -1,0 +1,21 @@
+{
+  "title": "Watch out for the hashtag on #event_simpleName and #cid",
+  "slug": "watch_out_for_the_hashtag_on_#event_simplename_and_#cid",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "In CrowdStrike searches, #event_simpleName and #cid are tagged fields. Forgetting the leading # changes the meaning of the query. Always include the hashtag when referencing the tagged variants.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Filters on the tagged fields for event type and customer ID; dropping the hashtag would search a different field or fail to use the tag index.",
+      "language": "logscale",
+      "query": "#event_simpleName=ProcessRollup2 and #cid=\"*your-cid*\""
+    }
+  ],
+  "tags": [
+    "tags"
+  ],
+  "url": "https://library.humio.com/kb/kb-hashtag-on-event_simplename-and-cid.html",
+  "difficulty": "beginner"
+}

@@ -1,0 +1,27 @@
+{
+  "title": "Using case statements",
+  "slug": "using_case_statements",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "case statements allow conditional assignment and transformation of field values. Use them to map codes to labels, bucket numeric ranges, or normalize multi\u2011valued fields.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Maps numeric severity into High/Medium/Low buckets and then counts events per bucket.",
+      "language": "logscale",
+      "query": "severity_label := case{\n  Severity_int >= 70 | \"High\";\n  Severity_int >= 40 | \"Medium\";\n  * | \"Low\";\n}\n| groupBy(severity_label, function=count())"
+    }
+  ],
+  "tags": [
+    "assignment",
+    "case",
+    "formatting"
+  ],
+  "url": "https://library.humio.com/kb/kb-using-case-statements.html",
+  "difficulty": "intermediate",
+  "related_functions": [
+    "count",
+    "groupBy"
+  ]
+}

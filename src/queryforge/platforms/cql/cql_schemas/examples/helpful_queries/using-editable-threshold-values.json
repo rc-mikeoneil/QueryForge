@@ -1,0 +1,45 @@
+{
+  "id": "using-editable-threshold-values",
+  "title": "Using Editable Threshold Values",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Using Editable Threshold Values.md",
+  "category": "helpful_query",
+  "subcategory": "process",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "count",
+    "groupBy",
+    "test"
+  ],
+  "operators_used": [
+    "=",
+    ">",
+    "|"
+  ],
+  "fields_referenced": [
+    "ImageFileName",
+    "as",
+    "condition",
+    "else",
+    "function",
+    "myThreshold",
+    "then"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Cross-platform"
+  ],
+  "use_case": "Analysis query for Using Editable Threshold Values",
+  "query": "#event_simpleName=ProcessRollup2 ImageFileName=/(\\\\|\\/)whoami/i\n| groupBy([aid], function=(count(aid, as=executionCount)))\n| myThreshold:=?myThreshold\n| myThreshold:=if(condition=(myThreshold == \"*\"), then=\"0\", else=myThreshold)\n| test(executionCount>myThreshold)",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "cross-platform",
+    "processrollup2"
+  ]
+}

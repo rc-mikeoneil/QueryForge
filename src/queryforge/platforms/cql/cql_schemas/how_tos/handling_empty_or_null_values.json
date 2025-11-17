@@ -1,0 +1,26 @@
+{
+  "title": "How-To: Handling Empty or Null Values",
+  "slug": "handling_empty_or_null_values",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Shows how to handle missing, empty, or null fields using functions like default(), coalesce(),\nand case, to improve robustness of dashboards and alerts.",
+  "examples": [
+    {
+      "name": "Replace missing UserName with placeholder",
+      "description": "Ensures UserName has a value for grouping or display.",
+      "language": "logscale",
+      "query": "default(field=UserName, value=\"UnknownUser\")"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "null",
+    "default",
+    "data_quality"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "default"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "group-policy-discovery",
+  "title": "(T1615) Group Policy Discovery",
+  "source_file": "Queries-Only/MITRE-ATT&CK-Enterprise/(TA007) Discovery/(T1615) Group Policy Discovery.md",
+  "category": "mitre_attack",
+  "subcategory": null,
+  "description": "https://attack.mitre.org/techniques/T1615/",
+  "mitre_attack": {
+    "tactic_code": "TA007",
+    "tactic_name": "Discovery",
+    "technique_id": "T1615",
+    "technique_name": "Group Policy Discovery",
+    "sub_technique_id": null
+  },
+  "event_types": [],
+  "functions_used": [],
+  "operators_used": [
+    "=",
+    "or",
+    "|"
+  ],
+  "fields_referenced": [
+    "ImageFileName"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "basic",
+  "query_type": "utility",
+  "platforms": [
+    "Win"
+  ],
+  "use_case": "https://attack.mitre.org/techniques/T1615/",
+  "query": "#event_simpleName=/^(ProcessRollup2|CommandHistory|ScriptControl)/ event_platform=Win ((ImageFileName=/\\\\gpresult\\.exe/i) OR /(Get-DomainGPO|Get-DomainGPOLocalGroup|GPOLocalGroup)/i)",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "win"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "id": "processrollup2-files-with-mark-of-the-web",
+  "title": "ProcessRollup2 Files With Mark of the Web",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/ProcessRollup2 Files With Mark of the Web.md",
+  "category": "helpful_query",
+  "subcategory": "process",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "count",
+    "format",
+    "groupBy",
+    "select"
+  ],
+  "operators_used": [
+    "<",
+    "=",
+    ">",
+    "and",
+    "match",
+    "|"
+  ],
+  "fields_referenced": [
+    "ConfigBuild",
+    "ImageFileName",
+    "ZoneIdentifier",
+    "as",
+    "distinct",
+    "field",
+    "function",
+    "indicators",
+    "query"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "hunting",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "Hunting query for ProcessRollup2 Files With Mark of the Web",
+  "query": "// Get ProcessRollup2 events for Windows with Mark of the Web field set\n#event_simpleName=ProcessRollup2 event_platform=Win ZoneIdentifier=*\n// Parse ConfigBuild for Falcon link syntehsis\n\n| ConfigBuild=/(?<config>\\d+)\\.(?<opSystem>\\d+)\\.(?<falconBuild>\\d+)\\.(?<cloudDecimal>\\d+$)/i\n| cloudDecimal match {\n\n    1 => rootURL  := \"https://falcon.crowdstrike.com/\" ;\n    9 => rootURL  := \"https://falcon.laggar.gcw.crowdstrike.com/\" ;\n    10 => rootURL := \"https://falcon.eu-1.crowdstrike.com/\" ;\n    11 => rootURL := \"https://falcon.us-2.crowdstrike.com/\" ;\n}\n// Extract file name and path\n\n| ImageFileName=/\\\\Device\\\\HarddiskVolume\\d+(?<filePath>\\S+\\\\)(?<fileName>\\w+\\.exe)$/i\n\n// Group output\n\n| groupBy([fileName, SHA256HashData, MD5HashData, rootURL], function=([collect([#event_simpleName, filePath]), count(aid, distinct=true, as=endpointCount), count(aid, as=executionCount)]))\n\n// Virus Total Link\n\n| format(\"[Virus Total](https://www.virustotal.com/gui/file/%s)\", field=[SHA256HashData], as=\"VT\")\n\n// Hybrid Analysis Link\n\n| format(\"[Hybrid Analysis](https://www.hybrid-analysis.com/search?query=%s)\", field=[SHA256HashData], as=\"HA\")\n\n// Indicator Graph Link\n\n| colon := \"%3A\"\n| tick := \"%27\"\n| plus := \"%2B\"\n| format(\"[Indicator Graph](%sintelligence/graph?indicators=hash%s%s%s%s)\",field=[\"rootURL\",\"colon\", \"tick\",\"SHA256HashData\", \"tick\"], as=\"Graph\")\n\n// Order column output as desired\n\n| select([fileName, filePath, endpointCount, executionCount, Graph, HA, VT, SHA256HashData, MD5HashData])",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "lin",
+    "processrollup2",
+    "win"
+  ]
+}

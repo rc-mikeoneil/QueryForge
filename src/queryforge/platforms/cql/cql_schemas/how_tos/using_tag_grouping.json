@@ -1,0 +1,23 @@
+{
+  "title": "How-To: Using Tag Grouping",
+  "slug": "using_tag_grouping",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "admin",
+  "description": "Explains how tag fields (starting with #) influence data source partitioning and how\nto use tag grouping to limit the number of data sources and improve performance.",
+  "examples": [
+    {
+      "name": "Group high-cardinality tag into buckets",
+      "description": "Conceptually, map many tag values into a fixed number of groups to limit data sources.",
+      "language": "text",
+      "query": "#responsecode -> tag group -> limited number of datasources"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "tags",
+    "datasources",
+    "performance"
+  ],
+  "difficulty": "beginner"
+}

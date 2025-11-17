@@ -1,0 +1,26 @@
+{
+  "title": "Using widget visualizations",
+  "slug": "using_widget_visualizations",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "Shape query output to match the widget you plan to use (time series, table, single value, pie, etc.). Ensure your query emits the right combination of time, value, and label fields.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Produces timestamp and numeric fields that can be used with a line, bar, or single\u2011value widget showing detection counts over time.",
+      "language": "logscale",
+      "query": "#event_simpleName=DetectionSummaryEvent\n| timechart(span=1h, function=count(as=\"Detections\"))"
+    }
+  ],
+  "tags": [
+    "match",
+    "visualization"
+  ],
+  "url": "https://library.humio.com/kb/kb-using-widget-visualizations.html",
+  "difficulty": "beginner",
+  "related_functions": [
+    "count",
+    "timechart"
+  ]
+}

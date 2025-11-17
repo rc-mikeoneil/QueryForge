@@ -1,0 +1,30 @@
+{
+  "name": "selectFromMin",
+  "category": "aggregation",
+  "description": "Selects the event with the minimum value of a specified field within each group, and includes additional fields from that event. Used within groupBy() to get the oldest event (or event with lowest value) along with its associated fields.",
+  "syntax": "selectFromMin(field=\"field_name\", include=[field1, field2, ...])",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "Field to find the minimum value of (typically @timestamp for oldest event)"
+    },
+    {
+      "name": "include",
+      "type": "array",
+      "required": true,
+      "description": "Array of field names to include from the selected event"
+    }
+  ],
+  "return_type": "fields",
+  "examples": [
+    "| groupBy([aid, ComputerName], function=selectFromMin(field=\"@timestamp\", include=[UserSid, UserName, ImageFileName, CommandLine]))",
+    "| groupBy([UserName], function=selectFromMin(field=\"LogonTime\", include=[RemoteIP, ComputerName]))",
+    "| selectFromMin(field=\"DetectTime\", include=[DetectName, Severity])"
+  ],
+  "related_functions": ["selectFromMax", "groupBy", "min", "selectFirst"],
+  "use_cases": ["Getting first occurrence", "Finding initial values", "Baseline capture", "Historical state"],
+  "notes": "Returns fields from the event with the lowest value in the specified field. Opposite of selectFromMax.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-selectfrommin.html"
+}

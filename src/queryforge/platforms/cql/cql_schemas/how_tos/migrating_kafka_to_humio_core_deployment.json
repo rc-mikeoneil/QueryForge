@@ -1,0 +1,23 @@
+{
+  "title": "How-To: Migrating Kafka to humio-core Deployment",
+  "slug": "migrating_kafka_to_humio_core_deployment",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "admin",
+  "description": "Provides guidance for migrating from a Kafka-based pipeline to a humio-core or LogScale-native\ningest deployment, including reconfiguring shippers and validating data flow.",
+  "examples": [
+    {
+      "name": "High-level migration steps",
+      "description": "Stop Kafka-based shippers, configure them to point to LogScale ingest, and validate.",
+      "language": "shell",
+      "query": "# Conceptual: adjust log shipper outputs from Kafka topics to LogScale ingest endpoint."
+    }
+  ],
+  "tags": [
+    "how-to",
+    "kafka",
+    "deployment",
+    "migration"
+  ],
+  "difficulty": "beginner"
+}

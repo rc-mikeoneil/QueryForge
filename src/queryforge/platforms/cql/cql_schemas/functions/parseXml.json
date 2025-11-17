@@ -1,0 +1,30 @@
+{
+  "name": "parseXml",
+  "category": "transformation",
+  "description": "Parses data as XML. Can parse @rawstring or a specified field into XML. If the field doesn't exist, the event is skipped. Behavior for non-XML data depends on the strict parameter.",
+  "syntax": "| parseXml(field=field_name, strict=boolean)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "field",
+      "required": false,
+      "description": "The field containing XML data to parse. Defaults to @rawstring if not specified"
+    },
+    {
+      "name": "strict",
+      "type": "boolean",
+      "required": false,
+      "description": "Controls behavior when field contains non-XML data"
+    }
+  ],
+  "return_type": "parsed_events",
+  "examples": [
+    "#event_simpleName=ScheduledTaskRegistered\n| parseXml(field=TaskXml)\n| Task.Principals.Principal.UserId=*\n| Task.Principals.Principal.UserId!=/^S-1-5-(18|20)$/\n| select([aid, UserName, TaskName, TaskExecArguments, Task.Principals.Principal.RunLevel, Task.Principals.Principal.UserId, Task.Settings.Hidden, Task.Settings.Priority])",
+    "| parseXml(field=xmlData)",
+    "| parseXml(@rawstring)"
+  ],
+  "related_functions": ["parseJson", "kvParse"],
+  "use_cases": ["Parsing XML logs", "Processing Windows Event XML", "Parsing scheduled task XML", "Extracting nested XML fields"],
+  "notes": "Events are skipped if the specified field doesn't exist. Use strict parameter to control error handling for invalid XML.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-parsexml.html"
+}

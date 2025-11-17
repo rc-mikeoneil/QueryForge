@@ -1,0 +1,29 @@
+{
+  "title": "Contacting Support",
+  "slug": "contacting_support",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "performance",
+  "description": "When opening a support case, include details like query text, time range, repo/view, user, and screenshots. This shortens resolution time for performance or data issues.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "An example of a simple diagnostic query you might share with support to illustrate a problem with missing or delayed data.",
+      "language": "logscale",
+      "query": "#repo=falcon-endpoint\n| groupBy(@host, function=count(), limit=20)\n| sort(_count, order=desc)"
+    }
+  ],
+  "tags": [
+    "case",
+    "performance",
+    "repos",
+    "views"
+  ],
+  "url": "https://library.humio.com/kb/kb-contacting-support.html",
+  "difficulty": "intermediate",
+  "related_functions": [
+    "count",
+    "groupBy",
+    "sort"
+  ]
+}

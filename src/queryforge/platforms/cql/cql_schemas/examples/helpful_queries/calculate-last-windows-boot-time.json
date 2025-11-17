@@ -1,0 +1,41 @@
+{
+  "id": "calculate-last-windows-boot-time",
+  "title": "Calculate Last Windows Boot Time",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Calculate Last Windows Boot Time.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "AgentOnline"
+  ],
+  "functions_used": [
+    "groupBy"
+  ],
+  "operators_used": [
+    "=",
+    "|"
+  ],
+  "fields_referenced": [
+    "field",
+    "format",
+    "function",
+    "precision"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "Analysis query for Calculate Last Windows Boot Time",
+  "query": "#event_simpleName=AgentOnline event_platform=Win  \n| groupBy([aid], function=([selectLast([BaseTime])]))\n| LastReboot_milli:=(BaseTime/1000*1024)+978307200\n| round(\"LastReboot_milli\")\n| LastRebootAgo:=now()-(LastReboot_milli*1000)\n| formatDuration(\"LastRebootAgo\", precision=2)\n| LastReboot:=formatTime(format=\"%F %T %Z\", field=\"LastReboot_milli\")",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "agentonline",
+    "lin",
+    "win"
+  ]
+}

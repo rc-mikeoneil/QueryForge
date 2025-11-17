@@ -1,0 +1,57 @@
+{
+  "id": "pr2-dns-cheat-join",
+  "title": "PR2 + DNS Cheat Join",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/PR2 + DNS Cheat Join.md",
+  "category": "helpful_query",
+  "subcategory": "network",
+  "description": "OR",
+  "mitre_attack": null,
+  "event_types": [
+    "DnsRequest",
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "count",
+    "format",
+    "rename",
+    "stats",
+    "table"
+  ],
+  "operators_used": [
+    "!=",
+    "<",
+    "=",
+    ">",
+    "and",
+    "or",
+    "|"
+  ],
+  "fields_referenced": [
+    "CommandLine",
+    "DomainName",
+    "ImageFileName",
+    "as",
+    "distinct",
+    "field",
+    "function",
+    "limit"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "hunting",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "OR",
+  "query": "(#event_simpleName = ProcessRollup2 AND ImageFileName = /.*\\\\powershell\\.exe/) OR (#event_simpleName=DnsRequest AND (DomainName!=\"ocsp.digicert.com\" AND DomainName!=\"localhost\"))\n\n| rename(\"ContextProcessId\",as=\"TargetProcessId\")\n| groupby([aid, TargetProcessId], function=stats([count(#event_simpleName, distinct=true), collect(DomainName), collect(ImageFileName), collect(CommandLine)]), limit=max)\n| _count > 1\n| ImageFileName=/.*\\\\(?<fileName>.*\\.exe)/\n| \"Process Explorer\" := format(\"[Process Explorer](https://falcon.crowdstrike.com/investigate/process-explorer/%s/%s)\", field=[aid, TargetProcessId])\n| table([aid, DomainName, fileName, CommandLine, \"Process Explorer\"])",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "dns",
+    "dnsrequest",
+    "lin",
+    "processrollup2",
+    "win"
+  ]
+}

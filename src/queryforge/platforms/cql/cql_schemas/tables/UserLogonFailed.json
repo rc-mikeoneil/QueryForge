@@ -1,0 +1,122 @@
+{
+  "table": "UserLogonFailed",
+  "category": "endpoint_authentication",
+  "description": "Failed user logon events on Windows endpoints. Captures unsuccessful authentication attempts for brute force detection, account enumeration, and security monitoring.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["UserLogonFailed"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint where logon failed",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "UserName",
+      "type": "string",
+      "description": "Username that attempted to log on",
+      "searchable": true,
+      "common_usage": ["filtering", "grouping", "brute force detection"]
+    },
+    {
+      "name": "UserSid",
+      "type": "string",
+      "description": "Windows Security Identifier for the user (if available)",
+      "searchable": true,
+      "common_usage": ["filtering", "user correlation"]
+    },
+    {
+      "name": "LogonType",
+      "type": "string",
+      "description": "Windows logon type code",
+      "example_values": ["2", "3", "10"],
+      "common_usage": ["filtering", "logon method classification"]
+    },
+    {
+      "name": "LogonDomain",
+      "type": "string",
+      "description": "Domain name for the authentication attempt",
+      "searchable": true,
+      "common_usage": ["filtering", "domain analysis"]
+    },
+    {
+      "name": "FailureReason",
+      "type": "string",
+      "description": "Reason code or description for the logon failure",
+      "searchable": true,
+      "common_usage": ["failure analysis", "attack pattern identification"]
+    },
+    {
+      "name": "ClientComputerName",
+      "type": "string",
+      "description": "Name of the client computer attempting the logon",
+      "searchable": true,
+      "common_usage": ["source tracking", "attack origin analysis"]
+    },
+    {
+      "name": "RemoteAddressIP4",
+      "type": "ip_address",
+      "description": "Remote IPv4 address for remote logon attempts",
+      "searchable": true,
+      "common_usage": ["source IP tracking", "geolocation", "brute force detection"]
+    },
+    {
+      "name": "AuthenticationPackage",
+      "type": "string",
+      "description": "Windows authentication package used",
+      "example_values": ["NTLM", "Kerberos"],
+      "common_usage": ["authentication method analysis"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "brute force time window detection"]
+    }
+  ],
+  "col_count": 14,
+  "common_filters": [
+    "event_platform=Win",
+    "LogonType=10",
+    "FailureReason=*"
+  ],
+  "common_fields": ["aid", "ComputerName", "UserName", "LogonType", "RemoteAddressIP4", "FailureReason"],
+  "common_operations": [
+    "Brute force detection via failed logon count by UserName",
+    "Password spray detection via unique UserName count by RemoteAddressIP4",
+    "RDP brute force detection (LogonType=10)",
+    "Threshold-based alerting on failure count",
+    "Temporal analysis to identify attack windows",
+    "Correlate with successful UserLogon events"
+  ],
+  "generated_at": "2025-11-15T00:00:00Z"
+}

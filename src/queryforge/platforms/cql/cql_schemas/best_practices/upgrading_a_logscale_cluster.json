@@ -1,0 +1,26 @@
+{
+  "title": "Upgrading a LogScale Cluster",
+  "slug": "upgrading_a_logscale_cluster",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "Plan cluster upgrades carefully: back up configuration, test in staging, and upgrade nodes in a controlled order. Verify ingest and query behavior before and after the upgrade.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Monitors LogScale error and warning logs during and after an upgrade to detect issues early.",
+      "language": "logscale",
+      "query": "#source=logscale\n| level=\"error\" or level=\"warning\"\n| timechart(span=5m, function=count())"
+    }
+  ],
+  "tags": [
+    "cluster",
+    "tags"
+  ],
+  "url": "https://library.humio.com/kb/kb-upgrading-humio.html",
+  "difficulty": "beginner",
+  "related_functions": [
+    "count",
+    "timechart"
+  ]
+}

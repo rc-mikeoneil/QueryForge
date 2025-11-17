@@ -1,0 +1,27 @@
+{
+  "title": "Adding hyperlinks to search output",
+  "slug": "adding_hyperlinks_to_search_output",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "You can construct URL fields in query results so that clicking a value opens an external system (ticketing, asset DB, case management, etc.). Use string concatenation or format() to build a dynamic URL.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Builds a URL that deep\u2011links into a ticketing system for the specific host and PID, making it easy to pivot from detections into workflow tools.",
+      "language": "logscale",
+      "query": "#event_simpleName=ProcessRollup2\n| url := format(\"https://tickets.example.local/create?host=%s&pid=%s\", field=[ComputerName, PID])\n| select([@timestamp, ComputerName, PID, url])"
+    }
+  ],
+  "tags": [
+    "case",
+    "formatting",
+    "urls"
+  ],
+  "url": "https://library.humio.com/kb/kb-adding-hyperlinks-to-search-output.html",
+  "difficulty": "beginner",
+  "related_functions": [
+    "format",
+    "select"
+  ]
+}

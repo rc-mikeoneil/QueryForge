@@ -1,0 +1,24 @@
+{
+  "title": "How-To: O365 Event Ingest into LogScale via Microsoft Graph (using pre-defined CrowdStream O365 Activity/Services)",
+  "slug": "o365_event_ingest_into_logscale_via_microsoft_graph_using_pre_defined_crowdstream_o365_activity_services",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "integration",
+  "description": "Describes how to collect Office 365 events into LogScale via Microsoft Graph and CrowdStream/Cribl,\nincluding app registration, permissions, and wiring content subscriptions to a LogScale destination.",
+  "examples": [
+    {
+      "name": "Conceptual ingest flow",
+      "description": "Office 365 -> Microsoft Graph -> CrowdStream/Cribl -> LogScale ingest.",
+      "language": "text",
+      "query": "O365 -> Graph API -> CrowdStream route -> LogScale /api/v1/ingest/hec"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "o365",
+    "graph_api",
+    "cribl",
+    "ingest"
+  ],
+  "difficulty": "beginner"
+}

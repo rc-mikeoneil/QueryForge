@@ -1,0 +1,560 @@
+{
+  "schema_version": "1.1.0",
+  "generated_at": "2025-11-17T18:09:00Z",
+  "description": "CrowdStrike Query Language (CQL) functions index for query building and RAG integration",
+  "total_functions": 52,
+  "summary": {
+    "by_category": {
+      "aggregation": 12,
+      "transformation": 15,
+      "filtering": 8,
+      "text": 7,
+      "networking": 4,
+      "time": 3,
+      "visualization": 2,
+      "special": 1
+    },
+    "by_complexity": {
+      "basic": 20,
+      "intermediate": 25,
+      "advanced": 7
+    },
+    "by_usage_frequency": {
+      "high": 15,
+      "medium": 22,
+      "low": 15
+    }
+  },
+  "functions": [
+    {
+      "name": "groupBy",
+      "category": "aggregation",
+      "complexity": "basic",
+      "usage_frequency": "high",
+      "description": "Groups events by specified fields and applies aggregate functions",
+      "syntax": "groupBy([fields], function=([agg_funcs]), limit=max)",
+      "file": "functions/groupBy.json"
+    },
+    {
+      "name": "count",
+      "category": "aggregation",
+      "complexity": "basic",
+      "usage_frequency": "high",
+      "description": "Counts events or distinct field values",
+      "syntax": "count(field?, as=name?, distinct=false?)",
+      "file": "functions/count.json"
+    },
+    {
+      "name": "select",
+      "category": "transformation",
+      "complexity": "basic",
+      "usage_frequency": "high",
+      "description": "Selects and optionally renames fields in output",
+      "syntax": "select([field1, field2, ...]) or select(field, as=newname)",
+      "file": "functions/select.json"
+    },
+    {
+      "name": "format",
+      "category": "text",
+      "complexity": "intermediate",
+      "usage_frequency": "high",
+      "description": "Formats fields using format strings",
+      "syntax": "format(format_string, field=value, as=output_field)",
+      "file": "functions/format.json"
+    },
+    {
+      "name": "timeChart",
+      "category": "visualization",
+      "complexity": "intermediate",
+      "usage_frequency": "high",
+      "description": "Creates time-based charts with bucketed data",
+      "syntax": "timeChart(function=agg_func, buckets=count?, span=duration?)",
+      "file": "functions/timeChart.json"
+    },
+    {
+      "name": "case",
+      "category": "transformation",
+      "complexity": "intermediate",
+      "usage_frequency": "high",
+      "description": "Conditional value assignment based on expressions",
+      "syntax": "case { condition1 => value1; condition2 => value2; * => default }",
+      "file": "functions/case.json"
+    },
+    {
+      "name": "join",
+      "category": "aggregation",
+      "complexity": "advanced",
+      "usage_frequency": "medium",
+      "description": "Joins events from different queries or datasets",
+      "syntax": "join(query=[subquery], field=[join_fields], mode=type)",
+      "file": "functions/join.json"
+    },
+    {
+      "name": "correlate",
+      "category": "aggregation",
+      "complexity": "advanced",
+      "usage_frequency": "medium",
+      "description": "Correlates events across time windows using named queries",
+      "syntax": "correlate(field=correlation_field, queries=[named_queries])",
+      "file": "functions/correlate.json"
+    },
+    {
+      "name": "match",
+      "category": "filtering",
+      "complexity": "intermediate",
+      "usage_frequency": "medium",
+      "description": "Pattern matching against lookup tables or expressions",
+      "syntax": "match(field=value, file=lookup.csv, column=col)",
+      "file": "functions/match_conditional.json"
+    },
+    {
+      "name": "cidr",
+      "category": "networking",
+      "complexity": "intermediate",
+      "usage_frequency": "medium",
+      "description": "Checks if IP address is within CIDR subnet ranges",
+      "syntax": "cidr(ip_field, subnet=[cidr_list])",
+      "file": "functions/cidr.json"
+    },
+    {
+      "name": "ipLocation",
+      "category": "networking",
+      "complexity": "intermediate",
+      "usage_frequency": "medium",
+      "description": "Enriches IP addresses with geolocation data",
+      "syntax": "ipLocation(ip_field)",
+      "file": "functions/ipLocation.json"
+    },
+    {
+      "name": "regex",
+      "category": "text",
+      "complexity": "intermediate",
+      "usage_frequency": "medium",
+      "description": "Extracts data using regular expressions with named groups",
+      "syntax": "regex(pattern, field=input, flags=i?)",
+      "file": "functions/regex.json"
+    },
+    {
+      "name": "bucket",
+      "category": "time",
+      "complexity": "intermediate",
+      "usage_frequency": "medium",
+      "description": "Creates time buckets for temporal aggregation",
+      "syntax": "bucket(field=@timestamp, span=duration, as=bucket_field)",
+      "file": "functions/bucket.json"
+    },
+    {
+      "name": "formatTime",
+      "category": "time",
+      "complexity": "basic",
+      "usage_frequency": "medium",
+      "description": "Formats timestamp fields into human-readable strings",
+      "syntax": "formatTime(format_string, field=timestamp_field, as=output)",
+      "file": "functions/formatTime.json"
+    },
+    {
+      "name": "in",
+      "category": "filtering",
+      "complexity": "basic",
+      "usage_frequency": "high",
+      "description": "Checks if field value is in a list of values",
+      "syntax": "in(field, values=[value1, value2, ...])",
+      "file": "functions/in.json"
+    },
+    {
+      "name": "drop",
+      "category": "transformation",
+      "complexity": "basic",
+      "usage_frequency": "medium",
+      "description": "Removes specified fields from events",
+      "syntax": "drop([field1, field2, ...])",
+      "file": "functions/drop.json"
+    },
+    {
+      "name": "rename",
+      "category": "transformation",
+      "complexity": "basic",
+      "usage_frequency": "medium",
+      "description": "Renames fields to new names",
+      "syntax": "rename(old_field, as=new_field)",
+      "file": "functions/rename.json"
+    },
+    {
+      "name": "sort",
+      "category": "transformation",
+      "complexity": "basic",
+      "usage_frequency": "medium",
+      "description": "Sorts events by one or more fields",
+      "syntax": "sort(field1, field2=desc?, limit=count?)",
+      "file": "functions/sort.json"
+    },
+    {
+      "name": "head",
+      "category": "filtering",
+      "complexity": "basic",
+      "usage_frequency": "medium",
+      "description": "Returns first N events from the stream",
+      "syntax": "head(limit=N)",
+      "file": "functions/head.json"
+    },
+    {
+      "name": "tail",
+      "category": "filtering",
+      "complexity": "basic",
+      "usage_frequency": "medium",
+      "description": "Returns last N events from the stream",
+      "syntax": "tail(limit=N)",
+      "file": "functions/tail.json"
+    },
+    {
+      "name": "top",
+      "category": "aggregation",
+      "complexity": "intermediate",
+      "usage_frequency": "medium",
+      "description": "Returns top N values by frequency or field value",
+      "syntax": "top(field, limit=N, by=count?)",
+      "file": "functions/top.json"
+    },
+    {
+      "name": "stats",
+      "category": "aggregation",
+      "complexity": "intermediate",
+      "usage_frequency": "medium",
+      "description": "Calculates statistical measures for numeric fields",
+      "syntax": "stats(field)",
+      "file": "functions/stats.json"
+    },
+    {
+      "name": "sum",
+      "category": "aggregation",
+      "complexity": "basic",
+      "usage_frequency": "medium",
+      "description": "Calculates sum of numeric field values",
+      "syntax": "sum(field, as=output_name?)",
+      "file": "functions/sum.json"
+    },
+    {
+      "name": "avg",
+      "category": "aggregation",
+      "complexity": "basic",
+      "usage_frequency": "medium",
+      "description": "Calculates average of numeric field values",
+      "syntax": "avg(field, as=output_name?)",
+      "file": "functions/avg.json"
+    },
+    {
+      "name": "max",
+      "category": "aggregation",
+      "complexity": "basic",
+      "usage_frequency": "medium",
+      "description": "Finds maximum value in a numeric field",
+      "syntax": "max(field, as=output_name?)",
+      "file": "functions/max.json"
+    },
+    {
+      "name": "min",
+      "category": "aggregation",
+      "complexity": "basic",
+      "usage_frequency": "medium",
+      "description": "Finds minimum value in a numeric field",
+      "syntax": "min(field, as=output_name?)",
+      "file": "functions/min.json"
+    },
+    {
+      "name": "concat",
+      "category": "text",
+      "complexity": "basic",
+      "usage_frequency": "medium",
+      "description": "Concatenates string field values",
+      "syntax": "concat([field1, field2, ...], as=output, separator=sep?)",
+      "file": "functions/concat.json"
+    },
+    {
+      "name": "split",
+      "category": "text",
+      "complexity": "basic",
+      "usage_frequency": "medium",
+      "description": "Splits a string field into multiple fields",
+      "syntax": "split(field, by=delimiter, as=[field1, field2, ...])",
+      "file": "functions/split.json"
+    },
+    {
+      "name": "replace",
+      "category": "text",
+      "complexity": "basic",
+      "usage_frequency": "medium",
+      "description": "Replaces substrings in a field with new values",
+      "syntax": "replace(field, pattern, with=replacement, as=output)",
+      "file": "functions/replace.json"
+    },
+    {
+      "name": "lower",
+      "category": "text",
+      "complexity": "basic",
+      "usage_frequency": "low",
+      "description": "Converts string field to lowercase",
+      "syntax": "lower(field, as=output?)",
+      "file": "functions/lower.json"
+    },
+    {
+      "name": "upper",
+      "category": "text",
+      "complexity": "basic",
+      "usage_frequency": "low",
+      "description": "Converts string field to uppercase",
+      "syntax": "upper(field, as=output?)",
+      "file": "functions/upper.json"
+    },
+    {
+      "name": "length",
+      "category": "text",
+      "complexity": "basic",
+      "usage_frequency": "low",
+      "description": "Calculates length of string or array field",
+      "syntax": "length(field, as=output?)",
+      "file": "functions/length.json"
+    },
+    {
+      "name": "parseJson",
+      "category": "transformation",
+      "complexity": "intermediate",
+      "usage_frequency": "medium",
+      "description": "Parses JSON strings into structured fields",
+      "syntax": "parseJson(field=json_field, as=prefix?)",
+      "file": "functions/parseJson.json"
+    },
+    {
+      "name": "parseXml",
+      "category": "transformation",
+      "complexity": "intermediate",
+      "usage_frequency": "low",
+      "description": "Parses XML strings into structured fields",
+      "syntax": "parseXml(field=xml_field, xpath=expression?)",
+      "file": "functions/parseXml.json"
+    },
+    {
+      "name": "kvParse",
+      "category": "transformation",
+      "complexity": "intermediate",
+      "usage_frequency": "medium",
+      "description": "Parses key-value pairs from strings",
+      "syntax": "kvParse(field, separator==?, as=prefix?)",
+      "file": "functions/kvParse.json"
+    },
+    {
+      "name": "worldMap",
+      "category": "visualization",
+      "complexity": "advanced",
+      "usage_frequency": "low",
+      "description": "Creates world map visualizations from geolocation data",
+      "syntax": "worldMap(lat=lat_field, lon=lon_field, magnitude=mag_field?)",
+      "file": "functions/worldMap.json"
+    },
+    {
+      "name": "table",
+      "category": "transformation",
+      "complexity": "basic",
+      "usage_frequency": "medium",
+      "description": "Formats output as a table view",
+      "syntax": "table()",
+      "file": "functions/table.json"
+    },
+    {
+      "name": "transpose",
+      "category": "transformation",
+      "complexity": "intermediate",
+      "usage_frequency": "low",
+      "description": "Transposes rows and columns in results",
+      "syntax": "transpose()",
+      "file": "functions/transpose.json"
+    },
+    {
+      "name": "default",
+      "category": "transformation",
+      "complexity": "basic",
+      "usage_frequency": "medium",
+      "description": "Sets default values for missing or null fields",
+      "syntax": "default(field=default_value, field2=default2, ...)",
+      "file": "functions/default.json"
+    },
+    {
+      "name": "round",
+      "category": "transformation",
+      "complexity": "basic",
+      "usage_frequency": "low",
+      "description": "Rounds numeric values to specified decimal places",
+      "syntax": "round(field, digits=2?, as=output?)",
+      "file": "functions/round.json"
+    },
+    {
+      "name": "formatDuration",
+      "category": "time",
+      "complexity": "basic",
+      "usage_frequency": "low",
+      "description": "Formats duration values into human-readable strings",
+      "syntax": "formatDuration(field, as=output?, precision=2?)",
+      "file": "functions/formatDuration.json"
+    },
+    {
+      "name": "asn",
+      "category": "networking",
+      "complexity": "basic",
+      "usage_frequency": "low",
+      "description": "Looks up ASN information for IP addresses",
+      "syntax": "asn(ip_field)",
+      "file": "functions/asn.json"
+    },
+    {
+      "name": "rdns",
+      "category": "networking",
+      "complexity": "basic",
+      "usage_frequency": "low",
+      "description": "Performs reverse DNS lookup for IP addresses",
+      "syntax": "rdns(ip_field, as=hostname?)",
+      "file": "functions/rdns.json"
+    },
+    {
+      "name": "geoHash",
+      "category": "networking",
+      "complexity": "intermediate",
+      "usage_frequency": "low",
+      "description": "Generates geohash from latitude/longitude coordinates",
+      "syntax": "geoHash(lat=lat_field, lon=lon_field, precision=5?)",
+      "file": "functions/geoHash.json"
+    },
+    {
+      "name": "concatArray",
+      "category": "aggregation",
+      "complexity": "intermediate",
+      "usage_frequency": "low",
+      "description": "Concatenates array values into a single string",
+      "syntax": "concatArray(array_field, separator=,?, as=output?)",
+      "file": "functions/concatArray.json"
+    },
+    {
+      "name": "selectFromMax",
+      "category": "aggregation",
+      "complexity": "advanced",
+      "usage_frequency": "low",
+      "description": "Selects fields from event with maximum value in specified field",
+      "syntax": "selectFromMax(field, include=[fields])",
+      "file": "functions/selectFromMax.json"
+    },
+    {
+      "name": "selectFromMin",
+      "category": "aggregation",
+      "complexity": "advanced",
+      "usage_frequency": "low",
+      "description": "Selects fields from event with minimum value in specified field",
+      "syntax": "selectFromMin(field, include=[fields])",
+      "file": "functions/selectFromMin.json"
+    },
+    {
+      "name": "selfJoinFilter",
+      "category": "filtering",
+      "complexity": "advanced",
+      "usage_frequency": "low",
+      "description": "Filters events based on self-join conditions",
+      "syntax": "selfJoinFilter(key=join_field, where=condition)",
+      "file": "functions/selfJoinFilter.json"
+    },
+    {
+      "name": "splitString",
+      "category": "text",
+      "complexity": "basic",
+      "usage_frequency": "low",
+      "description": "Splits string into array of substrings",
+      "syntax": "splitString(field, by=delimiter, as=array_field)",
+      "file": "functions/splitString.json"
+    },
+    {
+      "name": "createEvents",
+      "category": "transformation",
+      "complexity": "advanced",
+      "usage_frequency": "low",
+      "description": "Creates new events from array fields",
+      "syntax": "createEvents(array_field, as=event_field)",
+      "file": "functions/createEvents.json"
+    },
+    {
+      "name": "defineTable",
+      "category": "special",
+      "complexity": "advanced",
+      "usage_frequency": "low",
+      "description": "Defines custom lookup tables for match operations",
+      "syntax": "defineTable(name=table_name, data=[[row1], [row2]])",
+      "file": "functions/defineTable.json"
+    },
+    {
+      "name": "readFile",
+      "category": "transformation",
+      "complexity": "intermediate",
+      "usage_frequency": "low",
+      "description": "Reads data from external files for enrichment",
+      "syntax": "readFile(file=filename.csv)",
+      "file": "functions/readFile.json"
+    },
+    {
+      "name": "test",
+      "category": "filtering",
+      "complexity": "intermediate",
+      "usage_frequency": "low",
+      "description": "Tests conditions and filters events based on boolean results",
+      "syntax": "test(condition)",
+      "file": "functions/test.json"
+    }
+  ],
+  "categories": {
+    "aggregation": {
+      "description": "Functions for grouping and aggregating data",
+      "functions": ["groupBy", "count", "join", "correlate", "top", "stats", "sum", "avg", "max", "min", "concatArray", "selectFromMax", "selectFromMin"]
+    },
+    "transformation": {
+      "description": "Functions for transforming and restructuring data",
+      "functions": ["select", "drop", "rename", "sort", "parseJson", "parseXml", "kvParse", "table", "transpose", "default", "round", "createEvents", "readFile"]
+    },
+    "filtering": {
+      "description": "Functions for filtering and limiting data",
+      "functions": ["match", "in", "head", "tail", "selfJoinFilter", "test"]
+    },
+    "text": {
+      "description": "Functions for text manipulation and processing",
+      "functions": ["format", "regex", "concat", "split", "replace", "lower", "upper", "length", "splitString"]
+    },
+    "networking": {
+      "description": "Functions for network data analysis and enrichment",
+      "functions": ["cidr", "ipLocation", "asn", "rdns", "geoHash"]
+    },
+    "time": {
+      "description": "Functions for time-based operations and formatting",
+      "functions": ["bucket", "formatTime", "formatDuration"]
+    },
+    "visualization": {
+      "description": "Functions for creating charts and visualizations",
+      "functions": ["timeChart", "worldMap"]
+    },
+    "special": {
+      "description": "Special utility functions",
+      "functions": ["defineTable"]
+    }
+  },
+  "usage_patterns": {
+    "most_common_combinations": [
+      "groupBy + count",
+      "select + format",
+      "timeChart + bucket",
+      "ipLocation + worldMap",
+      "regex + case",
+      "join + correlate",
+      "cidr + in"
+    ],
+    "query_building_workflow": [
+      "Start with event filtering (#event_simpleName=...)",
+      "Add field filtering (field=value conditions)",
+      "Apply transformations (select, rename, format)",
+      "Aggregate or group data (groupBy, count, stats)",
+      "Sort and limit results (sort, head, tail)",
+      "Create visualizations (timeChart, worldMap)"
+    ]
+  }
+}

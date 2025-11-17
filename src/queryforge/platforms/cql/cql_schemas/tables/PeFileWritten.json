@@ -1,0 +1,161 @@
+{
+  "table": "PeFileWritten",
+  "category": "endpoint_file",
+  "description": "Portable Executable (PE) file write events for Windows executables (.exe, .dll, .sys). Captures metadata, hashes, and code signing information for executable files written to disk, essential for malware detection and threat hunting.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["PeFileWritten"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "UserName",
+      "type": "string",
+      "description": "Username associated with the file write",
+      "searchable": true,
+      "common_usage": ["filtering", "user behavior analysis"]
+    },
+    {
+      "name": "UserSid",
+      "type": "string",
+      "description": "Windows Security Identifier for the user",
+      "searchable": true,
+      "common_usage": ["filtering", "correlation"]
+    },
+    {
+      "name": "TargetFileName",
+      "type": "string",
+      "description": "Full path to the written PE file",
+      "searchable": true,
+      "supports_regex": true,
+      "example_values": ["\\Device\\HarddiskVolume1\\Windows\\Temp\\malware.exe"],
+      "common_usage": ["filtering", "path-based detection", "staging directory analysis"]
+    },
+    {
+      "name": "FileName",
+      "type": "string",
+      "description": "Base filename of the written PE file",
+      "searchable": true,
+      "example_values": ["malware.exe", "payload.dll"],
+      "common_usage": ["filtering", "frequency analysis"]
+    },
+    {
+      "name": "ContextProcessId",
+      "type": "long",
+      "description": "Falcon's unique process identifier for the writing process",
+      "common_usage": ["correlation", "joining with ProcessRollup2"]
+    },
+    {
+      "name": "WritingProcessFileName",
+      "type": "string",
+      "description": "Base filename of the process that wrote the file",
+      "searchable": true,
+      "example_values": ["chrome.exe", "powershell.exe", "winword.exe"],
+      "common_usage": ["filtering", "source process analysis"]
+    },
+    {
+      "name": "WritingProcessCommandLine",
+      "type": "string",
+      "description": "Command line of the writing process",
+      "searchable": true,
+      "supports_regex": true,
+      "common_usage": ["behavioral analysis", "download detection"]
+    },
+    {
+      "name": "MD5HashData",
+      "type": "string",
+      "description": "MD5 hash of the written PE file",
+      "searchable": true,
+      "common_usage": ["threat intelligence", "IOC matching", "deduplication"]
+    },
+    {
+      "name": "SHA256HashData",
+      "type": "string",
+      "description": "SHA256 hash of the written PE file",
+      "searchable": true,
+      "common_usage": ["threat intelligence", "IOC matching", "malware identification"]
+    },
+    {
+      "name": "SHA1HashData",
+      "type": "string",
+      "description": "SHA1 hash of the written PE file",
+      "searchable": true,
+      "common_usage": ["threat intelligence", "IOC matching"]
+    },
+    {
+      "name": "Size",
+      "type": "long",
+      "description": "File size in bytes",
+      "common_usage": ["filtering", "size-based analysis"]
+    },
+    {
+      "name": "SignInfoFlags",
+      "type": "long",
+      "description": "Bitmask indicating code signature validation results",
+      "common_usage": ["signature validation", "unsigned binary detection"]
+    },
+    {
+      "name": "ZoneIdentifier",
+      "type": "string",
+      "description": "Mark of the Web (MOTW) zone identifier indicating download source",
+      "searchable": true,
+      "example_values": ["3"],
+      "common_usage": ["downloaded file detection", "internet origin tracking"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "timeline creation"]
+    }
+  ],
+  "col_count": 19,
+  "common_filters": [
+    "event_platform=Win",
+    "TargetFileName=/\\\\Temp\\\\/i",
+    "TargetFileName=/\\\\AppData\\\\/i",
+    "ZoneIdentifier=3"
+  ],
+  "common_fields": ["aid", "ComputerName", "TargetFileName", "SHA256HashData", "WritingProcessFileName"],
+  "common_operations": [
+    "Join with ProcessRollup2 via ContextProcessId for writing process details",
+    "Match hashes against threat intelligence feeds",
+    "Detect files written to suspicious directories (Temp, AppData)",
+    "Identify unsigned or invalidly signed executables",
+    "Correlate with download activity via ZoneIdentifier",
+    "Frequency analysis to find rare executables"
+  ],
+  "generated_at": "2025-11-15T00:00:00Z"
+}

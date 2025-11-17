@@ -1,0 +1,55 @@
+{
+  "id": "2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths",
+  "title": "2023-09-08 - Cool Query Friday - Reflective .Net Module Loads and Program Database (PDB) File Paths",
+  "source_file": "Queries-Only/Cool-Query-Friday/2023-09-08 - Cool Query Friday - Reflective .Net Module Loads and Program Database (PDB) File Paths.md",
+  "category": "cool_query_friday",
+  "subcategory": null,
+  "description": "[Full post text.](https://community.crowdstrike.com/cool-query-friday-77/2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths-337)",
+  "mitre_attack": null,
+  "event_types": [
+    "ReflectiveDotnetModuleLoad"
+  ],
+  "functions_used": [
+    "count",
+    "drop",
+    "format",
+    "groupBy",
+    "in",
+    "selectFromMax",
+    "test"
+  ],
+  "operators_used": [
+    "!=",
+    "<",
+    "=",
+    ">",
+    "and",
+    "in",
+    "|"
+  ],
+  "fields_referenced": [
+    "ImageFileName",
+    "as",
+    "distinct",
+    "field",
+    "function",
+    "id",
+    "include",
+    "values"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Win"
+  ],
+  "use_case": "[Full post text.](https://community.crowdstrike.com/cool-query-friday-77/2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths-337)",
+  "query": "// Get ReflectiveDotnetModuleLoad with non-null ManagedPdbBuildPath field\n#event_simpleName=ReflectiveDotnetModuleLoad event_platform=Win ManagedPdbBuildPath!=\"\" \n\n// Capture FilePath and FileName Fields \n| ImageFileName=/(\\\\Device\\\\HarddiskVolume\\d+)?(?<FilePath>.+\\\\)(?<FileName>.+)/ \n\n// Aggregate results by FileName and FilePath \n| groupBy([FileName, FilePath], function=([count(aid, distinct=true, as=uniqueEndpoints), count(aid, as=executionCount), count(ManagedPdbBuildPath, distinct=true, as=uniqueManagedPdbBuildPath), collect([AssemblyName, ManagedPdbBuildPath]), selectFromMax(field=\"@timestamp\", include=[aid, ContextProcessId])])) \n\n// Create thresholds for conditions \n| test(uniqueEndpoints<5) \n| test(uniqueManagedPdbBuildPath<10) \n| test(executionCount<100) \n\n// Remove unwanted files that slip through filter (I've commented these out) \n//| !in(field=\"FileName\", values=[\"Docker Desktop Installer.exe\", \"otherfile.exe\"]) \n//| FilePath!=/\\\\Windows\\\\/ \n\n// Add Graph Explorer \n| rootURL := \"https://falcon.crowdstrike.com/\" /* US-1 */ \n//| rootURL := \"https://falcon.us-2.crowdstrike.com/\" /* US-2 */ \n//| rootURL := \"https://falcon.laggar.gcw.crowdstrike.com/\" /* Gov */ \n//| rootURL := \"https://falcon.eu-1.crowdstrike.com/\" /* EU */ \n| format(\"[Graph Explorer](%sgraphs/process-explorer/graph?id=pid:%s:%s)\", field=[\"rootURL\", \"aid\", \"ContextProcessId\"], as=\"Last Execution\") \n\n// Drop unnecessary fields\n| drop([rootURL, aid, ContextProcessId])",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "file",
+    "reflectivedotnetmoduleload",
+    "win"
+  ]
+}

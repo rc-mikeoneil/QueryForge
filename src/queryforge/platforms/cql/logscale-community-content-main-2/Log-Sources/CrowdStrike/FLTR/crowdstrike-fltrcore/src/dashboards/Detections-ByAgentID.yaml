@@ -1,0 +1,593 @@
+name: Detections - By AgentId
+updateFrequency: never
+timeSelector: {}
+sharedTimeInterval:
+  enabled: true
+  isLive: false
+  start: 7d
+widgets:
+  2060d750-1c73-4632-a976-4293cf494fe9:
+    x: 0
+    height: 4
+    queryString: |
+      #event_simpleName!=* OR #streamingApiEvent=Event_DetectionSummaryEvent
+      | ExternalApiType=Event_DetectionSummaryEvent
+      // Add the ComputerName.
+      | $"crowdstrike/fltr-core:zComputerName"()
+
+      // Check inputs and make ComputerName case-insensitive.
+      | wildcard(field=ComputerName, pattern=?ComputerName, ignoreCase=true)
+
+      // Check the remaining inputs.
+      | wildcard(field=aid, pattern=?aid, ignoreCase=true)
+      | wildcard(field=CustomerIdString, pattern=?CustomerIdString, ignoreCase=true)
+      | timechart(function=count(as="Total Detections"))
+    end: now
+    start: 7d
+    width: 12
+    y: 0
+    interactions:
+    - conditions: null
+      name: Search by Timeframe
+      titleTemplate: null
+      queryString: |-
+        #event_simpleName!=* OR #streamingApiEvent=Event_DetectionSummaryEvent
+        | ExternalApiType=Event_DetectionSummaryEvent
+        // Add the ComputerName.
+        | $"crowdstrike/fltr-core:zComputerName"()
+
+        // Check inputs and make ComputerName case-insensitive.
+        | wildcard(field=ComputerName, pattern=?ComputerName, ignoreCase=true)
+
+        // Check the remaining inputs.
+        | wildcard(field=aid, pattern=?aid, ignoreCase=true)
+        | wildcard(field=CustomerIdString, pattern=?CustomerIdString, ignoreCase=true)
+      useWidgetTimeWindow: true
+      repoOrViewName:
+      arguments:
+        ComputerName: '["{{ parameters.ComputerName }}"]'
+        aid: '["{{ parameters.aid }}"]'
+        cid: '["{{ parameters.cid }}"]'
+      openInNewTab: true
+      isLive: false
+      type: searchlink
+    options:
+      series: {}
+      interpolation: step-after
+      legendLabelOverflow: truncate
+      showDataPoints: false
+      connect-points: true
+      stacking: normal
+      yAxisScale: linear
+      regression: false
+      show-utc: false
+      imputation: lerp
+    visualization: time-chart
+    title: Detection Rate
+    isLive: false
+    type: query
+  b0618476-d5d2-4728-9013-7f06872bcd54:
+    x: 6
+    height: 5
+    queryString: |-
+      #event_simpleName!=* OR #streamingApiEvent=Event_DetectionSummaryEvent
+      | ExternalApiType=Event_DetectionSummaryEvent
+      // Add the ComputerName.
+      | $"crowdstrike/fltr-core:zComputerName"()
+
+      // Check inputs and make ComputerName case-insensitive.
+      | wildcard(field=ComputerName, pattern=?ComputerName, ignoreCase=true)
+
+      // Check the remaining inputs.
+      | wildcard(field=aid, pattern=?aid, ignoreCase=true)
+      | wildcard(field=CustomerIdString, pattern=?CustomerIdString, ignoreCase=true)
+      | sankey(target=Tactic, source=Technique)
+    end: now
+    start: 7d
+    width: 6
+    y: 8
+    interactions:
+    - conditions: null
+      name: Search by Technique
+      titleTemplate: 'Search by Technique: {{ fields.source }}, Tactic: {{ fields.target
+        }}'
+      queryString: |-
+        #event_simpleName!=* OR #streamingApiEvent=Event_DetectionSummaryEvent
+        | ExternalApiType=Event_DetectionSummaryEvent
+        // Add the ComputerName.
+        | $"crowdstrike/fltr-core:zComputerName"()
+
+        // Check inputs and make ComputerName case-insensitive.
+        | wildcard(field=ComputerName, pattern=?ComputerName, ignoreCase=true)
+
+        // Check the remaining inputs.
+        | wildcard(field=aid, pattern=?aid, ignoreCase=true)
+        | wildcard(field=CustomerIdString, pattern=?CustomerIdString, ignoreCase=true)
+        | wildcard(field=Technique, pattern=?Technique, ignoreCase=true)
+        | wildcard(field=Tactic, pattern=?Tactic, ignoreCase=true)
+      useWidgetTimeWindow: true
+      repoOrViewName:
+      arguments:
+        aid: '["{{ parameters.aid }}"]'
+        ComputerName: '["{{ parameters.ComputerName }}"]'
+        cid: '["{{ parameters.cid }}"]'
+        Tactic: '["{{ fields.target }}"]'
+        Technique: '["{{ fields.source }}"]'
+      openInNewTab: true
+      isLive: false
+      type: searchlink
+    options:
+      series: {}
+    visualization: sankey
+    title: 'Map: Technique -> Tactic'
+    isLive: false
+    type: query
+  d230b296-3415-4212-9d71-9c3cd3905a73:
+    x: 0
+    y: 18
+    height: 4
+    queryString: |-
+      #event_simpleName!=* OR #streamingApiEvent=Event_DetectionSummaryEvent
+      | EventType=Event_ExternalApiEvent
+      | ExternalApiType=Event_DetectionSummaryEvent
+      // Add the ComputerName.
+      | $"crowdstrike/fltr-core:zComputerName"()
+
+      // Check inputs and make ComputerName case-insensitive.
+      | wildcard(field=ComputerName, pattern=?ComputerName, ignoreCase=true)
+
+      // Check the remaining inputs.
+      | wildcard(field=aid, pattern=?aid, ignoreCase=true)
+      | wildcard(field=CustomerIdString, pattern=?CustomerIdString, ignoreCase=true)
+      | top(ComputerName, as="Top Hosts")
+    visualization: table-view
+    end: now
+    start: 7d
+    width: 4
+    title: Detections by Host
+    isLive: false
+    type: query
+  0ed2aa7d-a8f5-4dc9-bc6a-6e40c3295ad5:
+    x: 8
+    height: 4
+    queryString: |-
+      #event_simpleName!=* OR #streamingApiEvent=Event_DetectionSummaryEvent
+      | ExternalApiType=Event_DetectionSummaryEvent
+      // Add the ComputerName.
+      | $"crowdstrike/fltr-core:zComputerName"()
+
+      // Check inputs and make ComputerName case-insensitive.
+      | wildcard(field=ComputerName, pattern=?ComputerName, ignoreCase=true)
+
+      // Check the remaining inputs.
+      | wildcard(field=aid, pattern=?aid, ignoreCase=true)
+      | wildcard(field=CustomerIdString, pattern=?CustomerIdString, ignoreCase=true)
+      | top(Tactic, as="Top Tactics")
+    end: now
+    start: 7d
+    width: 4
+    y: 4
+    interactions:
+    - conditions: null
+      name: Search by Tactic
+      titleTemplate: 'Search by Tactic: {{ fields.Tactic }}'
+      queryString: |-
+        #event_simpleName!=* OR #streamingApiEvent=Event_DetectionSummaryEvent
+        | ExternalApiType=Event_DetectionSummaryEvent
+        // Add the ComputerName.
+        | $"crowdstrike/fltr-core:zComputerName"()
+
+        // Check inputs and make ComputerName case-insensitive.
+        | wildcard(field=ComputerName, pattern=?ComputerName, ignoreCase=true)
+
+        // Check the remaining inputs.
+        | wildcard(field=aid, pattern=?aid, ignoreCase=true)
+        | wildcard(field=CustomerIdString, pattern=?CustomerIdString, ignoreCase=true)
+        | wildcard(field=Tactic, pattern=?Tactic, ignoreCase=true)
+      useWidgetTimeWindow: true
+      repoOrViewName:
+      arguments:
+        ComputerName: '["{{ parameters.ComputerName }}"]'
+        Tactic: '["{{ fields.Tactic }}"]'
+        aid: '["{{ parameters.aid }}"]'
+        cid: '["{{ parameters.cid }}"]'
+      openInNewTab: true
+      isLive: false
+      type: searchlink
+    options:
+      innerRadius: 28
+      legend: true
+      maxLegendRows: 2
+      series: {}
+    visualization: pie-chart
+    title: Detections by Tactic
+    isLive: false
+    type: query
+  e06e9462-2858-40ea-be51-c496a0eed0fe:
+    x: 4
+    y: 18
+    height: 4
+    queryString: |-
+      #event_simpleName!=* OR #streamingApiEvent=Event_DetectionSummaryEvent
+      | ExternalApiType=Event_DetectionSummaryEvent
+      // Add the ComputerName.
+      | $"crowdstrike/fltr-core:zComputerName"()
+
+      // Check inputs and make ComputerName case-insensitive.
+      | wildcard(field=ComputerName, pattern=?ComputerName, ignoreCase=true)
+
+      // Check the remaining inputs.
+      | wildcard(field=aid, pattern=?aid, ignoreCase=true)
+      | wildcard(field=CustomerIdString, pattern=?CustomerIdString, ignoreCase=true)
+      | top(UserName, as="Top Users")
+    visualization: table-view
+    end: now
+    start: 7d
+    width: 4
+    title: Detections by User
+    isLive: false
+    type: query
+  76307711-ec33-4b97-996f-65224a5f483f:
+    x: 4
+    height: 4
+    queryString: |-
+      #event_simpleName!=* OR #streamingApiEvent=Event_DetectionSummaryEvent
+      | ExternalApiType=Event_DetectionSummaryEvent
+      // Add the ComputerName.
+      | $"crowdstrike/fltr-core:zComputerName"()
+
+      // Check inputs and make ComputerName case-insensitive.
+      | wildcard(field=ComputerName, pattern=?ComputerName, ignoreCase=true)
+
+      // Check the remaining inputs.
+      | wildcard(field=aid, pattern=?aid, ignoreCase=true)
+      | wildcard(field=CustomerIdString, pattern=?CustomerIdString, ignoreCase=true)
+      | top(Technique, as="Top Techniques")
+    end: now
+    start: 7d
+    width: 4
+    y: 4
+    interactions:
+    - conditions: null
+      name: Search by Technique
+      titleTemplate: 'Search by Technique: {{ fields.Technique }}'
+      queryString: |-
+        #event_simpleName!=* OR #streamingApiEvent=Event_DetectionSummaryEvent
+        | ExternalApiType=Event_DetectionSummaryEvent
+        // Add the ComputerName.
+        | $"crowdstrike/fltr-core:zComputerName"()
+
+        // Check inputs and make ComputerName case-insensitive.
+        | wildcard(field=ComputerName, pattern=?ComputerName, ignoreCase=true)
+
+        // Check the remaining inputs.
+        | wildcard(field=aid, pattern=?aid, ignoreCase=true)
+        | wildcard(field=CustomerIdString, pattern=?CustomerIdString, ignoreCase=true)
+        | wildcard(field=Technique, pattern=?Technique, ignoreCase=true)
+      useWidgetTimeWindow: true
+      repoOrViewName:
+      arguments:
+        ComputerName: '["{{ parameters.ComputerName }}"]'
+        Technique: '["{{ fields.Technique }}"]'
+        aid: '["{{ parameters.aid }}"]'
+        cid: '["{{ parameters.cid }}"]'
+      openInNewTab: true
+      isLive: false
+      type: searchlink
+    options:
+      labelLimit: 90
+      series: {}
+      withXAxisTitle: false
+      withYAxisTitle: true
+    visualization: bar-chart
+    title: Detections by Technique
+    isLive: false
+    type: query
+  47420c28-6845-4c52-a733-b6a7bd6fd77c:
+    x: 0
+    height: 5
+    queryString: |-
+      #event_simpleName!=* OR #streamingApiEvent=Event_DetectionSummaryEvent
+      | ExternalApiType=Event_DetectionSummaryEvent
+      // Add the ComputerName.
+      | $"crowdstrike/fltr-core:zComputerName"()
+
+      // Check inputs and make ComputerName case-insensitive.
+      | wildcard(field=ComputerName, pattern=?ComputerName, ignoreCase=true)
+
+      // Check the remaining inputs.
+      | wildcard(field=aid, pattern=?aid, ignoreCase=true)
+      | wildcard(field=CustomerIdString, pattern=?CustomerIdString, ignoreCase=true)
+      | sankey(target=Technique, source=SeverityName)
+    end: now
+    start: 7d
+    width: 6
+    y: 8
+    interactions:
+    - conditions: null
+      name: Search by Severity
+      titleTemplate: 'Search by Severity: {{ fields.source }}, Technique: {{ fields.target
+        }}'
+      queryString: |-
+        #event_simpleName!=* OR #streamingApiEvent=Event_DetectionSummaryEvent
+        | ExternalApiType=Event_DetectionSummaryEvent
+        // Add the ComputerName.
+        | $"crowdstrike/fltr-core:zComputerName"()
+
+        // Check inputs and make ComputerName case-insensitive.
+        | wildcard(field=ComputerName, pattern=?ComputerName, ignoreCase=true)
+
+        // Check the remaining inputs.
+        | wildcard(field=aid, pattern=?aid, ignoreCase=true)
+        | wildcard(field=CustomerIdString, pattern=?CustomerIdString, ignoreCase=true)
+        | wildcard(field=SeverityName, pattern=?SeverityName, ignoreCase=true)
+        | wildcard(field=Technique, pattern=?Technique, ignoreCase=true)
+      useWidgetTimeWindow: true
+      repoOrViewName:
+      arguments:
+        SeverityName: '["{{ fields.source }}"]'
+        aid: '["{{ parameters.aid }}"]'
+        ComputerName: '["{{ parameters.ComputerName }}"]'
+        cid: '["{{ parameters.cid }}"]'
+        Technique: '["{{ fields.target }}"]'
+      openInNewTab: true
+      isLive: false
+      type: searchlink
+    options:
+      series: {}
+    visualization: sankey
+    title: 'Map: Severity -> Technique'
+    isLive: false
+    type: query
+  70fc45f6-63a2-467f-9325-a5ba0b6b268e:
+    x: 0
+    height: 4
+    queryString: |-
+      #event_simpleName!=* OR #streamingApiEvent=Event_DetectionSummaryEvent
+      | ExternalApiType=Event_DetectionSummaryEvent
+      // Add the ComputerName.
+      | $"crowdstrike/fltr-core:zComputerName"()
+
+      // Check inputs and make ComputerName case-insensitive.
+      | wildcard(field=ComputerName, pattern=?ComputerName, ignoreCase=true)
+
+      // Check the remaining inputs.
+      | wildcard(field=aid, pattern=?aid, ignoreCase=true)
+      | wildcard(field=CustomerIdString, pattern=?CustomerIdString, ignoreCase=true)
+      | top(SeverityName, as="Top Severities")
+    end: now
+    start: 7d
+    width: 4
+    y: 4
+    interactions:
+    - conditions: null
+      name: Search by Severity
+      titleTemplate: 'Search for Severity: {{ fields.SeverityName }}'
+      queryString: |-
+        #event_simpleName!=* OR #streamingApiEvent=Event_DetectionSummaryEvent
+        | ExternalApiType=Event_DetectionSummaryEvent
+        | $"crowdstrike/fltr-core:zComputerName"()
+        | wildcard(field=ComputerName, pattern=?ComputerName, ignoreCase=true)
+        | wildcard(field=aid, pattern=?aid, ignoreCase=true)
+        | wildcard(field=CustomerIdString, pattern=?CustomerIdString, ignoreCase=true)
+        | wildcard(field=SeverityName, pattern=?SeverityName, ignoreCase=true)
+      useWidgetTimeWindow: true
+      repoOrViewName:
+      arguments:
+        ComputerName: '["{{ parameters.ComputerName }}"]'
+        SeverityName: '["{{ fields.SeverityName }}"]'
+        aid: '["{{ parameters.aid }}"]'
+        cid: '["{{ parameters.cid }}"]'
+      openInNewTab: true
+      isLive: false
+      type: searchlink
+    options:
+      series: {}
+    visualization: pie-chart
+    title: Detections by Severity
+    isLive: false
+    type: query
+  9bea2809-f92e-43ef-b449-29b4baa6702c:
+    x: 8
+    y: 18
+    height: 4
+    queryString: |-
+      #event_simpleName!=* OR #streamingApiEvent=Event_DetectionSummaryEvent
+      | ExternalApiType=Event_DetectionSummaryEvent
+      // Add the ComputerName.
+      | $"crowdstrike/fltr-core:zComputerName"()
+
+      // Check inputs and make ComputerName case-insensitive.
+      | wildcard(field=ComputerName, pattern=?ComputerName, ignoreCase=true)
+
+      // Check the remaining inputs.
+      | wildcard(field=aid, pattern=?aid, ignoreCase=true)
+      | wildcard(field=CustomerIdString, pattern=?CustomerIdString, ignoreCase=true)
+      | top(DetectName, as="Top Detections")
+    visualization: table-view
+    end: now
+    start: 7d
+    width: 4
+    title: Detection by Attack
+    isLive: false
+    type: query
+  adc076bb-73cb-4ecd-8783-def7d90e781c:
+    x: 6
+    height: 5
+    queryString: |-
+      #event_simpleName!=* OR #streamingApiEvent=Event_DetectionSummaryEvent
+      | ExternalApiType=Event_DetectionSummaryEvent
+      // Add the ComputerName.
+      | $"crowdstrike/fltr-core:zComputerName"()
+
+      // Check inputs and make ComputerName case-insensitive.
+      | wildcard(field=ComputerName, pattern=?ComputerName, ignoreCase=true)
+
+      // Check the remaining inputs.
+      | wildcard(field=aid, pattern=?aid, ignoreCase=true)
+      | wildcard(field=CustomerIdString, pattern=?CustomerIdString, ignoreCase=true)
+      | sankey(target=FileName, source=ParentImageFileName)
+    end: now
+    start: 7d
+    width: 6
+    y: 13
+    interactions:
+    - conditions: null
+      name: Search by Parent File
+      titleTemplate: 'Search by Parent: {{ fields.source }}, File: {{ fields.target
+        }}'
+      queryString: |-
+        #event_simpleName!=* OR #streamingApiEvent=Event_DetectionSummaryEvent
+        | ExternalApiType=Event_DetectionSummaryEvent
+        // Add the ComputerName.
+        | $"crowdstrike/fltr-core:zComputerName"()
+
+        // Check inputs and make ComputerName case-insensitive.
+        | wildcard(field=ComputerName, pattern=?ComputerName, ignoreCase=true)
+
+        // Check the remaining inputs.
+        | wildcard(field=aid, pattern=?aid, ignoreCase=true)
+        | wildcard(field=CustomerIdString, pattern=?CustomerIdString, ignoreCase=true)
+        | wildcard(field=ParentImageFileName, pattern=?ParentImageFileName, ignoreCase=true)
+        | wildcard(field=FileName, pattern=?FileName, ignoreCase=true)
+      useWidgetTimeWindow: true
+      repoOrViewName:
+      arguments:
+        aid: '["{{ parameters.aid }}"]'
+        ParentImageFileName: '["{{ fields.source }}"]'
+        ComputerName: '["{{ parameters.ComputerName }}"]'
+        cid: '["{{ parameters.cid }}"]'
+        FileName: '["{{ fields.target }}"]'
+      openInNewTab: true
+      isLive: false
+      type: searchlink
+    options:
+      series: {}
+    visualization: sankey
+    title: 'Detection: Parent File -> File'
+    isLive: false
+    type: query
+  a74886b3-3044-4109-965d-845d29e213b0:
+    x: 0
+    height: 5
+    queryString: |-
+      #event_simpleName!=* OR #streamingApiEvent=Event_DetectionSummaryEvent
+      | ExternalApiType=Event_DetectionSummaryEvent
+      // Add the ComputerName.
+      | $"crowdstrike/fltr-core:zComputerName"()
+
+      // Check inputs and make ComputerName case-insensitive.
+      | wildcard(field=ComputerName, pattern=?ComputerName, ignoreCase=true)
+
+      // Check the remaining inputs.
+      | wildcard(field=aid, pattern=?aid, ignoreCase=true)
+      | wildcard(field=CustomerIdString, pattern=?CustomerIdString, ignoreCase=true)
+      | sankey(target=ParentImageFileName, source=GrandparentImageFileName)
+    end: now
+    start: 7d
+    width: 6
+    y: 13
+    interactions:
+    - conditions: null
+      name: Search by GrandParent File
+      titleTemplate: 'Search by GrandParent: {{ fields.source }}, Parent: {{ fields.target
+        }}'
+      queryString: |-
+        #event_simpleName!=* OR #streamingApiEvent=Event_DetectionSummaryEvent
+        | ExternalApiType=Event_DetectionSummaryEvent
+        // Add the ComputerName.
+        | $"crowdstrike/fltr-core:zComputerName"()
+
+        // Check inputs and make ComputerName case-insensitive.
+        | wildcard(field=ComputerName, pattern=?ComputerName, ignoreCase=true)
+
+        // Check the remaining inputs.
+        | wildcard(field=aid, pattern=?aid, ignoreCase=true)
+        | wildcard(field=CustomerIdString, pattern=?CustomerIdString, ignoreCase=true)
+        | wildcard(field=GrandparentImageFileName, pattern=?GrandparentImageFileName, ignoreCase=true)
+        | wildcard(field=ParentImageFileName, pattern=?ParentImageFileName, ignoreCase=true)
+      useWidgetTimeWindow: true
+      repoOrViewName:
+      arguments:
+        aid: '["{{ parameters.aid }}"]'
+        ParentImageFileName: '["{{ fields.target }}"]'
+        ComputerName: '["{{ parameters.ComputerName }}"]'
+        cid: '["{{ parameters.cid }}"]'
+        GrandparentImageFileName: '["{{ fields.source }}"]'
+      openInNewTab: true
+      isLive: false
+      type: searchlink
+    options:
+      series: {}
+    visualization: sankey
+    title: 'Detection: Grandparent File -> Parent File'
+    isLive: false
+    type: query
+  c10aa261-3a2e-43ca-8778-57120c02d433:
+    x: 0
+    height: 7
+    queryString: |-
+      #event_simpleName!=* OR #streamingApiEvent=Event_DetectionSummaryEvent
+      | ExternalApiType=Event_DetectionSummaryEvent
+      // Add the ComputerName.
+      | $"crowdstrike/fltr-core:zComputerName"()
+
+      // Check inputs and make ComputerName case-insensitive.
+      | wildcard(field=ComputerName, pattern=?ComputerName, ignoreCase=true)
+
+      // Check the remaining inputs.
+      | wildcard(field=aid, pattern=?aid, ignoreCase=true)
+      | wildcard(field=CustomerIdString, pattern=?CustomerIdString, ignoreCase=true)
+      // Add the UserName.
+      | $"crowdstrike/fltr-core:zUserName"()
+    end: now
+    start: 7d
+    width: 12
+    y: 22
+    interactions:
+    - conditions: null
+      name: AgentId Dashboard
+      titleTemplate: 'AgentId Dashboard: {{ fields.AgentIdString }}'
+      useWidgetTimeWindow: true
+      dashboardReference:
+        name: Search - By AgentId
+        packageSpecifier: crowdstrike/fltr-core
+        repoOrViewName:
+      arguments:
+        aid: '["{{ fields.AgentIdString }}"]'
+        cid: '["{{ parameters.cid }}"]'
+      openInNewTab: true
+      type: dashboardlink
+    - conditions: null
+      name: Search by AgentId
+      titleTemplate: 'Search by AgentId: {{ fields.AgentIdString }}'
+      queryString: |-
+        #event_simpleName!=* OR #streamingApiEvent=Event_DetectionSummaryEvent
+        | ExternalApiType=Event_DetectionSummaryEvent
+        // Add the ComputerName.
+        | $"crowdstrike/fltr-core:zComputerName"()
+
+        // Check inputs and make ComputerName case-insensitive.
+        | wildcard(field=ComputerName, pattern=?ComputerName, ignoreCase=true)
+
+        // Check the remaining inputs.
+        | wildcard(field=aid, pattern=?aid, ignoreCase=true)
+        | wildcard(field=CustomerIdString, pattern=?CustomerIdString, ignoreCase=true)
+      useWidgetTimeWindow: true
+      repoOrViewName:
+      arguments:
+        ComputerName: '["{{ parameters.ComputerName }}"]'
+        aid: '["{{ fields.AgentIdString }}"]'
+        cid: '["{{ parameters.cid }}"]'
+      openInNewTab: true
+      isLive: false
+      type: searchlink
+    options:
+      columns: '[{"type":"field","fieldName":"@timestamp","format":"timestamp","width":183},{"type":"field","fieldName":"AgentIdString","format":"text","width":135},{"type":"field","fieldName":"ComputerName","format":"text","width":135},{"type":"field","fieldName":"UserName","format":"text","width":100},{"type":"field","fieldName":"DetectName","format":"text","width":190},{"type":"field","fieldName":"SeverityName","format":"text","width":122},{"type":"field","fieldName":"DetectDescription","format":"text","width":256},{"type":"field","fieldName":"Tactic","format":"text","width":175},{"type":"field","fieldName":"Technique","format":"text","width":317},{"type":"field","fieldName":"FilePath","format":"text","width":190},{"type":"field","fieldName":"FileName","format":"text","width":100}]'
+      newestAtBottom: 'true'
+      showOnlyFirstLine: 'false'
+    visualization: list-view
+    title: Detection Table
+    isLive: false
+    type: query
+$schema: https://schemas.humio.com/dashboard/v0.10.0

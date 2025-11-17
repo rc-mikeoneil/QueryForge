@@ -1,0 +1,26 @@
+{
+  "title": "How-To: Split a Single Event into Multiple Events",
+  "slug": "split_a_single_event_into_multiple_events",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Shows how to take a single event that contains multiple logical records (for example,\nmultiple lines or array elements) and split it into separate events for easier analysis.",
+  "examples": [
+    {
+      "name": "Split multiline message into separate events",
+      "description": "Splits a message field on newline characters.",
+      "language": "logscale",
+      "query": "split(message, on=\"\\n\")"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "split",
+    "events",
+    "arrays"
+  ],
+  "difficulty": "intermediate",
+  "related_functions": [
+    "split"
+  ]
+}

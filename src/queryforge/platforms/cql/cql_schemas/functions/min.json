@@ -1,0 +1,30 @@
+{
+  "name": "min",
+  "category": "aggregation",
+  "description": "Returns the minimum value of a specified field across events in a group. Typically used within groupBy() function to find the lowest value in each group.",
+  "syntax": "min(field, as=output_field)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "Field to find the minimum value of"
+    },
+    {
+      "name": "as",
+      "type": "string",
+      "required": false,
+      "description": "Name for the output field containing the minimum value"
+    }
+  ],
+  "return_type": "numeric",
+  "examples": [
+    "| groupBy([UserId], function=min(@timestamp, as=firstSeen))",
+    "| groupBy([aid], function=([min(@timestamp, as=firstLogon), max(@timestamp, as=lastLogon)]))",
+    "| min(DetectTime, as=firstDetection)"
+  ],
+  "related_functions": ["max", "avg", "sum", "groupBy"],
+  "use_cases": ["Finding earliest timestamp", "Minimum value analysis", "Baseline detection", "Statistical analysis"],
+  "notes": "Commonly used with timestamps to find the first/earliest event in a group.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-min.html"
+}

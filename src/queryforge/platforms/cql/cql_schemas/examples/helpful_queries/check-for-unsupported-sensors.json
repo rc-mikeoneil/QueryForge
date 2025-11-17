@@ -1,0 +1,55 @@
+{
+  "id": "check-for-unsupported-sensors",
+  "title": "Check for Unsupported Sensors",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Check for Unsupported Sensors.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "OsVersionInfo"
+  ],
+  "functions_used": [
+    "count",
+    "drop",
+    "groupBy",
+    "match",
+    "selectFromMax",
+    "test"
+  ],
+  "operators_used": [
+    "<",
+    "=",
+    ">",
+    "in",
+    "match",
+    "|"
+  ],
+  "fields_referenced": [
+    "AgentVersion",
+    "BUILD",
+    "as",
+    "column",
+    "field",
+    "file",
+    "function",
+    "include",
+    "limit",
+    "strict",
+    "timezone"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "hunting",
+  "platforms": [
+    "Cross-platform"
+  ],
+  "use_case": "Hunting query for Check for Unsupported Sensors",
+  "query": "// Get OsVersionInfo events\n#event_simpleName=OsVersionInfo\n// Get latest OsVersionInfo data per aid\n| groupBy([aid], function=([selectFromMax(field=\"@timestamp\", include=[event_platform, ComputerName, AgentVersion])]), limit=max)\n// Extract Falcon build number from AgentVersion \n| AgentVersion=/\\d+\\.\\d+\\.(?<BUILD>\\d+)\\./\n// Bring in sensor support details from lookup file\n| BUILD=~match(file=\"falcon/investigate/sensors_support_info.csv\", column=\"BUILD\", include=[SUPPORT_ENDS], strict=true)\n// Aggregate support status by Falcon build\n| groupBy([event_platform, BUILD, AgentVersion, SUPPORT_ENDS], function=([count(aid, as=TotalSystems)]))\n// Parse timestamp into epoch\n| parseTimestamp(\"M/d/yy\",field=SUPPORT_ENDS, as=SUPPORT_ENDS_EPOCH, timezone=\"UTC\")\n// See what sensors are out of support\n| test(SUPPORT_ENDS_EPOCH < now())\n// Drop unnecessary fields\n| drop([@timezone, SUPPORT_ENDS_EPOCH, SUPPORT_ENDS_EPOCH.nanos])",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "cross-platform",
+    "osversioninfo"
+  ]
+}

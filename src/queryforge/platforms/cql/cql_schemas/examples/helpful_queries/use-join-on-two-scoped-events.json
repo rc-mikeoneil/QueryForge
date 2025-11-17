@@ -1,0 +1,50 @@
+{
+  "id": "use-join-on-two-scoped-events",
+  "title": "Use Join on Two Scoped Events",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Use Join on Two Scoped Events.md",
+  "category": "helpful_query",
+  "subcategory": "process",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "join",
+    "rename",
+    "select"
+  ],
+  "operators_used": [
+    "=",
+    "|"
+  ],
+  "fields_referenced": [
+    "ImageFileName",
+    "ParentBaseFileName",
+    "as",
+    "field",
+    "include",
+    "key"
+  ],
+  "correlation_patterns": [
+    "join"
+  ],
+  "difficulty": "advanced",
+  "query_type": "utility",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "Utility query for Use Join on Two Scoped Events",
+  "query": "(#event_simpleName=ProcessRollup2 ImageFileName=/\\\\psexec64\\.exe/i ParentBaseFileName=/powershell\\.exe/i)\n\n| rename(field=\"ImageFileName\", as=\"ChildImageFileName\")\n| rename(field=\"CommandLine\", as=\"ChildCommandLine\")\n| join( { #event_simpleName=ProcessRollup2 ImageFileName=/powershell\\.exe/i | ParentImageFileName := ImageFileName | ParentCmdLine := CommandLine | rename(field=\"ParentBaseFileName\", as=\"GrandParentFileName\")}, key=[aid, TargetProcessId], field=[aid, ParentProcessId], include=[GrandParentFileName, ParentImageFileName, ParentCmdLine] )\n| select([aid, GrandParentFileName, ParentImageFileName, ParentCmdLine, ChildImageFileName, ChildCommandLine])",
+  "key_features": [
+    "Uses join for correlation"
+  ],
+  "related_examples": [],
+  "tags": [
+    "join",
+    "lin",
+    "processrollup2",
+    "win"
+  ]
+}

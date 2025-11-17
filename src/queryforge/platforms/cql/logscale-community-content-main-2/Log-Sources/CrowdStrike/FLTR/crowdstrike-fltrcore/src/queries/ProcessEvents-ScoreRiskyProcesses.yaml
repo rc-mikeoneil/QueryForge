@@ -1,0 +1,64 @@
+name: Process Events - Score Risky Processes
+visualization:
+  options: {}
+  type: table-view
+$schema: https://schemas.humio.com/query/v0.1.0
+timeInterval:
+  isLive: false
+  start: 7d
+queryString: |-
+  // Process Events - Score Risky Processes
+
+  // Get all Windows ProcessRollup2 Events.
+  #event_simpleName=ProcessRollup2 event_platform=Win
+
+  // Narrow to processes of interest and create FileName variable.
+  | ImageFileName=/\\(?<FileName>(whoami|net1?|systeminfo|ping|nltest|sc)\.exe)/i
+
+  // Get timestamp value with date and hour value.
+  | ProcessStartTime:=ProcessStartTime*1000
+  | dayBucket:=formatTime("%Y-%m-%d %H", field=ProcessStartTime, locale=en_US, timezone=Z)
+
+  // Parse flag used in "net" command.
+  | regex("(sc|net1?)\s+(?<netFlag>\S+)\s+", field=CommandLine, strict=false, flags=i)
+
+  // Create evaluation criteria and weighting for process usage.
+  | case {
+      FileName=/net1?\.exe/i netFlag="start"                              | behaviorWeight := "4" ;
+      FileName=/net1?\.exe/i netFlag="stop"                               | behaviorWeight := "4" ;
+      FileName=/net1?\.exe/i netFlag="stop" CommandLine=/falcon/i         | behaviorWeight := "25" ;
+      FileName=/sc\.exe/i netFlag="start"                                 | behaviorWeight := "4" ;
+      FileName=/sc\.exe/i netFlag="stop"                                  | behaviorWeight := "4" ;
+      FileName=/sc\.exe/i netFlag=/(query|stop)/i CommandLine=/csagent/i  | behaviorWeight := "25" ;
+      FileName=/net1?\.exe/i netFlag="share"                              | behaviorWeight := "2" ;
+      FileName=/net1?\.exe/i netFlag="user" CommandLine=/\/delete/i       | behaviorWeight := "10" ;
+      FileName=/net1?\.exe/i netFlag="user" CommandLine=/\/add/i          | behaviorWeight := "10" ;
+      FileName=/net1?\.exe/i netFlag="group" CommandLine=/\/domain\s+/i   | behaviorWeight := "5" ;
+      FileName=/net1?\.exe/i netFlag="group" CommandLine=/\/admin/i       | behaviorWeight := "5" ;
+      FileName=/net1?\.exe/i netFlag="localgroup" CommandLine=/\/add/i    | behaviorWeight := "10" ;
+      FileName=/net1?\.exe/i netFlag="localgroup" CommandLine=/\/delete/i | behaviorWeight := "10" ;
+      FileName=/nltest\.exe/i                                             | behaviorWeight := "3" ;
+      FileName=/systeminfo\.exe/i                                         | behaviorWeight := "3" ;
+      FileName=/whoami\.exe/i                                             | behaviorWeight := "3" ;
+      FileName=/ping\.exe/i                                               | behaviorWeight := "3" ;
+      * ;
+    }
+  | default(field=behaviorWeight, value=0)
+
+  // Create FileName and CommandLine one-liner.
+  | format(format="Score: %s -> %s", field=[behaviorWeight, CommandLine], as="executionDetails")
+
+  // Group and organize output.
+  | groupby([cid, aid, dayBucket], function=[count(FileName, distinct=true, as="fileCount"), sum(behaviorWeight, as="totalScore"), collect(executionDetails, limit=1000)], limit=max)
+
+  // Add the ComputerName
+  | $"crowdstrike/fltr-core:zComputerName"()
+
+  // Set thresholds.
+  | fileCount >= 5 OR totalScore > 30
+  | sort(totalScore, limit=1000)
+
+  // Format the final output.
+  | "Total Score":=rename(totalScore)
+  | "Process Details":=rename(executionDetails)
+  | table([aid, ComputerName, "Total Score", "Process Details"], limit=1000)

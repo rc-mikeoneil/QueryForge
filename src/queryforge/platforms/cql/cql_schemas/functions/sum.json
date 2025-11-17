@@ -1,0 +1,30 @@
+{
+  "name": "sum",
+  "category": "aggregation",
+  "description": "Calculates the sum of all values in a specified field across events in a group. Typically used within groupBy() function to aggregate numeric values.",
+  "syntax": "sum(field, as=output_field)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "Numeric field to sum"
+    },
+    {
+      "name": "as",
+      "type": "string",
+      "required": false,
+      "description": "Name for the output field containing the sum"
+    }
+  ],
+  "return_type": "numeric",
+  "examples": [
+    "| groupBy([aid], function=sum(Severity, as=severityWeight))",
+    "| sum(behaviorWeight, as=totalWeight)",
+    "| groupBy([UserName], function=([sum(whoami, as=whoami), sum(ping, as=ping)]))"
+  ],
+  "related_functions": ["max", "min", "avg", "count", "groupBy"],
+  "use_cases": ["Severity scoring", "Behavior weighting", "Total calculations", "Statistical aggregation"],
+  "notes": "Often used to calculate weighted scores or total counts across categories.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-sum.html"
+}

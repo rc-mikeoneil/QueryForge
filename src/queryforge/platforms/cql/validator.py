@@ -6,6 +6,7 @@ Validates CQL queries for syntax, schema compliance, performance, and best pract
 
 from __future__ import annotations
 
+import logging
 import re
 from typing import Any, Dict, List, Optional
 
@@ -22,7 +23,8 @@ from queryforge.shared.validation import (
 
 
 # Dangerous characters for CQL queries (security validation)
-DANGEROUS_CHARS = {';', '\n', '\r', '\t', '|'}
+# Note: '|' is NOT dangerous in CQL - it's the pipe operator for chaining commands
+DANGEROUS_CHARS = {';', '\n', '\r', '\t'}
 
 # Performance thresholds
 MAX_QUERY_LENGTH = 10000
@@ -31,6 +33,8 @@ UNBOUNDED_WARNING_THRESHOLD = 1000
 # Common CQL operators and functions
 CQL_OPERATORS = {'=', '!=', '>', '>=', '<', '<=', 'contains', 'startswith', 'endswith', 'in', 'not in', '=~', '!~'}
 CQL_FUNCTIONS = {'now', 'hour', 'day', 'week', 'month', 'year'}
+
+logger = logging.getLogger(__name__)
 
 
 class CQLValidator(BaseValidator):
@@ -52,6 +56,30 @@ class CQLValidator(BaseValidator):
             "field_types": schema_loader.get_field_types(),
             "best_practices": schema_loader.get_best_practices(),
         }
+        
+        # Load valid pipeline functions from schema
+        self._load_valid_pipeline_functions()
+    
+    def _load_valid_pipeline_functions(self) -> None:
+        """Load valid pipeline functions from the schema."""
+        try:
+            functions_index = self.schema_loader._load_json("metadata/functions_index.json")
+            functions_list = functions_index.get("functions", [])
+            
+            # Extract function names
+            self.valid_pipeline_functions = {func["name"].lower() for func in functions_list if isinstance(func, dict)}
+            
+            # Add common aliases and legacy operators
+            self.valid_pipeline_functions.update({'where', 'limit'})
+            
+            logger.debug("Loaded %d valid CQL pipeline functions", len(self.valid_pipeline_functions))
+        except Exception as exc:
+            logger.warning("Failed to load CQL functions from schema, using fallback list: %s", exc)
+            # Fallback to basic set if loading fails
+            self.valid_pipeline_functions = {
+                'select', 'groupby', 'count', 'sort', 'where', 'limit', 'table',
+                'stats', 'top', 'head', 'tail', 'timechart', 'bucket', 'join'
+            }
 
     def get_platform_name(self) -> str:
         """Return platform name."""
@@ -93,16 +121,17 @@ class CQLValidator(BaseValidator):
         # Check for dangerous characters
         issues.extend(check_dangerous_characters(query, DANGEROUS_CHARS))
 
-        # Check for proper pipeline syntax (| select, | limit, | stats)
+        # Check for proper pipeline syntax (| select, | limit, | stats, | groupBy, etc.)
         pipeline_operators = re.findall(r'\|\s*(\w+)', query)
-        valid_pipeline_ops = {'select', 'limit', 'stats', 'sort', 'where', 'table'}
         for op in pipeline_operators:
-            if op.lower() not in valid_pipeline_ops:
+            if op.lower() not in self.valid_pipeline_functions:
+                # Get a sample of common functions for suggestion
+                common_funcs = ['select', 'groupBy', 'count', 'limit', 'stats', 'sort', 'table', 'where']
                 issues.append(ValidationIssue(
                     severity=ValidationSeverity.WARNING,
                     category="syntax",
                     message=f"Unknown pipeline operator '| {op}'",
-                    suggestion=f"Valid pipeline operators: {', '.join(valid_pipeline_ops)}"
+                    suggestion=f"Common pipeline operators: {', '.join(common_funcs)}. Check CQL documentation for full list."
                 ))
 
         # Check for potential escape issues with backslashes
@@ -231,19 +260,33 @@ class CQLValidator(BaseValidator):
 
         # Get valid operators from schema
         operators_data = self.schema.get("operators", {})
-        operators_dict = operators_data.get("operators", {})
+        operators_list = operators_data.get("operators", [])
 
         # Build set of valid operators
         valid_operators = set()
-        for op_name, op_def in operators_dict.items():
-            if isinstance(op_def, dict):
-                variants = op_def.get("operators", [])
-                normalized = op_def.get("normalized")
-                if normalized:
-                    valid_operators.add(normalized.lower())
-                for variant in variants:
-                    if isinstance(variant, str):
-                        valid_operators.add(variant.lower())
+        # Handle list structure (CQL uses list of operator objects)
+        if isinstance(operators_list, list):
+            for op_def in operators_list:
+                if isinstance(op_def, dict):
+                    # Add the operator symbol
+                    op_symbol = op_def.get("operator", "")
+                    if op_symbol:
+                        valid_operators.add(op_symbol.lower())
+                    # Add the operator name
+                    op_name = op_def.get("name", "")
+                    if op_name:
+                        valid_operators.add(op_name.lower())
+        # Handle dict structure (legacy support)
+        elif isinstance(operators_list, dict):
+            for op_name, op_def in operators_list.items():
+                if isinstance(op_def, dict):
+                    variants = op_def.get("operators", [])
+                    normalized = op_def.get("normalized")
+                    if normalized:
+                        valid_operators.add(normalized.lower())
+                    for variant in variants:
+                        if isinstance(variant, str):
+                            valid_operators.add(variant.lower())
 
         # Validate operators from metadata
         if metadata.get("inferred_conditions"):

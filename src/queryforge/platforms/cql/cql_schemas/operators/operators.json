@@ -1,0 +1,405 @@
+{
+  "schema_version": "1.1.0",
+  "generated_at": "2025-11-15T00:00:00Z",
+  "description": "CrowdStrike Query Language (CQL) operators with type compatibility and usage patterns",
+  "operators": [
+    {
+      "operator": "=",
+      "name": "equals",
+      "category": "comparison",
+      "description": "Exact match comparison. Case-sensitive for strings unless used with regex modifiers.",
+      "syntax": "field=value",
+      "compatible_types": ["string", "number", "boolean"],
+      "examples": [
+        "#event_simpleName=ProcessRollup2",
+        "ImageFileName=chrome.exe",
+        "LogonType=10",
+        "UserIsAdmin=1"
+      ],
+      "use_cases": ["Exact filtering", "Event type selection", "Value matching"]
+    },
+    {
+      "operator": "!=",
+      "name": "not_equals",
+      "category": "comparison",
+      "description": "Not equal comparison. Filters out events where field matches the value.",
+      "syntax": "field!=value",
+      "compatible_types": ["string", "number", "boolean"],
+      "examples": [
+        "UserName!=\"SYSTEM\"",
+        "LogonType!=2",
+        "event_platform!=Mac"
+      ],
+      "use_cases": ["Exclusion filtering", "Negative matching"]
+    },
+    {
+      "operator": ">",
+      "name": "greater_than",
+      "category": "comparison",
+      "description": "Greater than comparison for numeric values.",
+      "syntax": "field>value",
+      "compatible_types": ["number", "long", "timestamp"],
+      "examples": [
+        "FileSize>1000000",
+        "_count>10",
+        "ProcessId>1000"
+      ],
+      "use_cases": ["Threshold filtering", "Numeric range queries"]
+    },
+    {
+      "operator": "<",
+      "name": "less_than",
+      "category": "comparison",
+      "description": "Less than comparison for numeric values.",
+      "syntax": "field<value",
+      "compatible_types": ["number", "long", "timestamp"],
+      "examples": [
+        "FileSize<1024",
+        "_count<5"
+      ],
+      "use_cases": ["Threshold filtering", "Numeric range queries"]
+    },
+    {
+      "operator": ">=",
+      "name": "greater_than_or_equal",
+      "category": "comparison",
+      "description": "Greater than or equal comparison for numeric values.",
+      "syntax": "field>=value",
+      "compatible_types": ["number", "long", "timestamp"],
+      "examples": [
+        "FileSize>=1048576",
+        "_count>=1"
+      ],
+      "use_cases": ["Threshold filtering", "Minimum value checks"]
+    },
+    {
+      "operator": "<=",
+      "name": "less_than_or_equal",
+      "category": "comparison",
+      "description": "Less than or equal comparison for numeric values.",
+      "syntax": "field<=value",
+      "compatible_types": ["number", "long", "timestamp"],
+      "examples": [
+        "FileSize<=1024",
+        "_count<=100"
+      ],
+      "use_cases": ["Threshold filtering", "Maximum value checks"]
+    },
+    {
+      "operator": "=*",
+      "name": "wildcard_match",
+      "category": "pattern",
+      "description": "Wildcard pattern matching. Use * for zero or more characters, ? for single character.",
+      "syntax": "field=*pattern*",
+      "compatible_types": ["string"],
+      "examples": [
+        "ImageFileName=*powershell*",
+        "CommandLine=*-enc*",
+        "FileName=*.exe"
+      ],
+      "use_cases": ["Pattern matching", "Substring search", "Flexible filtering"]
+    },
+    {
+      "operator": "=/regex/",
+      "name": "regex_match",
+      "category": "pattern",
+      "description": "Regular expression pattern matching. Supports regex flags like /i for case-insensitive.",
+      "syntax": "field=/pattern/flags",
+      "compatible_types": ["string"],
+      "regex_flags": {
+        "i": "Case-insensitive matching",
+        "m": "Multi-line mode",
+        "s": "Dot matches newline"
+      },
+      "examples": [
+        "ImageFileName=/\\\\powershell\\.exe$/i",
+        "CommandLine=/^(sc|net1?)\\.exe/",
+        "FileName=/(?<extension>\\.[a-z]+)$/i"
+      ],
+      "use_cases": ["Complex pattern matching", "Field extraction", "Advanced filtering"],
+      "notes": "Can extract named capture groups into new fields using (?<name>...)"
+    },
+    {
+      "operator": "in()",
+      "name": "in_function",
+      "category": "pattern",
+      "description": "Checks if field value is in a list of values. More efficient than multiple OR conditions.",
+      "syntax": "in(field, values=[value1, value2, ...])",
+      "compatible_types": ["string", "number", "any"],
+      "examples": [
+        "in(LogonDomain, values=[\"acme.com\",\"beta.com\"])",
+        "in(LogonType, values=[2,10])",
+        "in(ImageFileName, values=[\"cmd.exe\",\"powershell.exe\"])"
+      ],
+      "use_cases": ["Multi-value filtering", "Whitelist/blacklist checks", "Efficient OR operations"]
+    },
+    {
+      "operator": "match",
+      "name": "match_operator",
+      "category": "pattern",
+      "description": "Pattern matching operator for string matching against patterns or lookup tables.",
+      "syntax": "field match pattern or match(field, ...)",
+      "compatible_types": ["string"],
+      "examples": [
+        "CommandLine match \"*powershell*\"",
+        "UserName match /admin.*/i"
+      ],
+      "use_cases": ["Pattern matching", "Flexible string comparison", "Lookup operations"],
+      "notes": "Can be used as both infix operator and function call"
+    },
+    {
+      "operator": "regex",
+      "name": "regex_operator",
+      "category": "pattern",
+      "description": "Regular expression matching operator. Alternative syntax to =/regex/.",
+      "syntax": "field regex \"pattern\"",
+      "compatible_types": ["string"],
+      "examples": [
+        "ImageFileName regex \"powershell\\.exe$\"",
+        "CommandLine regex \"^(sc|net1?)\\s\""
+      ],
+      "use_cases": ["Regular expression matching", "Complex pattern filtering", "Advanced text search"],
+      "notes": "Equivalent to =/regex/ operator syntax"
+    },
+    {
+      "operator": ":=",
+      "name": "assignment",
+      "category": "assignment",
+      "description": "Assigns a value or expression result to a field. Creates new field or overwrites existing one.",
+      "syntax": "field := value_or_expression",
+      "compatible_types": ["any"],
+      "examples": [
+        "falconPID := TargetProcessId",
+        "timeDelta := (now()*1000)-ProcessStartTime",
+        "day := formatTime(\"%Y-%m-%d\", field=@timestamp)"
+      ],
+      "use_cases": ["Field creation", "Calculated fields", "Field aliasing", "Data transformation"]
+    },
+    {
+      "operator": "|",
+      "name": "pipe",
+      "category": "flow",
+      "description": "Pipes events from one operation to the next. Core operator for chaining CQL functions.",
+      "syntax": "operation1 | operation2 | operation3",
+      "compatible_types": ["event_stream"],
+      "examples": [
+        "#event_simpleName=ProcessRollup2 | groupBy([ComputerName])",
+        "ImageFileName=chrome.exe | count()",
+        "| ipLocation(RemoteAddressIP4) | worldMap(...)"
+      ],
+      "use_cases": ["Query chaining", "Data flow", "Multi-step transformations"]
+    },
+    {
+      "operator": "AND",
+      "name": "logical_and",
+      "category": "logical",
+      "description": "Logical AND - both conditions must be true. Often implied when conditions are on same line.",
+      "syntax": "condition1 AND condition2",
+      "compatible_types": ["boolean"],
+      "examples": [
+        "#event_simpleName=ProcessRollup2 ImageFileName=powershell.exe",
+        "UserName=admin AND LogonType=10"
+      ],
+      "use_cases": ["Multiple condition filtering", "Complex boolean logic"],
+      "notes": "Space between conditions often implies AND"
+    },
+    {
+      "operator": "OR",
+      "name": "logical_or",
+      "category": "logical",
+      "description": "Logical OR - at least one condition must be true.",
+      "syntax": "condition1 OR condition2",
+      "compatible_types": ["boolean"],
+      "examples": [
+        "#event_simpleName=ProcessRollup2 OR #event_simpleName=NetworkConnectIP4",
+        "ImageFileName=cmd.exe OR ImageFileName=powershell.exe"
+      ],
+      "use_cases": ["Alternative conditions", "Multi-value matching"],
+      "notes": "Consider using in() function for cleaner syntax with multiple values"
+    },
+    {
+      "operator": "NOT",
+      "name": "logical_not",
+      "category": "logical",
+      "description": "Logical NOT - inverts the condition. Often expressed with ! prefix.",
+      "syntax": "NOT condition or !condition",
+      "compatible_types": ["boolean"],
+      "examples": [
+        "!cidr(RemoteAddressIP4, subnet=[\"10.0.0.0/8\"])",
+        "NOT UserName=SYSTEM",
+        "!ImageFileName=chrome.exe"
+      ],
+      "use_cases": ["Negation", "Exclusion filtering", "Inverse matching"]
+    },
+    {
+      "operator": "and",
+      "name": "logical_and_lowercase",
+      "category": "logical",
+      "description": "Logical AND (lowercase variant) - both conditions must be true. Functionally identical to uppercase AND.",
+      "syntax": "condition1 and condition2",
+      "compatible_types": ["boolean"],
+      "examples": [
+        "#event_simpleName=ProcessRollup2 and ImageFileName=powershell.exe",
+        "UserName=admin and LogonType=10"
+      ],
+      "use_cases": ["Multiple condition filtering", "Complex boolean logic"],
+      "notes": "Case-insensitive variant of AND operator"
+    },
+    {
+      "operator": "or",
+      "name": "logical_or_lowercase",
+      "category": "logical",
+      "description": "Logical OR (lowercase variant) - at least one condition must be true. Functionally identical to uppercase OR.",
+      "syntax": "condition1 or condition2",
+      "compatible_types": ["boolean"],
+      "examples": [
+        "#event_simpleName=ProcessRollup2 or #event_simpleName=NetworkConnectIP4",
+        "ImageFileName=cmd.exe or ImageFileName=powershell.exe"
+      ],
+      "use_cases": ["Alternative conditions", "Multi-value matching"],
+      "notes": "Case-insensitive variant of OR operator"
+    },
+    {
+      "operator": "not",
+      "name": "logical_not_lowercase",
+      "category": "logical",
+      "description": "Logical NOT (lowercase variant) - inverts the condition. Functionally identical to uppercase NOT.",
+      "syntax": "not condition",
+      "compatible_types": ["boolean"],
+      "examples": [
+        "not UserName=SYSTEM",
+        "not in(LogonType, values=[2,3])"
+      ],
+      "use_cases": ["Negation", "Exclusion filtering", "Inverse matching"],
+      "notes": "Case-insensitive variant of NOT operator"
+    },
+    {
+      "operator": "!",
+      "name": "negation",
+      "category": "logical",
+      "description": "Negation operator - inverts boolean result or filters out matches.",
+      "syntax": "!expression",
+      "compatible_types": ["boolean", "any"],
+      "examples": [
+        "!cidr(RemoteAddressIP4, subnet=[\"192.168.0.0/16\"])",
+        "UserName!=/SYSTEM/",
+        "!in(LogonType, values=[2,3])"
+      ],
+      "use_cases": ["Negation", "Exclusion", "Inverse operations"]
+    },
+    {
+      "operator": "#",
+      "name": "metadata_field",
+      "category": "special",
+      "description": "Accesses metadata fields. Most commonly used with #event_simpleName for event type filtering.",
+      "syntax": "#field_name=value",
+      "compatible_types": ["metadata"],
+      "examples": [
+        "#event_simpleName=ProcessRollup2",
+        "#event_simpleName=/^(UserIdentity|UserLogon)$/",
+        "#repo=\"base_sensor\""
+      ],
+      "use_cases": ["Event type filtering", "Metadata access", "Repository selection"],
+      "common_fields": [
+        "#event_simpleName - Event type identifier",
+        "#repo - Repository name",
+        "#event_platform - Platform (Win, Mac, Lin)"
+      ]
+    },
+    {
+      "operator": "=~",
+      "name": "match_assign",
+      "category": "special",
+      "description": "Special operator for match() function to assign all columns from lookup to event.",
+      "syntax": "field =~ match(file=\"file.csv\", column=col)",
+      "compatible_types": ["lookup"],
+      "examples": [
+        "aid =~ match(file=\"fdr_aidmaster.csv\", column=aid, strict=false)",
+        "cid =~ match(file=\"cid_name.csv\", column=cid, strict=true)"
+      ],
+      "use_cases": ["Lookup enrichment", "CSV/JSON file matching", "Data augmentation"]
+    },
+    {
+      "operator": "<=>",
+      "name": "correlate_reference",
+      "category": "special",
+      "description": "References fields from named queries in correlate() function for cross-query field matching.",
+      "syntax": "field <=> named_query.field",
+      "compatible_types": ["correlation"],
+      "examples": [
+        "aid <=> whoami.aid",
+        "TargetProcessId <=> net.ProcessId"
+      ],
+      "use_cases": ["Event correlation", "Cross-query references", "Pattern detection"],
+      "notes": "Only used within correlate() function sub-queries"
+    },
+    {
+      "operator": "*",
+      "name": "field_exists",
+      "category": "special",
+      "description": "Wildcard operator. When used with =, checks if field exists with any value.",
+      "syntax": "field=*",
+      "compatible_types": ["any"],
+      "examples": [
+        "RemoteAddressIP4=*",
+        "CommandLine=*",
+        "SHA256HashData=*"
+      ],
+      "use_cases": ["Field existence check", "Non-null filtering", "Has-value verification"]
+    }
+  ],
+  "type_compatibility_matrix": {
+    "string": ["=", "!=", "=*", "=/regex/", "in()", ":=", "=~", "match", "regex"],
+    "number": ["=", "!=", ">", "<", ">=", "<=", "in()", ":="],
+    "long": ["=", "!=", ">", "<", ">=", "<=", "in()", ":="],
+    "boolean": ["=", "!=", ":=", "AND", "OR", "NOT", "and", "or", "not", "!"],
+    "timestamp": [">", "<", ">=", "<=", ":="],
+    "ip_address": ["=", "!=", ":=", "cidr()", "ipLocation()"],
+    "any": [":=", "=*", "in()"]
+  },
+  "operator_precedence": [
+    {
+      "level": 1,
+      "operators": ["#"],
+      "description": "Metadata field access - highest precedence"
+    },
+    {
+      "level": 2,
+      "operators": ["NOT", "not", "!"],
+      "description": "Logical negation"
+    },
+    {
+      "level": 3,
+      "operators": ["=", "!=", ">", "<", ">=", "<=", "=*", "=/regex/", "in()", "match", "regex"],
+      "description": "Comparison and pattern matching"
+    },
+    {
+      "level": 4,
+      "operators": ["AND", "and"],
+      "description": "Logical AND"
+    },
+    {
+      "level": 5,
+      "operators": ["OR", "or"],
+      "description": "Logical OR"
+    },
+    {
+      "level": 6,
+      "operators": [":="],
+      "description": "Assignment"
+    },
+    {
+      "level": 7,
+      "operators": ["|"],
+      "description": "Pipe - lowest precedence, executes left to right"
+    }
+  ],
+  "best_practices": [
+    "Use in() instead of multiple OR conditions for cleaner syntax and better performance",
+    "Leverage # metadata fields early in queries for efficient event filtering",
+    "Use := for calculated fields and transformations",
+    "Prefer cidr() over manual IP range comparisons for network filtering",
+    "Use regex with named capture groups (?<name>...) to extract fields efficiently",
+    "Chain operations with | pipe for readable, maintainable queries"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "id": "failed-and-successful-user-logon-events",
+  "title": "Failed and Successful User Logon Events",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Failed and Successful User Logon Events.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "UserLogon",
+    "UserLogonFailed2"
+  ],
+  "functions_used": [
+    "count",
+    "default",
+    "groupBy",
+    "max",
+    "min",
+    "rename",
+    "selectFromMax",
+    "sort"
+  ],
+  "operators_used": [
+    "=",
+    ">",
+    "|"
+  ],
+  "fields_referenced": [
+    "as",
+    "field",
+    "format",
+    "function",
+    "include",
+    "limit",
+    "order",
+    "timezone",
+    "value"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Cross-platform"
+  ],
+  "use_case": "Analysis query for Failed and Successful User Logon Events",
+  "query": "#event_simpleName=/UserLogon/\n| case{\n    #event_simpleName=UserLogon | SuccessLogonTime:=ContextTimeStamp;\n    #event_simpleName=UserLogonFailed2 | FailedLogonTime:=ContextTimeStamp;\n}\n| groupBy([UserSid, UserName], function=([min(FailedLogonTime, as=FirstFailedLogon), max(FailedLogonTime, as=LastFailedLogon), max(SuccessLogonTime, as=LastSuccessfulLogin), count(SuccessLogonTime, as=TotalSuccessfulLogins), count(FailedLogonTime, as=TotalFailedLogins), selectFromMax(field=\"@timestamp\", include=[PasswordLastSet]), {#event_simpleName=UserLogon | selectFromMax(field=\"@timestamp\", include=[ComputerName]) | rename(field=\"ComputerName\", as=\"LastLoggedOnHost\")}]))\n| TotalFailedLogins>3\n| $falcon/helper:enrich(field=UserLogonFlags)\n| formatTime(format=\"%F %T\", field=FirstFailedLogon, as=\"FirstFailedLogon\", timezone=\"EST\")\n| formatTime(format=\"%F %T\", field=LastFailedLogon, as=\"LastFailedLogon\", timezone=\"EST\")\n| formatTime(format=\"%F %T\", field=LastSuccessfulLogin, as=\"LastSuccessfulLogin\", timezone=\"EST\")\n| PasswordLastSet:=PasswordLastSet*1000 | formatTime(format=\"%F %T\", field=PasswordLastSet, as=\"PasswordLastSet\", timezone=\"EST\")\n| default(value=\"-\", field=[FirstFailedLogon, LastFailedLogon, LastSuccessfulLogin, TotalSuccessfulLogins, TotalFailedLogins, PasswordLastSet, LastLoggedOnHost])\n| sort(order=desc, TotalFailedLogins, limit=20000)",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "cross-platform",
+    "user",
+    "userlogon",
+    "userlogonfailed2"
+  ]
+}

@@ -1,0 +1,477 @@
+name: Security Overview
+timeSelector: {}
+sharedTimeInterval:
+  enabled: false
+  isLive: false
+  start: 1d
+widgets:
+  af79654a-c063-4505-a9de-059684745dc0:
+    x: 4
+    y: 14
+    height: 4
+    queryString: |-
+      #Vendor="google"
+      |os.type=?os_platform
+      |top(os.type,limit=10,rest=others,as="Count")
+      |rename(os.type,as="OS Platform")
+      |select(["OS Platform","Count"])
+    end: now
+    start: 24h
+    width: 4
+    options:
+      cell-overflow: wrap-text
+      configured-columns: {}
+      row-numbers-enabled: false
+    visualization: table-view
+    title: Top OS Platforms with Security Events
+    isLive: false
+    type: query
+  263fb3b5-5b91-4312-a1be-1acc30011b40:
+    x: 8
+    y: 0
+    height: 4
+    queryString: |-
+      #Vendor="google"
+      |groupBy("event.reason")
+    visualization: bar-chart
+    end: now
+    start: 24h
+    width: 4
+    title: Security Events by Reason
+    isLive: false
+    type: query
+  34c77d4e-fb1e-4b7c-a305-c396dc55f3b5:
+    x: 0
+    y: 9
+    height: 4
+    queryString: |-
+      #Vendor="google"
+      |event.action=/^(badNavigationEvent|passwordReuseEvent|dangerousDownloadEvent)$/
+      |url.host=?url
+      |rename(url.host, as="Hostname")
+      |top(["Hostname"],limit=10,rest=others,as="Count")
+    end: now
+    start: 30d
+    width: 4
+    options:
+      cell-overflow: wrap-text
+      configured-columns: {}
+      row-numbers-enabled: false
+    visualization: table-view
+    title: Problematic Hostnames
+    isLive: false
+    type: query
+  ef778174-5df1-4a13-80a9-4fcfec9901af:
+    x: 0
+    y: 4
+    height: 4
+    queryString: |-
+      #Vendor="google"
+      |device.user=?device_user
+      |top(device.user,limit=10,rest=others,as="Count")
+      |rename(device.user,as="Device User")
+      |select(["Device User","Count"])
+    end: now
+    start: 1d
+    width: 4
+    options:
+      cell-overflow: wrap-text
+      configured-columns: {}
+      row-numbers-enabled: false
+    visualization: table-view
+    title: Top Device Users with Events
+    isLive: false
+    type: query
+  44f63287-f472-4e1b-a5a1-ef072775a86f:
+    x: 0
+    y: 19
+    height: 4
+    queryString: count(device.user, distinct=true)
+    end: now
+    start: 24h
+    width: 4
+    options:
+      color-method: static
+      default: {}
+      use-colorised-thresholds: false
+    visualization: single-value
+    title: Unique Users with Security Events
+    isLive: false
+    type: query
+  85ca7654-8ef8-4c7f-a373-2e71fdbc9c84:
+    x: 0
+    y: 14
+    height: 4
+    queryString: |-
+      #Vendor="google"
+      |os.type=?os_platform
+      |count(os.type, distinct=true, as="OS Platform")
+    end: now
+    start: 24h
+    width: 4
+    options:
+      color-method: static
+      default: {}
+      use-colorised-thresholds: false
+    visualization: single-value
+    title: Unique OSs with Security Events
+    isLive: false
+    type: query
+  b87c3a84-0590-40a3-8896-621e6aae526d:
+    x: 4
+    y: 9
+    height: 4
+    queryString: |-
+      #Vendor="google"
+      |event.action=/^(badNavigationEvent|passwordReuseEvent|dangerousDownloadEvent)$/
+      |event.reason="MALWARE"
+      |url.original=?url
+      |rename(url.original, as="URL")
+      |top(["URL"],limit=10,rest=others,as="Count")
+    end: now
+    start: 30d
+    width: 4
+    options:
+      cell-overflow: wrap-text
+      configured-columns: {}
+      row-numbers-enabled: false
+    visualization: table-view
+    title: Potential Malware Websites
+    isLive: false
+    type: query
+  71793cfa-f0e1-4e83-a3cd-4acfa54851bf:
+    x: 4
+    y: 24
+    height: 4
+    queryString: |-
+      #Vendor="google"
+      |device.id=?device_id | device.name=?device_name | device.user=?device_user | Vendor.profile_user=?profile_user
+      |groupBy(["device.id", "device.name", "device.user", "Vendor.profile_user"])
+      |rename(device.id, as="Device ID") |rename(device.name, as="Device Name") |rename(device.user, as="Device User") |rename(Vendor.profile_user, as="Profile User")
+      |select(["Device Name","Device ID", "Device User", "Profile User"])
+    end: now
+    start: 24h
+    width: 8
+    options:
+      cell-overflow: wrap-text
+      configured-columns: {}
+      row-numbers-enabled: false
+    visualization: table-view
+    title: Device ID to Host Mapping
+    isLive: false
+    type: query
+  1b989b1d-21ce-481a-9291-af35690ea024:
+    x: 0
+    y: 24
+    height: 4
+    queryString: |-
+      #Vendor="google"
+      |device.id=?device_id
+      |count("device.id", distinct=true, as="Count")
+    end: now
+    start: 24h
+    width: 4
+    options:
+      default: {}
+    visualization: single-value
+    title: Unique Device IDs
+    isLive: false
+    type: query
+  4d0e00b1-5273-4d35-bbe8-71a03938b239:
+    x: 0
+    backgroundColor: '#000000'
+    y: 23
+    height: 1
+    text: ''
+    width: 12
+    title: Devices
+    type: note
+  note-1663216423664-0:
+    x: 0
+    backgroundColor: '#000000'
+    y: 13
+    height: 1
+    text: ''
+    width: 12
+    title: Operating System
+    type: note
+  a9746c5f-446e-406c-be09-247196e22bf8:
+    x: 8
+    y: 19
+    height: 4
+    queryString: |-
+      #Vendor="google"
+      |groupBy(Vendor.browser_version)
+    visualization: pie-chart
+    end: now
+    start: 24h
+    width: 4
+    title: Events by Chrome Browser Version
+    isLive: false
+    type: query
+  52287e8d-dc9d-47ad-86dc-a9a0cf1f615d:
+    x: 4
+    y: 29
+    height: 4
+    queryString: |-
+      #Vendor="google"
+      |top(Vendor.trigger_type, as="Count")
+      |rename(Vendor.trigger_type,as="Trigger Type")
+      |select(["Trigger Type","Count"])
+    end: now
+    start: 24h
+    width: 4
+    options:
+      cell-overflow: wrap-text
+      configured-columns: {}
+      row-numbers-enabled: false
+    visualization: table-view
+    title: Security Events by Trigger Type
+    isLive: false
+    type: query
+  4e2def31-8367-4a1a-b3e4-2d380b779aa3:
+    x: 4
+    y: 0
+    height: 4
+    queryString: |-
+      #Vendor="google"
+      |top(Vendor.result,limit=10,rest=others,as="Count")
+      |rename(Vendor.result,as="Result")
+      |select(["Result","Count"])
+    end: now
+    start: 24h
+    width: 4
+    options:
+      cell-overflow: wrap-text
+      configured-columns: {}
+      row-numbers-enabled: false
+    visualization: table-view
+    title: Top Security Event Results
+    isLive: false
+    type: query
+  63b24b46-bd13-49a2-b281-59a57a0a268a:
+    x: 4
+    y: 19
+    height: 4
+    queryString: |-
+      #Vendor="google"
+      |top(device.user, as="Count")
+      |rename(device.user,as="Device User")
+    end: now
+    start: 24h
+    width: 4
+    options:
+      cell-overflow: wrap-text
+      configured-columns: {}
+      row-numbers-enabled: false
+    visualization: table-view
+    title: Users with Events
+    isLive: false
+    type: query
+  2762e08f-7321-4a56-9369-47e3564e8655:
+    x: 0
+    backgroundColor: '#000000'
+    y: 28
+    height: 1
+    text: ''
+    width: 12
+    title: Trigger Types
+    type: note
+  aa038474-bc49-4cfb-9152-6882f93c1969:
+    x: 0
+    backgroundColor: '#000000'
+    y: 18
+    height: 1
+    text: ''
+    width: 12
+    title: User Events and Browser Summary
+    type: note
+  67b46914-8ca0-4a7d-9a1c-a55f7e9ae88f:
+    x: 0
+    backgroundColor: '#000000'
+    y: 8
+    height: 1
+    text: ''
+    width: 12
+    title: Websites
+    type: note
+  6fa16f86-a398-4418-be71-69df5a97cb1b:
+    x: 4
+    y: 4
+    height: 4
+    queryString: |-
+      #Vendor="google"
+      |device.user=?device_user
+      |device.id=?device_id
+      |rename(device.user, as="Device User")
+      |rename(device.id, as="Device ID")
+      |sankey(source="Device User", target="Device ID")
+    visualization: sankey
+    end: now
+    start: 1d
+    width: 4
+    title: Device User to Device Mapping
+    isLive: false
+    type: query
+  44ddbc35-4ece-46d6-b0db-f16e4a3c175a:
+    x: 0
+    y: 29
+    height: 4
+    queryString: count(Vendor.trigger_type, distinct=true)
+    end: now
+    start: 24h
+    width: 4
+    options:
+      color-method: static
+      default: {}
+      use-colorised-thresholds: false
+    visualization: single-value
+    title: Unique Trigger Types
+    isLive: false
+    type: query
+  1506cd0a-e321-4d71-8e38-6aecbf675d12:
+    x: 8
+    y: 9
+    height: 4
+    queryString: |-
+      #Vendor="google"
+      |event.action=/^(badNavigationEvent|passwordReuseEvent)$/
+      |event.reason="SOCIAL_ENGINEERING"
+      |url.original=?url
+      |rename(url.original, as="URL")
+      |top(["URL"],limit=10,rest=others,as="Count")
+    end: now
+    start: 30d
+    width: 4
+    options:
+      cell-overflow: wrap-text
+      configured-columns: {}
+      row-numbers-enabled: false
+    visualization: table-view
+    title: Potential Credential Leak Websites
+    isLive: false
+    type: query
+  7c527f46-7460-4b49-9e48-018bb14b9481:
+    x: 8
+    y: 4
+    height: 4
+    queryString: |-
+      #Vendor="google"
+      |Vendor.profile_user!=""
+      |Vendor.profile_user=?profile_user
+      |top(Vendor.profile_user,limit=10,rest=others,as="Count")
+      |rename(Vendor.profile_user,as="Profile User")
+      |select(["Profile User", "Count"])
+    end: now
+    start: 24h
+    width: 4
+    options:
+      cell-overflow: wrap-text
+      configured-columns: {}
+      row-numbers-enabled: false
+    visualization: table-view
+    title: Security Events by Chrome User
+    isLive: false
+    type: query
+  0d7e3674-7735-4a16-ac73-f8a62558d108:
+    x: 8
+    y: 14
+    height: 4
+    queryString: |-
+      #Vendor="google"
+      |os.type=?os_platform
+      |groupBy(os.type)
+      |rename(os.type,as="OS Platform")
+    visualization: pie-chart
+    end: now
+    start: 24h
+    width: 4
+    title: Security Event Counts by OS Platform
+    isLive: false
+    type: query
+  768e980b-a5b4-4e35-871e-d489490964d8:
+    x: 0
+    y: 0
+    height: 4
+    queryString: |-
+      #Vendor="google"
+      |event.action=?{event=*}
+      |top(event.action,limit=10,rest=others,as="Count")
+      |rename(event.action, as="Event Type")
+      |select(["Event Type","Count"])
+    end: now
+    start: 24h
+    width: 4
+    options:
+      cell-overflow: wrap-text
+      configured-columns: {}
+      row-numbers-enabled: false
+    visualization: table-view
+    title: Security Events by Event Type
+    isLive: false
+    type: query
+$schema: https://schemas.humio.com/dashboard/v0.15.0
+parameters:
+  device_name:
+    label: Device Name
+    query: '#Vendor = "google" | groupBy("device.name", function=[])'
+    timeInterval: 1d
+    useDashboardTimeIfSet: true
+    type: query
+    defaultValue: '*'
+    order: 50
+    valueField: device.name
+  device_id:
+    label: Device ID
+    query: '#Vendor = "google" | groupBy("device.id", function=[])'
+    timeInterval: 1d
+    useDashboardTimeIfSet: true
+    type: query
+    defaultValue: '*'
+    order: 50
+    valueField: device.id
+  event:
+    label: Event Type
+    query: '#Vendor = "google" | groupBy("event.action", function=[])'
+    timeInterval: 1d
+    useDashboardTimeIfSet: true
+    type: query
+    defaultValue: '*'
+    order: 50
+    valueField: event.action
+  device_user:
+    label: Device User
+    query: '#Vendor = "google" | groupBy("device.user", function=[])'
+    timeInterval: 1d
+    useDashboardTimeIfSet: true
+    type: query
+    defaultValue: '*'
+    order: 50
+    valueField: device.user
+  os_platform:
+    label: Operating System
+    query: '#Vendor = "google" | groupBy("os.type", function=[])'
+    timeInterval: 1d
+    useDashboardTimeIfSet: true
+    type: query
+    defaultValue: '*'
+    order: 50
+    valueField: os.type
+  profile_user:
+    label: Profile User
+    query: '#Vendor = "google" | groupBy("Vendor.profile_user", function=[])'
+    timeInterval: 1d
+    useDashboardTimeIfSet: true
+    type: query
+    defaultValue: '*'
+    order: 50
+    valueField: Vendor.profile_user
+  url:
+    label: URL
+    query: '#Vendor = "google" | groupBy("url.original", function=[])'
+    timeInterval: 1d
+    useDashboardTimeIfSet: true
+    type: query
+    defaultValue: '*'
+    order: 50
+    valueField: url.original

@@ -1,0 +1,119 @@
+{
+  "table": "DnsRequest",
+  "category": "endpoint_network",
+  "description": "DNS query events from endpoints. Captures domain resolution requests for detecting malicious domains, data exfiltration, C2 communications, and network behavior analysis.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["DnsRequest"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win", "Mac", "Lin"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint making the DNS request",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "UserName",
+      "type": "string",
+      "description": "Username associated with the process making the DNS request",
+      "searchable": true,
+      "common_usage": ["filtering", "user behavior analysis"]
+    },
+    {
+      "name": "DomainName",
+      "type": "string",
+      "description": "Domain name being queried",
+      "searchable": true,
+      "supports_regex": true,
+      "example_values": ["example.com", "malicious.ru", "google.com"],
+      "common_usage": ["filtering", "threat hunting", "TLD analysis", "C2 detection"]
+    },
+    {
+      "name": "ContextProcessId",
+      "type": "long",
+      "description": "Falcon's unique process identifier (UPID) for the process making the DNS request",
+      "required": true,
+      "common_usage": ["correlation", "joining with ProcessRollup2"]
+    },
+    {
+      "name": "ContextBaseFileName",
+      "type": "string",
+      "description": "Base filename of the process making the DNS request",
+      "searchable": true,
+      "example_values": ["chrome.exe", "firefox.exe", "msedge.exe", "powershell.exe"],
+      "common_usage": ["filtering", "browser DNS analysis", "process attribution"]
+    },
+    {
+      "name": "FileName",
+      "type": "string",
+      "description": "Filename of the process (alternate field)",
+      "searchable": true,
+      "common_usage": ["filtering", "normalization with ContextBaseFileName"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "aggregation"]
+    },
+    {
+      "name": "@timestamp",
+      "type": "datetime",
+      "description": "Event timestamp in ISO format",
+      "common_usage": ["display", "time range filtering"]
+    }
+  ],
+  "col_count": 12,
+  "common_filters": [
+    "event_platform=Win",
+    "event_platform=Mac",
+    "event_platform=Lin",
+    "DomainName=/\\.ru$/",
+    "DomainName=/suspicious-pattern/i",
+    "in(field=\"ContextBaseFileName\", values=[chrome.exe, firefox.exe, msedge.exe])"
+  ],
+  "common_fields": ["aid", "ComputerName", "UserName", "DomainName", "ContextProcessId", "ContextBaseFileName"],
+  "common_operations": [
+    "Join with ProcessRollup2 via ContextProcessId (matched to TargetProcessId) for process context",
+    "Browser DNS activity analysis by filtering on browser executables",
+    "TLD-based filtering (e.g., .ru, .cn domains)",
+    "C2 domain detection via pattern matching",
+    "Domain frequency analysis",
+    "User DNS behavior profiling",
+    "Normalization: fileName:=concat([FileName, ContextBaseFileName])",
+    "Process correlation: falconPID:=ContextProcessId"
+  ],
+  "normalization_patterns": [
+    "fileName:=concat([FileName, ContextBaseFileName]) - Normalize filename across events",
+    "falconPID:=ContextProcessId - Normalize process ID for joining"
+  ],
+  "generated_at": "2025-11-14T23:45:00Z"
+}

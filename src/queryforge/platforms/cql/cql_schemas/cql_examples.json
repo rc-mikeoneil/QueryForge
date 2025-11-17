@@ -1,0 +1,181 @@
+{
+  "schema_version": "1.0.0",
+  "description": "CQL example queries for various use cases",
+  "examples": [
+    {
+      "category": "process_execution",
+      "name": "Basic process filtering",
+      "query": "#event_simpleName=ProcessRollup2 event_platform=Win FileName=powershell.exe",
+      "description": "Filter processes by filename and platform",
+      "difficulty": "basic",
+      "use_case": "Starting point for any process analysis"
+    },
+    {
+      "category": "process_execution",
+      "name": "Group processes by endpoint",
+      "query": "#event_simpleName=ProcessRollup2 | groupBy([ComputerName], function=count())",
+      "description": "Count processes per endpoint",
+      "difficulty": "basic",
+      "use_case": "Identifying endpoints with unusual process activity"
+    },
+    {
+      "category": "process_execution",
+      "name": "Process frequency analysis",
+      "query": "#event_simpleName=ProcessRollup2 | groupBy([FileName], function=count()) | sort(_count, order=desc, limit=20)",
+      "description": "Find most common processes",
+      "difficulty": "intermediate",
+      "use_case": "Baseline analysis and anomaly detection"
+    },
+    {
+      "category": "process_execution",
+      "name": "Suspicious command line patterns",
+      "query": "#event_simpleName=ProcessRollup2 CommandLine=*-enc* | regex(field=CommandLine, regex=\"-enc[^ ]* (?<encoded>.+)\") | table([ComputerName, UserName, FileName, encoded])",
+      "description": "Detect encoded PowerShell commands",
+      "difficulty": "advanced",
+      "use_case": "Hunting for obfuscated malicious commands",
+      "mitre_attack": "T1027"
+    },
+    {
+      "category": "authentication",
+      "name": "RDP logons",
+      "query": "#event_simpleName=UserLogon LogonType=10",
+      "description": "Filter for Remote Desktop (RDP) logons",
+      "difficulty": "basic",
+      "use_case": "Monitoring remote access"
+    },
+    {
+      "category": "authentication",
+      "name": "Admin logons",
+      "query": "#event_simpleName=UserLogon UserIsAdmin=1 | groupBy([UserName, ComputerName], function=count())",
+      "description": "Track administrative logons",
+      "difficulty": "basic",
+      "use_case": "Privileged access monitoring"
+    },
+    {
+      "category": "authentication",
+      "name": "Geographic RDP analysis",
+      "query": "#event_simpleName=UserLogon LogonType=10 RemoteAddressIP4=* | ipLocation(RemoteAddressIP4) | groupBy([RemoteAddressIP4.country], function=count())",
+      "description": "Analyze RDP logons by country",
+      "difficulty": "intermediate",
+      "use_case": "Detecting geographic anomalies in access patterns"
+    },
+    {
+      "category": "network_activity",
+      "name": "Top destination IPs",
+      "query": "#event_simpleName=NetworkConnectIP4 | groupBy([RemoteAddressIP4], function=count()) | sort(_count, order=desc, limit=20)",
+      "description": "Most frequently contacted IPs",
+      "difficulty": "basic",
+      "use_case": "Baseline network activity"
+    },
+    {
+      "category": "network_activity",
+      "name": "Uncommon ports",
+      "query": "#event_simpleName=NetworkConnectIP4 NOT in(RemotePort, values=[80, 443, 53, 22, 3389]) | groupBy([RemotePort, FileName], function=count())",
+      "description": "Connections to non-standard ports",
+      "difficulty": "intermediate",
+      "use_case": "Detecting unusual network activity"
+    },
+    {
+      "category": "network_activity",
+      "name": "Process-to-Network correlation",
+      "query": "#event_simpleName=ProcessRollup2 | join(query={#event_simpleName=NetworkConnectIP4}, field=[aid, TargetProcessId=ContextProcessId], include=[RemoteAddressIP4, RemotePort])",
+      "description": "Link processes to their network connections",
+      "difficulty": "intermediate",
+      "use_case": "Identifying processes making network connections"
+    },
+    {
+      "category": "dns_activity",
+      "name": "Top queried domains",
+      "query": "#event_simpleName=DnsRequest | groupBy([DomainName], function=count()) | sort(_count, order=desc, limit=50)",
+      "description": "Most frequently queried domains",
+      "difficulty": "basic",
+      "use_case": "Baseline DNS activity"
+    },
+    {
+      "category": "dns_activity",
+      "name": "Long domain names (DGA detection)",
+      "query": "#event_simpleName=DnsRequest | length(DomainName, as=domain_length) | domain_length>50 | table([DomainName, domain_length, ContextBaseFileName])",
+      "description": "Detect suspiciously long domains",
+      "difficulty": "intermediate",
+      "use_case": "DGA (Domain Generation Algorithm) detection"
+    },
+    {
+      "category": "threat_hunting",
+      "name": "Living off the Land Binaries",
+      "query": "#event_simpleName=ProcessRollup2 event_platform=Win in(FileName, values=[\"certutil.exe\", \"bitsadmin.exe\", \"mshta.exe\", \"regsvr32.exe\", \"rundll32.exe\"]) | table([ComputerName, UserName, FileName, CommandLine])",
+      "description": "Detect usage of commonly abused Windows binaries",
+      "difficulty": "intermediate",
+      "use_case": "LOLBin detection",
+      "mitre_attack": "Multiple"
+    },
+    {
+      "category": "threat_hunting",
+      "name": "Suspicious parent-child relationships",
+      "query": "#event_simpleName=ProcessRollup2 event_platform=Win ParentBaseFileName=winword.exe in(FileName, values=[\"powershell.exe\", \"cmd.exe\", \"wscript.exe\", \"cscript.exe\"]) | table([ComputerName, UserName, ParentBaseFileName, FileName, CommandLine])",
+      "description": "Detect Office applications spawning suspicious processes",
+      "difficulty": "intermediate",
+      "use_case": "Phishing detection",
+      "mitre_attack": "T1566"
+    },
+    {
+      "category": "inventory",
+      "name": "OS distribution",
+      "query": "#event_simpleName=OsVersionInfo | groupBy([event_platform], function=count())",
+      "description": "Count endpoints by OS platform",
+      "difficulty": "basic",
+      "use_case": "Understanding OS distribution"
+    },
+    {
+      "category": "inventory",
+      "name": "Windows version breakdown",
+      "query": "#event_simpleName=OsVersionInfo event_platform=Win | groupBy([ProductName, Version], function=count()) | sort(_count, order=desc)",
+      "description": "Windows versions in environment",
+      "difficulty": "intermediate",
+      "use_case": "Patch management and upgrade planning"
+    },
+    {
+      "category": "drivers",
+      "name": "Unsigned drivers",
+      "query": "#event_simpleName=DriverLoad SubjectCN=* NOT | table([ComputerName, FileName, FilePath])",
+      "description": "Detect unsigned kernel drivers",
+      "difficulty": "intermediate",
+      "use_case": "Identifying potentially malicious drivers"
+    },
+    {
+      "category": "lateral_movement",
+      "name": "PsExec usage",
+      "query": "#event_simpleName=ProcessRollup2 ImageFileName=*psexe* | table([ComputerName, UserName, ImageFileName, CommandLine])",
+      "description": "Detect PsExec execution",
+      "difficulty": "basic",
+      "use_case": "Lateral movement detection",
+      "mitre_attack": "T1570"
+    },
+    {
+      "category": "persistence",
+      "name": "Scheduled task creation",
+      "query": "#event_simpleName=ProcessRollup2 event_platform=Win FileName=schtasks.exe CommandLine=*/create* | table([ComputerName, UserName, CommandLine])",
+      "description": "Detect scheduled task creation",
+      "difficulty": "basic",
+      "use_case": "Persistence detection",
+      "mitre_attack": "T1053.005"
+    },
+    {
+      "category": "credential_access",
+      "name": "LSASS access",
+      "query": "#event_simpleName=ProcessRollup2 event_platform=Win CommandLine=*lsass* | table([ComputerName, UserName, FileName, CommandLine])",
+      "description": "Detect processes accessing LSASS memory",
+      "difficulty": "intermediate",
+      "use_case": "Credential dumping detection",
+      "mitre_attack": "T1003.001"
+    },
+    {
+      "category": "defense_evasion",
+      "name": "Disable Windows Defender",
+      "query": "#event_simpleName=ProcessRollup2 event_platform=Win CommandLine=*Set-MpPreference* CommandLine=*DisableRealtimeMonitoring* | table([ComputerName, UserName, CommandLine])",
+      "description": "Detect attempts to disable Windows Defender",
+      "difficulty": "basic",
+      "use_case": "Defense evasion detection",
+      "mitre_attack": "T1562.001"
+    }
+  ]
+}

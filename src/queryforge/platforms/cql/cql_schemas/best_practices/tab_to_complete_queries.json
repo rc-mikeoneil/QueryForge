@@ -1,0 +1,23 @@
+{
+  "title": "Tab to complete queries",
+  "slug": "tab_to_complete_queries",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "Use tab\u2011completion in the UI to quickly insert function names, field names, and operators. This speeds up query authoring and reduces typos.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Leverages tab completion to quickly add timechart(), then builds a basic hourly event count visualization.",
+      "language": "logscale",
+      "query": "// Start typing 'timec' then press Tab to insert timechart()\n#event_simpleName=ProcessRollup2\n| timechart(span=1h, function=count())"
+    }
+  ],
+  "tags": [],
+  "url": "https://library.humio.com/kb/kb-tab-to-complete-syntax.html",
+  "difficulty": "beginner",
+  "related_functions": [
+    "count",
+    "timechart"
+  ]
+}

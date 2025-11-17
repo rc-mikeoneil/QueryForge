@@ -1,0 +1,52 @@
+{
+  "name": "formatTime",
+  "category": "time",
+  "description": "Formats times using a subset of the Java Formatter pattern format. Supports a wide range of date and time format symbols for custom timestamp formatting.",
+  "syntax": "formatTime(format=pattern, field=input_field, as=output_field, locale=locale, timezone=tz)",
+  "parameters": [
+    {
+      "name": "format",
+      "type": "string",
+      "required": true,
+      "description": "Format pattern using Java Formatter symbols (e.g., %Y-%m-%d %H:%M:%S)"
+    },
+    {
+      "name": "field",
+      "type": "string",
+      "required": false,
+      "description": "Field containing timestamp to format (default: @timestamp)"
+    },
+    {
+      "name": "as",
+      "type": "string",
+      "required": false,
+      "description": "Name of output field"
+    },
+    {
+      "name": "locale",
+      "type": "string",
+      "required": false,
+      "description": "Locale for formatting (e.g., en_US)"
+    },
+    {
+      "name": "timezone",
+      "type": "string",
+      "required": false,
+      "description": "Timezone for formatting (e.g., Z, UTC)"
+    }
+  ],
+  "return_type": "enriched_events",
+  "format_symbols": {
+    "time": ["%H", "%I", "%k", "%l", "%M", "%S", "%L", "%N", "%p", "%z", "%Z", "%s", "%Q"],
+    "date": ["%B", "%b", "%h", "%A", "%a", "%C", "%Y", "%y", "%j", "%m", "%d", "%e"],
+    "combined": ["%R", "%T", "%r", "%D", "%F", "%c"]
+  },
+  "examples": [
+    "| formatTime(format=\"%Y-%m-%d %H:%M:%S.%L\", field=firstLogon, as=\"firstLogon\")",
+    "| day := formatTime(\"%Y-%m-%d\", field=@timestamp, locale=en_US, timezone=Z)",
+    "| _bucket := formatTime(\"%Y-%m-%d\", field=_bucket, locale=en_US, timezone=Z)"
+  ],
+  "related_functions": ["formatDuration", "bucket"],
+  "use_cases": ["Timestamp formatting", "Date display", "Time zone conversion", "Custom date formats"],
+  "documentation_url": "https://library.humio.com/data-analysis/functions-formattime.html"
+}

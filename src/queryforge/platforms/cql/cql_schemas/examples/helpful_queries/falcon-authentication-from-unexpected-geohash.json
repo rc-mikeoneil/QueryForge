@@ -1,0 +1,63 @@
+{
+  "id": "falcon-authentication-from-unexpected-geohash",
+  "title": "Falcon Authentication from Unexpected GeoHash",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Falcon Authentication from Unexpected GeoHash.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [],
+  "functions_used": [
+    "asn",
+    "count",
+    "default",
+    "format",
+    "groupBy",
+    "ipLocation",
+    "max",
+    "min",
+    "select",
+    "test"
+  ],
+  "operators_used": [
+    "!=",
+    "<",
+    "=",
+    "and",
+    "|"
+  ],
+  "fields_referenced": [
+    "EventType",
+    "OperationName",
+    "OriginSourceIpAddress",
+    "Success",
+    "as",
+    "field",
+    "format",
+    "from",
+    "function",
+    "ipDetails",
+    "lat",
+    "lon",
+    "precision",
+    "value"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "Analysis query for Falcon Authentication from Unexpected GeoHash",
+  "query": "// Get events of interest\nEventType=Event_ExternalApiEvent EventType=Event_ExternalApiEvent OperationName=userAuthenticate Success=true\n// Get ASN Details\n| asn(OriginSourceIpAddress, as=asn)\n// Omit ZScaler infra\n| asn.org!=/ZSCALER/\n//Get IP Location\n| ipLocation(OriginSourceIpAddress)\n// Get geohash; precision can be adjusted as desired\n| geoHash := geohash(lat=OriginSourceIpAddress.lat, lon=OriginSourceIpAddress.lon, precision=2)\n// Get RDNS value if available\n| rdns(OriginSourceIpAddress, as=rdns)\n//Set default values for blank fields\n| default(value=\"Unknown Country\", field=[OriginSourceIpAddress.country])\n| default(value=\"Unknown City\", field=[OriginSourceIpAddress.city])\n| default(value=\"Unknown ASN\", field=[asn.org])\n| default(value=\"Unknown RDNS\", field=[rdns])\n// Create unified IP details field\n| format(format=\"%s (%s, %s) [%s] - %s\", field=[OriginSourceIpAddress, OriginSourceIpAddress.country, OriginSourceIpAddress.city, asn.org, rdns], as=ipDetails)\n// Aggregate by UserId and geoHash\n| groupBy([UserId, geoHash], function=([count(as=logonCount), min(@timestamp, as=firstLogon), max(@timestamp, as=lastLogon), collect(ipDetails)]))\n// Look for geohashes with fewer than 5 logins; can be adjusted as desired\n| test(logonCount<5)\n// Calculate time delta and determine delta between first and last login\n| timeDelta := lastLogon-firstLogon\n| formatDuration(timeDelta, from=ms, precision=4, as=timeDelta)\n// Format timestamps\n| formatTime(format=\"%Y-%m-%dT%H:%M:%S\", field=firstLogon, as=\"firstLogon\")\n| formatTime(format=\"%Y-%m-%dT%H:%M:%S\", field=lastLogon, as=\"lastLogon\")\n// Create link to geohash map for easier viewing\n| format(\"[Map](https://geohash.softeng.co/%s)\", field=geoHash, as=Map)\n// Order fields as desired\n| select([UserId, firstLogon, lastLogon, logonCount, timeDelta, Map, ipDetails])",
+  "key_features": [
+    "IP geolocation enrichment"
+  ],
+  "related_examples": [],
+  "tags": [
+    "authentication",
+    "lin",
+    "win"
+  ]
+}

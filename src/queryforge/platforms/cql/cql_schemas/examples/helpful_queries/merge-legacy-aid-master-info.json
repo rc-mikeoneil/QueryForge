@@ -1,0 +1,50 @@
+{
+  "id": "merge-legacy-aid-master-info",
+  "title": "Merge Legacy AID Master Info",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Merge Legacy AID Master Info.md",
+  "category": "helpful_query",
+  "subcategory": "process",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "join",
+    "select"
+  ],
+  "operators_used": [
+    "=",
+    "|"
+  ],
+  "fields_referenced": [
+    "FileName",
+    "aid",
+    "field",
+    "include",
+    "key",
+    "query",
+    "repo"
+  ],
+  "correlation_patterns": [
+    "join"
+  ],
+  "difficulty": "advanced",
+  "query_type": "utility",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "Utility query for Merge Legacy AID Master Info",
+  "query": "aid=1e0afc34e9634710bfcd2f46d8564ab1 (#event_simpleName=ProcessRollup2 FileName=\"powershell.exe\")\n| select([aid, ComputerName, CommandLine])\n| join(key=aid, field=aid, query={#repo=sensor_metadata}, include=([AgentVersion, BiosManufacturer, FalconGroupingTags]))",
+  "key_features": [
+    "Uses join for correlation"
+  ],
+  "related_examples": [],
+  "tags": [
+    "join",
+    "lin",
+    "processrollup2",
+    "win"
+  ]
+}

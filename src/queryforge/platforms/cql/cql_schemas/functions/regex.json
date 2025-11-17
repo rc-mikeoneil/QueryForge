@@ -1,0 +1,41 @@
+{
+  "name": "regex",
+  "category": "string",
+  "description": "Works as both a filter and field extractor using regular expressions. The regular expression can contain one or more named capturing groups. Fields with the names of the groups will be added to the events. Can be used inline or as a function.",
+  "syntax": "regex(pattern, field=input_field, strict=bool) OR field=/pattern/",
+  "parameters": [
+    {
+      "name": "pattern",
+      "type": "string",
+      "required": true,
+      "description": "Regular expression pattern with optional named capture groups (?<name>...)"
+    },
+    {
+      "name": "field",
+      "type": "string",
+      "required": false,
+      "description": "Field to search (default: @rawstring)"
+    },
+    {
+      "name": "strict",
+      "type": "boolean",
+      "required": false,
+      "description": "If true, events without a match are dropped. If false, events without a match pass through (default: false)"
+    }
+  ],
+  "return_type": "filtered_or_enriched_events",
+  "inline_syntax": {
+    "filter": "ImageFileName=/\\\\powershell\\.exe/i",
+    "extract": "CommandLine=/(?<command>\\w+)/"
+  },
+  "examples": [
+    "ImageFileName=/\\\\powershell\\.exe/i",
+    "| regex(\"(sc|net1?)\\s+(?<netFlag>\\S+)\\s+\", field=CommandLine, strict=true)",
+    "| regex(\"(sc|net1?)\\s+(?<netFlag>\\S+)\\s+\", field=CommandLine, strict=false)",
+    "| ImageFileName = /powershell/"
+  ],
+  "related_functions": ["match", "replace", "test"],
+  "use_cases": ["Pattern matching", "Field extraction", "Text parsing", "Data filtering"],
+  "notes": "The regex() function searches only the specified field (or @rawstring by default), which can be significantly more performant than the /regex/ inline syntax that searches all fields.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-regular-expression.html"
+}

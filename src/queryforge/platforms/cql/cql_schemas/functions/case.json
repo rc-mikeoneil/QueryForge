@@ -1,0 +1,35 @@
+{
+  "name": "case",
+  "category": "control_flow",
+  "description": "Allows you to describe alternative flows in queries using if-then-else constructs that work on event streams. Similar to case or cond in functional programming languages.",
+  "syntax": "case { condition1 | action1 ; condition2 | action2 ; * ; }",
+  "parameters": [
+    {
+      "name": "conditions",
+      "type": "boolean_expression",
+      "required": true,
+      "description": "Conditions to evaluate for each branch"
+    },
+    {
+      "name": "actions",
+      "type": "query_expression",
+      "required": true,
+      "description": "Actions to perform when condition matches"
+    },
+    {
+      "name": "default",
+      "type": "query_expression",
+      "required": false,
+      "description": "Default case using * for all other events"
+    }
+  ],
+  "return_type": "conditional_events",
+  "examples": [
+    "| case {\n  UserIsAdmin=1 | UserIsAdmin := \"True\" ;\n  UserIsAdmin=0 | UserIsAdmin := \"False\" ;\n  *; \n}",
+    "| case {\n  UserIsAdmin=1 | _UserIsAdmin := \"True\" ;\n  UserIsAdmin=0 | _UserIsAdmin := \"False\" ;\n  *; \n}"
+  ],
+  "related_functions": ["match", "test"],
+  "use_cases": ["Conditional logic", "Data transformation", "Field normalization"],
+  "notes": "Can be destructive (modifying existing fields) or non-destructive (creating new fields with _ prefix).",
+  "documentation_url": "https://library.humio.com/data-analysis/syntax-conditional.html#syntax-conditional-case"
+}

@@ -1,0 +1,26 @@
+{
+  "title": "How-To: Managing timestamps",
+  "slug": "managing_timestamps",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Explains how LogScale parses, normalizes, and uses timestamp fields, and how to adjust or\ncreate timestamps for events that need special handling.",
+  "examples": [
+    {
+      "name": "Parse custom timestamp into @timestamp",
+      "description": "Parses a custom timestamp field and assigns it to @timestamp.",
+      "language": "logscale",
+      "query": "parseTimestamp(field=custom_time, format=\"yyyy-MM-dd HH:mm:ss\", as=@timestamp)"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "timestamps",
+    "parse",
+    "time"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "parseTimestamp"
+  ]
+}

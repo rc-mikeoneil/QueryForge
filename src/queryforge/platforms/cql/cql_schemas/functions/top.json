@@ -1,0 +1,30 @@
+{
+  "name": "top",
+  "category": "aggregation",
+  "description": "Returns the most common values for specified fields with their counts. Automatically sorts by count in descending order.",
+  "syntax": "| top([field1, field2], limit=number)",
+  "parameters": [
+    {
+      "name": "fields",
+      "type": "array",
+      "required": true,
+      "description": "Array of fields to find top values for"
+    },
+    {
+      "name": "limit",
+      "type": "number",
+      "required": false,
+      "description": "Maximum number of results to return. Defaults to 10"
+    }
+  ],
+  "return_type": "aggregated_events",
+  "examples": [
+    "#event_simpleName=UserLogon UserSid=/S-1-5-21-/\n| top([UserName], limit=100)",
+    "| top([ImageFileName], limit=20)",
+    "| top([src_ip, dst_port], limit=50)"
+  ],
+  "related_functions": ["groupBy", "count", "sort"],
+  "use_cases": ["Finding most frequent values", "Top talkers analysis", "Frequency analysis", "Finding outliers"],
+  "notes": "Combines groupBy and count operations with automatic sorting by count. More concise than using groupBy with count and sort separately.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-top.html"
+}

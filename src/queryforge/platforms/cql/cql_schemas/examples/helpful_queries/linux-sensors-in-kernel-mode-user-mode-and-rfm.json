@@ -1,0 +1,49 @@
+{
+  "id": "linux-sensors-in-kernel-mode-user-mode-and-rfm",
+  "title": "Linux Sensors in Kernel Mode, User Mode, and RFM",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Linux Sensors in Kernel Mode, User Mode, and RFM.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "NEW WAY",
+  "mitre_attack": null,
+  "event_types": [
+    "OsVersionInfo"
+  ],
+  "functions_used": [
+    "groupBy",
+    "regex",
+    "replace",
+    "select"
+  ],
+  "operators_used": [
+    "<",
+    "=",
+    ">",
+    "regex",
+    "|"
+  ],
+  "fields_referenced": [
+    "LinuxSensorBackend",
+    "PRETTY_NAME",
+    "as",
+    "field",
+    "function",
+    "strict",
+    "with"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Lin"
+  ],
+  "use_case": "NEW WAY",
+  "query": "#event_simpleName=OsVersionInfo event_platform=Lin\n\n| LinuxSensorBackend=*\n| case{\n\n    LinuxSensorBackend=0 | LinuxSensorBackend := \"Kernel\";\n    LinuxSensorBackend=1 | LinuxSensorBackend := \"eBPF\";\n    *;\n}\n\n| groupBy([aid], function=(selectLast([AgentVersion, LinuxSensorBackend, OSVersionFileData])))\n| replace(\"([0-9A-Fa-f]{2})\", with=\"%$1\", field=OSVersionFileData, as=OSVersionFileData)\n| OSVersionFileData:=urlDecode(\"OSVersionFileData\")\n| regex(\"PRETTY_NAME=\\\"(?<DistroName>[^\\\"]+)\\\"\", field=OSVersionFileData, strict=false)\n| select([aid, AgentVersion, LinuxSensorBackend, DistroName, OSVersionFileData])",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "lin",
+    "osversioninfo",
+    "user"
+  ]
+}

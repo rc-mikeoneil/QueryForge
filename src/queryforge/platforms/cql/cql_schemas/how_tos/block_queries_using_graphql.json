@@ -1,0 +1,27 @@
+{
+  "title": "How-To: Block Queries using GraphQL",
+  "slug": "block_queries_using_graphql",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "graphql",
+  "description": "Use the GraphQL API to block or terminate long-running or abusive queries.\nThis can be used to enforce operational safety, stop runaway dashboards, or comply with\nresource limits for multi-tenant setups.",
+  "examples": [
+    {
+      "name": "Block a specific query by ID",
+      "description": "Marks a query as blocked so it cannot be executed again.",
+      "language": "graphql",
+      "query": "mutation {\n  blockQuery(input: { queryId: \"<QUERY_ID>\", reason: \"Excessive resource usage\" }) {\n    blockedQuery {\n      queryId\n      reason\n    }\n  }\n}"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "graphql",
+    "governance",
+    "queries",
+    "operations"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "blockQuery"
+  ]
+}

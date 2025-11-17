@@ -1,0 +1,26 @@
+{
+  "title": "How-To: Edit schedule and timestamp in scheduled searches",
+  "slug": "edit_schedule_and_timestamp_in_scheduled_searches",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "scheduled_search",
+  "description": "Shows how to adjust the cron-style schedule and timestamp handling for scheduled searches,\nso that searches run at the right times and evaluate the intended time window.",
+  "examples": [
+    {
+      "name": "Change cron schedule for a search",
+      "description": "Updates a scheduled search to run every 15 minutes instead of hourly.",
+      "language": "graphql",
+      "query": "mutation {\n  updateScheduledSearch(\n    input: {\n      id: \"<SCHEDULED_SEARCH_ID>\"\n      cronSchedule: \"*/15 * * * *\"\n    }\n  ) {\n    scheduledSearch { id cronSchedule }\n  }\n}"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "scheduled_search",
+    "cron",
+    "time"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "updateScheduledSearch"
+  ]
+}

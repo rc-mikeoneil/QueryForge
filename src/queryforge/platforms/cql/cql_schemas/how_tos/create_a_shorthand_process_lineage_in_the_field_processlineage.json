@@ -1,0 +1,27 @@
+{
+  "title": "How-To: Create a shorthand process lineage in the field processLineage",
+  "slug": "create_a_shorthand_process_lineage_in_the_field_processlineage",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "fdr_query",
+  "description": "Shows how to build a compact process lineage string (for example, parent->child->grandchild)\nfrom Falcon process execution events using fields like ParentBaseFileName and ImageFileName.",
+  "examples": [
+    {
+      "name": "Build simple processLineage",
+      "description": "Concatenates parent and child process names into a single lineage field.",
+      "language": "logscale",
+      "query": "processLineage := format(\"%s -> %s\", field=[ParentBaseFileName, ImageFileName])"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "fdr",
+    "process",
+    "lineage",
+    "forensics"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "format"
+  ]
+}

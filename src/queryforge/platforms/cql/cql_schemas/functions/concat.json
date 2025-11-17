@@ -1,0 +1,34 @@
+{
+  "name": "concat",
+  "category": "string",
+  "description": "Concatenates the values of a list of fields into a value in a new field.",
+  "syntax": "concat([field1, field2, ...], as=output_field, separator=sep)",
+  "parameters": [
+    {
+      "name": "fields",
+      "type": "array",
+      "required": true,
+      "description": "Array of field names to concatenate"
+    },
+    {
+      "name": "as",
+      "type": "string",
+      "required": true,
+      "description": "Name of the output field"
+    },
+    {
+      "name": "separator",
+      "type": "string",
+      "required": false,
+      "description": "Separator to use between concatenated values (default: empty string)"
+    }
+  ],
+  "return_type": "enriched_events",
+  "examples": [
+    "| concat([UID, UserSid], as=\"userIdentifier\")",
+    "| concat([ComputerName, UserName], as=\"hostUser\", separator=\"\\\\\")"
+  ],
+  "related_functions": ["concatArray", "splitString", "format"],
+  "use_cases": ["Combine fields", "Create composite keys", "String building"],
+  "documentation_url": "https://library.humio.com/data-analysis/functions-concat.html"
+}

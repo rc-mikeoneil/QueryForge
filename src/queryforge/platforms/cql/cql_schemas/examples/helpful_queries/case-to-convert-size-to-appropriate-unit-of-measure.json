@@ -1,0 +1,38 @@
+{
+  "id": "case-to-convert-size-to-appropriate-unit-of-measure",
+  "title": "Case to convert Size to appropriate unit of measure",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Case to convert Size to appropriate unit of measure.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [],
+  "functions_used": [
+    "format",
+    "table"
+  ],
+  "operators_used": [
+    "=",
+    ">",
+    ">=",
+    "|"
+  ],
+  "fields_referenced": [
+    "as",
+    "field",
+    "to"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "basic",
+  "query_type": "utility",
+  "platforms": [
+    "Cross-platform"
+  ],
+  "use_case": "Utility query for Case to convert Size to appropriate unit of measure",
+  "query": "#event_simpleName=/FileWritten$/ \n| case {\n    Size>=1099511627776 | CommonSize:=unit:convert(Size, to=T) | format(\"%,.2f TB\",field=[\"CommonSize\"], as=\"CommonSize\");\n    Size>=1073741824 | CommonSize:=unit:convert(Size, to=G) | format(\"%,.2f GB\",field=[\"CommonSize\"], as=\"CommonSize\");\n    Size>=1048576| CommonSize:=unit:convert(Size, to=M) | format(\"%,.2f MB\",field=[\"CommonSize\"], as=\"CommonSize\");\n    Size>1024 | CommonSize:=unit:convert(Size, to=k) | format(\"%,.3f KB\",field=[\"CommonSize\"], as=\"CommonSize\");\n    * | CommonSize:=format(\"%,.0f Bytes\",field=[\"Size\"]);\n}\n| table([@timestamp, aid, ComputerName, FileName, Size, CommonSize])",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "cross-platform"
+  ]
+}

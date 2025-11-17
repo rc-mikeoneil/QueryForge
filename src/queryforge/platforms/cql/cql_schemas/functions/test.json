@@ -1,0 +1,25 @@
+{
+  "name": "test",
+  "category": "utility",
+  "description": "Filters events based on a boolean condition. Only events where the condition evaluates to true are kept.",
+  "syntax": "| test(condition)",
+  "parameters": [
+    {
+      "name": "condition",
+      "type": "boolean_expression",
+      "required": true,
+      "description": "The boolean expression to evaluate for each event"
+    }
+  ],
+  "return_type": "filtered_events",
+  "examples": [
+    "| test(logonCount<5)",
+    "| test(eventCount==2)",
+    "| test(length > 100)",
+    "| test(UserIsAdmin=1)"
+  ],
+  "related_functions": ["case", "match", "in"],
+  "use_cases": ["Filtering by numeric conditions", "Threshold filtering", "Boolean logic", "Post-aggregation filtering"],
+  "notes": "Commonly used after aggregations to filter based on calculated values.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-test.html"
+}

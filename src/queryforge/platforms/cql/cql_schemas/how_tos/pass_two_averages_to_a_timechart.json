@@ -1,0 +1,27 @@
+{
+  "title": "How-To: Pass Two Averages to a Timechart",
+  "slug": "pass_two_averages_to_a_timechart",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Shows how to compute two average metrics (for example, avg response time and avg payload size)\nand then visualize both series on the same timechart.",
+  "examples": [
+    {
+      "name": "Chart avg latency and avg size",
+      "description": "Computes average latency and size per time bucket and sends both to timechart().",
+      "language": "logscale",
+      "query": "| timechart(\n    function=[avg(latency_ms) as avgLatency, avg(bytes) as avgBytes],\n    span=1m\n  )"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "timechart",
+    "averages",
+    "metrics"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "avg",
+    "timechart"
+  ]
+}

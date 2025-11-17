@@ -1,0 +1,23 @@
+{
+  "title": "How-To: Upgrading from Non-OSS to OSS Beats Log Shippers",
+  "slug": "upgrading_from_non_oss_to_oss_beats_log_shippers",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "integration",
+  "description": "Outlines steps for upgrading Beats-based shippers from non-OSS distributions to OSS ones,\nensuring configuration compatibility and minimal downtime.",
+  "examples": [
+    {
+      "name": "Upgrade Beats package",
+      "description": "High-level example of replacing a non-OSS Beats package with an OSS one.",
+      "language": "shell",
+      "query": "systemctl stop filebeat\nrpm -Uvh filebeat-oss.rpm\nsystemctl start filebeat"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "beats",
+    "oss",
+    "upgrade"
+  ],
+  "difficulty": "beginner"
+}

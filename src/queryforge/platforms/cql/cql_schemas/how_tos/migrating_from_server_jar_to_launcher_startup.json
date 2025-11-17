@@ -1,0 +1,23 @@
+{
+  "title": "How-To: Migrating from server.jar to Launcher Startup",
+  "slug": "migrating_from_server_jar_to_launcher_startup",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "admin",
+  "description": "Details how to migrate from running LogScale via the legacy server.jar method to a launcher-based\nor service-based startup, preserving configuration and data directories.",
+  "examples": [
+    {
+      "name": "Basic migration outline",
+      "description": "Copy configuration to launcher config directory and enable the new service.",
+      "language": "shell",
+      "query": "cp server.conf /etc/logscale/server.conf\nsystemctl enable logscale\nsystemctl start logscale"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "migration",
+    "launcher",
+    "admin"
+  ],
+  "difficulty": "beginner"
+}

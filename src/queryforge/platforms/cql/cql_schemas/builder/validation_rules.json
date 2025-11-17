@@ -1,0 +1,539 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2025-11-15T00:00:00Z",
+  "description": "Validation rules for CrowdStrike Query Language (CQL) query builder - ensures type safety and syntax correctness",
+  "type_compatibility_matrix": {
+    "description": "Defines which operators and functions can be used with which field types",
+    "operator_to_field_types": {
+      "=": {
+        "compatible_types": ["string", "number", "long", "boolean", "ip_address"],
+        "description": "Exact match - works with all types",
+        "examples": [
+          {"field": "ComputerName", "type": "string", "usage": "ComputerName=\"HOST01\""},
+          {"field": "LogonType", "type": "string", "usage": "LogonType=10"},
+          {"field": "UserIsAdmin", "type": "boolean", "usage": "UserIsAdmin=1"}
+        ]
+      },
+      "!=": {
+        "compatible_types": ["string", "number", "long", "boolean", "ip_address"],
+        "description": "Not equal - works with all types",
+        "examples": [
+          {"field": "UserName", "type": "string", "usage": "UserName!=\"SYSTEM\""},
+          {"field": "LogonType", "type": "string", "usage": "LogonType!=2"}
+        ]
+      },
+      ">": {
+        "compatible_types": ["number", "long", "timestamp"],
+        "description": "Greater than - numeric and timestamp types only",
+        "incompatible_with": ["string", "boolean", "ip_address"],
+        "error_message": "Operator '>' can only be used with numeric or timestamp fields",
+        "examples": [
+          {"field": "_count", "type": "number", "usage": "_count>10"},
+          {"field": "ProcessStartTime", "type": "timestamp", "usage": "ProcessStartTime>1000000"}
+        ]
+      },
+      "<": {
+        "compatible_types": ["number", "long", "timestamp"],
+        "description": "Less than - numeric and timestamp types only",
+        "incompatible_with": ["string", "boolean", "ip_address"],
+        "error_message": "Operator '<' can only be used with numeric or timestamp fields",
+        "examples": [
+          {"field": "FileSize", "type": "number", "usage": "FileSize<1024"}
+        ]
+      },
+      ">=": {
+        "compatible_types": ["number", "long", "timestamp"],
+        "description": "Greater than or equal - numeric and timestamp types only",
+        "incompatible_with": ["string", "boolean", "ip_address"],
+        "error_message": "Operator '>=' can only be used with numeric or timestamp fields"
+      },
+      "<=": {
+        "compatible_types": ["number", "long", "timestamp"],
+        "description": "Less than or equal - numeric and timestamp types only",
+        "incompatible_with": ["string", "boolean", "ip_address"],
+        "error_message": "Operator '<=' can only be used with numeric or timestamp fields"
+      },
+      "=*": {
+        "compatible_types": ["string"],
+        "description": "Wildcard match - string fields only",
+        "incompatible_with": ["number", "long", "boolean", "timestamp", "ip_address"],
+        "error_message": "Wildcard operator '=*' can only be used with string fields",
+        "examples": [
+          {"field": "ImageFileName", "type": "string", "usage": "ImageFileName=*powershell*"},
+          {"field": "FileName", "type": "string", "usage": "FileName=*.exe"}
+        ]
+      },
+      "=/regex/": {
+        "compatible_types": ["string"],
+        "description": "Regex match - string fields only",
+        "incompatible_with": ["number", "long", "boolean", "timestamp", "ip_address"],
+        "error_message": "Regex operator can only be used with string fields",
+        "examples": [
+          {"field": "CommandLine", "type": "string", "usage": "CommandLine=/^(sc|net1?)\\.exe/i"}
+        ]
+      },
+      "in()": {
+        "compatible_types": ["string", "number", "long", "boolean", "ip_address"],
+        "description": "Multi-value match - works with all types",
+        "examples": [
+          {"field": "LogonType", "type": "string", "usage": "in(LogonType, values=[2,10])"},
+          {"field": "ImageFileName", "type": "string", "usage": "in(ImageFileName, values=[\"cmd.exe\",\"powershell.exe\"])"}
+        ]
+      }
+    },
+    "function_to_field_types": {
+      "groupBy": {
+        "compatible_types": ["string", "number", "long", "ip_address", "boolean"],
+        "recommended_types": ["string", "ip_address"],
+        "avoid_types": ["high_cardinality_string"],
+        "description": "Grouping works best with low-to-medium cardinality fields",
+        "performance_warning": "Avoid grouping by high-cardinality fields like CommandLine or SHA256HashData",
+        "examples": [
+          {"field": "ComputerName", "type": "string", "recommended": true},
+          {"field": "UserSid", "type": "string", "recommended": true},
+          {"field": "CommandLine", "type": "string", "recommended": false, "reason": "High cardinality"}
+        ]
+      },
+      "count": {
+        "compatible_types": ["string", "number", "long", "ip_address", "boolean"],
+        "description": "Count works with all field types",
+        "notes": "Use distinct=true for counting unique values"
+      },
+      "ipLocation": {
+        "compatible_types": ["ip_address"],
+        "required_type": "ip_address",
+        "incompatible_with": ["string", "number", "long", "boolean", "timestamp"],
+        "error_message": "ipLocation() requires an IP address field",
+        "valid_fields": ["RemoteAddressIP4", "LocalAddressIP4", "aip"],
+        "examples": [
+          {"field": "RemoteAddressIP4", "type": "ip_address", "usage": "ipLocation(RemoteAddressIP4)"}
+        ]
+      },
+      "asn": {
+        "compatible_types": ["ip_address"],
+        "required_type": "ip_address",
+        "incompatible_with": ["string", "number", "long", "boolean", "timestamp"],
+        "error_message": "asn() requires an IP address field",
+        "valid_fields": ["RemoteAddressIP4", "LocalAddressIP4", "aip"]
+      },
+      "cidr": {
+        "compatible_types": ["ip_address"],
+        "required_type": "ip_address",
+        "incompatible_with": ["string", "number", "long", "boolean", "timestamp"],
+        "error_message": "cidr() requires an IP address field",
+        "valid_fields": ["RemoteAddressIP4", "LocalAddressIP4", "aip"]
+      },
+      "rdns": {
+        "compatible_types": ["ip_address"],
+        "required_type": "ip_address",
+        "incompatible_with": ["string", "number", "long", "boolean", "timestamp"],
+        "error_message": "rdns() requires an IP address field",
+        "valid_fields": ["RemoteAddressIP4", "LocalAddressIP4", "aip"]
+      },
+      "geoHash": {
+        "compatible_types": ["number"],
+        "required_parameters": ["lat", "lon"],
+        "description": "Requires latitude and longitude numeric fields",
+        "error_message": "geoHash() requires both lat and lon parameters with numeric fields"
+      },
+      "formatTime": {
+        "compatible_types": ["timestamp", "long", "datetime"],
+        "description": "Formats timestamp fields",
+        "valid_fields": ["@timestamp", "ContextTimeStamp", "ProcessStartTime", "PasswordLastSet"],
+        "error_message": "formatTime() requires a timestamp field",
+        "notes": "Epoch timestamps in milliseconds need conversion"
+      },
+      "formatDuration": {
+        "compatible_types": ["number", "long"],
+        "description": "Formats duration values (milliseconds) to human-readable",
+        "error_message": "formatDuration() requires a numeric field representing duration"
+      },
+      "regex": {
+        "compatible_types": ["string"],
+        "required_type": "string",
+        "incompatible_with": ["number", "long", "boolean", "timestamp", "ip_address"],
+        "error_message": "regex() can only be used with string fields",
+        "notes": "Use named capture groups (?<name>...) to extract fields"
+      },
+      "lower": {
+        "compatible_types": ["string"],
+        "required_type": "string",
+        "incompatible_with": ["number", "long", "boolean", "timestamp", "ip_address"],
+        "error_message": "lower() can only be used with string fields"
+      },
+      "concat": {
+        "compatible_types": ["string", "number"],
+        "description": "Concatenates multiple fields",
+        "notes": "Numeric fields will be converted to strings"
+      },
+      "splitString": {
+        "compatible_types": ["string"],
+        "required_type": "string",
+        "incompatible_with": ["number", "long", "boolean", "timestamp", "ip_address"],
+        "error_message": "splitString() can only be used with string fields"
+      },
+      "length": {
+        "compatible_types": ["string"],
+        "required_type": "string",
+        "incompatible_with": ["number", "long", "boolean", "timestamp", "ip_address"],
+        "error_message": "length() can only be used with string fields"
+      }
+    }
+  },
+  "required_fields": {
+    "description": "Required fields that should always be present in queries for each event type",
+    "event_type_requirements": {
+      "all_events": {
+        "filter_requirement": {
+          "field": "#event_simpleName",
+          "description": "All queries should start with an event type filter",
+          "example": "#event_simpleName=ProcessRollup2",
+          "validation": "Query should begin with #event_simpleName=<event_type>",
+          "error_message": "Missing event type filter - queries should start with #event_simpleName=<type>"
+        },
+        "recommended_fields": [
+          {
+            "field": "aid",
+            "description": "Agent ID for endpoint correlation",
+            "usage": "grouping, filtering, correlation"
+          }
+        ]
+      },
+      "ProcessRollup2": {
+        "always_available": ["event_simpleName", "aid", "cid", "event_platform", "TargetProcessId", "ContextTimeStamp"],
+        "commonly_used": ["ComputerName", "UserName", "UserSid", "ImageFileName", "FileName", "CommandLine", "ParentProcessId"],
+        "optional": ["SHA256HashData", "MD5HashData", "SignInfoFlags", "ZoneIdentifier", "UID", "GID"]
+      },
+      "UserLogon": {
+        "always_available": ["event_simpleName", "aid", "cid", "event_platform", "ContextTimeStamp"],
+        "commonly_used": ["ComputerName", "UserName", "UserSid", "LogonType", "LogonDomain", "RemoteAddressIP4"],
+        "optional": ["ClientComputerName", "UserIsAdmin", "AuthenticationPackage", "PasswordLastSet", "aip"]
+      },
+      "NetworkConnectIP4": {
+        "always_available": ["event_simpleName", "aid", "cid", "event_platform", "ContextTimeStamp"],
+        "commonly_used": ["ComputerName", "RemoteAddressIP4", "RemotePort", "LocalAddressIP4", "Protocol", "ContextProcessId"],
+        "optional": ["UserName", "UserSid", "UID", "CommandLine", "FileName"]
+      },
+      "DnsRequest": {
+        "always_available": ["event_simpleName", "aid", "cid", "event_platform", "ContextTimeStamp"],
+        "commonly_used": ["ComputerName", "DomainName", "ContextProcessId", "ContextBaseFileName"],
+        "optional": ["UserName", "FileName"]
+      }
+    }
+  },
+  "function_parameter_validation": {
+    "description": "Parameter requirements and validation rules for CQL functions",
+    "groupBy": {
+      "required_parameters": ["fields"],
+      "optional_parameters": ["function", "limit"],
+      "validation_rules": {
+        "fields": {
+          "type": "array",
+          "min_length": 1,
+          "error_message": "groupBy requires at least one field in the fields array"
+        },
+        "function": {
+          "type": "aggregation_function",
+          "valid_functions": ["count()", "collect()", "avg()", "sum()", "min()", "max()"],
+          "error_message": "function parameter must be an aggregation function"
+        },
+        "limit": {
+          "type": "number or 'max'",
+          "default": 200,
+          "description": "Maximum number of groups to return"
+        }
+      },
+      "examples": [
+        "groupBy([ComputerName])",
+        "groupBy([aid, UserSid], function=count())",
+        "groupBy([ImageFileName], function=[count(), collect([CommandLine])], limit=max)"
+      ]
+    },
+    "join": {
+      "required_parameters": ["query", "field"],
+      "optional_parameters": ["include", "mode"],
+      "validation_rules": {
+        "query": {
+          "type": "subquery",
+          "format": "{#event_simpleName=<type> <filters>}",
+          "error_message": "query parameter must be a valid CQL subquery enclosed in {}"
+        },
+        "field": {
+          "type": "array",
+          "description": "Array of field names to join on, supports field mapping with =",
+          "format": "[aid, field1=field2]",
+          "common_joins": [
+            {"primary": "TargetProcessId", "secondary": "ContextProcessId", "description": "Process-to-Network correlation"},
+            {"primary": "aid", "secondary": "aid", "description": "Same endpoint correlation"},
+            {"primary": "UserSid", "secondary": "UserSid", "description": "User activity correlation"}
+          ],
+          "error_message": "field parameter must be an array of field names or field mappings"
+        },
+        "mode": {
+          "type": "string",
+          "valid_values": ["left", "inner", "outer"],
+          "default": "left",
+          "description": "Join mode - left includes all events from primary query"
+        }
+      }
+    },
+    "ipLocation": {
+      "required_parameters": ["field"],
+      "optional_parameters": ["as"],
+      "validation_rules": {
+        "field": {
+          "type": "ip_address",
+          "valid_fields": ["RemoteAddressIP4", "LocalAddressIP4", "aip"],
+          "error_message": "field parameter must be an IP address field"
+        },
+        "as": {
+          "type": "string",
+          "description": "Prefix for output fields (e.g., 'remote' creates remote.country, remote.city)",
+          "default": "field name prefix"
+        }
+      }
+    },
+    "formatTime": {
+      "required_parameters": ["format", "field"],
+      "optional_parameters": ["as"],
+      "validation_rules": {
+        "format": {
+          "type": "string",
+          "description": "strftime-style format pattern",
+          "common_patterns": [
+            "%Y-%m-%d (date)",
+            "%H:%M:%S (time)",
+            "%Y-%m-%d %H:%M:%S (datetime)",
+            "%A, %B %d, %Y (human-readable)"
+          ],
+          "error_message": "format parameter must be a valid strftime pattern"
+        },
+        "field": {
+          "type": "timestamp",
+          "valid_fields": ["@timestamp", "ContextTimeStamp", "ProcessStartTime"],
+          "error_message": "field parameter must be a timestamp field"
+        }
+      }
+    },
+    "bucket": {
+      "required_parameters": ["span"],
+      "optional_parameters": ["field", "function"],
+      "validation_rules": {
+        "span": {
+          "type": "duration",
+          "format": "<number><unit>",
+          "valid_units": ["ms", "s", "m", "h", "d", "w"],
+          "examples": ["1m", "5m", "1h", "1d"],
+          "error_message": "span must be a valid duration (e.g., 1m, 5m, 1h)"
+        },
+        "field": {
+          "type": "timestamp",
+          "default": "@timestamp",
+          "description": "Timestamp field to bucket on"
+        }
+      }
+    },
+    "in": {
+      "required_parameters": ["field", "values"],
+      "validation_rules": {
+        "field": {
+          "type": "any",
+          "description": "Field name to check"
+        },
+        "values": {
+          "type": "array",
+          "min_length": 1,
+          "description": "Array of values to match against",
+          "error_message": "values parameter must be a non-empty array"
+        }
+      }
+    }
+  },
+  "join_validation": {
+    "description": "Validation rules for join operations and field correlation",
+    "common_correlation_patterns": [
+      {
+        "pattern_name": "Process-to-Network",
+        "primary_event": "ProcessRollup2",
+        "secondary_event": "NetworkConnectIP4",
+        "join_fields": ["aid", {"primary": "TargetProcessId", "secondary": "ContextProcessId"}],
+        "valid": true,
+        "example": "join(query={#event_simpleName=NetworkConnectIP4}, field=[aid, TargetProcessId=ContextProcessId])"
+      },
+      {
+        "pattern_name": "Process-to-DNS",
+        "primary_event": "ProcessRollup2",
+        "secondary_event": "DnsRequest",
+        "join_fields": ["aid", {"primary": "TargetProcessId", "secondary": "ContextProcessId"}],
+        "valid": true,
+        "example": "join(query={#event_simpleName=DnsRequest}, field=[aid, TargetProcessId=ContextProcessId])"
+      },
+      {
+        "pattern_name": "User-to-Process",
+        "primary_event": "UserLogon",
+        "secondary_event": "ProcessRollup2",
+        "join_fields": ["aid", "UserSid"],
+        "valid": true,
+        "example": "join(query={#event_simpleName=ProcessRollup2}, field=[aid, UserSid])"
+      },
+      {
+        "pattern_name": "Process-Lifecycle",
+        "primary_event": "ProcessRollup2",
+        "secondary_event": "EndOfProcess",
+        "join_fields": ["aid", "TargetProcessId"],
+        "valid": true,
+        "example": "join(query={#event_simpleName=EndOfProcess}, field=[aid, TargetProcessId])"
+      }
+    ],
+    "field_type_compatibility": {
+      "description": "Field types must match when joining",
+      "rules": [
+        {
+          "rule": "Same field types required",
+          "example_valid": "aid (string) = aid (string)",
+          "example_invalid": "TargetProcessId (long) = ComputerName (string)",
+          "error_message": "Cannot join fields of different types"
+        },
+        {
+          "rule": "aid should always be included in joins",
+          "description": "Ensures events are from the same endpoint",
+          "recommended": true
+        }
+      ]
+    }
+  },
+  "syntax_validation": {
+    "description": "Query syntax validation rules",
+    "query_structure": {
+      "valid_pattern": "#event_simpleName=<type> [filters] | [functions] | [output]",
+      "required_start": "#event_simpleName=",
+      "pipe_usage": "| separates query stages",
+      "field_references": "Use field names without quotes for field references"
+    },
+    "common_errors": [
+      {
+        "error": "Missing event type filter",
+        "fix": "Start query with #event_simpleName=<event_type>",
+        "example_bad": "aid=* | groupBy([ComputerName])",
+        "example_good": "#event_simpleName=ProcessRollup2 aid=* | groupBy([ComputerName])"
+      },
+      {
+        "error": "Incorrect field type for operator",
+        "fix": "Use appropriate operator for field type",
+        "example_bad": "ComputerName>100",
+        "example_good": "ComputerName=*HOST*"
+      },
+      {
+        "error": "High cardinality groupBy",
+        "fix": "Avoid grouping by CommandLine, SHA256HashData, or other high-cardinality fields",
+        "example_bad": "groupBy([CommandLine])",
+        "example_good": "groupBy([FileName])",
+        "warning_level": "performance"
+      },
+      {
+        "error": "Missing join correlation field",
+        "fix": "Always include 'aid' in join field list",
+        "example_bad": "join(query={...}, field=[UserSid])",
+        "example_good": "join(query={...}, field=[aid, UserSid])"
+      },
+      {
+        "error": "Invalid IP field for geolocation",
+        "fix": "Use IP address fields (RemoteAddressIP4, LocalAddressIP4, aip) with ipLocation",
+        "example_bad": "ipLocation(ComputerName)",
+        "example_good": "ipLocation(RemoteAddressIP4)"
+      }
+    ]
+  },
+  "performance_validation": {
+    "description": "Performance best practices and validation warnings",
+    "warnings": [
+      {
+        "check": "High cardinality groupBy",
+        "fields_to_avoid": ["CommandLine", "SHA256HashData", "MD5HashData", "@rawstring"],
+        "reason": "Extremely high cardinality can cause memory issues",
+        "severity": "high",
+        "suggestion": "Group by lower cardinality fields like FileName, ImageFileName, or UserSid"
+      },
+      {
+        "check": "Missing time range filter",
+        "reason": "Queries without time limits can be very slow",
+        "severity": "medium",
+        "suggestion": "Add time range filter or use default time range in UI"
+      },
+      {
+        "check": "Wildcard at start of string",
+        "pattern": "field=*value",
+        "reason": "Leading wildcards prevent index usage",
+        "severity": "medium",
+        "suggestion": "Avoid wildcards at the beginning of search patterns when possible"
+      },
+      {
+        "check": "Regex without anchors",
+        "reason": "Unanchored regex patterns can be slow",
+        "severity": "low",
+        "suggestion": "Use ^ and $ anchors when appropriate to improve regex performance"
+      },
+      {
+        "check": "Multiple joins in sequence",
+        "reason": "Multiple joins can be expensive",
+        "severity": "medium",
+        "suggestion": "Consider using correlate() for complex multi-event correlation"
+      }
+    ],
+    "best_practices": [
+      "Filter early: Apply field filters before aggregation",
+      "Use aid for correlation: Always include aid in joins for endpoint correlation",
+      "Prefer FileName over ImageFileName: FileName has lower cardinality for grouping",
+      "Use UserSid over UserName: UserSid is more reliable and cannot be spoofed",
+      "Limit results: Use head(), tail(), or limit parameter to avoid returning too many results",
+      "Use in() instead of OR: in(field, values=[...]) is more efficient than multiple OR conditions"
+    ]
+  },
+  "field_type_definitions": {
+    "description": "Standard field type definitions and their characteristics",
+    "types": {
+      "string": {
+        "description": "Text data",
+        "compatible_operators": ["=", "!=", "=*", "=/regex/", "in()"],
+        "compatible_functions": ["groupBy", "count", "regex", "lower", "concat", "splitString", "length"],
+        "examples": ["ComputerName", "UserName", "FileName", "CommandLine"]
+      },
+      "long": {
+        "description": "Large integer values",
+        "compatible_operators": ["=", "!=", ">", "<", ">=", "<=", "in()"],
+        "compatible_functions": ["groupBy", "count", "formatDuration"],
+        "examples": ["TargetProcessId", "ParentProcessId", "ContextProcessId", "ProcessStartTime"]
+      },
+      "number": {
+        "description": "Numeric values",
+        "compatible_operators": ["=", "!=", ">", "<", ">=", "<=", "in()"],
+        "compatible_functions": ["groupBy", "count", "sum", "avg", "min", "max"],
+        "examples": ["_count", "RemotePort", "LocalPort"]
+      },
+      "ip_address": {
+        "description": "IPv4 addresses",
+        "compatible_operators": ["=", "!=", "in()"],
+        "compatible_functions": ["groupBy", "count", "ipLocation", "asn", "cidr", "rdns"],
+        "examples": ["RemoteAddressIP4", "LocalAddressIP4", "aip"]
+      },
+      "timestamp": {
+        "description": "Epoch timestamps or datetime values",
+        "compatible_operators": ["=", "!=", ">", "<", ">=", "<="],
+        "compatible_functions": ["formatTime", "bucket", "timeChart"],
+        "examples": ["@timestamp", "ContextTimeStamp", "ProcessStartTime"]
+      },
+      "datetime": {
+        "description": "ISO format datetime strings",
+        "compatible_operators": ["=", "!=", ">", "<", ">=", "<="],
+        "compatible_functions": ["formatTime", "bucket"],
+        "examples": ["@timestamp"]
+      },
+      "boolean": {
+        "description": "Boolean values (0/1 or true/false)",
+        "compatible_operators": ["=", "!="],
+        "compatible_functions": ["groupBy", "count"],
+        "examples": ["UserIsAdmin", "RemoteAccount"]
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "kvParse",
+  "category": "transformation",
+  "description": "Parses key-value pairs in various formats including quoted and unquoted values. Extracts keys as field names with their corresponding values.",
+  "syntax": "| kvParse(field)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "field",
+      "required": false,
+      "description": "The field containing key-value pairs to parse. Defaults to @rawstring if not specified"
+    }
+  ],
+  "return_type": "parsed_events",
+  "examples": [
+    "createEvents([\"Shape=Square, Color=Red\", \"Shape=Circle, Color=Blue\", \"Shape=Triangle, Color=Green\"])\n| kvParse()",
+    "| kvParse(field=message)",
+    "| kvParse()"
+  ],
+  "related_functions": ["parseJson", "parseXml", "regex"],
+  "use_cases": ["Parsing log messages with key-value format", "Extracting structured data from unstructured text", "Processing configuration strings"],
+  "notes": "Supports multiple formats:\n- key=value\n- key=\"value\"\n- key='value'\n- key = value (with spaces)\nBoth key and value can be quoted or unquoted.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-kvparse.html"
+}

@@ -1,0 +1,42 @@
+{
+  "name": "count",
+  "category": "aggregation",
+  "description": "Counts the number of events in the repository or streaming through the function. The result is put in a field named '_count'. You can specify a field to count only events containing that field, and can output a distinct count.",
+  "syntax": "count(field, as=output_field, distinct=bool)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": false,
+      "description": "Field to count. If specified, only events containing this field are counted"
+    },
+    {
+      "name": "as",
+      "type": "string",
+      "required": false,
+      "description": "Name for the output count field (default: _count)"
+    },
+    {
+      "name": "distinct",
+      "type": "boolean",
+      "required": false,
+      "description": "If true, counts only distinct values (default: false)"
+    }
+  ],
+  "return_type": "aggregated_count",
+  "output_fields": [
+    {
+      "name": "_count",
+      "type": "long",
+      "description": "Count of events (or custom field name if 'as' parameter is used)"
+    }
+  ],
+  "examples": [
+    "| count(FileName, as=executionCount)",
+    "| count(aid, distinct=true, as=uniqueEndpoints)",
+    "| count()"
+  ],
+  "related_functions": ["groupBy", "stats"],
+  "use_cases": ["Event counting", "Aggregation", "Frequency analysis", "Cardinality analysis"],
+  "documentation_url": "https://library.humio.com/data-analysis/functions-count.html"
+}

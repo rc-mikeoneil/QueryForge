@@ -1,0 +1,61 @@
+{
+  "id": "resource-utilization",
+  "title": "Resource Utilization",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Resource Utilization.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "SystemCapacity",
+    "ResourceUtilization"
+  ],
+  "functions_used": [
+    "default",
+    "format",
+    "groupBy",
+    "rename",
+    "selfJoinFilter",
+    "table"
+  ],
+  "operators_used": [
+    "=",
+    "or",
+    "|"
+  ],
+  "fields_referenced": [
+    "MemoryTotal",
+    "as",
+    "data_source_name",
+    "field",
+    "format",
+    "function",
+    "limit",
+    "replaceEmpty",
+    "repo",
+    "value",
+    "where"
+  ],
+  "correlation_patterns": [
+    "selfJoinFilter"
+  ],
+  "difficulty": "expert",
+  "query_type": "analysis",
+  "platforms": [
+    "Lin",
+    "Mac"
+  ],
+  "use_case": "Analysis query for Resource Utilization",
+  "query": "(#event_simpleName=/^(SystemCapacity|ResourceUtilization)$/) OR (#repo=sensor_metadata #data_source_name=aidmaster)\n| case {\n    event_platform=Lin | ProductType:=3;\n    event_platform=Mac | ProductType:=1;\n    *;\n}\n| $falcon/helper:enrich(field=ProductType)\n| selfJoinFilter(field=[aid], where=[{#event_simpleName=SystemCapacity},{#event_simpleName=ResourceUtilization}, {#repo=sensor_metadata #data_source_name=aidmaster}])\n| groupBy([aid], function=([selectLast([ComputerName, event_platform, ProductType, AgentVersion, Version, MachineDomain, OU, SiteName, CpuProcessorName, PhysicalCoreCount, LogicalCoreCount, AverageCpuUsage, MaxCpuUsage, MemoryTotal, AverageUsedRam, MaxUsedRam, UsedDiskSpace, AvailableDiskSpace])]))\n| PercentDiskUsed:=AvailableDiskSpace/(UsedDiskSpace+AvailableDiskSpace) | PercentDiskUsed:=format(format=\"%,.2f %%\", field=[PercentDiskUsed])\n| MemoryTotal:=(MemoryTotal/1024/1024/1024) | MemoryTotal:=round(MemoryTotal) | MemoryTotal:=format(format=\"%s GB\", field=[MemoryTotal])\n| AverageUsedRam:=(AverageUsedRam/1024) | AverageUsedRam:=format(format=\"%,.2f GB\", field=[AverageUsedRam])\n| MaxUsedRam:=(MaxUsedRam/1024) | MaxUsedRam:=format(format=\"%,.2f GB\", field=[MaxUsedRam])\n| AverageCpuUsage:= format(format=\"%s %%\", field=[AverageCpuUsage])\n| MaxCpuUsage:= format(format=\"%s %%\", field=[MaxCpuUsage])\n| default(value=\"-\", field=[ComputerName, event_platform, ProductType, AgentVersion, Version, MachineDomain, OU, SiteName, CpuProcessorName, PhysicalCoreCount, LogicalCoreCount, AverageCpuUsage, MaxCpuUsage, MemoryTotal, AverageUsedRam, MaxUsedRam, UsedDiskSpace, AvailableDiskSpace, PercentDiskUsed], replaceEmpty=true)\n| rename(field=\"aid\", as=\"Agent ID\")\n| rename(field=\"ComputerName\", as=\"Endpoint\")\n| rename(field=\"event_platform\", as=\"Platform\")\n| rename(field=\"ProductType\", as=\"Type\")\n| rename(field=\"AgentVersion\", as=\"Falcon Version\")\n| rename(field=\"Version\", as=\"OS\")\n| rename(field=\"MachineDomain\", as=\"Domain\")\n| rename(field=\"SiteName\", as=\"Site\")\n| rename(field=\"CpuProcessorName\", as=\"CPU\")\n| rename(field=\"PhysicalCoreCount\", as=\"Physical Cores\")\n| rename(field=\"LogicalCoreCount\", as=\"Logical Cores\")\n| rename(field=\"AverageCpuUsage\", as=\"Avg. CPU\")\n| rename(field=\"MaxCpuUsage\", as=\"Max. CPU\")\n| rename(field=\"AverageUsedRam\", as=\"Avg. RAM\")\n| rename(field=\"MaxUsedRam\", as=\"Max. RAM\")\n| rename(field=\"PercentDiskUsed\", as=\"% Disk Used\")\n| table([\"Agent ID\", \"Endpoint\", \"Platform\", \"Type\", \"Falcon Version\", \"OS\", \"Domain\", \"Site\", \"CPU\", \"Physical Cores\", \"Logical Cores\", \"Avg. CPU\", \"Max. CPU\", \"Avg. RAM\", \"MaxUsedRam\", \"% Disk Used\"], limit=20000)",
+  "key_features": [
+    "Uses selfJoinFilter for correlation",
+    "Advanced correlation techniques"
+  ],
+  "related_examples": [],
+  "tags": [
+    "lin",
+    "mac",
+    "resourceutilization",
+    "systemcapacity"
+  ]
+}

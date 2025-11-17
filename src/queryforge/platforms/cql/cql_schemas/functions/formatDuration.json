@@ -1,0 +1,50 @@
+{
+  "name": "formatDuration",
+  "category": "time",
+  "description": "Converts a duration into a human readable string. The 'from' parameter can be set to your duration's magnitude.",
+  "syntax": "formatDuration(field, from=unit, precision=num, as=output_field)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "Field containing the duration value"
+    },
+    {
+      "name": "from",
+      "type": "string",
+      "required": true,
+      "description": "Unit of the input duration (d, h, m, s, ms, us, ns)"
+    },
+    {
+      "name": "precision",
+      "type": "number",
+      "required": false,
+      "description": "Number of time units to include in output (default: 2)"
+    },
+    {
+      "name": "as",
+      "type": "string",
+      "required": false,
+      "description": "Name of the output field"
+    }
+  ],
+  "valid_units": {
+    "d": "Days",
+    "h": "Hours",
+    "m": "Minutes",
+    "s": "Seconds",
+    "ms": "Milliseconds",
+    "us": "Microseconds",
+    "ns": "Nanoseconds"
+  },
+  "return_type": "enriched_events",
+  "examples": [
+    "| formatDuration(timeDelta, from=ms, precision=4, as=timeDelta)",
+    "| formatDuration(uptime, from=s, precision=2, as=uptimeFormatted)",
+    "| formatDuration(responseTime, from=ms, precision=3, as=responseTime)"
+  ],
+  "related_functions": ["formatTime", "bucket"],
+  "use_cases": ["Duration formatting", "Time display", "Performance metrics", "Uptime calculation"],
+  "documentation_url": "https://library.humio.com/data-analysis/functions-formatduration.html"
+}

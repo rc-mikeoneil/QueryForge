@@ -1,0 +1,26 @@
+{
+  "title": "How-To: Parse Unix Timestamps",
+  "slug": "parse_unix_timestamps",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Shows how to convert Unix epoch timestamps (seconds or milliseconds) into @timestamp or\nother datetime fields using parseTimestamp() or similar functions.",
+  "examples": [
+    {
+      "name": "Parse millisecond epoch into readable timestamp",
+      "description": "Converts a numeric epoch_ms field into @timestamp.",
+      "language": "logscale",
+      "query": "parseTimestamp(field=epoch_ms, unit=ms, as=@timestamp)"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "timestamps",
+    "unix_epoch",
+    "parse"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "parseTimestamp"
+  ]
+}

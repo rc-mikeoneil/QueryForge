@@ -1,0 +1,250 @@
+{
+  "schema_version": "1.0.0",
+  "description": "CQL query best practices and optimization guidelines",
+  "best_practices": [
+    {
+      "category": "filtering",
+      "title": "Always start with event type filter",
+      "description": "Begin queries with #event_simpleName=<type> to filter events efficiently",
+      "example_bad": "aid=* | groupBy([ComputerName])",
+      "example_good": "#event_simpleName=ProcessRollup2 aid=* | groupBy([ComputerName])",
+      "importance": "critical"
+    },
+    {
+      "category": "filtering",
+      "title": "Filter early in query pipeline",
+      "description": "Apply field filters before aggregation operations for better performance",
+      "example_bad": "#event_simpleName=ProcessRollup2 | groupBy([FileName]) | UserName=admin",
+      "example_good": "#event_simpleName=ProcessRollup2 UserName=admin | groupBy([FileName])",
+      "importance": "high"
+    },
+    {
+      "category": "filtering",
+      "title": "Use time range filters",
+      "description": "Add time filters to limit data scanned and improve query performance",
+      "example_good": "#event_simpleName=ProcessRollup2 @timestamp>=now()-24h",
+      "importance": "high"
+    },
+    {
+      "category": "aggregation",
+      "title": "Avoid high cardinality groupBy fields",
+      "description": "Don't group by fields with millions of unique values like CommandLine or SHA256HashData",
+      "example_bad": "groupBy([CommandLine])",
+      "example_good": "groupBy([FileName])",
+      "importance": "high",
+      "avoid_fields": ["CommandLine", "SHA256HashData", "MD5HashData", "@rawstring"]
+    },
+    {
+      "category": "aggregation",
+      "title": "Prefer FileName over ImageFileName for grouping",
+      "description": "FileName has lower cardinality than ImageFileName, making it better for grouping",
+      "example_good": "groupBy([FileName])",
+      "importance": "medium"
+    },
+    {
+      "category": "aggregation",
+      "title": "Use limit parameter in groupBy",
+      "description": "Limit results to prevent memory issues with large result sets",
+      "example_good": "groupBy([ComputerName], limit=100)",
+      "importance": "medium"
+    },
+    {
+      "category": "correlation",
+      "title": "Always include aid in joins",
+      "description": "Include aid (Agent ID) in join conditions to ensure events are from same endpoint",
+      "example_bad": "join(query={#event_simpleName=NetworkConnectIP4}, field=[TargetProcessId=ContextProcessId])",
+      "example_good": "join(query={#event_simpleName=NetworkConnectIP4}, field=[aid, TargetProcessId=ContextProcessId])",
+      "importance": "high"
+    },
+    {
+      "category": "correlation",
+      "title": "Use UserSid over UserName for correlation",
+      "description": "UserSid is more reliable and cannot be spoofed",
+      "example_good": "join(query={...}, field=[aid, UserSid])",
+      "importance": "medium"
+    },
+    {
+      "category": "performance",
+      "title": "Use in() instead of multiple OR conditions",
+      "description": "in() function is more efficient than chaining OR operators",
+      "example_bad": "LogonType=2 OR LogonType=3 OR LogonType=10",
+      "example_good": "in(LogonType, values=[2,3,10])",
+      "importance": "medium"
+    },
+    {
+      "category": "performance",
+      "title": "Avoid leading wildcards",
+      "description": "Wildcards at the beginning of patterns prevent index usage",
+      "example_bad": "ImageFileName=*powershell.exe",
+      "example_good": "ImageFileName=*\\powershell.exe OR FileName=powershell.exe",
+      "importance": "medium"
+    },
+    {
+      "category": "performance",
+      "title": "Use anchored regex patterns",
+      "description": "Anchor regex with ^ and $ when appropriate for better performance",
+      "example_bad": "CommandLine=/powershell/i",
+      "example_good": "CommandLine=/^powershell\\.exe/i",
+      "importance": "low"
+    },
+    {
+      "category": "performance",
+      "title": "Limit result set size",
+      "description": "Use head(), tail(), or limit parameter to avoid returning too many results",
+      "example_good": "| head(limit=1000)",
+      "importance": "medium"
+    },
+    {
+      "category": "syntax",
+      "title": "Use field projection for efficiency",
+      "description": "Select only needed fields to reduce data transfer and improve performance",
+      "example_good": "| table([ComputerName, UserName, CommandLine], limit=100)",
+      "importance": "medium"
+    },
+    {
+      "category": "syntax",
+      "title": "Quote string values consistently",
+      "description": "Always quote string values for clarity and correctness",
+      "example_bad": "UserName=admin",
+      "example_good": "UserName=\"admin\"",
+      "importance": "low"
+    },
+    {
+      "category": "syntax",
+      "title": "Use parentheses for complex boolean logic",
+      "description": "Make operator precedence explicit with parentheses when mixing AND/OR",
+      "example_bad": "UserName=\"admin\" AND LogonType=2 OR LogonType=10",
+      "example_good": "UserName=\"admin\" AND (LogonType=2 OR LogonType=10)",
+      "importance": "medium"
+    },
+    {
+      "category": "functions",
+      "title": "Use ipLocation for geolocation analysis",
+      "description": "Leverage ipLocation() to enrich IP addresses with geographic data",
+      "example_good": "| ipLocation(RemoteAddressIP4) | groupBy([RemoteAddressIP4.country])",
+      "importance": "low"
+    },
+    {
+      "category": "functions",
+      "title": "Use formatTime for readable timestamps",
+      "description": "Convert epoch timestamps to human-readable format for better analysis",
+      "example_good": "| formatTime(format=\"%Y-%m-%d %H:%M:%S\", field=ContextTimeStamp, as=event_time)",
+      "importance": "low"
+    },
+    {
+      "category": "functions",
+      "title": "Use case statements for conditional logic",
+      "description": "case{} provides clean conditional field assignment",
+      "example_good": "case { event_platform=\"Win\" | os:=\"Windows\"; event_platform=\"Lin\" | os:=\"Linux\"; * | os:=\"Other\" }",
+      "importance": "low"
+    },
+    {
+      "category": "security",
+      "title": "Look for unsigned or suspicious signatures",
+      "description": "Filter on SignInfoFlags for unsigned or invalid code signatures",
+      "example_good": "#event_simpleName=ProcessRollup2 SignInfoFlags!=0",
+      "importance": "medium"
+    },
+    {
+      "category": "security",
+      "title": "Monitor Mark of the Web",
+      "description": "Use ZoneIdentifier field to find files downloaded from internet",
+      "example_good": "#event_simpleName=ProcessRollup2 ZoneIdentifier=*",
+      "importance": "medium"
+    },
+    {
+      "category": "security",
+      "title": "Track admin logons",
+      "description": "Monitor administrative logon events for privilege escalation",
+      "example_good": "#event_simpleName=UserLogon UserIsAdmin=1",
+      "importance": "medium"
+    },
+    {
+      "category": "troubleshooting",
+      "title": "Use drop() to remove noisy fields",
+      "description": "Remove high-volume or unnecessary fields from output",
+      "example_good": "| drop([@rawstring, _raw])",
+      "importance": "low"
+    },
+    {
+      "category": "troubleshooting",
+      "title": "Use default() for missing fields",
+      "description": "Provide default values for fields that may be missing",
+      "example_good": "| default(UserName=\"Unknown\")",
+      "importance": "low"
+    }
+  ],
+  "performance_tips": [
+    {
+      "tip": "Filter on indexed fields first",
+      "description": "Fields like aid, ComputerName, UserSid, and event_simpleName are indexed for fast filtering",
+      "impact": "high"
+    },
+    {
+      "tip": "Avoid full table scans",
+      "description": "Always include filters to narrow the result set before aggregation",
+      "impact": "high"
+    },
+    {
+      "tip": "Limit groupBy cardinality",
+      "description": "Group by fields with fewer than 100,000 unique values for best performance",
+      "impact": "high"
+    },
+    {
+      "tip": "Use time-based bucketing wisely",
+      "description": "Choose appropriate bucket span based on data volume (1m, 5m, 1h)",
+      "impact": "medium"
+    },
+    {
+      "tip": "Minimize join operations",
+      "description": "Joins are expensive - use them judiciously and filter before joining",
+      "impact": "medium"
+    },
+    {
+      "tip": "Cache frequently used subqueries",
+      "description": "Use defineTable() to cache lookup tables for reuse",
+      "impact": "low"
+    }
+  ],
+  "common_patterns": [
+    {
+      "name": "Process execution monitoring",
+      "query": "#event_simpleName=ProcessRollup2 | groupBy([FileName], function=count()) | sort(_count, order=desc)",
+      "description": "Track process execution frequency"
+    },
+    {
+      "name": "Network connections by process",
+      "query": "#event_simpleName=ProcessRollup2 | join(query={#event_simpleName=NetworkConnectIP4}, field=[aid, TargetProcessId=ContextProcessId]) | groupBy([FileName, RemoteAddressIP4])",
+      "description": "Correlate processes with their network connections"
+    },
+    {
+      "name": "Failed logon attempts",
+      "query": "#event_simpleName=UserLogonFailed2 | groupBy([UserName, ComputerName], function=count()) | _count>5",
+      "description": "Detect potential brute force attacks"
+    },
+    {
+      "name": "Suspicious DNS queries",
+      "query": "#event_simpleName=DnsRequest DomainName=*suspicious* | groupBy([DomainName, ContextBaseFileName])",
+      "description": "Find DNS queries matching suspicious patterns"
+    },
+    {
+      "name": "Geographic logon analysis",
+      "query": "#event_simpleName=UserLogon RemoteAddressIP4=* | ipLocation(RemoteAddressIP4) | groupBy([UserName, RemoteAddressIP4.country])",
+      "description": "Analyze logon locations by geography"
+    }
+  ],
+  "field_selection_guidance": {
+    "for_grouping": {
+      "recommended": ["FileName", "ComputerName", "UserName", "UserSid", "LogonType", "event_platform"],
+      "avoid": ["CommandLine", "SHA256HashData", "MD5HashData", "ImageFileName", "@rawstring"]
+    },
+    "for_correlation": {
+      "recommended": ["aid", "TargetProcessId", "ContextProcessId", "UserSid", "ParentProcessId"],
+      "note": "Always include aid in join operations"
+    },
+    "for_filtering": {
+      "indexed": ["aid", "ComputerName", "UserName", "UserSid", "FileName", "event_simpleName"],
+      "note": "Indexed fields provide fastest filtering"
+    }
+  }
+}

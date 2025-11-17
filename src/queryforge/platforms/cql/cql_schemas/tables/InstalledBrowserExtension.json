@@ -1,0 +1,121 @@
+{
+  "table": "InstalledBrowserExtension",
+  "category": "endpoint_inventory",
+  "description": "Browser extension inventory events from Chrome and Edge browsers on Windows and Mac. Used for software inventory, security analysis, and detecting malicious or unauthorized browser extensions.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["InstalledBrowserExtension"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win", "Mac"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "UserName",
+      "type": "string",
+      "description": "Username of the browser profile owner",
+      "searchable": true,
+      "common_usage": ["filtering", "user-based extension analysis"]
+    },
+    {
+      "name": "BrowserExtensionId",
+      "type": "string",
+      "description": "Unique identifier for the browser extension",
+      "searchable": true,
+      "example_values": ["nkbihfbeogaeaoehlefnkodbefgpgknn", "no-extension-available"],
+      "common_usage": ["filtering", "extension tracking", "Chrome Web Store linking"]
+    },
+    {
+      "name": "BrowserExtensionName",
+      "type": "string",
+      "description": "Display name of the browser extension",
+      "searchable": true,
+      "supports_regex": true,
+      "example_values": ["MetaMask", "Adblock Plus", "VPN Extension"],
+      "common_usage": ["filtering", "keyword search", "categorization"]
+    },
+    {
+      "name": "BrowserName",
+      "type": "string",
+      "description": "Browser type code",
+      "example_values": ["3", "4"],
+      "common_usage": ["filtering", "browser-specific analysis"],
+      "notes": "3=Chrome, 4=Edge (requires case statement for human-readable)"
+    },
+    {
+      "name": "BrowserProfileId",
+      "type": "string",
+      "description": "Unique identifier for the browser profile",
+      "searchable": true,
+      "common_usage": ["grouping", "per-profile extension analysis"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "aggregation"]
+    },
+    {
+      "name": "@timestamp",
+      "type": "datetime",
+      "description": "Event timestamp in ISO format",
+      "common_usage": ["display", "time range filtering"]
+    }
+  ],
+  "col_count": 12,
+  "common_filters": [
+    "event_platform=Win",
+    "event_platform=Mac",
+    "BrowserExtensionId!=\"no-extension-available\"",
+    "BrowserExtensionName=/vpn/i",
+    "BrowserName=\"3\"",
+    "BrowserName=\"4\""
+  ],
+  "common_fields": ["aid", "ComputerName", "UserName", "BrowserExtensionId", "BrowserExtensionName", "BrowserName", "BrowserProfileId"],
+  "common_operations": [
+    "Extension prevalence analysis (count distinct endpoints)",
+    "Rare extension detection (TotalEndpoints < threshold)",
+    "Keyword-based extension hunting (e.g., VPN, crypto, password)",
+    "Chrome Web Store URL generation",
+    "Per-user browser profile analysis",
+    "Browser-specific filtering (Chrome vs Edge)",
+    "Extension inventory per endpoint"
+  ],
+  "enrichment_patterns": [
+    "BrowserName=\"3\" | BrowserName:=\"Chrome\"",
+    "BrowserName=\"4\" | BrowserName:=\"Edge\"",
+    "Extension:=format(format=\"%s (%s)\", field=[BrowserExtensionId, BrowserExtensionName])",
+    "format(\"[See Extension](https://chromewebstore.google.com/detail/%s)\", field=[BrowserExtensionId])"
+  ],
+  "generated_at": "2025-11-14T23:45:00Z"
+}

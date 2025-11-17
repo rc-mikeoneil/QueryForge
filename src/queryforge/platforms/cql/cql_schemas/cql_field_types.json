@@ -1,0 +1,351 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Field type definitions and compatible operators for CQL",
+  "field_types": {
+    "string": {
+      "description": "Text data",
+      "compatible_operators": ["=", "!=", "=*", "=/regex/", "in()", "match", "regex"],
+      "compatible_functions": ["groupBy", "count", "regex", "lower", "upper", "concat", "splitString", "length", "replace"],
+      "examples": ["ComputerName", "UserName", "FileName", "CommandLine", "ImageFileName"]
+    },
+    "long": {
+      "description": "Large integer values (64-bit)",
+      "compatible_operators": ["=", "!=", ">", "<", ">=", "<=", "in()"],
+      "compatible_functions": ["groupBy", "count", "sum", "avg", "min", "max", "formatDuration"],
+      "examples": ["TargetProcessId", "ParentProcessId", "ContextProcessId", "ProcessStartTime", "ContextTimeStamp"]
+    },
+    "number": {
+      "description": "Numeric values (integers and floats)",
+      "compatible_operators": ["=", "!=", ">", "<", ">=", "<=", "in()"],
+      "compatible_functions": ["groupBy", "count", "sum", "avg", "min", "max", "round"],
+      "examples": ["_count", "RemotePort", "LocalPort", "FileSize"]
+    },
+    "ip_address": {
+      "description": "IPv4 addresses",
+      "compatible_operators": ["=", "!=", "in()"],
+      "compatible_functions": ["groupBy", "count", "ipLocation", "asn", "cidr", "rdns"],
+      "examples": ["RemoteAddressIP4", "LocalAddressIP4", "aip"]
+    },
+    "timestamp": {
+      "description": "Epoch timestamps (milliseconds) or datetime values",
+      "compatible_operators": ["=", "!=", ">", "<", ">=", "<="],
+      "compatible_functions": ["formatTime", "bucket", "timeChart"],
+      "examples": ["@timestamp", "ContextTimeStamp", "ProcessStartTime", "PasswordLastSet"]
+    },
+    "datetime": {
+      "description": "ISO format datetime strings",
+      "compatible_operators": ["=", "!=", ">", "<", ">=", "<="],
+      "compatible_functions": ["formatTime", "bucket", "timeChart"],
+      "examples": ["@timestamp"]
+    },
+    "boolean": {
+      "description": "Boolean values (0/1 or true/false)",
+      "compatible_operators": ["=", "!="],
+      "compatible_functions": ["groupBy", "count"],
+      "examples": ["UserIsAdmin", "RemoteAccount"]
+    }
+  },
+  "placeholder_fields": {
+    "events": {
+      "aid": {
+        "type": "string",
+        "description": "Agent ID - unique identifier for endpoint",
+        "indexed": true,
+        "cardinality": "high",
+        "use_cases": ["correlation", "filtering", "grouping"]
+      },
+      "cid": {
+        "type": "string",
+        "description": "Customer ID",
+        "indexed": true,
+        "cardinality": "low"
+      },
+      "ComputerName": {
+        "type": "string",
+        "description": "Hostname of the endpoint",
+        "indexed": true,
+        "cardinality": "medium",
+        "use_cases": ["filtering", "grouping"]
+      },
+      "UserName": {
+        "type": "string",
+        "description": "Username associated with the event",
+        "indexed": true,
+        "cardinality": "medium",
+        "use_cases": ["filtering", "grouping"]
+      },
+      "UserSid": {
+        "type": "string",
+        "description": "User Security Identifier (SID)",
+        "indexed": true,
+        "cardinality": "medium",
+        "use_cases": ["correlation", "filtering", "grouping"]
+      },
+      "ImageFileName": {
+        "type": "string",
+        "description": "Full path to executable",
+        "indexed": true,
+        "cardinality": "high",
+        "use_cases": ["filtering", "threat_hunting"]
+      },
+      "FileName": {
+        "type": "string",
+        "description": "Base filename without path",
+        "indexed": true,
+        "cardinality": "medium",
+        "use_cases": ["filtering", "grouping"]
+      },
+      "CommandLine": {
+        "type": "string",
+        "description": "Command line arguments",
+        "indexed": true,
+        "cardinality": "very_high",
+        "use_cases": ["threat_hunting", "filtering"]
+      },
+      "TargetProcessId": {
+        "type": "long",
+        "description": "Process ID for correlation",
+        "indexed": true,
+        "cardinality": "high",
+        "use_cases": ["correlation"]
+      },
+      "ParentProcessId": {
+        "type": "long",
+        "description": "Parent process ID",
+        "indexed": true,
+        "cardinality": "high",
+        "use_cases": ["correlation"]
+      },
+      "ContextProcessId": {
+        "type": "long",
+        "description": "Process ID making network/DNS request",
+        "indexed": true,
+        "cardinality": "high",
+        "use_cases": ["correlation"]
+      },
+      "ProcessStartTime": {
+        "type": "timestamp",
+        "description": "Process start timestamp (epoch milliseconds)",
+        "indexed": true,
+        "use_cases": ["temporal_analysis"]
+      },
+      "ContextTimeStamp": {
+        "type": "timestamp",
+        "description": "Event timestamp (epoch milliseconds)",
+        "indexed": true,
+        "use_cases": ["temporal_analysis", "sorting"]
+      },
+      "@timestamp": {
+        "type": "datetime",
+        "description": "Event timestamp (ISO format)",
+        "indexed": true,
+        "use_cases": ["temporal_analysis", "filtering"]
+      },
+      "MD5HashData": {
+        "type": "string",
+        "description": "MD5 hash of file",
+        "indexed": true,
+        "cardinality": "very_high",
+        "use_cases": ["ioc_matching"]
+      },
+      "SHA256HashData": {
+        "type": "string",
+        "description": "SHA256 hash of file",
+        "indexed": true,
+        "cardinality": "very_high",
+        "use_cases": ["ioc_matching"]
+      },
+      "SHA1HashData": {
+        "type": "string",
+        "description": "SHA1 hash of file",
+        "indexed": true,
+        "cardinality": "very_high",
+        "use_cases": ["ioc_matching"]
+      },
+      "RemoteAddressIP4": {
+        "type": "ip_address",
+        "description": "Destination IP address",
+        "indexed": true,
+        "cardinality": "high",
+        "use_cases": ["filtering", "geolocation"]
+      },
+      "LocalAddressIP4": {
+        "type": "ip_address",
+        "description": "Source IP address",
+        "indexed": true,
+        "cardinality": "medium",
+        "use_cases": ["filtering"]
+      },
+      "aip": {
+        "type": "ip_address",
+        "description": "External IP address",
+        "indexed": true,
+        "cardinality": "medium",
+        "use_cases": ["geolocation"]
+      },
+      "RemotePort": {
+        "type": "long",
+        "description": "Destination port",
+        "indexed": true,
+        "cardinality": "low",
+        "use_cases": ["filtering"]
+      },
+      "LocalPort": {
+        "type": "long",
+        "description": "Source port",
+        "indexed": true,
+        "cardinality": "medium",
+        "use_cases": ["filtering"]
+      },
+      "DomainName": {
+        "type": "string",
+        "description": "DNS domain queried",
+        "indexed": true,
+        "cardinality": "high",
+        "use_cases": ["filtering", "threat_hunting"]
+      },
+      "LogonType": {
+        "type": "string",
+        "description": "Logon type code",
+        "indexed": true,
+        "cardinality": "low",
+        "use_cases": ["filtering", "grouping"]
+      },
+      "LogonDomain": {
+        "type": "string",
+        "description": "Domain name for logon",
+        "indexed": true,
+        "cardinality": "low",
+        "use_cases": ["filtering"]
+      },
+      "event_platform": {
+        "type": "string",
+        "description": "OS platform (Win, Mac, Lin)",
+        "indexed": true,
+        "cardinality": "low",
+        "use_cases": ["filtering", "grouping"]
+      },
+      "event_simpleName": {
+        "type": "string",
+        "description": "Event type identifier",
+        "indexed": true,
+        "cardinality": "low",
+        "use_cases": ["filtering"]
+      },
+      "UserIsAdmin": {
+        "type": "boolean",
+        "description": "Admin privileges indicator",
+        "indexed": true,
+        "cardinality": "low",
+        "use_cases": ["filtering"]
+      },
+      "SignInfoFlags": {
+        "type": "long",
+        "description": "Code signature validation flags",
+        "indexed": true,
+        "cardinality": "low",
+        "use_cases": ["filtering"]
+      },
+      "ZoneIdentifier": {
+        "type": "string",
+        "description": "Mark of the Web identifier",
+        "indexed": true,
+        "cardinality": "low",
+        "use_cases": ["filtering"]
+      },
+      "Protocol": {
+        "type": "string",
+        "description": "Network protocol (TCP/UDP)",
+        "indexed": true,
+        "cardinality": "low",
+        "use_cases": ["filtering"]
+      },
+      "UID": {
+        "type": "string",
+        "description": "Unix User ID",
+        "indexed": true,
+        "cardinality": "medium",
+        "use_cases": ["filtering"]
+      },
+      "GID": {
+        "type": "string",
+        "description": "Unix Group ID",
+        "indexed": true,
+        "cardinality": "medium",
+        "use_cases": ["filtering"]
+      }
+    },
+    "detections": {
+      "aid": {
+        "type": "string",
+        "description": "Agent ID",
+        "indexed": true
+      },
+      "ComputerName": {
+        "type": "string",
+        "description": "Hostname",
+        "indexed": true
+      },
+      "DetectName": {
+        "type": "string",
+        "description": "Detection name",
+        "indexed": true
+      },
+      "Severity": {
+        "type": "string",
+        "description": "Detection severity",
+        "indexed": true
+      },
+      "@timestamp": {
+        "type": "datetime",
+        "description": "Detection timestamp",
+        "indexed": true
+      }
+    },
+    "indicators": {
+      "aid": {
+        "type": "string",
+        "description": "Agent ID",
+        "indexed": true
+      },
+      "IndicatorType": {
+        "type": "string",
+        "description": "Type of indicator",
+        "indexed": true
+      },
+      "IndicatorValue": {
+        "type": "string",
+        "description": "Indicator value",
+        "indexed": true
+      },
+      "@timestamp": {
+        "type": "datetime",
+        "description": "Indicator timestamp",
+        "indexed": true
+      }
+    }
+  },
+  "cardinality_levels": {
+    "low": {
+      "description": "Few unique values (< 100)",
+      "examples": ["LogonType", "event_platform", "Protocol"],
+      "grouping_performance": "excellent"
+    },
+    "medium": {
+      "description": "Moderate unique values (100-10000)",
+      "examples": ["ComputerName", "UserName", "FileName"],
+      "grouping_performance": "good"
+    },
+    "high": {
+      "description": "Many unique values (10000-1M)",
+      "examples": ["aid", "ImageFileName", "RemoteAddressIP4"],
+      "grouping_performance": "acceptable"
+    },
+    "very_high": {
+      "description": "Extremely high unique values (> 1M)",
+      "examples": ["CommandLine", "SHA256HashData", "MD5HashData"],
+      "grouping_performance": "poor",
+      "warning": "Avoid grouping by these fields"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "cidr",
+  "category": "network",
+  "description": "Filters events using CIDR subnets. Can be used to include or exclude IP addresses that match specified subnet ranges.",
+  "syntax": "cidr(field, subnet=[subnet_list])",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "Field containing an IP address"
+    },
+    {
+      "name": "subnet",
+      "type": "array",
+      "required": true,
+      "description": "Array of CIDR subnet ranges to match against"
+    }
+  ],
+  "return_type": "filtered_events",
+  "examples": [
+    "| !cidr(RemoteAddressIP4, subnet=[\"224.0.0.0/4\", \"10.0.0.0/8\", \"172.16.0.0/12\", \"192.168.0.0/16\", \"127.0.0.1/32\", \"169.254.0.0/16\", \"0.0.0.0/32\"])",
+    "| cidr(RemoteAddressIP4, subnet=[\"192.168.0.0/16\"])",
+    "| !cidr(RemoteAddressIP4, subnet=[\"10.0.0.0/8\"])"
+  ],
+  "related_functions": ["ipLocation", "asn"],
+  "use_cases": ["Filter private IPs", "Network segmentation filtering", "RFC-1918 address filtering"],
+  "notes": "Often used with negation (!) to exclude private/reserved IP ranges before geolocation lookups.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-cidr.html"
+}

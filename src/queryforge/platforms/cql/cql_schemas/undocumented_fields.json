@@ -1,0 +1,2682 @@
+{
+  "generated_at": "2025-11-17T18:47:00Z",
+  "description": "Undocumented CQL fields found in example queries",
+  "total_fields": 373,
+  "fields_by_event_type": {
+    "general": [
+      {
+        "name": "AgentVersion",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "Attributes.assign_to_user_id",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "Attributes.update_status",
+        "type": "long",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "AvailableDiskSpace",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "CommandHistory",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "CommandLine",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "Commands",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "CpuProcessorName",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "EventType",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "ExternalApiType",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "FileName",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "Hostname",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "ImageFileName",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "IsOnRemovableDisk",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "MTTReact",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "MTTResolve",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "MTTRespond",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "OperationName",
+        "type": "float",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "OriginSourceIpAddress",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "Pod",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "ProductType",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "SeverityName",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "Success",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "aip",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "data_source_group",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "distinct",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "file",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "format",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "group_id",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "header",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "ignoreCase",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "include",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "ingestAfterFieldRemovalSize",
+        "type": "long",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "ipDetails",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "lat",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "limit",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "lon",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "majorVersion",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "minSpan",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "minorVersion",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "mode",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "order",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "output",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "precision",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "prefix",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "query",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "regex",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "release.type",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "release_id",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "replaceEmpty",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "sampleType",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "separator",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "shape",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "size",
+        "type": "long",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "start",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "strict",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "timeDeltaDays",
+        "type": "long",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "timezone",
+        "type": "long",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "values",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "with",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "ReflectiveDotnetModuleLoad": [
+      {
+        "name": "distinct",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "include",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "values",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "DnsRequest": [
+      {
+        "name": "CommandLine",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "ImageFileName",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "ParentBaseFileName",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "distinct",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "eventCount",
+        "type": "long",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "format",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "ignoreCase",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "limit",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "prefilter",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "values",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "where",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "ProcessRollup2": [
+      {
+        "name": "CallStackModuleNames",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "DomainName",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "FilePath",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "FixedFileVersion",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "RemoteAddressIP4",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "RemotePort",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "TargetFileName",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "WindowFlags",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "_ise",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "aid_tok",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "array",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "b64String",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "behaviorWeight",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "charset",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "cmdLength",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "computer",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "condition",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "customer_tok",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "decodedCommand",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "distinct",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "earliest",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "else",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "eventCount",
+        "type": "long",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "executionDetails",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "file",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "flags",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "format",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "ignoreCase",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "include",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "index",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "indicators",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "key",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "latest",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "limit",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "locale",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "myThreshold",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "netFlag",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "optional",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "order",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "output",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "precision",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "prefilter",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "query",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "regex",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "s",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "separator",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "sequence",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "span",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "start",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "strict",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "then",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "timezone",
+        "type": "long",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "values",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "var",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "where",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "with",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "within",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "x",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "ResourceUtilization": [
+      {
+        "name": "MemoryTotal",
+        "type": "long",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "TpmFirmwareVersion",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "binary",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "file",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "format",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "include",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "limit",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "replaceEmpty",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "values",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "where",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "ZeroTrustHostAssessment": [
+      {
+        "name": "TpmFirmwareVersion",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "binary",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "file",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "include",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "limit",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "replaceEmpty",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "values",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "where",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "SystemCapacity": [
+      {
+        "name": "binary",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "file",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "format",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "include",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "limit",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "replaceEmpty",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "values",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "where",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "AgentOnline": [
+      {
+        "name": "TpmFirmwareVersion",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "binary",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "file",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "format",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "include",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "limit",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "locale",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "precision",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "realBootTime",
+        "type": "long",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "realBootTimeHuman",
+        "type": "long",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "replaceEmpty",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "timezone",
+        "type": "long",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "values",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "where",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "OsVersionInfo": [
+      {
+        "name": "BUILD",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "LinuxSensorBackend",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "LogonType",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "PRETTY_NAME",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "Pod",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "distinct",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "field_temp",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "file",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "format",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "ignoreCase",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "include",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "limit",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "locale",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "majorVersion",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "minorVersion",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "mode",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "query",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "regex",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "repeat",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "replaceEmpty",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "start",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "strict",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "timezone",
+        "type": "long",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "values",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "with",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "DetectionExcluded": [
+      {
+        "name": "ExclusionSource",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "ExclusionType",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "PatternId",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "file",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "limit",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "sortby",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "strict",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "SensorHeartbeat": [
+      {
+        "name": "RTR_Locally_Disabled",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "SensorStateBitMap",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "format",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "include",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "limit",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "output",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "EndOfProcess": [
+      {
+        "name": "_ise",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "distinct",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "eventCount",
+        "type": "long",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "format",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "precision",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "prefilter",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "strict",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "where",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "UserLogon": [
+      {
+        "name": "AgentVersion",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "DistanceKm",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "LogonDelta",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "LogonTime",
+        "type": "long",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "Mach",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "Pod",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "ProductType",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "SpeedKph",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "UserHash",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "_bucket",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "_dayOfWeekName",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "file",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "format",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "ignoreCase",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "include",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "isLive",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "lat",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "lat1",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "lat2",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "limit",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "locale",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "lon",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "lon1",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "lon2",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "magnitude",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "majorVersion",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "minorVersion",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "mode",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "order",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "precision",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "prefix",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "query",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "replaceEmpty",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "reverse",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "span",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "start",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "strict",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "timezone",
+        "type": "long",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "values",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "InstalledBrowserExtension": [
+      {
+        "name": "distinct",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "limit",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "order",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "ScriptControlScanInfo": [
+      {
+        "name": "ScriptContent",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "distinct",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "endpointCount",
+        "type": "long",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "entropy",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "order",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "NetworkConnectIP4": [
+      {
+        "name": "ImageFileName",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "distinct",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "limit",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "order",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "prefilter",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "separator",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "subnet",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "where",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "NetworkListenIP4": [
+      {
+        "name": "file",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "include",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "where",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "FirewallSetRule": [
+      {
+        "name": "ImageFileName",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "include",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "key",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "CriticalEnvironmentVariableChanged": [
+      {
+        "name": "EnvironmentVariableName",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "EnvironmentVariableValue",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "UserAccountAddedToGroup": [
+      {
+        "name": "endian",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "format",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "include",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "query",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "radix",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "Event_RemoteResponseSessionStartEvent": [
+      {
+        "name": "file",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "format",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "limit",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "strict",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "NetworkReceiveAcceptIP4": [
+      {
+        "name": "destinationip",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "distinct",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "limit",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "order",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "proto",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "sourceip",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "subnet",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "values",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "UserLogonFailed2": [
+      {
+        "name": "format",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "include",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "limit",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "order",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "timezone",
+        "type": "long",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "ImgExtensionFileWritten": [
+      {
+        "name": "ImageFileName",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "file",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "format",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "ignoreCase",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "include",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "key",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "strict",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "IsoExtensionFileWritten": [
+      {
+        "name": "ImageFileName",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "file",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "format",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "ignoreCase",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "include",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "key",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "strict",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "DriverLoad": [
+      {
+        "name": "ExternalApiType",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "limit",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "repo",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "where",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "FalconProcessHandleOpDetectInfo": [
+      {
+        "name": "CommandLine",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "FileName",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "GrandparentCommandLine",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "ParentCommandLine",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "format",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "PeVersionInfo": [
+      {
+        "name": "FixedFileVersion",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "ImageFileName",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "file",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "ignoreCase",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "include",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "strict",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "AssociateTreeIdWithRoot": [
+      {
+        "name": "PatternId",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "file",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "strict",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "HttpRequestDetect": [
+      {
+        "name": "H",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "HttpRequestHeader",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "ImageFileName",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "MagicNumber",
+        "type": "long",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "charset",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "format",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "h",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "UserIdentity": [
+      {
+        "name": "ImageFileName",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "include",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "index",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "start",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "values",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ],
+    "ZipFileWritten": [
+      {
+        "name": "ImageFileName",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "distinct",
+        "type": "boolean",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "prefilter",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      },
+      {
+        "name": "where",
+        "type": "string",
+        "description": "Field found in example queries (undocumented)",
+        "searchable": true,
+        "undocumented": true
+      }
+    ]
+  }
+}

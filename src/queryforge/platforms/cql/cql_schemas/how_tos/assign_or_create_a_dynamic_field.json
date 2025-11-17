@@ -1,0 +1,24 @@
+{
+  "title": "How-To: Assign or Create a Dynamic Field",
+  "slug": "assign_or_create_a_dynamic_field",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Show how to create or overwrite fields at query time using assignment and functions such as default().\nDynamic fields are not stored on disk but exist for the lifetime of the query and can be used for\nfiltering, grouping, and visualization.",
+  "examples": [
+    {
+      "name": "Create a severity field from status code",
+      "description": "Creates a derived severity field based on HTTP status, defaulting to info.",
+      "language": "logscale",
+      "query": "| case {\n    status>=500 | severity := \"error\" ;\n    status>=400 | severity := \"warning\" ;\n    *           | severity := \"info\" ;\n  }"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "fields",
+    "assignment",
+    "case",
+    "derived_fields"
+  ],
+  "difficulty": "beginner"
+}

@@ -1,0 +1,28 @@
+{
+  "title": "How-To: How to Compare and Alert Historical Ingest",
+  "slug": "how_to_compare_and_alert_historical_ingest",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Compares current ingest volume against historical baselines to detect drops or spikes in logging,\nand builds scheduled searches or alerts when current ingest deviates from normal.",
+  "examples": [
+    {
+      "name": "Alert on low ingest volume",
+      "description": "Calculates daily event counts and flags if today is significantly lower than the 30-day average.",
+      "language": "logscale",
+      "query": "| timechart(function=count(), span=1d)\n| avg_30d := avg(value, window=30)\n| drop_ratio := value / avg_30d\n| drop_ratio < 0.5"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "ingest",
+    "baselines",
+    "alerts"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "avg",
+    "count",
+    "timechart"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "select",
+  "category": "transformation",
+  "description": "Selects only the specified fields from events, dropping all other fields. Useful for limiting output to relevant fields.",
+  "syntax": "| select([field1, field2, field3, ...])",
+  "parameters": [
+    {
+      "name": "fields",
+      "type": "array",
+      "required": true,
+      "description": "Array of field names to keep in the output"
+    }
+  ],
+  "return_type": "filtered_events",
+  "examples": [
+    "| select([@timestamp, aid, UserSid, ImageFileName, CommandLine])",
+    "| select([aid, ComputerName, UserName])",
+    "| select([src_ip, dst_ip, protocol, port])"
+  ],
+  "related_functions": ["drop", "rename", "table"],
+  "use_cases": ["Reducing output fields", "Creating focused views", "Performance optimization", "Clean reporting"],
+  "notes": "Only specified fields are kept; all other fields are removed from the output.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-select.html"
+}

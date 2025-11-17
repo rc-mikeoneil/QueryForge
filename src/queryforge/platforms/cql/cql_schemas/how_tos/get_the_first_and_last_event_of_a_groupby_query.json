@@ -1,0 +1,28 @@
+{
+  "title": "How-To: Get the first and last event of a groupBy() query",
+  "slug": "get_the_first_and_last_event_of_a_groupby_query",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Uses groupBy() along with functions like min(), max(), or collect() combined with sort()\nto identify the earliest and latest events in each group (for example, per host or user).",
+  "examples": [
+    {
+      "name": "Get first and last login per user",
+      "description": "Groups by UserName and returns the earliest and latest @timestamp for each user.",
+      "language": "logscale",
+      "query": "groupBy(UserName, function=[min(@timestamp), max(@timestamp)])"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "groupBy",
+    "first_last",
+    "aggregation"
+  ],
+  "difficulty": "intermediate",
+  "related_functions": [
+    "groupBy",
+    "max",
+    "min"
+  ]
+}

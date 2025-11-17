@@ -1,0 +1,26 @@
+{
+  "title": "Estimating Local Disk Threshold",
+  "slug": "estimating_local_disk_threshold",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "Tune LOCAL_STORAGE_PERCENTAGE and retention thresholds to avoid running out of disk while still maximizing on\u2011disk history. Monitor ingest rate, compression ratio, and retention to estimate safe limits.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Shows hourly ingest size so you can estimate how much disk is required for a given retention period and adjust thresholds accordingly.",
+      "language": "logscale",
+      "query": "#repo=falcon-endpoint\n| timechart(span=1h, function=sum(@rawBytes, as=\"IngestBytes\"))"
+    }
+  ],
+  "tags": [
+    "monitoring",
+    "tags"
+  ],
+  "url": "https://library.humio.com/kb/kb-estimating-local-disk-threshold.html",
+  "difficulty": "beginner",
+  "related_functions": [
+    "sum",
+    "timechart"
+  ]
+}

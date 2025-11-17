@@ -1,0 +1,23 @@
+{
+  "title": "How-To: Add Lines to a Query",
+  "slug": "add_lines_to_a_query",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "ui",
+  "description": "Explains how to add new lines when editing queries in the LogScale UI without accidentally running them.\nTypically this is done with a modifier such as Shift+Enter to insert a hard line-break inside the query editor.",
+  "examples": [
+    {
+      "name": "Keyboard interaction",
+      "description": "Move the cursor where a new line is needed and press Shift+Enter to insert a line-break inside the query editor.",
+      "language": "ui",
+      "query": ""
+    }
+  ],
+  "tags": [
+    "how-to",
+    "ui",
+    "editor",
+    "keyboard"
+  ],
+  "difficulty": "beginner"
+}

@@ -1,0 +1,779 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2025-11-15T00:00:00Z",
+  "description": "Cross-reference relationships between event types, functions, operators, examples, and MITRE ATT&CK techniques",
+  "common_fields_across_event_types": {
+    "description": "Fields that appear across multiple event types, enabling cross-event correlation",
+    "fields": [
+      {
+        "field_name": "aid",
+        "type": "string",
+        "description": "Agent ID - unique identifier for the endpoint",
+        "appears_in": [
+          "ProcessRollup2",
+          "OsVersionInfo",
+          "UserLogon",
+          "DnsRequest",
+          "NetworkConnectIP4",
+          "InstalledBrowserExtension",
+          "AgentOnline",
+          "UserLogonFailed2",
+          "DriverLoad",
+          "EndOfProcess"
+        ],
+        "event_count": 10,
+        "correlation_potential": "highest",
+        "use_case": "Join events from the same endpoint across all event types"
+      },
+      {
+        "field_name": "TargetProcessId",
+        "type": "long",
+        "description": "Process ID of the target process",
+        "appears_in": [
+          "ProcessRollup2",
+          "EndOfProcess"
+        ],
+        "event_count": 2,
+        "correlation_potential": "high",
+        "use_case": "Calculate process lifecycle and runtime",
+        "alias": "falconPID (platform-specific)"
+      },
+      {
+        "field_name": "ContextProcessId",
+        "type": "long",
+        "description": "Process ID of the process generating the event",
+        "appears_in": [
+          "DnsRequest",
+          "NetworkConnectIP4"
+        ],
+        "event_count": 2,
+        "correlation_potential": "high",
+        "use_case": "Link network/DNS activity to originating process",
+        "joins_with": "ProcessRollup2.TargetProcessId"
+      },
+      {
+        "field_name": "UserSid",
+        "type": "string",
+        "description": "User Security Identifier",
+        "appears_in": [
+          "ProcessRollup2",
+          "UserLogon",
+          "UserLogonFailed2"
+        ],
+        "event_count": 3,
+        "correlation_potential": "high",
+        "use_case": "Correlate user activity across logons and process executions"
+      },
+      {
+        "field_name": "SHA256HashData",
+        "type": "string",
+        "description": "SHA256 hash of file or driver",
+        "appears_in": [
+          "ProcessRollup2",
+          "DriverLoad"
+        ],
+        "event_count": 2,
+        "correlation_potential": "medium",
+        "use_case": "File reputation and certificate validation lookups"
+      },
+      {
+        "field_name": "ComputerName",
+        "type": "string",
+        "description": "Hostname of the endpoint",
+        "appears_in": [
+          "ProcessRollup2",
+          "OsVersionInfo",
+          "UserLogon"
+        ],
+        "event_count": 3,
+        "correlation_potential": "high",
+        "use_case": "Human-readable endpoint identification"
+      },
+      {
+        "field_name": "RemoteAddressIP4",
+        "type": "ip_address",
+        "description": "Remote IPv4 address",
+        "appears_in": [
+          "UserLogon",
+          "NetworkConnectIP4"
+        ],
+        "event_count": 2,
+        "correlation_potential": "medium",
+        "use_case": "Track network connections and remote access sources"
+      },
+      {
+        "field_name": "event_platform",
+        "type": "string",
+        "description": "Operating system platform (Win, Mac, Lin)",
+        "appears_in": [
+          "ProcessRollup2",
+          "OsVersionInfo",
+          "DnsRequest",
+          "NetworkConnectIP4",
+          "AgentOnline",
+          "EndOfProcess"
+        ],
+        "event_count": 6,
+        "correlation_potential": "low",
+        "use_case": "Platform-specific filtering and normalization"
+      },
+      {
+        "field_name": "@timestamp",
+        "type": "datetime",
+        "description": "Event timestamp",
+        "appears_in": "all_event_types",
+        "event_count": 10,
+        "correlation_potential": "highest",
+        "use_case": "Temporal correlation and time-based analysis"
+      }
+    ]
+  },
+  "function_to_field_type_compatibility": {
+    "description": "Mapping of functions to compatible field types for validation and autocomplete",
+    "aggregation_functions": {
+      "groupBy": {
+        "compatible_types": ["string", "number", "long", "ip_address", "boolean"],
+        "description": "Groups by any field type that has discrete values",
+        "common_fields": ["ComputerName", "ImageFileName", "aid", "UserSid", "event_platform"]
+      },
+      "count": {
+        "compatible_types": ["any"],
+        "description": "Counts events or distinct values of any field type",
+        "common_fields": ["aid", "ImageFileName", "DomainName", "RemoteAddressIP4"]
+      },
+      "bucket": {
+        "compatible_types": ["datetime", "timestamp", "numeric_epoch"],
+        "description": "Time-based bucketing for temporal aggregation",
+        "common_fields": ["@timestamp", "ProcessStartTime", "ContextTimeStamp"]
+      },
+      "top": {
+        "compatible_types": ["string", "number", "long"],
+        "description": "Returns most common values",
+        "common_fields": ["ImageFileName", "UserName", "DomainName", "RemotePort"]
+      }
+    },
+    "network_functions": {
+      "ipLocation": {
+        "compatible_types": ["ip_address"],
+        "description": "Enriches IP addresses with geolocation data",
+        "common_fields": ["RemoteAddressIP4", "LocalAddressIP4", "aip"]
+      },
+      "asn": {
+        "compatible_types": ["ip_address"],
+        "description": "Adds ASN data to IP addresses",
+        "common_fields": ["RemoteAddressIP4", "LocalAddressIP4"]
+      },
+      "cidr": {
+        "compatible_types": ["ip_address"],
+        "description": "Filters events using CIDR subnet matching",
+        "common_fields": ["RemoteAddressIP4", "LocalAddressIP4"]
+      },
+      "rdns": {
+        "compatible_types": ["ip_address"],
+        "description": "Performs reverse DNS lookups",
+        "common_fields": ["RemoteAddressIP4"]
+      },
+      "geoHash": {
+        "compatible_types": ["number"],
+        "description": "Calculates geohash from lat/lon coordinates",
+        "common_fields": ["latitude", "longitude"]
+      }
+    },
+    "string_functions": {
+      "regex": {
+        "compatible_types": ["string"],
+        "description": "Pattern matching and field extraction",
+        "common_fields": ["CommandLine", "ImageFileName", "DomainName", "FilePath"]
+      },
+      "lower": {
+        "compatible_types": ["string"],
+        "description": "Converts strings to lowercase",
+        "common_fields": ["ImageFileName", "UserName", "DomainName"]
+      },
+      "concat": {
+        "compatible_types": ["string", "number"],
+        "description": "Concatenates field values",
+        "common_fields": ["any"]
+      },
+      "replace": {
+        "compatible_types": ["string"],
+        "description": "Replaces substrings",
+        "common_fields": ["CommandLine", "FilePath", "ImageFileName"]
+      },
+      "splitString": {
+        "compatible_types": ["string"],
+        "description": "Splits strings by delimiter",
+        "common_fields": ["CommandLine", "FilePath", "IP4Records"]
+      },
+      "format": {
+        "compatible_types": ["any"],
+        "description": "Formats strings using printf-style patterns",
+        "common_fields": ["any"]
+      },
+      "length": {
+        "compatible_types": ["string"],
+        "description": "Returns character count",
+        "common_fields": ["CommandLine", "ImageFileName", "DomainName"]
+      }
+    },
+    "transformation_functions": {
+      "rename": {
+        "compatible_types": ["any"],
+        "description": "Renames fields in results",
+        "common_fields": ["any"]
+      },
+      "drop": {
+        "compatible_types": ["any"],
+        "description": "Removes fields from results",
+        "common_fields": ["any"]
+      },
+      "default": {
+        "compatible_types": ["any"],
+        "description": "Provides default values for missing fields",
+        "common_fields": ["any"]
+      },
+      "parseJson": {
+        "compatible_types": ["string"],
+        "description": "Parses JSON data into fields",
+        "common_fields": ["any_json_field"]
+      },
+      "parseXml": {
+        "compatible_types": ["string"],
+        "description": "Parses XML data into fields",
+        "common_fields": ["any_xml_field"]
+      },
+      "kvParse": {
+        "compatible_types": ["string"],
+        "description": "Parses key-value pairs",
+        "common_fields": ["CommandLine", "any_kv_field"]
+      }
+    },
+    "time_functions": {
+      "formatTime": {
+        "compatible_types": ["datetime", "timestamp", "numeric_epoch"],
+        "description": "Formats timestamps using custom patterns",
+        "common_fields": ["@timestamp", "ProcessStartTime", "ContextTimeStamp", "BaseTime"]
+      },
+      "formatDuration": {
+        "compatible_types": ["number", "long"],
+        "description": "Converts durations to human-readable strings",
+        "common_fields": ["runtime", "timeDelta", "duration_ms"]
+      },
+      "timeChart": {
+        "compatible_types": ["datetime", "timestamp"],
+        "description": "Creates time-based chart visualizations",
+        "common_fields": ["@timestamp"]
+      }
+    },
+    "advanced_functions": {
+      "join": {
+        "compatible_types": ["any"],
+        "description": "Joins two queries on matching fields",
+        "common_use": "Correlate ProcessRollup2 with NetworkConnectIP4, DnsRequest, etc."
+      },
+      "selfJoinFilter": {
+        "compatible_types": ["any"],
+        "description": "Correlates events within the same stream",
+        "common_use": "Multi-event pattern detection"
+      },
+      "correlate": {
+        "compatible_types": ["any"],
+        "description": "Correlates events across multiple queries with time windows",
+        "common_use": "Complex behavioral detection"
+      },
+      "defineTable": {
+        "compatible_types": ["any"],
+        "description": "Creates in-memory lookup tables",
+        "common_use": "Enrichment and lookups"
+      }
+    }
+  },
+  "event_type_to_examples": {
+    "description": "Mapping of event types to example queries that use them",
+    "ProcessRollup2": {
+      "example_count": 40,
+      "query_types": ["hunting", "analysis", "detection", "utility"],
+      "common_patterns": [
+        "Process tree analysis",
+        "Command line hunting",
+        "File hash lookups",
+        "User activity correlation",
+        "Frequency analysis"
+      ],
+      "sample_queries": [
+        "Frequency Analysis via Program Clustering",
+        "Custom Weighting Command Line and File Name",
+        "Combine ProcessRollup2 and NetworkConnectIP4 Events",
+        "Process Discovery (T1057)",
+        "System Information Discovery (T1082)"
+      ]
+    },
+    "OsVersionInfo": {
+      "example_count": 14,
+      "query_types": ["hunting", "analysis", "inventory"],
+      "common_patterns": [
+        "CVE vulnerability scoping",
+        "OS prevalence analysis",
+        "Sensor version tracking",
+        "RFM state monitoring"
+      ],
+      "sample_queries": [
+        "CVE-2025-1146 System Scoping",
+        "Evaluate Operating System Prevalence",
+        "Linux Kernel Version",
+        "Check for Unsupported Sensors"
+      ]
+    },
+    "UserLogon": {
+      "example_count": 7,
+      "query_types": ["hunting", "analysis", "monitoring", "utility"],
+      "common_patterns": [
+        "RDP tracking",
+        "Impossible travel detection",
+        "Login heatmaps",
+        "Geographic analysis"
+      ],
+      "sample_queries": [
+        "RDP Login World Map",
+        "Impossible Time To Travel (UserLogon)",
+        "Create Heatmap of Login Activity",
+        "Failed and Successful User Logon Events"
+      ]
+    },
+    "DnsRequest": {
+      "example_count": 4,
+      "query_types": ["hunting", "analysis"],
+      "common_patterns": [
+        "C2 domain detection",
+        "DNS resolution analysis",
+        "Process-to-DNS correlation"
+      ],
+      "sample_queries": [
+        "Combine ProcessRollup2 and DnsRequest Events",
+        "Get DNS Resolutions from Browser Processes",
+        "PR2 + DNS Cheat Join"
+      ]
+    },
+    "NetworkConnectIP4": {
+      "example_count": 4,
+      "query_types": ["hunting", "analysis"],
+      "common_patterns": [
+        "C2 detection",
+        "Lateral movement",
+        "Network scanning",
+        "RFC1918 filtering"
+      ],
+      "sample_queries": [
+        "Combine ProcessRollup2 and NetworkConnectIP4 Events",
+        "Systems Initiating Connections to a High Number of Ports",
+        "Omit RFC1819 CIDR Ranges from Search",
+        "Bottom 10% of NetworkConnect Port Values"
+      ]
+    },
+    "InstalledBrowserExtension": {
+      "example_count": 2,
+      "query_types": ["inventory", "analysis"],
+      "common_patterns": [
+        "Malicious extension detection",
+        "Software inventory",
+        "Extension prevalence"
+      ],
+      "sample_queries": [
+        "Enumerate Chrome + Edge Browser Extension on Win and Mac",
+        "Installed Browser Extensions"
+      ]
+    },
+    "AgentOnline": {
+      "example_count": 3,
+      "query_types": ["analysis", "hunting"],
+      "common_patterns": [
+        "Boot time calculation",
+        "Uptime analysis",
+        "Sensor connectivity"
+      ],
+      "sample_queries": [
+        "Calculate Last Windows Boot Time",
+        "Get Windows OS Boot Time"
+      ]
+    },
+    "UserLogonFailed2": {
+      "example_count": 1,
+      "query_types": ["analysis"],
+      "common_patterns": [
+        "Brute force detection",
+        "Failed login analysis"
+      ],
+      "sample_queries": [
+        "Failed User Logon Thresholding",
+        "Failed and Successful User Logon Events"
+      ]
+    },
+    "DriverLoad": {
+      "example_count": 1,
+      "query_types": ["detection", "inventory"],
+      "common_patterns": [
+        "BYOVD detection",
+        "Unsigned driver detection",
+        "Certificate validation"
+      ],
+      "sample_queries": [
+        "Enumerate Windows Driver Loads"
+      ]
+    },
+    "EndOfProcess": {
+      "example_count": 1,
+      "query_types": ["analysis"],
+      "common_patterns": [
+        "Process lifecycle analysis",
+        "Runtime calculation"
+      ],
+      "sample_queries": [
+        "Calculate Process Run Time"
+      ]
+    }
+  },
+  "function_to_examples": {
+    "description": "Most commonly used functions in example queries",
+    "top_functions_with_examples": [
+      {
+        "function": "groupBy",
+        "usage_count": 63,
+        "category": "aggregation",
+        "common_use_cases": [
+          "Aggregate events by endpoint (aid, ComputerName)",
+          "Count events by process name (ImageFileName)",
+          "Time-based aggregation with bucket()",
+          "User activity grouping (UserName, UserSid)"
+        ],
+        "example_queries": [
+          "Frequency Analysis via Program Clustering",
+          "Count Windows Discovery Commands Per User",
+          "Evaluate Operating System Prevalence",
+          "Top 10 ProcessRollup2 Events"
+        ]
+      },
+      {
+        "function": "count",
+        "usage_count": 40,
+        "category": "aggregation",
+        "common_use_cases": [
+          "Event counting",
+          "Distinct value counting",
+          "Threshold detection"
+        ],
+        "example_queries": [
+          "Failed User Logon Thresholding",
+          "Aggregate Detection Data by Host",
+          "Resource Utilization"
+        ]
+      },
+      {
+        "function": "format",
+        "usage_count": 28,
+        "category": "string",
+        "common_use_cases": [
+          "String formatting",
+          "Field concatenation",
+          "Display formatting"
+        ],
+        "example_queries": [
+          "OsVersionInfo OsVersionFileData Decode",
+          "Linux Kernel Version",
+          "Process ProcessCreateFlags"
+        ]
+      },
+      {
+        "function": "drop",
+        "usage_count": 25,
+        "category": "transformation",
+        "common_use_cases": [
+          "Remove unnecessary fields",
+          "Clean output",
+          "Performance optimization"
+        ],
+        "example_queries": [
+          "Many queries use drop for final output cleanup"
+        ]
+      },
+      {
+        "function": "table",
+        "usage_count": 22,
+        "category": "utility",
+        "common_use_cases": [
+          "Format results as table",
+          "Specify column order",
+          "Display formatting"
+        ],
+        "example_queries": [
+          "Various utility and analysis queries"
+        ]
+      },
+      {
+        "function": "join",
+        "usage_count": 13,
+        "category": "advanced",
+        "common_use_cases": [
+          "Process-to-Network correlation",
+          "Process-to-DNS correlation",
+          "Process tree construction",
+          "Event enrichment"
+        ],
+        "example_queries": [
+          "Combine ProcessRollup2 and NetworkConnectIP4 Events",
+          "Combine ProcessRollup2 and DnsRequest Events",
+          "Merge Parent_Child PR2 with Join",
+          "Listening Programs with low port numbers"
+        ]
+      },
+      {
+        "function": "in",
+        "usage_count": 15,
+        "category": "utility",
+        "common_use_cases": [
+          "Multi-value filtering",
+          "Whitelist/blacklist checks",
+          "Platform filtering"
+        ],
+        "example_queries": [
+          "Platform-specific queries",
+          "Multi-value field filtering"
+        ]
+      },
+      {
+        "function": "match",
+        "usage_count": 16,
+        "category": "control_flow",
+        "common_use_cases": [
+          "Conditional field assignment",
+          "Case-based logic",
+          "Field categorization"
+        ],
+        "example_queries": [
+          "Case to convert Size to appropriate unit of measure",
+          "Decode SignInfoFlags",
+          "OsVersionInfo OsVersionFileData Decode"
+        ]
+      }
+    ]
+  },
+  "mitre_attack_to_queries": {
+    "description": "Mapping of MITRE ATT&CK techniques to example queries",
+    "tactic": "TA007 - Discovery",
+    "techniques": [
+      {
+        "technique_id": "T1087",
+        "technique_name": "Account Discovery",
+        "sub_techniques": [
+          "T1087.001 - Local Account",
+          "T1087.002 - Domain Account",
+          "T1087.003 - Email Account",
+          "T1087.004 - Cloud Account"
+        ],
+        "query_count": 4,
+        "example_queries": [
+          "Account Discovery - Local Account",
+          "Account Discovery - Domain Account",
+          "Account Discovery - Email Account",
+          "Account Discovery - Cloud Account"
+        ],
+        "common_event_types": ["ProcessRollup2"],
+        "common_indicators": ["whoami", "net user", "net localgroup", "Get-ADUser"]
+      },
+      {
+        "technique_id": "T1069",
+        "technique_name": "Permission Groups Discovery",
+        "sub_techniques": [
+          "T1069.001 - Local Groups",
+          "T1069.002 - Domain Groups",
+          "T1069.003 - Cloud Groups"
+        ],
+        "query_count": 3,
+        "example_queries": [
+          "Permission Groups Discovery - Local Groups",
+          "Permission Groups Discovery - Domain Groups",
+          "Permission Groups Discovery - Cloud Groups"
+        ],
+        "common_event_types": ["ProcessRollup2"],
+        "common_indicators": ["net localgroup", "net group", "Get-ADGroup"]
+      },
+      {
+        "technique_id": "T1082",
+        "technique_name": "System Information Discovery",
+        "query_count": 1,
+        "example_queries": [
+          "System Information Discovery"
+        ],
+        "common_event_types": ["ProcessRollup2", "OsVersionInfo"],
+        "common_indicators": ["systeminfo", "ver", "uname"]
+      },
+      {
+        "technique_id": "T1083",
+        "technique_name": "File and Directory Discovery",
+        "query_count": 1,
+        "example_queries": [
+          "File and Directory Discovery"
+        ],
+        "common_event_types": ["ProcessRollup2"],
+        "common_indicators": ["dir", "ls", "tree", "find"]
+      },
+      {
+        "technique_id": "T1057",
+        "technique_name": "Process Discovery",
+        "query_count": 1,
+        "example_queries": [
+          "Process Discovery"
+        ],
+        "common_event_types": ["ProcessRollup2"],
+        "common_indicators": ["tasklist", "ps", "Get-Process"]
+      },
+      {
+        "technique_id": "T1018",
+        "technique_name": "Remote System Discovery",
+        "query_count": 1,
+        "example_queries": [
+          "Remote System Discovery"
+        ],
+        "common_event_types": ["ProcessRollup2"],
+        "common_indicators": ["net view", "ping", "arp"]
+      },
+      {
+        "technique_id": "T1135",
+        "technique_name": "Network Share Discovery",
+        "query_count": 1,
+        "example_queries": [
+          "Network Share Discovery"
+        ],
+        "common_event_types": ["ProcessRollup2"],
+        "common_indicators": ["net share", "net use"]
+      },
+      {
+        "technique_id": "T1016",
+        "technique_name": "System Network Configuration Discovery",
+        "query_count": 1,
+        "example_queries": [
+          "System Network Configuration Discovery - Internet Connection Discovery"
+        ],
+        "common_event_types": ["ProcessRollup2"],
+        "common_indicators": ["ipconfig", "ifconfig", "netstat"]
+      }
+    ],
+    "total_techniques": 20,
+    "total_queries": 25
+  },
+  "correlation_join_patterns": {
+    "description": "Common join patterns for event correlation",
+    "patterns": [
+      {
+        "pattern_name": "Process-to-Network Correlation",
+        "primary_event": "ProcessRollup2",
+        "secondary_event": "NetworkConnectIP4",
+        "join_condition": "ProcessRollup2.TargetProcessId = NetworkConnectIP4.ContextProcessId AND ProcessRollup2.aid = NetworkConnectIP4.aid",
+        "use_case": "Identify which processes are making network connections",
+        "example_count": 4,
+        "complexity": "intermediate",
+        "functions_used": ["join", "selfJoinFilter"]
+      },
+      {
+        "pattern_name": "Process-to-DNS Correlation",
+        "primary_event": "ProcessRollup2",
+        "secondary_event": "DnsRequest",
+        "join_condition": "ProcessRollup2.TargetProcessId = DnsRequest.ContextProcessId AND ProcessRollup2.aid = DnsRequest.aid",
+        "use_case": "Link DNS queries to originating processes",
+        "example_count": 4,
+        "complexity": "intermediate",
+        "functions_used": ["join", "selfJoinFilter"]
+      },
+      {
+        "pattern_name": "Process Lifecycle",
+        "primary_event": "ProcessRollup2",
+        "secondary_event": "EndOfProcess",
+        "join_condition": "ProcessRollup2.TargetProcessId = EndOfProcess.TargetProcessId AND ProcessRollup2.aid = EndOfProcess.aid",
+        "use_case": "Calculate process runtime and analyze lifecycle",
+        "example_count": 1,
+        "complexity": "expert",
+        "functions_used": ["join", "formatDuration"]
+      },
+      {
+        "pattern_name": "User Logon to Process Activity",
+        "primary_event": "UserLogon",
+        "secondary_event": "ProcessRollup2",
+        "join_condition": "UserLogon.UserSid = ProcessRollup2.UserSid AND UserLogon.aid = ProcessRollup2.aid",
+        "use_case": "Correlate user logons with subsequent process executions",
+        "example_count": 2,
+        "complexity": "intermediate",
+        "functions_used": ["join", "bucket"]
+      },
+      {
+        "pattern_name": "Parent-Child Process Relationship",
+        "primary_event": "ProcessRollup2",
+        "secondary_event": "ProcessRollup2",
+        "join_condition": "parent.TargetProcessId = child.ParentProcessId AND parent.aid = child.aid",
+        "use_case": "Build process trees and analyze parent-child relationships",
+        "example_count": 2,
+        "complexity": "advanced",
+        "functions_used": ["join"]
+      }
+    ]
+  },
+  "field_normalization_patterns": {
+    "description": "Fields that require platform-specific normalization or conversion",
+    "patterns": [
+      {
+        "field": "ProcessId",
+        "normalization": "Platform-specific process ID field selection",
+        "platforms": {
+          "Windows": "TargetProcessId",
+          "Mac": "TargetProcessId",
+          "Linux": "TargetProcessId"
+        },
+        "alias": "falconPID := TargetProcessId",
+        "use_case": "Unified process ID across platforms"
+      },
+      {
+        "field": "UserId",
+        "normalization": "Platform-specific user ID field selection",
+        "platforms": {
+          "Windows": "UserSid",
+          "Mac": "uid",
+          "Linux": "uid"
+        },
+        "use_case": "Unified user identification across platforms"
+      },
+      {
+        "field": "OSVersionFileData",
+        "normalization": "Hex decoding for Linux/Mac OS versions",
+        "platforms": {
+          "Linux": "format(\"%d.%d.%d\", ...hex decoding...)",
+          "Mac": "ProductBuild extraction",
+          "Windows": "ProductName field"
+        },
+        "use_case": "Human-readable OS version information"
+      },
+      {
+        "field": "Timestamps",
+        "normalization": "Epoch milliseconds to human-readable time",
+        "conversion": "formatTime(\"%Y-%m-%d %H:%M:%S\", field=timestamp_field, unit=milliseconds)",
+        "common_fields": ["ProcessStartTime", "ContextTimeStamp", "BaseTime"],
+        "use_case": "Convert numeric epochs to readable timestamps"
+      }
+    ]
+  },
+  "usage_recommendations": {
+    "for_query_builders": [
+      "Use common_fields_across_event_types to suggest join opportunities",
+      "Use function_to_field_type_compatibility to validate function usage on specific fields",
+      "Use correlation_join_patterns to provide template queries for common use cases",
+      "Use event_type_to_examples to show relevant examples when user selects an event type"
+    ],
+    "for_threat_hunters": [
+      "Reference mitre_attack_to_queries to find detection queries for specific TTPs",
+      "Use correlation_join_patterns to build complex behavioral detections",
+      "Use event_type_to_examples to find hunting patterns for specific data sources"
+    ],
+    "for_developers": [
+      "Use field_normalization_patterns to implement cross-platform query logic",
+      "Use function_to_field_type_compatibility for autocomplete and validation",
+      "Use common_fields_across_event_types for join optimization"
+    ]
+  }
+}

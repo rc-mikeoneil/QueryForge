@@ -1,0 +1,123 @@
+{
+  "table": "CommandHistory",
+  "category": "endpoint_process",
+  "description": "Captures command-line execution history from shells and interpreters (PowerShell, cmd.exe, bash, etc.). Provides visibility into interactive commands and scripts executed by users, critical for detecting malicious activity and post-exploitation techniques.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["CommandHistory"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation", "joining"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win", "Mac", "Lin"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "UserName",
+      "type": "string",
+      "description": "Username executing the command",
+      "searchable": true,
+      "common_usage": ["filtering", "grouping", "user behavior analysis"]
+    },
+    {
+      "name": "UserSid",
+      "type": "string",
+      "description": "Windows Security Identifier for the user",
+      "searchable": true,
+      "common_usage": ["filtering", "correlation"]
+    },
+    {
+      "name": "ImageFileName",
+      "type": "string",
+      "description": "Full path to the shell or interpreter executable",
+      "searchable": true,
+      "supports_regex": true,
+      "example_values": ["\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe", "\\cmd.exe", "/bin/bash"],
+      "common_usage": ["filtering", "shell identification"]
+    },
+    {
+      "name": "FileName",
+      "type": "string",
+      "description": "Base filename of the shell or interpreter",
+      "searchable": true,
+      "example_values": ["powershell.exe", "cmd.exe", "bash", "pwsh"],
+      "common_usage": ["filtering", "grouping"]
+    },
+    {
+      "name": "CommandLine",
+      "type": "string",
+      "description": "The command executed in the shell",
+      "searchable": true,
+      "supports_regex": true,
+      "common_usage": ["threat hunting", "command pattern analysis", "detection"]
+    },
+    {
+      "name": "TargetProcessId",
+      "type": "long",
+      "description": "Falcon's unique process identifier for the shell process",
+      "common_usage": ["correlation", "joining with ProcessRollup2"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "timeline reconstruction"]
+    },
+    {
+      "name": "UID",
+      "type": "string",
+      "description": "Unix User ID (Linux/Mac)",
+      "common_usage": ["filtering", "user tracking on Unix systems"]
+    },
+    {
+      "name": "GID",
+      "type": "string",
+      "description": "Unix Group ID (Linux/Mac)",
+      "common_usage": ["filtering", "permission analysis"]
+    }
+  ],
+  "col_count": 14,
+  "common_filters": [
+    "#event_simpleName=CommandHistory",
+    "event_platform=Win",
+    "ImageFileName=/powershell\\.exe/i",
+    "CommandLine=/Get-/i"
+  ],
+  "common_fields": ["aid", "ComputerName", "UserName", "ImageFileName", "CommandLine"],
+  "common_operations": [
+    "Detect PowerShell reconnaissance (Get-NetDomainTrust, Get-ADUser, etc.)",
+    "Identify cloud infrastructure discovery commands",
+    "Join with ProcessRollup2 via TargetProcessId for full process context",
+    "Hunt for MITRE ATT&CK Discovery techniques",
+    "Track command execution patterns by user"
+  ],
+  "generated_at": "2025-11-15T00:00:00Z"
+}

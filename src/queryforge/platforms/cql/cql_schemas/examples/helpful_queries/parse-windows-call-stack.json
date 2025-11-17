@@ -1,0 +1,61 @@
+{
+  "id": "parse-windows-call-stack",
+  "title": "Parse Windows Call Stack",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Parse Windows Call Stack.md",
+  "category": "helpful_query",
+  "subcategory": "process",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "groupBy",
+    "replace"
+  ],
+  "operators_used": [
+    "<",
+    "=",
+    ">",
+    "in",
+    "not",
+    "or",
+    "regex",
+    "|"
+  ],
+  "fields_referenced": [
+    "CallStackModuleNames",
+    "ComputerName",
+    "UserName",
+    "aid",
+    "array",
+    "as",
+    "by",
+    "field",
+    "function",
+    "ignoreCase",
+    "limit",
+    "optional",
+    "regex",
+    "separator",
+    "var",
+    "with",
+    "x"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "hunting",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "Hunting query for Parse Windows Call Stack",
+  "query": "// Get all Windows ProcessRollup2 events with .dll or .exe listed in the call stack\nevent_platform=Win #event_simpleName=ProcessRollup2 CallStackModuleNames=/\\.(dll|exe)/\n\n// Create filters to narrow searches\n| aid=?aid\n| ComputerName=~wildcard(?{ComputerName=\"*\"}, ignoreCase=true)\n| UserName=~wildcard(?{UserName=\"*\"}, ignoreCase=true)\n\n// Clean up first few characters in CallStackModuleNames\n| replace(field=CallStackModuleNames, regex=\"0\\\\<\\\\-1\\\\>\", as=CallStackModuleNames)\n\n// Remove memory addresses (optional)\n| replace(field=CallStackModuleNames, regex=\"(\\\\.dll|\\\\.exe)\\\\+.*?\\\\|\", with=\"$1|\", as=CallStackModuleNames)\n\n// Create arrary of module loads\n| loadedFile:=splitString(by=\"\\\\|\", field=CallStackModuleNames)\n\n// Omit array values that are not exe or dll file paths\n| array:filter(array=\"loadedFile[]\", function={x=/\\.(exe|dll)/i}, var=x)\n\n// Concat results into unified field\n| concatArray(field=\"loadedFile\", as=CallStackModules, separator=\"|\")\n\n// Aggregate by process execution\n| groupBy([cid, aid, TargetProcessId, ComputerName, UserName, UserSid, ParentBaseFileName, FileName, CommandLine], function=([collect([CallStackModules])]), limit=max)\n\n// Put each CallStackModules value on its own line\n| replace(field=CallStackModules, regex=\"\\\\|\", with=\"\\n\", as=CallStackModules)",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "lin",
+    "processrollup2",
+    "win"
+  ]
+}

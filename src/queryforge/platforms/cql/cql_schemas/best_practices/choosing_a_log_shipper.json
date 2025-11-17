@@ -1,0 +1,27 @@
+{
+  "title": "Choosing a Log Shipper",
+  "slug": "choosing_a_log_shipper",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "integration",
+  "description": "Selecting the right log shipper depends on scale, OS support, protocol, and operational requirements. Common choices include Fluent Bit, Beats, rsyslog, and the Falcon LogScale Collector.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Counts events by log shipper source to help validate deployment coverage and compare relative volumes for each shipper.",
+      "language": "logscale",
+      "query": "#source=fluentbit or #source=beats\n| groupBy(#source, function=count())"
+    }
+  ],
+  "tags": [
+    "collect",
+    "select",
+    "shipper"
+  ],
+  "url": "https://library.humio.com/kb/kb-choosing-log-shipper.html",
+  "difficulty": "intermediate",
+  "related_functions": [
+    "count",
+    "groupBy"
+  ]
+}

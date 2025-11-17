@@ -1,0 +1,26 @@
+{
+  "title": "How-To: Sorting Exported Data",
+  "slug": "sorting_exported_data",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Covers techniques to ensure exported CSV or JSON data is sorted correctly\u2014often by timestamp\nor another key\u2014before export or visualization.",
+  "examples": [
+    {
+      "name": "Sort by timestamp before export",
+      "description": "Sorts events in ascending timestamp order for consistent export.",
+      "language": "logscale",
+      "query": "| sort(@timestamp asc)"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "export",
+    "sorting",
+    "csv"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "sort"
+  ]
+}

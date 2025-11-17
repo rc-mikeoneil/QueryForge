@@ -1,0 +1,23 @@
+{
+  "name": "lower",
+  "category": "string",
+  "description": "Converts text to all lowercase letters. Based on presumed language, with option to set language and locale if needed.",
+  "syntax": "| field := lower(input_field)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "field",
+      "required": true,
+      "description": "The field containing text to convert to lowercase"
+    }
+  ],
+  "return_type": "string",
+  "examples": [
+    "| lowerImageFileName := lower(ImageFileName)",
+    "| userName := lower(UserName)",
+    "| domain := lower(Domain)"
+  ],
+  "related_functions": ["upper", "length"],
+  "use_cases": ["Normalizing text for comparison", "Case-insensitive matching", "Data standardization"],
+  "documentation_url": "https://library.humio.com/data-analysis/functions-lower.html"
+}

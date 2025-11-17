@@ -1,0 +1,27 @@
+{
+  "title": "Leveraging saved queries as functions",
+  "slug": "leveraging_saved_queries_as_functions",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "Saved queries can be invoked like functions inside other queries. This supports reuse of complex logic such as normalization, enrichment, or detection patterns.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Two saved queries (NormalizeUserName and TagPrivilegedAccounts) are reused as functions to standardize users and tag privileged ones before aggregation.",
+      "language": "logscale",
+      "query": "#event_simpleName=UserLogon\n| $NormalizeUserName()\n| $TagPrivilegedAccounts()\n| groupBy(UserName, function=count())"
+    }
+  ],
+  "tags": [
+    "saved-queries"
+  ],
+  "url": "https://library.humio.com/kb/kb-saved-queries-as-functions.html",
+  "difficulty": "intermediate",
+  "related_functions": [
+    "NormalizeUserName",
+    "TagPrivilegedAccounts",
+    "count",
+    "groupBy"
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "id": "2023-06-14-cool-query-friday-watching-the-watchers-profiling-falcon-console-logins-via-geohashing",
+  "title": "2023-06-14 - Cool Query Friday - Watching the Watchers - Profiling Falcon Console Logins via Geohashing",
+  "source_file": "Queries-Only/Cool-Query-Friday/2023-06-14 - Cool Query Friday - Watching the Watchers - Profiling Falcon Console Logins via Geohashing.md",
+  "category": "cool_query_friday",
+  "subcategory": null,
+  "description": "[Reddit Link](https://www.reddit.com/r/crowdstrike/comments/149krol/20230614_cool_query_friday_watching_the_watchers/)",
+  "mitre_attack": null,
+  "event_types": [],
+  "functions_used": [
+    "asn",
+    "count",
+    "default",
+    "format",
+    "groupBy",
+    "ipLocation",
+    "max",
+    "min",
+    "select",
+    "test"
+  ],
+  "operators_used": [
+    "!=",
+    "<",
+    "=",
+    "and",
+    "|"
+  ],
+  "fields_referenced": [
+    "EventType",
+    "OperationName",
+    "OriginSourceIpAddress",
+    "Success",
+    "as",
+    "field",
+    "format",
+    "from",
+    "function",
+    "ipDetails",
+    "lat",
+    "lon",
+    "precision",
+    "value"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "monitoring",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "[Reddit Link](https://www.reddit.com/r/crowdstrike/comments/149krol/20230614_cool_query_friday_watching_the_watchers/)",
+  "query": "// Get successful Falcon console logins\nEventType=Event_ExternalApiEvent OperationName=userAuthenticate Success=true\n\n// Get ASN Details for OriginSourceIpAddress\n| asn(OriginSourceIpAddress, as=asn)\n\n// Omit ZScaler infra\n| asn.org!=/ZSCALER/\n\n//Get IP Location for OriginSourceIpAddress\n| ipLocation(OriginSourceIpAddress)\n\n// Get geohash with precision of 2; precision can be adjusted as desired\n| geohash(lat=OriginSourceIpAddress.lat, lon=OriginSourceIpAddress.lon, precision=2, as=geohash)\n\n// Get RDNS value, if available, for OriginSourceIpAddress\n| rdns(OriginSourceIpAddress, as=rdns)\n\n//Set default values for blank fields\n| default(value=\"Unknown Country\", field=[OriginSourceIpAddress.country])\n| default(value=\"Unknown City\", field=[OriginSourceIpAddress.city])\n| default(value=\"Unknown ASN\", field=[asn.org])\n| default(value=\"Unknown RDNS\", field=[rdns])\n\n// Create unified IP details field for easier viewing\n| format(format=\"%s (%s, %s) [%s] - %s\", field=[OriginSourceIpAddress, OriginSourceIpAddress.country, OriginSourceIpAddress.city, asn.org, rdns], as=ipDetails)\n\n// Aggregate details by UserId and geoHash\n| groupBy([UserId, geoHash], function=([count(as=logonCount), min(@timestamp, as=firstLogon), max(@timestamp, as=lastLogon), collect(ipDetails)]))\n\n// Look for geohashes with fewer than 5 logins; logonCount can be adjusted as desired\n| test(logonCount<5)\n\n// Calculate time delta and determine span between first and last login\n| timeDelta := lastLogon-firstLogon\n| formatDuration(timeDelta, from=ms, precision=4, as=timeDelta)\n\n// Format timestamps\n| formatTime(format=\"%Y-%m-%dT%H:%M:%S\", field=firstLogon, as=\"firstLogon\")\n| formatTime(format=\"%Y-%m-%dT%H:%M:%S\", field=lastLogon, as=\"lastLogon\")\n\n// Create link to geohash map for easy cartography\n| format(\"[Map](https://geohash.softeng.co/%s)\", field=geoHash, as=Map)\n\n// Order fields as desired\n| select([UserId, firstLogon, lastLogon, timeDelta, logonCount, Map, ipDetails])",
+  "key_features": [
+    "IP geolocation enrichment"
+  ],
+  "related_examples": [],
+  "tags": [
+    "lin",
+    "win"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "name": "ipLocation",
+  "category": "network",
+  "description": "Determines the country, city, longitude, and latitude for an IP address (IPv4 or IPv6). The attributes ip.country, ip.city, ip.lon, ip.lat are added to the event.",
+  "syntax": "ipLocation(field)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "Field containing an IP address (IPv4 or IPv6)"
+    }
+  ],
+  "return_type": "enriched_events",
+  "output_fields": [
+    {
+      "name": "{field}.country",
+      "type": "string",
+      "description": "Country name or code"
+    },
+    {
+      "name": "{field}.city",
+      "type": "string",
+      "description": "City name"
+    },
+    {
+      "name": "{field}.lon",
+      "type": "number",
+      "description": "Longitude coordinate"
+    },
+    {
+      "name": "{field}.lat",
+      "type": "number",
+      "description": "Latitude coordinate"
+    }
+  ],
+  "examples": [
+    "| ipLocation(RemoteAddressIP4)",
+    "| !cidr(RemoteAddressIP4, subnet=[\"224.0.0.0/4\", \"10.0.0.0/8\", \"172.16.0.0/12\", \"192.168.0.0/16\", \"127.0.0.1/32\", \"169.254.0.0/16\", \"0.0.0.0/32\"])\n| ipLocation(RemoteAddressIP4)"
+  ],
+  "related_functions": ["asn", "cidr", "geoHash", "worldMap"],
+  "use_cases": ["Geolocation", "IP enrichment", "Geographic analysis", "Threat intelligence"],
+  "notes": "Often used with cidr() to pre-filter RFC-1918 private addresses before geolocation lookup.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-iplocation.html"
+}

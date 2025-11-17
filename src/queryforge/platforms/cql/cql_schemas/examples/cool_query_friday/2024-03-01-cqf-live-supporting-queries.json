@@ -1,0 +1,31 @@
+{
+  "id": "2024-03-01-cqf-live-supporting-queries",
+  "title": "2024-03-01 CQF Live Supporting Queries",
+  "source_file": "Queries-Only/Cool-Query-Friday/2024-03-01 CQF Live Supporting Queries.md",
+  "category": "cool_query_friday",
+  "subcategory": null,
+  "description": "**CHEAT SHEET**",
+  "mitre_attack": null,
+  "event_types": [],
+  "functions_used": [],
+  "operators_used": [
+    "=",
+    "|"
+  ],
+  "fields_referenced": [
+    "FileName"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "basic",
+  "query_type": "utility",
+  "platforms": [
+    "Cross-platform"
+  ],
+  "use_case": "**CHEAT SHEET**",
+  "query": "FileName=testfile* | dedup ComputerName | stats count by ComputerName FileName FilePath",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "cross-platform"
+  ]
+}

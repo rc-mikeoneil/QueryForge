@@ -1,0 +1,24 @@
+{
+  "name": "upper",
+  "category": "string",
+  "description": "Converts a string field to uppercase. Opposite of the lower() function. Useful for normalizing string values for comparison or display.",
+  "syntax": "upper(field)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "Field or string value to convert to uppercase"
+    }
+  ],
+  "return_type": "string",
+  "examples": [
+    "| column := upper(column)",
+    "| UEFI := upper(\"assessments.firmware_is_uefi\")",
+    "| SubStatus_hex := upper(SubStatus_hex)"
+  ],
+  "related_functions": ["lower", "replace", "regex"],
+  "use_cases": ["String normalization", "Case-insensitive comparison", "Field formatting", "Data standardization"],
+  "notes": "Useful for normalizing strings before comparison or creating standardized field values.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-upper.html"
+}

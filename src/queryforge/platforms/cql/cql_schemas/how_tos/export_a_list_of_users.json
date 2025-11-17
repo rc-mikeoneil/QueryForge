@@ -1,0 +1,23 @@
+{
+  "title": "How-To: Export a List of Users",
+  "slug": "export_a_list_of_users",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "admin",
+  "description": "Shows how to export user information (for example, email and roles) from LogScale,\noften via GraphQL or an administrative API, for auditing or inventory purposes.",
+  "examples": [
+    {
+      "name": "List organization users via GraphQL",
+      "description": "Queries all users and their roles in the current organization.",
+      "language": "graphql",
+      "query": "query {\n  organization {\n    users {\n      email\n      roles\n    }\n  }\n}"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "admin",
+    "users",
+    "audit"
+  ],
+  "difficulty": "beginner"
+}

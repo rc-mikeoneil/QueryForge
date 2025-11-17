@@ -1,0 +1,70 @@
+{
+  "id": "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11",
+  "title": "2021-10-29 - Cool Query Friday - CPU, RAM, Disk, Firmware, TPM 2.0, and Windows 11",
+  "source_file": "Queries-Only/Cool-Query-Friday/2021-10-29 - Cool Query Friday - CPU, RAM, Disk, Firmware, TPM 2.0, and Windows 11.md",
+  "category": "cool_query_friday",
+  "subcategory": null,
+  "description": "https://www.reddit.com/r/crowdstrike/comments/qid1tj/20211029_cool_query_friday_cpu_ram_disk_firmware/",
+  "mitre_attack": null,
+  "event_types": [
+    "ResourceUtilization",
+    "ZeroTrustHostAssessment",
+    "SystemCapacity",
+    "AgentOnline"
+  ],
+  "functions_used": [
+    "default",
+    "drop",
+    "groupBy",
+    "in",
+    "match",
+    "selfJoinFilter",
+    "upper"
+  ],
+  "operators_used": [
+    "=",
+    "in",
+    "match",
+    "|"
+  ],
+  "fields_referenced": [
+    "TpmFirmwareVersion",
+    "binary",
+    "field",
+    "file",
+    "from",
+    "function",
+    "include",
+    "limit",
+    "replaceEmpty",
+    "to",
+    "value",
+    "values",
+    "where"
+  ],
+  "correlation_patterns": [
+    "selfJoinFilter"
+  ],
+  "difficulty": "expert",
+  "query_type": "hunting",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "https://www.reddit.com/r/crowdstrike/comments/qid1tj/20211029_cool_query_friday_cpu_ram_disk_firmware/",
+  "query": "// Get 4 events of interest  \nevent_platform=Win  \n| in(field=\"#event_simpleName\", values=[AgentOnline,ResourceUtilization,SystemCapacity,ZeroTrustHostAssessment])  \n  \n// Use selfJoinFilter() to include only systems where all 4 events are in search window  \n| selfJoinFilter(field=[aid], where=[{#event_simpleName=AgentOnline}, {#event_simpleName=ResourceUtilization}, {#event_simpleName=SystemCapacity}, {#event_simpleName=ZeroTrustHostAssessment}])  \n  \n// Aggregate by Agent ID  \n| groupBy([aid], function=([selectLast([BiosManufacturer, ChasisManufacturer, CpuProcessorName, MemoryTotal,assessments.firmware_is_uefi, TpmFirmwareVersion, AvailableDiskSpace, AverageCpuUsage, AverageUsedRam])]), limit=max)  \n  \n// Format fields as required  \n| unit:convert(AverageUsedRam, from=\"M\", to=\"G\")  \n| UEFI:=upper(\"assessments.firmware_is_uefi\") | drop([\"assessments.firmware_is_uefi\"])  \n| unit:convert(MemoryTotal, to=\"G\", binary=true)  \n| default(value=\"-\", field=[TpmFirmwareVersion,BiosManufacturer, ChasisManufacturer,CpuProcessorName, AverageCpuUsage, MemoryTotal, AverageUsedRam, AvailableDiskSpace], replaceEmpty=true)  \n  \n// Check to see if TPM Firmware version is reporting indicating TPM 2.0  \n| case {  \nTpmFirmwareVersion=\"-\" | TPM:=\"-\";  \n* | TPM:=\"2.0\";  \n}  \n| drop([TpmFirmwareVersion])  \n  \n// Merge data from AID Master  \n| match(file=\"aid_master_main.csv\", field=[aid], include=[Version, ComputerName])  \n  \n// Final aggregation to order fields  \n| groupBy([aid, ComputerName, BiosManufacturer, ChasisManufacturer, Version, CpuProcessorName, AverageCpuUsage, MemoryTotal, AverageUsedRam, AvailableDiskSpace, UEFI, TPM], function=[], limit=max)",
+  "key_features": [
+    "Uses selfJoinFilter for correlation",
+    "Multi-event correlation (4 event types)",
+    "Advanced correlation techniques"
+  ],
+  "related_examples": [],
+  "tags": [
+    "agentonline",
+    "lin",
+    "resourceutilization",
+    "systemcapacity",
+    "win",
+    "zerotrusthostassessment"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "title": "How-To: Getting unsupported fields for collect()",
+  "slug": "getting_unsupported_fields_for_collect",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Discusses scenarios where collect() cannot be applied due to field types or size and how to\nidentify or remediate unsupported fields before using collect() (e.g., by casting or trimming).",
+  "examples": [
+    {
+      "name": "Identify large fields before collect()",
+      "description": "Shows field length and filters out over-large values before using collect().",
+      "language": "logscale",
+      "query": "fieldLength := length(BigField)\n| fieldLength < 1024\n| groupBy(ComputerName, function=collect(BigField))"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "collect",
+    "fields",
+    "troubleshooting"
+  ],
+  "difficulty": "intermediate",
+  "related_functions": [
+    "collect",
+    "groupBy",
+    "length"
+  ]
+}

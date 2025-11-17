@@ -1,0 +1,43 @@
+{
+  "id": "account-discovery-local-account",
+  "title": "(T1087.001) Account Discovery - Local Account",
+  "source_file": "Queries-Only/MITRE-ATT&CK-Enterprise/(TA007) Discovery/(T1087) Account Discovery/(T1087.001) Account Discovery - Local Account.md",
+  "category": "mitre_attack",
+  "subcategory": "process",
+  "description": "https://attack.mitre.org/techniques/T1087/001/",
+  "mitre_attack": {
+    "tactic_code": "TA007",
+    "tactic_name": "Discovery",
+    "technique_id": "T1087",
+    "technique_name": "Account Discovery/(T1087",
+    "sub_technique_id": null
+  },
+  "event_types": [
+    "ProcessRollup2"
+  ],
+  "functions_used": [],
+  "operators_used": [
+    "=",
+    "|"
+  ],
+  "fields_referenced": [
+    "CommandLine",
+    "ImageFileName"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "basic",
+  "query_type": "utility",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "https://attack.mitre.org/techniques/T1087/001/",
+  "query": "#event_simpleName=ProcessRollup2 event_platform=Win ImageFileName=/\\\\net1?\\.exe/i CommandLine=/\\s+(localgroup|user)\\s+/i",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "lin",
+    "processrollup2",
+    "win"
+  ]
+}

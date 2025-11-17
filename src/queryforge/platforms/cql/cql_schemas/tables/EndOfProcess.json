@@ -1,0 +1,106 @@
+{
+  "table": "EndOfProcess",
+  "category": "endpoint_process",
+  "description": "Process termination events on Windows, Mac, and Linux. Captures when processes exit. Used for calculating process runtime, lifecycle analysis, and correlating start/end events.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["EndOfProcess"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win", "Mac", "Lin"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "searchable": true,
+      "common_usage": ["display", "filtering"]
+    },
+    {
+      "name": "TargetProcessId",
+      "type": "long",
+      "description": "Falcon's unique process identifier (UPID) for the terminated process",
+      "required": true,
+      "common_usage": ["correlation", "joining with ProcessRollup2"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Process end timestamp in epoch milliseconds",
+      "common_usage": ["runtime calculation", "temporal analysis"]
+    },
+    {
+      "name": "CLICreationCount",
+      "type": "long",
+      "description": "Count of command-line interface creations during process lifetime",
+      "common_usage": ["filtering", "scripting activity detection"]
+    },
+    {
+      "name": "ImageFileName",
+      "type": "string",
+      "description": "Full path to the process executable",
+      "searchable": true,
+      "common_usage": ["filtering", "process identification"]
+    },
+    {
+      "name": "FileName",
+      "type": "string",
+      "description": "Base filename extracted from ImageFileName (calculated field)",
+      "searchable": true,
+      "common_usage": ["display", "cleaner output"]
+    },
+    {
+      "name": "@timestamp",
+      "type": "datetime",
+      "description": "Event timestamp in ISO format",
+      "common_usage": ["display", "time range filtering"]
+    }
+  ],
+  "col_count": 11,
+  "common_filters": [
+    "event_platform=Win",
+    "CLICreationCount>0"
+  ],
+  "common_fields": ["aid", "TargetProcessId", "ContextTimeStamp", "CLICreationCount", "FileName"],
+  "common_operations": [
+    "Join with ProcessRollup2 via TargetProcessId for process runtime calculation",
+    "Process runtime calculation: runTime = processEndTime - processStartTime",
+    "SelfJoinFilter with ProcessRollup2 to match start and end events",
+    "CLICreationCount filtering for scripting activity",
+    "Filename extraction from ImageFileName path"
+  ],
+  "calculation_patterns": [
+    "processEndTime := max(ContextTimeStamp) from EndOfProcess",
+    "processStartTime := min(ProcessStartTime) from ProcessRollup2",
+    "runTime := processEndTime - processStartTime",
+    "formatDuration(runTime, from=ms, precision=4, as=programRunTime)"
+  ],
+  "correlation_pattern": "selfJoinFilter([aid, TargetProcessId], where=[{#event_simpleName=ProcessRollup2}, {#event_simpleName=EndOfProcess}], prefilter=true)",
+  "filename_extraction": "regex(\".+\\\\(?<FileName>.+$)\", field=ImageFileName, strict=false)",
+  "notes": "Always used in conjunction with ProcessRollup2 to calculate how long processes ran. CLICreationCount indicates PowerShell or other CLI activity during process lifetime.",
+  "generated_at": "2025-11-14T23:45:00Z"
+}

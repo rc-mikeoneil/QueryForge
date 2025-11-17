@@ -1,0 +1,49 @@
+{
+  "id": "hunting-bcdeditexe-usage",
+  "title": "Hunting bcdedit.exe usage",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Hunting bcdedit.exe usage.md",
+  "category": "helpful_query",
+  "subcategory": "process",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "count",
+    "format",
+    "groupBy",
+    "regex"
+  ],
+  "operators_used": [
+    "<",
+    "=",
+    ">",
+    "regex",
+    "|"
+  ],
+  "fields_referenced": [
+    "FileName",
+    "field",
+    "flags",
+    "format",
+    "function",
+    "strict"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "hunting",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "Hunting query for Hunting bcdedit.exe usage",
+  "query": "// Get bcdedit.exe process executions\n#event_simpleName=ProcessRollup2 event_platform=Win FileName=\"bcdedit.exe\"\n\n// Create process lineage tree for easier reading\n| ProcessLineage:=format(format=\"%s\\n\\t└ %s\\n\\t\\t└ %s\", field=[GrandParentBaseFileName, ParentBaseFileName, FileName])\n\n// Parse operator from bcdedit command if present\n| regex(\"bcdedit(\\.exe)?\\\"?\\s+\\/(?<operator>\\w+)\\s+(?<actions>.+$)\", field=CommandLine, flags=iF, strict=false)\n\n// Aggregate by command line arguments\n| groupBy(CommandLine, function=([count(), collect([ProcessLineage, operator, actions])]))",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "lin",
+    "processrollup2",
+    "win"
+  ]
+}

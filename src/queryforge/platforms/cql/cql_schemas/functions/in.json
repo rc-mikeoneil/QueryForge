@@ -1,0 +1,30 @@
+{
+  "name": "in",
+  "category": "utility",
+  "description": "Selects events where a given field contains particular values. Supports both string and numeric values in arrays.",
+  "syntax": "| in(field, values=[value1, value2, ...])",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "field",
+      "required": true,
+      "description": "The field to check for matching values"
+    },
+    {
+      "name": "values",
+      "type": "array",
+      "required": true,
+      "description": "Array of values to match against. Can contain strings or numbers"
+    }
+  ],
+  "return_type": "filtered_events",
+  "examples": [
+    "| in(LogonDomain, values=[\"acme.com\",\"beta.com\"])",
+    "| in(LogonType, values=[2,10])",
+    "| in(status, values=[\"error\", \"warning\", \"critical\"])"
+  ],
+  "related_functions": ["test", "case"],
+  "use_cases": ["Filtering events by multiple values", "Matching specific error codes", "Domain filtering", "Status filtering"],
+  "notes": "More efficient than multiple OR conditions when checking for multiple values in the same field.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-in.html"
+}

@@ -1,0 +1,578 @@
+sections:
+  section-1733163426510-0:
+    collapsed: true
+    order: 0
+    title: Data Vendors and Types
+    widgetIds:
+    - e41f47d4-9497-41ed-9a16-e3ccc4001cec
+    - 859d87a9-8d7f-4dff-bf0e-f57634e41bfc
+    - dc459b89-d7ff-4087-9f18-240d731ac635
+    - 5a5f8486-4a93-42ed-aa7e-9824cda35156
+    - 48066694-bd01-4545-8a5f-cc353bae993c
+    - 0b49c5ec-dfde-4165-b129-9284a774bd13
+  section-1733170885056-0:
+    collapsed: true
+    order: 2
+    title: CrowdStrike Parsing Standard Explorer
+    widgetIds:
+    - 1b5c21ff-5444-46dc-877f-7bd94d603121
+    - b21ce653-bbf5-4daf-9847-b08749940060
+name: Next-Gen SIEM Third-Party Data Explorer - v0.2
+updateFrequency: never
+timeSelector: {}
+sharedTimeInterval:
+  enabled: true
+  isLive: false
+  start: 1d
+widgets:
+  5a5f8486-4a93-42ed-aa7e-9824cda35156:
+    x: 6
+    height: 5
+    queryString: |-
+      #repo!=/detections|sensor_metadata|xdr_eventsarchive|xdr_indicatorsrepo|sensor_backup|base_sensor|falcon_for_it|fusion|foundry|forensics/F
+      | default(field=[#Vendor, #type], value="_missing_value")
+      | in(field=#Vendor, values=[?Vendor])
+      | top([#Vendor, #type], limit=25)
+      | sankey(source=#Vendor, target=#type, weight=count(field=#Vendor, distinct=true))
+    visualization: sankey
+    end: now
+    start: 1d
+    width: 6
+    y: 5
+    interactions:
+    - name: filterClick
+      titleTemplate: '{{ fields.source }} - {{ fields.target }}'
+      queryString: |-
+        #repo!=/detections|sensor_metadata|xdr_eventsarchive|xdr_indicatorsrepo|sensor_backup|base_sensor|falcon_for_it|fusion|foundry|forensics/F
+        | default(field=[#Vendor], value="_missing_value")
+        | #Vendor=?_Vendor
+        | #type=?_type
+      useWidgetTimeWindow: true
+      arguments:
+        _Vendor: '["{{ fields.source }}"]'
+        _type: '["{{ fields.target }}"]'
+      openInNewTab: true
+      isLive: false
+      type: searchlink
+    title: Top Vendors to Types
+    isLive: false
+    type: query
+  note-1733159733033-0:
+    x: 8
+    y: 0
+    height: 4
+    text: |-
+      * [Data onboarding](/data-connectors/)
+      * [Advanced event search](/investigate/search)
+      * [Rules](/xdr/rules)
+      * [Detection coverage](/xdr/rules/detection-coverage)
+      * [Detections](/unified-detections)
+      * [Incidents](/xdr/incidents)
+      * [Fusion SOAR dashboard](/workflow/fusion/dashboard)
+    width: 4
+    title: Next-Gen SIEM Components
+    type: note
+  e41f47d4-9497-41ed-9a16-e3ccc4001cec:
+    x: 0
+    height: 5
+    queryString: |-
+      #repo!=/detections|sensor_metadata|xdr_eventsarchive|xdr_indicatorsrepo|sensor_backup|base_sensor|falcon_for_it|fusion|foundry|forensics/F
+      | #event.kind=event
+      | event.category[0]=*
+      | split(event.category)
+      | default(field=[#Vendor], value="_missing_value")
+      | in(field=#Vendor, values=[?Vendor])
+      | groupby([#Vendor, event.category], limit=max)
+    end: now
+    start: 1d
+    width: 12
+    y: 15
+    interactions:
+    - name: clickFilter
+      titleTemplate: '{{ fields.#Vendor }}'
+      queryString: |-
+        #repo!=/detections|sensor_metadata|xdr_eventsarchive|xdr_indicatorsrepo|sensor_backup|base_sensor|falcon_for_it|fusion|foundry|forensics/F
+        | #event.kind=event
+        | split(event.category)
+        | default(field=[#Vendor], value="_missing_value")
+        | #Vendor=?_Vendor
+        | event.category=?_event_category
+      useWidgetTimeWindow: true
+      arguments:
+        _Vendor: '["{{fields.#Vendor}}"]'
+        _event_category: '["{{ fields.event.category }}"]'
+      openInNewTab: true
+      isLive: false
+      type: searchlink
+    options:
+      withXAxisTitle: true
+      labelAngle: 40
+      colorPalette: monoTeal
+      legendLocation: right
+      includeHistogram: false
+      gapBetweenRectangles: true
+      reversePalette: false
+    visualization: heat-map
+    title: Top Vendor and Category Events
+    isLive: false
+    type: query
+  b21ce653-bbf5-4daf-9847-b08749940060:
+    x: 0
+    height: 5
+    queryString: |-
+      #repo!=/detections|sensor_metadata|xdr_eventsarchive|xdr_indicatorsrepo|sensor_backup|base_sensor|falcon_for_it|fusion|foundry|forensics/F
+      | #event.kind=alert
+      | in(field=#Vendor, values=[?Vendor])
+      | #ecs.version!=* OR
+        Parser.version!=* OR
+        #Vendor!=* OR
+        #event.module!=* OR
+        #event.dataset!=* OR
+        event.category[0]!=* OR
+        event.type[0]!=*
+      | default(field=[#Vendor, #type, #ecs.version, Parser.version, #event.module, #event.dataset, #event.kind, event.category[0], event.type[0]], "_missing_value")
+      | groupby([#Vendor, #type, #ecs.version, Parser.version, #event.module, #event.dataset, #event.kind, event.category[0], event.type[0]], limit=max)
+    end: now
+    start: 1d
+    width: 12
+    y: 0
+    interactions:
+    - name: filterClick
+      titleTemplate: '{{ fields.#Vendor }} - events'
+      queryString: "#repo!=/detections|sensor_metadata|xdr_eventsarchive|xdr_indicatorsrepo|sensor_backup|base_sensor|falcon_for_it|fusion|foundry|forensics/F\n\
+        | #event.kind=alert\n| default(field=[#Vendor, #type, #ecs.version, Parser.version,\
+        \ #event.module, #event.dataset, #event.kind, event.category[0], event.type[0]],\
+        \ value=\"_missing_value\") \n| event.type[0]=?event_type_0_ \n| event.category[0]=?_event_category_0_\
+        \ \n| #event.kind=?_event_kind \n| #event.dataset=?_event_dataset \n| #event.module=?_event_module\
+        \ \n| Parser.version=?Parser_version \n| #ecs.version=?_ecs_version\n| #type=?_type\
+        \ \n| #Vendor=?_Vendor "
+      useWidgetTimeWindow: true
+      arguments:
+        event_type_0_: '["{{ fields[\"event.type[0]\"] }}"]'
+        Parser_version: '["{{fields.Parser.version}}"]'
+        _event_dataset: '["{{fields.#event.dataset}}"]'
+        _event_category_0_: '["{{ fields[\"event.category[0]\"] }}"]'
+        _Vendor: '["{{fields.#Vendor}}"]'
+        _type: '["{{fields.#type}}"]'
+        _ecs_version: '["{{fields.#ecs.version}}"]'
+        _event_module: '["{{fields.#event.module}}"]'
+        _event_kind: '["{{fields.#event.kind}}"]'
+      openInNewTab: true
+      isLive: false
+      type: searchlink
+    options:
+      cell-overflow: wrap-text
+      configured-columns:
+        '#type':
+          color:
+            conditions:
+            - color: '#F0424233'
+              condition:
+                arg: _missing_value
+                type: Equal
+        event.type[0]:
+          color:
+            conditions:
+            - color: '#F0424233'
+              condition:
+                arg: _missing_value
+                type: Equal
+        '#Vendor':
+          color:
+            conditions:
+            - color: '#F0424233'
+              condition:
+                arg: _missing_value
+                type: Equal
+          render-as: value
+        '#event.kind':
+          color:
+            conditions:
+            - color: '#F0424233'
+              condition:
+                arg: _missing_value
+                type: Equal
+        '#event.dataset':
+          color:
+            conditions:
+            - color: '#F0424233'
+              condition:
+                arg: _missing_value
+                type: Equal
+        '#event.module':
+          color:
+            conditions:
+            - color: '#F0424233'
+              condition:
+                arg: _missing_value
+                type: Equal
+        Parser.version:
+          color:
+            conditions:
+            - color: '#F0424233'
+              condition:
+                arg: _missing_value
+                type: Equal
+        '#event.category[0]':
+          color:
+            conditions:
+            - color: '#C93637'
+              condition:
+                arg: 'NULL'
+                type: Equal
+        event.category[0]:
+          color:
+            conditions:
+            - color: '#F0424233'
+              condition:
+                arg: _missing_value
+                type: Equal
+        '#ecs.version':
+          color:
+            conditions:
+            - color: '#F0424233'
+              condition:
+                arg: _missing_value
+                type: Equal
+      row-numbers-enabled: false
+    visualization: table-view
+    title: Alerts Missing CPS Fields Required for Correlation
+    isLive: false
+    type: query
+  48066694-bd01-4545-8a5f-cc353bae993c:
+    x: 0
+    height: 5
+    queryString: |-
+      #repo!=/detections|sensor_metadata|xdr_eventsarchive|xdr_indicatorsrepo|sensor_backup|base_sensor|falcon_for_it|fusion|foundry|forensics/F
+      | default(field=[#Vendor, #type], value="_missing_value")
+      | in(field=#Vendor, values=[?Vendor])
+      | top([#Vendor, #type], limit=1000)
+    end: now
+    start: 1d
+    width: 6
+    y: 0
+    interactions:
+    - name: filterClick
+      titleTemplate: '{{ fields.#Vendor }} - {{ fields.#type }}'
+      queryString: "#repo!=/detections|sensor_metadata|xdr_eventsarchive|xdr_indicatorsrepo|sensor_backup|base_sensor|falcon_for_it|fusion|foundry|forensics/F\n\
+        | default(field=[#Vendor, #type], value=\"_missing_value\")\n| #Vendor=?_Vendor\n\
+        | #type=?_type "
+      useWidgetTimeWindow: true
+      arguments:
+        _Vendor: '["{{fields.#Vendor}}"]'
+        _type: '["{{fields.#type}}"]'
+      openInNewTab: true
+      isLive: false
+      type: searchlink
+    options:
+      cell-overflow: wrap-text
+      configured-columns:
+        '#Vendor':
+          color:
+            conditions:
+            - color: '#F0424233'
+              condition:
+                arg: _missing_value
+                type: Equal
+        '#type':
+          color:
+            conditions:
+            - color: '#F0424233'
+              condition:
+                arg: _missing_value
+                type: Equal
+      row-numbers-enabled: false
+    visualization: table-view
+    title: Top Sources by Vendor and Type
+    isLive: false
+    type: query
+  1b5c21ff-5444-46dc-877f-7bd94d603121:
+    x: 0
+    height: 5
+    queryString: |-
+      #repo!=/detections|sensor_metadata|xdr_eventsarchive|xdr_indicatorsrepo|sensor_backup|base_sensor|falcon_for_it|fusion|foundry|forensics/F
+      | #event.kind=event
+      | in(field=#Vendor, values=[?Vendor])
+      | #ecs.version!=* OR
+        Parser.version!=* OR
+        #Vendor!=* OR
+        #event.module!=* OR
+        #event.dataset!=* OR
+        event.category[0]!=* OR
+        event.type[0]!=*
+      | default(field=[#Vendor, #type, #ecs.version, Parser.version, #event.module, #event.dataset, #event.kind, event.category[0], event.type[0]], "_missing_value")
+      | groupby([#Vendor, #type, #ecs.version, Parser.version, #event.module, #event.dataset, #event.kind, event.category[0], event.type[0]], limit=max)
+    end: now
+    start: 1d
+    width: 12
+    y: 5
+    interactions:
+    - name: filterClick
+      titleTemplate: '{{ fields.#Vendor }} - events'
+      queryString: "#repo!=/detections|sensor_metadata|xdr_eventsarchive|xdr_indicatorsrepo|sensor_backup|base_sensor|falcon_for_it|fusion|foundry|forensics/F\n\
+        | #event.kind=event\n| default(field=[#Vendor, #type, #ecs.version, Parser.version,\
+        \ #event.module, #event.dataset, #event.kind, event.category[0], event.type[0]],\
+        \ value=\"_missing_value\") \n| event.type[0]=?event_type_0_ \n| event.category[0]=?_event_category_0_\
+        \ \n| #event.kind=?_event_kind \n| #event.dataset=?_event_dataset \n| #event.module=?_event_module\
+        \ \n| Parser.version=?Parser_version \n| #ecs.version=?_ecs_version\n| #type=?_type\
+        \ \n| #Vendor=?_Vendor "
+      useWidgetTimeWindow: true
+      arguments:
+        event_type_0_: '["{{ fields[\"event.type[0]\"] }}"]'
+        Parser_version: '["{{fields.Parser.version}}"]'
+        _event_dataset: '["{{fields.#event.dataset}}"]'
+        _event_category_0_: '["{{ fields[\"event.category[0]\"] }}"]'
+        _Vendor: '["{{fields.#Vendor}}"]'
+        _type: '["{{fields.#type}}"]'
+        _ecs_version: '["{{fields.#ecs.version}}"]'
+        _event_module: '["{{fields.#event.module}}"]'
+        _event_kind: '["{{fields.#event.kind}}"]'
+      openInNewTab: true
+      isLive: false
+      type: searchlink
+    options:
+      cell-overflow: wrap-text
+      configured-columns:
+        '#type':
+          color:
+            conditions:
+            - color: '#F0424233'
+              condition:
+                arg: _missing_value
+                type: Equal
+        event.type[0]:
+          color:
+            conditions:
+            - color: '#F0424233'
+              condition:
+                arg: _missing_value
+                type: Equal
+        '#Vendor':
+          color:
+            conditions:
+            - color: '#F0424233'
+              condition:
+                arg: _missing_value
+                type: Equal
+          render-as: value
+        '#event.kind':
+          color:
+            conditions:
+            - color: '#F0424233'
+              condition:
+                arg: _missing_value
+                type: Equal
+        '#event.dataset':
+          color:
+            conditions:
+            - color: '#F0424233'
+              condition:
+                arg: _missing_value
+                type: Equal
+        '#event.module':
+          color:
+            conditions:
+            - color: '#F0424233'
+              condition:
+                arg: _missing_value
+                type: Equal
+        Parser.version:
+          color:
+            conditions:
+            - color: '#F0424233'
+              condition:
+                arg: _missing_value
+                type: Equal
+        '#event.category[0]':
+          color:
+            conditions:
+            - color: '#C93637'
+              condition:
+                arg: 'NULL'
+                type: Equal
+        event.category[0]:
+          color:
+            conditions:
+            - color: '#F0424233'
+              condition:
+                arg: _missing_value
+                type: Equal
+        '#ecs.version':
+          color:
+            conditions:
+            - color: '#F0424233'
+              condition:
+                arg: _missing_value
+                type: Equal
+      row-numbers-enabled: false
+    visualization: table-view
+    title: Events Missing CPS Fields Required for Correlation
+    isLive: false
+    type: query
+  note-1733159178762-1:
+    x: 3
+    y: 0
+    height: 4
+    text: "The dashboard is built to assist with exploring the third-party data you've\
+      \ ingested into Next-Gen SIEM. All of the widgets and queries are interactive.\
+      \   \n\n1. Specific data sources can be selected from the multi-pick parameter\
+      \ box at the top of the dashboard. By default it uses `*` to show all data sources.\n\
+      2. You can view all of the queries powering this dashboard by clicking *Edit*\
+      \ in the top-right followed by the *Show queries* button in the top-middle.\
+      \ Have a look at what powers the dashboard. You may need to clone the dashboard\
+      \ depending on permissions. This can be done from the upper-right menu. \n3.\
+      \ Try new queries and widgets, modify existing ones, or build entirely new sections.\
+      \ Discover the flexibility of Next-Gen SIEM!"
+    width: 5
+    title: Summary
+    type: note
+  0b49c5ec-dfde-4165-b129-9284a774bd13:
+    x: 6
+    height: 5
+    queryString: |-
+      #repo!=/detections|sensor_metadata|xdr_eventsarchive|xdr_indicatorsrepo|sensor_backup|base_sensor|falcon_for_it|fusion|foundry|forensics/F
+      | default(field=[#Vendor], value="_missing_value")
+      | in(field=#Vendor, values=[?Vendor])
+      | top([#Vendor], limit=1000)
+    end: now
+    start: 1d
+    width: 6
+    y: 0
+    interactions:
+    - name: filterClick
+      titleTemplate: '{{ fields.#Vendor }}'
+      queryString: "#repo!=/detections|sensor_metadata|xdr_eventsarchive|xdr_indicatorsrepo|sensor_backup|base_sensor|falcon_for_it|fusion|foundry|forensics/F\n\
+        | default(field=[#Vendor], value=\"_missing_value\")\n| #Vendor=?_Vendor "
+      useWidgetTimeWindow: true
+      arguments:
+        _Vendor: '["{{fields.#Vendor}}"]'
+      openInNewTab: true
+      isLive: false
+      type: searchlink
+    options:
+      legendPosition: right
+      series: {}
+    visualization: pie-chart
+    title: Top Sources by Vendor
+    isLive: false
+    type: query
+  741db556-5835-44e7-b317-8bea8a0798dc:
+    x: 0
+    y: 2
+    height: 2
+    queryString: |-
+      #repo!=/detections|sensor_metadata|xdr_eventsarchive|xdr_indicatorsrepo|sensor_backup|base_sensor|falcon_for_it|fusion|foundry|forensics/F
+      | default(field=#Vendor, value="_missing_value")
+      | count(#Vendor, distinct=true)
+    end: now
+    start: 1d
+    width: 3
+    options:
+      default: {}
+    visualization: single-value
+    title: Distinct Vendor Count
+    isLive: false
+    type: query
+  dc459b89-d7ff-4087-9f18-240d731ac635:
+    x: 0
+    height: 5
+    queryString: |-
+      #repo!=/detections|sensor_metadata|xdr_eventsarchive|xdr_indicatorsrepo|sensor_backup|base_sensor|falcon_for_it|fusion|foundry|forensics/F
+      | default(field=[#Vendor], value="_missing_value")
+      | in(field=#Vendor, values=[?Vendor])
+      | timechart(#Vendor, limit=25)
+    end: now
+    start: 1d
+    width: 6
+    y: 5
+    interactions:
+    - name: filterClick
+      titleTemplate: '{{ fields.#Vendor }}'
+      queryString: "#repo!=/detections|sensor_metadata|xdr_eventsarchive|xdr_indicatorsrepo|sensor_backup|base_sensor|falcon_for_it|fusion|foundry|forensics/F\n\
+        | default(field=[#Vendor], value=\"_missing_value\")\n| #Vendor=?_Vendor "
+      useWidgetTimeWindow: true
+      arguments:
+        _Vendor: '["{{fields.#Vendor}}"]'
+      openInNewTab: true
+      isLive: false
+      type: searchlink
+    options:
+      series: {}
+      gradient: false
+      interpolation: step-after
+      showDataPoints: false
+      connect-points: false
+      stacking: none
+      yAxisScale: linear
+      plotType: area
+      imputation: none
+    visualization: time-chart
+    title: Top Sources by Vendor
+    isLive: false
+    type: query
+  note-1733159071768-0:
+    x: 0
+    y: 0
+    height: 2
+    text: |-
+      ```
+      date: 2024-12-04
+      version: 0.2
+      ```
+    width: 3
+    title: ''
+    type: note
+  859d87a9-8d7f-4dff-bf0e-f57634e41bfc:
+    x: 0
+    height: 5
+    queryString: |-
+      #repo!=/detections|sensor_metadata|xdr_eventsarchive|xdr_indicatorsrepo|sensor_backup|base_sensor|falcon_for_it|fusion|foundry|forensics/F
+      | #event.kind=alert
+      | event.category[0]=*
+      | split(event.category)
+      | default(field=[#Vendor], value="_missing_value")
+      | in(field=#Vendor, values=[?Vendor])
+      | groupby([#Vendor, event.category], limit=max)
+    end: now
+    start: 1d
+    width: 12
+    y: 10
+    interactions:
+    - name: clickFilter
+      titleTemplate: '{{ fields.#Vendor }}'
+      queryString: |-
+        #repo!=/detections|sensor_metadata|xdr_eventsarchive|xdr_indicatorsrepo|sensor_backup|base_sensor|falcon_for_it|fusion|foundry|forensics/F
+        | #event.kind=alert
+        | split(event.category)
+        | default(field=[#Vendor], value="_missing_value")
+        | #Vendor=?_Vendor
+        | event.category=?_event_category
+      useWidgetTimeWindow: true
+      arguments:
+        _Vendor: '["{{fields.#Vendor}}"]'
+        _event_category: '["{{ fields.event.category }}"]'
+      openInNewTab: true
+      isLive: false
+      type: searchlink
+    options:
+      labelAngle: 40
+      legendLocation: right
+    visualization: heat-map
+    title: Top Vendor and Category Alerts
+    isLive: false
+    type: query
+$schema: https://schemas.humio.com/dashboard/v0.17.0
+parameters:
+  Vendor:
+    label: Vendor
+    query: |-
+      #repo!=/detections|sensor_metadata|xdr_eventsarchive|xdr_indicatorsrepo|sensor_backup|base_sensor/F
+      | default(field=[#Vendor], value="_missing_value")
+      | top([#Vendor], limit=1000)
+    timeInterval: 1d
+    useDashboardTimeIfSet: true
+    type: query
+    defaultValue: '*'
+    width: 1
+    order: 50
+    valueField: '#Vendor'

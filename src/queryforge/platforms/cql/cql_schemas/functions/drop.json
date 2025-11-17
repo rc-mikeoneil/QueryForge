@@ -1,0 +1,23 @@
+{
+  "name": "drop",
+  "category": "transformation",
+  "description": "Allows you to remove attributes and columns from a result set. Useful for cleaning up output by removing unnecessary fields.",
+  "syntax": "drop([field1, field2, ...])",
+  "parameters": [
+    {
+      "name": "fields",
+      "type": "array",
+      "required": true,
+      "description": "Array of field names to remove from the result set"
+    }
+  ],
+  "return_type": "filtered_events",
+  "examples": [
+    "| drop([eventCount, cid])",
+    "| drop([_count])",
+    "| drop([InternalField1, InternalField2, DebugInfo])"
+  ],
+  "related_functions": ["select", "rename"],
+  "use_cases": ["Remove unnecessary fields", "Clean output", "Reduce result size", "Hide internal fields"],
+  "documentation_url": "https://library.humio.com/data-analysis/functions-drop.html"
+}

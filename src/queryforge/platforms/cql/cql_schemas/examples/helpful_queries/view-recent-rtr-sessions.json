@@ -1,0 +1,48 @@
+{
+  "id": "view-recent-rtr-sessions",
+  "title": "View Recent RTR Sessions",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/View Recent RTR Sessions.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "Event_RemoteResponseSessionStartEvent"
+  ],
+  "functions_used": [
+    "match",
+    "rename",
+    "table"
+  ],
+  "operators_used": [
+    "=",
+    "in",
+    "match",
+    "|"
+  ],
+  "fields_referenced": [
+    "aid",
+    "as",
+    "column",
+    "field",
+    "file",
+    "format",
+    "limit",
+    "repo",
+    "strict"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "detection",
+  "platforms": [
+    "Cross-platform"
+  ],
+  "use_case": "Detection query for View Recent RTR Sessions",
+  "query": "// Get RTR Start events\n#repo=detections #event_simpleName=Event_RemoteResponseSessionStartEvent\n\n// Rename Agent ID value\n| rename(field=\"AgentIdString\", as=\"aid\")\n\n// Display results in table\n| table([StartTimestamp, UserName, aid], limit=20000)\n\n// Bring in data from AID Master lookup file\n| aid=~match(file=\"aid_master_main.csv\", column=[aid], strict=false)\n\n// Convert timestamp to human-readable value\n| formatTime(format=\"%F %T %Z\", as=StartTimestamp, field=StartTimestamp)",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "cross-platform",
+    "event_remoteresponsesessionstartevent"
+  ]
+}

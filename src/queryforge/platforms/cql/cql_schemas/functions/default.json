@@ -1,0 +1,36 @@
+{
+  "name": "default",
+  "category": "transformation",
+  "description": "Creates a field with the specified name and value. If the field already exists on an event, the field keeps its existing value. Useful for providing default values for missing fields.",
+  "syntax": "default(value=default_value, field=[field_names], replaceEmpty=bool)",
+  "parameters": [
+    {
+      "name": "value",
+      "type": "any",
+      "required": true,
+      "description": "Default value to set if field doesn't exist"
+    },
+    {
+      "name": "field",
+      "type": "string_or_array",
+      "required": true,
+      "description": "Field name(s) to apply default value to"
+    },
+    {
+      "name": "replaceEmpty",
+      "type": "boolean",
+      "required": false,
+      "description": "If true, replaces empty strings with the default value (default: false)"
+    }
+  ],
+  "return_type": "enriched_events",
+  "examples": [
+    "| default(value=\"Unknown\", field=[GrandParentBaseFileName, ParentBaseFileName], replaceEmpty=true)",
+    "| default(value=0, field=ErrorCount)",
+    "| default(value=\"N/A\", field=UserName, replaceEmpty=true)"
+  ],
+  "related_functions": ["assignment_operator", "rename"],
+  "use_cases": ["Handle missing fields", "Provide fallback values", "Data normalization"],
+  "notes": "replaceEmpty=true is necessary to populate fields listed as <empty_string>.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-default.html"
+}

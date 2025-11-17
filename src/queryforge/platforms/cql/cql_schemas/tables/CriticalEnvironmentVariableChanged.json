@@ -1,0 +1,100 @@
+{
+  "table": "CriticalEnvironmentVariableChanged",
+  "category": "endpoint_system_changes",
+  "description": "Critical environment variable change events. Captures modifications to important environment variables like PATH, which can indicate DLL hijacking, persistence, or privilege escalation attempts.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["CriticalEnvironmentVariableChanged"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win", "Lin", "Mac"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "UserName",
+      "type": "string",
+      "description": "Username that modified the environment variable",
+      "searchable": true,
+      "common_usage": ["filtering", "actor identification"]
+    },
+    {
+      "name": "VariableName",
+      "type": "string",
+      "description": "Name of the environment variable that was changed",
+      "searchable": true,
+      "example_values": ["PATH", "LD_LIBRARY_PATH", "PYTHONPATH"],
+      "common_usage": ["filtering", "variable tracking"]
+    },
+    {
+      "name": "OldValue",
+      "type": "string",
+      "description": "Previous value of the environment variable",
+      "searchable": true,
+      "common_usage": ["change analysis", "baseline comparison"]
+    },
+    {
+      "name": "NewValue",
+      "type": "string",
+      "description": "New value of the environment variable",
+      "searchable": true,
+      "supports_regex": true,
+      "common_usage": ["change analysis", "malicious path detection"]
+    },
+    {
+      "name": "ContextProcessId",
+      "type": "long",
+      "description": "Falcon process ID of the process making the change",
+      "common_usage": ["correlation", "joining with ProcessRollup2"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "change tracking"]
+    }
+  ],
+  "col_count": 11,
+  "common_filters": [
+    "VariableName=PATH",
+    "NewValue=/\\\\Temp\\\\/i"
+  ],
+  "common_fields": ["aid", "ComputerName", "VariableName", "NewValue"],
+  "common_operations": [
+    "Detect PATH environment variable hijacking",
+    "Monitor for persistence via environment variables",
+    "Join with ProcessRollup2 via ContextProcessId",
+    "Track unauthorized system configuration changes",
+    "Identify DLL search order hijacking attempts"
+  ],
+  "generated_at": "2025-11-15T00:00:00Z"
+}

@@ -1,0 +1,143 @@
+{
+  "table": "NetworkReceiveAcceptIP4",
+  "category": "endpoint_network",
+  "description": "IPv4 network accept events capturing when listening sockets accept incoming connections. Pairs with NetworkListenIP4 to track successful inbound connections, critical for detecting lateral movement and unauthorized access.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["NetworkReceiveAcceptIP4"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win", "Mac", "Lin"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint receiving the connection",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "UserName",
+      "type": "string",
+      "description": "Username associated with the accepting process",
+      "searchable": true,
+      "common_usage": ["filtering", "user behavior analysis"]
+    },
+    {
+      "name": "UserSid",
+      "type": "string",
+      "description": "Windows Security Identifier for the user",
+      "searchable": true,
+      "common_usage": ["filtering", "correlation"]
+    },
+    {
+      "name": "UID",
+      "type": "string",
+      "description": "Unix User ID (Linux/Mac)",
+      "common_usage": ["filtering", "user tracking on Unix systems"]
+    },
+    {
+      "name": "RemoteAddressIP4",
+      "type": "ip_address",
+      "description": "Source IPv4 address of the incoming connection",
+      "searchable": true,
+      "example_values": ["192.168.1.100", "10.0.0.50"],
+      "common_usage": ["filtering", "lateral movement detection", "source tracking"]
+    },
+    {
+      "name": "RemotePort",
+      "type": "long",
+      "description": "Source port of the incoming connection",
+      "common_usage": ["connection tracking"]
+    },
+    {
+      "name": "LocalAddressIP4",
+      "type": "ip_address",
+      "description": "Local IPv4 address that accepted the connection",
+      "searchable": true,
+      "common_usage": ["filtering", "interface tracking"]
+    },
+    {
+      "name": "LocalPort",
+      "type": "long",
+      "description": "Local port that accepted the connection",
+      "example_values": ["80", "443", "3389", "22"],
+      "common_usage": ["filtering", "service identification"]
+    },
+    {
+      "name": "Protocol",
+      "type": "string",
+      "description": "Network protocol",
+      "example_values": ["TCP", "UDP"],
+      "common_usage": ["filtering", "protocol analysis"]
+    },
+    {
+      "name": "ContextProcessId",
+      "type": "long",
+      "description": "Falcon's unique process identifier for the accepting process",
+      "required": true,
+      "common_usage": ["correlation", "joining with ProcessRollup2"]
+    },
+    {
+      "name": "FileName",
+      "type": "string",
+      "description": "Base filename of the accepting process",
+      "searchable": true,
+      "common_usage": ["filtering", "process attribution"]
+    },
+    {
+      "name": "CommandLine",
+      "type": "string",
+      "description": "Command line of the accepting process",
+      "searchable": true,
+      "common_usage": ["filtering", "behavioral analysis"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "aggregation"]
+    }
+  ],
+  "col_count": 17,
+  "common_filters": [
+    "LocalPort=3389",
+    "LocalPort=22",
+    "LocalPort=445",
+    "RemoteAddressIP4=cidr(192.168.0.0/16)"
+  ],
+  "common_fields": ["aid", "ComputerName", "RemoteAddressIP4", "LocalPort", "FileName"],
+  "common_operations": [
+    "Join with NetworkListenIP4 to correlate listen and accept events",
+    "Join with ProcessRollup2 via ContextProcessId for process context",
+    "Detect RDP lateral movement (port 3389)",
+    "Detect SSH access patterns (port 22)",
+    "Track inbound connections to sensitive services",
+    "Identify connection sources across the environment"
+  ],
+  "generated_at": "2025-11-15T00:00:00Z"
+}

@@ -1,0 +1,22 @@
+{
+  "title": "Omit _decimal and _readable dangling modifiers",
+  "slug": "omit__decimal_and__readable_dangling_modifiers",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "CrowdStrike Falcon fields sometimes have _decimal and _readable variants. Avoid referencing dangling modifiers without the base field and prefer one representation consistently to reduce confusion.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Chooses clear numeric and string severity fields instead of mixing multiple modifier variants that could be misinterpreted.",
+      "language": "logscale",
+      "query": "#event_simpleName=DetectionSummaryEvent\n| select([DetectName, Severity, Severity_int])"
+    }
+  ],
+  "tags": [],
+  "url": "https://library.humio.com/kb/kb-omit-decimal-readable-modifiers.html",
+  "difficulty": "beginner",
+  "related_functions": [
+    "select"
+  ]
+}

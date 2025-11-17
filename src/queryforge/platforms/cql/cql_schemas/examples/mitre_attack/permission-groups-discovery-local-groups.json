@@ -1,0 +1,41 @@
+{
+  "id": "permission-groups-discovery-local-groups",
+  "title": "(T1069.001) Permission Groups Discovery - Local Groups",
+  "source_file": "Queries-Only/MITRE-ATT&CK-Enterprise/(TA007) Discovery/(T1069) Permission Groups Discovery/(T1069.001) Permission Groups Discovery - Local Groups.md",
+  "category": "mitre_attack",
+  "subcategory": null,
+  "description": "https://attack.mitre.org/techniques/T1069/001/",
+  "mitre_attack": {
+    "tactic_code": "TA007",
+    "tactic_name": "Discovery",
+    "technique_id": "T1069",
+    "technique_name": "Permission Groups Discovery/(T1069",
+    "sub_technique_id": null
+  },
+  "event_types": [],
+  "functions_used": [],
+  "operators_used": [
+    "=",
+    "or",
+    "|"
+  ],
+  "fields_referenced": [
+    "CommandLine",
+    "ImageFileName"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "basic",
+  "query_type": "utility",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "https://attack.mitre.org/techniques/T1069/001/",
+  "query": "#event_simpleName=/^(ProcessRollup2|CommandHistory|ScriptControl)/ event_platform=Win ((ImageFileName=/\\\\net1?\\.exe/i CommandLine=/localgroup/i) OR (/get-localgroup/i))",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "lin",
+    "win"
+  ]
+}

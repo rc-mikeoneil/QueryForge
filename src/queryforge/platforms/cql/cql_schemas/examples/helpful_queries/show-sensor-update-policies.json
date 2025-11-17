@@ -1,0 +1,59 @@
+{
+  "id": "show-sensor-update-policies",
+  "title": "Show Sensor Update Policies",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Show Sensor Update Policies.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [],
+  "functions_used": [
+    "default",
+    "groupBy",
+    "in",
+    "kvParse",
+    "match",
+    "readFile",
+    "rename",
+    "selectFromMax"
+  ],
+  "operators_used": [
+    "=",
+    "in",
+    "match",
+    "|"
+  ],
+  "fields_referenced": [
+    "as",
+    "data_source_group",
+    "data_source_name",
+    "field",
+    "file",
+    "function",
+    "include",
+    "limit",
+    "name",
+    "query",
+    "release.type",
+    "release_id",
+    "replaceEmpty",
+    "repo",
+    "start",
+    "strict",
+    "value",
+    "values"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Mac"
+  ],
+  "use_case": "Analysis query for Show Sensor Update Policies",
+  "query": "defineTable(\n    query={\n        #repo=\"sensor_metadata\" #data_source_name=\"policyinfo\" #data_source_group=\"sensor-update\"\n        | groupBy(id, function=selectFromMax(field=\"@timestamp\", include=[release_id]))\n        | rename(field=\"id\", as=\"sensor_update_policy_id\")\n    }\n    , include=[sensor_update_policy_id, release_id]\n    , name=\"policy_to_release\"\n    , start=1h // policyinfo is currently updated once an hour\n)\n| defineTable(query={\n    createEvents([\n        \"release_id=tagged|1 release.type=N-1\",\n        \"release_id=tagged|2 release.type=N-2\",\n        \"release_id=tagged|3 release.type=N-1\",\n        \"release_id=tagged|4 release.type=N-2\",\n        \"release_id=tagged|5 release.type=N-1\",\n        \"release_id=tagged|6 release.type=N-2\",\n        \"release_id=tagged|11 release.type=\\\"Auto Latest\\\"\",\n        \"release_id=tagged|12 release.type=\\\"Auto Latest\\\"\",\n        \"release_id=tagged|13 release.type=\\\"Auto Latest\\\"\",\n        \"release_id=tagged|16 release.type=\\\"Auto EA\\\"\",\n        \"release_id=tagged|17 release.type=\\\"Auto EA\\\"\",\n        \"release_id=tagged|18 release.type=\\\"Auto EA\\\"\"\n    ])\n    | kvParse()\n}, include=[release_id, release.type], name=\"release_type_lookup\")\n| defineTable(\n    query={\n        #repo=\"sensor_metadata\" #data_source_name=\"aid-policy\"\n        | groupBy(aid, limit=max, function=selectFromMax(field=\"@timestamp\", include=[sensor_update_policy_id]))\n    }\n    , include=[aid, sensor_update_policy_id]\n    , name=\"aid_to_policy\"\n    , start=1d //aid-policy is currently updated once per day\n)\n| readFile(\"aid_master_main.csv\")\n| in(field=\"ProductType\", values=[1,2,3])\n| match(file=\"aid_to_policy\", field=aid, include=sensor_update_policy_id)\n| match(file=\"policy_to_release\", field=sensor_update_policy_id, include=release_id, strict=false)\n| match(file=\"release_type_lookup\", field=[release_id], include=release.type, strict=false)\n| groupBy([cid, aid, ComputerName, event_platform, Version, FirstSeen, ProductType, MAC, sensor_update_policy_id, release.type, MachineDomain, OU, SiteName, SystemManufacturer, SystemProductName], function=[], limit=max)\n| default(value=\"-\", field=[ProductType, MAC, sensor_update_policy_id, MachineDomain, OU, SiteName, SystemManufacturer, SystemProductName], replaceEmpty=true)\n| default(value=\"Auto-Update Disabled\", field=[release.type])",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "mac"
+  ]
+}

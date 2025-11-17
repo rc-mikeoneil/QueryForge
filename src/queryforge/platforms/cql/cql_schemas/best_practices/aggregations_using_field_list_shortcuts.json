@@ -1,0 +1,23 @@
+{
+  "title": "Aggregations using field list shortcuts",
+  "slug": "aggregations_using_field_list_shortcuts",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "Field list shortcuts let you apply the same aggregation across many numeric fields without specifying each one manually. This keeps queries concise and reduces errors.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Uses a wildcard shortcut to compute the average of all fields ending in _bytes per ComputerName in a single statement.",
+      "language": "logscale",
+      "query": "#event_simpleName=NetworkConnectionIP4\n| groupBy(ComputerName, function=avg([*_bytes]))"
+    }
+  ],
+  "tags": [],
+  "url": "https://library.humio.com/kb/kb-aggregation-using-shortcuts.html",
+  "difficulty": "intermediate",
+  "related_functions": [
+    "avg",
+    "groupBy"
+  ]
+}

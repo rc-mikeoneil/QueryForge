@@ -1,0 +1,49 @@
+{
+  "id": "leveraging-the-aidmaster-repo",
+  "title": "Leveraging the aidmaster repo",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Leveraging the aidmaster repo.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [],
+  "functions_used": [
+    "drop",
+    "groupBy",
+    "ipLocation",
+    "selectFromMax"
+  ],
+  "operators_used": [
+    "<",
+    "=",
+    "|"
+  ],
+  "fields_referenced": [
+    "aip",
+    "as",
+    "data_source_name",
+    "field",
+    "format",
+    "function",
+    "include",
+    "repo",
+    "timeDeltaDays"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Lin",
+    "Mac"
+  ],
+  "use_case": "Analysis query for Leveraging the aidmaster repo",
+  "query": "#repo=sensor_metadata #data_source_name=aidmaster\n| groupBy([cid, aid], function=([selectFromMax(field=\"@timestamp\", include=[AgentLoadFlags, AgentLocalTime, AgentTimeOffset, AgentVersion, BiosManufacturer, BiosVersion, ChassisType, City, ComputerName, ConfigBuild, ConfigIDBuild, Continent, Country, FalconGroupingTags, FirstSeen, HostHiddenStatus, MachineDomain, OU, PointerSize, ProductType, SensorGroupingTags, ServicePackMajor, SiteName, SystemManufacturer, SystemProductName, @timezone, Timezone, Version, aid, aip, cid, event_platform])]))\n| lastSeen:=@timestamp\n| formatTime(format=\"%F %T\", as=\"lastSeen\", field=lastSeen)\n| timeDelta:=now()-@timestamp\n| timeDeltaDays:=timeDelta/1000/60/60/24\n| round(timeDeltaDays)\n  \n// Edit this line to set your \"days since last seen\" treshold\n//| timeDeltaDays<4\n  \n| ipLocation(aip)\n| drop([aip.lat, aip.lon, timeDelta, @timestamp])",
+  "key_features": [
+    "IP geolocation enrichment"
+  ],
+  "related_examples": [],
+  "tags": [
+    "lin",
+    "mac"
+  ]
+}

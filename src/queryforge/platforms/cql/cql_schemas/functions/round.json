@@ -1,0 +1,30 @@
+{
+  "name": "round",
+  "category": "utility",
+  "description": "Rounds a numeric input field to the nearest integer, with optional method to set the rounding type.",
+  "syntax": "| output_field := round(numeric_field)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "number",
+      "required": true,
+      "description": "The numeric field to round"
+    },
+    {
+      "name": "method",
+      "type": "string",
+      "required": false,
+      "description": "Optional rounding method (e.g., floor, ceil)"
+    }
+  ],
+  "return_type": "number",
+  "examples": [
+    "| roundNumber:=round(number)",
+    "createEvents([\"Number=1.2\", \"Number=1.23\", \"Number=1.234\",\"Number=1.2345\",\"Number=1.789\"])\n| kvParse()\n| roundNumber:=round(Number)\n| select([Number, roundNumber])",
+    "| rounded := round(avg_value)"
+  ],
+  "related_functions": ["format"],
+  "use_cases": ["Rounding averages", "Converting decimals to integers", "Mathematical calculations", "Display formatting"],
+  "notes": "Converts to the nearest whole integer. To round numbers with decimal-point precision, use format function instead.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-round.html"
+}

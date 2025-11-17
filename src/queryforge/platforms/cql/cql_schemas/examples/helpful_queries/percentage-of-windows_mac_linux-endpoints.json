@@ -1,0 +1,47 @@
+{
+  "id": "percentage-of-windows_mac_linux-endpoints",
+  "title": "Percentage of Windows_Mac_Linux Endpoints",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Percentage of Windows_Mac_Linux Endpoints.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "OsVersionInfo"
+  ],
+  "functions_used": [
+    "count",
+    "format",
+    "groupBy",
+    "select"
+  ],
+  "operators_used": [
+    "=",
+    "|"
+  ],
+  "fields_referenced": [
+    "as",
+    "distinct",
+    "field",
+    "format",
+    "function"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Lin",
+    "Mac",
+    "Win"
+  ],
+  "use_case": "Analysis query for Percentage of Windows_Mac_Linux Endpoints",
+  "query": "#event_simpleName=OsVersionInfo event_platform=/^(Win|Mac|Lin)$/\n\n| groupBy(field=#cid, function=[count(aid, distinct=true, as=totalcount), {event_platform=Lin | count(aid, distinct=true, as=Linux)},{ event_platform=Mac | count(aid, distinct=true, as=Mac)}, { event_platform=Win | count(aid, distinct=true, as=Windows)}])\n| linuxPercentage := (Linux/totalcount)*100 | format(format=\"%,.3f%%\", field=[linuxPercentage], as=linuxPercentage)\n| windowsPercentage := (Windows/totalcount)*100 | format(format=\"%,.3f%%\", field=[windowsPercentage], as=windowsPercentage)\n| macPercentage := (Mac/totalcount)*100 | format(format=\"%,.3f%%\", field=[macPercentage], as=macPercentage)\n| select([#cid, totalcount, Windows, windowsPercentage, Linux, linuxPercentage, Mac, macPercentage])",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "lin",
+    "mac",
+    "osversioninfo",
+    "win"
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "table": "HttpRequestDetect",
+  "category": "endpoint_network",
+  "description": "HTTP/HTTPS request detection events capturing URLs, user agents, and web request metadata from endpoints. Useful for detecting malicious web traffic, C2 beaconing, and suspicious download activity.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["HttpRequestDetect"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win", "Mac", "Lin"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "UserName",
+      "type": "string",
+      "description": "Username associated with the HTTP request",
+      "searchable": true,
+      "common_usage": ["filtering", "user behavior analysis"]
+    },
+    {
+      "name": "RequestURL",
+      "type": "string",
+      "description": "Full URL of the HTTP request",
+      "searchable": true,
+      "supports_regex": true,
+      "example_values": ["http://malicious.com/payload.exe", "https://pastebin.com/raw/abc123"],
+      "common_usage": ["threat hunting", "IOC matching", "URL pattern analysis"]
+    },
+    {
+      "name": "RequestMethod",
+      "type": "string",
+      "description": "HTTP request method",
+      "example_values": ["GET", "POST", "PUT", "DELETE"],
+      "common_usage": ["filtering", "method analysis"]
+    },
+    {
+      "name": "UserAgent",
+      "type": "string",
+      "description": "HTTP User-Agent header value",
+      "searchable": true,
+      "supports_regex": true,
+      "example_values": ["Mozilla/5.0...", "curl/7.68.0", "python-requests/2.25.1"],
+      "common_usage": ["anomaly detection", "tool identification", "C2 detection"]
+    },
+    {
+      "name": "RemoteAddressIP4",
+      "type": "ip_address",
+      "description": "Destination IP address of the HTTP request",
+      "searchable": true,
+      "common_usage": ["threat intelligence", "IP reputation"]
+    },
+    {
+      "name": "RemotePort",
+      "type": "long",
+      "description": "Destination port",
+      "example_values": ["80", "443", "8080"],
+      "common_usage": ["filtering", "non-standard port detection"]
+    },
+    {
+      "name": "ContextProcessId",
+      "type": "long",
+      "description": "Falcon's unique process identifier for the requesting process",
+      "required": true,
+      "common_usage": ["correlation", "joining with ProcessRollup2"]
+    },
+    {
+      "name": "FileName",
+      "type": "string",
+      "description": "Base filename of the process making the request",
+      "searchable": true,
+      "example_values": ["powershell.exe", "curl.exe", "chrome.exe"],
+      "common_usage": ["filtering", "process attribution"]
+    },
+    {
+      "name": "CommandLine",
+      "type": "string",
+      "description": "Command line of the requesting process",
+      "searchable": true,
+      "common_usage": ["filtering", "behavioral analysis"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "beaconing detection"]
+    }
+  ],
+  "col_count": 15,
+  "common_filters": [
+    "RequestURL=/pastebin\\.com/i",
+    "UserAgent=/curl|wget|invoke-webrequest/i",
+    "RemotePort!=443 RemotePort!=80",
+    "FileName=/powershell\\.exe/i"
+  ],
+  "common_fields": ["aid", "ComputerName", "RequestURL", "UserAgent", "FileName"],
+  "common_operations": [
+    "Join with ProcessRollup2 via ContextProcessId for process context",
+    "Detect suspicious download sources (pastebin, file sharing sites)",
+    "Identify non-browser HTTP requests",
+    "Hunt for C2 beaconing via temporal analysis",
+    "Match known malicious URLs or domains",
+    "Detect file downloads with suspicious User-Agents"
+  ],
+  "generated_at": "2025-11-15T00:00:00Z"
+}

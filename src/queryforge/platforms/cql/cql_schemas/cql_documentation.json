@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0.0",
+  "description": "CQL documentation for RAG integration",
+  "sections": [
+    {
+      "title": "Introduction to CQL",
+      "content": "CrowdStrike Query Language (CQL) is a powerful query language for threat hunting and security analytics across Falcon event data. CQL queries consist of event type filtering, field filters, and optional pipeline operations for aggregation, correlation, and transformation.",
+      "keywords": ["cql", "crowdstrike", "query language", "introduction", "basics"]
+    },
+    {
+      "title": "Query Structure",
+      "content": "All CQL queries must start with an event type filter using #event_simpleName=<type>. This is followed by optional field filters, and then optional pipeline operations separated by the pipe (|) operator. Example: #event_simpleName=ProcessRollup2 FileName=powershell.exe | groupBy([ComputerName])",
+      "keywords": ["structure", "syntax", "event_simpleName", "pipeline", "query format"]
+    },
+    {
+      "title": "Event Types",
+      "content": "Common event types include ProcessRollup2 (process execution), NetworkConnectIP4 (network connections), DnsRequest (DNS queries), UserLogon (authentication), DriverLoad (driver loading), and OsVersionInfo (system inventory). Each event type has specific fields available for filtering and analysis.",
+      "keywords": ["event types", "ProcessRollup2", "NetworkConnectIP4", "DnsRequest", "UserLogon"]
+    },
+    {
+      "title": "Field Filtering",
+      "content": "Fields can be filtered using operators like = (equals), != (not equals), > < >= <= (comparisons), =* (wildcard), and =/regex/ (regex). Use in() for multi-value matching. Examples: FileName=cmd.exe, CommandLine=*encoded*, in(LogonType, values=[2,10])",
+      "keywords": ["filtering", "operators", "wildcards", "regex", "in function"]
+    },
+    {
+      "title": "Aggregation with groupBy",
+      "content": "The groupBy() function aggregates events by specified fields. Use function=count() to count events per group. Can group by multiple fields and use multiple aggregation functions. Important: Avoid grouping by high-cardinality fields like CommandLine or SHA256HashData. Example: groupBy([FileName], function=count())",
+      "keywords": ["aggregation", "groupBy", "count", "group by", "cardinality"]
+    },
+    {
+      "title": "Event Correlation with join",
+      "content": "The join() function correlates two event types. Must specify correlation fields with field=[aid, field1=field2]. Always include 'aid' (Agent ID) to ensure events are from same endpoint. Can include specific fields from secondary event with include parameter. Example: join(query={#event_simpleName=NetworkConnectIP4}, field=[aid, TargetProcessId=ContextProcessId])",
+      "keywords": ["correlation", "join", "aid", "process correlation", "event correlation"]
+    },
+    {
+      "title": "IP Geolocation",
+      "content": "The ipLocation() function enriches IP addresses with geographic data including country, city, latitude, and longitude. Works with fields like RemoteAddressIP4, LocalAddressIP4, and aip. Results can be grouped by .country or .city fields. Example: ipLocation(RemoteAddressIP4) | groupBy([RemoteAddressIP4.country])",
+      "keywords": ["geolocation", "ipLocation", "ip address", "country", "geographic"]
+    },
+    {
+      "title": "Time-Series Analysis",
+      "content": "Use bucket() or timeChart() to create time-series data. The bucket() function divides time into intervals with span parameter (1m, 5m, 1h, 1d). The timeChart() function creates visual time-series charts. Example: bucket(field=@timestamp, span=1h, function=count())",
+      "keywords": ["time series", "bucket", "timeChart", "temporal", "time-based"]
+    },
+    {
+      "title": "Regular Expression Extraction",
+      "content": "The regex() function extracts fields using named capture groups. Use (?<name>pattern) syntax to create new fields from matches. Useful for extracting data from CommandLine, ImageFileName, and other text fields. Example: regex(field=CommandLine, regex=\"-enc[^ ]* (?<encoded>.+)\")",
+      "keywords": ["regex", "extraction", "pattern matching", "capture groups"]
+    },
+    {
+      "title": "Field Transformation",
+      "content": "Transform fields using functions like formatTime() (timestamp formatting), lower() (lowercase), concat() (concatenate), splitString() (split strings), and replace() (find/replace). Use := operator for field assignment. Example: formatTime(format=\"%Y-%m-%d\", field=@timestamp, as=date)",
+      "keywords": ["transformation", "formatTime", "field manipulation", "assignment"]
+    },
+    {
+      "title": "Output Formatting",
+      "content": "Format query output using table() (tabular display), sort() (sorting), head() (first N results), and tail() (last N results). The table() function accepts a list of fields to display. Example: table([ComputerName, UserName, CommandLine], limit=100)",
+      "keywords": ["output", "table", "sort", "head", "tail", "formatting"]
+    },
+    {
+      "title": "Best Practices",
+      "content": "Always start queries with #event_simpleName. Filter early before aggregation. Use in() instead of multiple OR operators. Always include 'aid' in joins. Avoid grouping by high-cardinality fields. Use time range filters for better performance. Avoid leading wildcards which prevent index usage.",
+      "keywords": ["best practices", "performance", "optimization", "recommendations"]
+    },
+    {
+      "title": "Common Fields",
+      "content": "Key fields available across event types: aid (Agent ID for correlation), ComputerName (hostname), UserName (username), UserSid (user SID for correlation), FileName (base filename), ImageFileName (full path), CommandLine (command line arguments), TargetProcessId (process ID), @timestamp (event time), event_platform (Win/Mac/Lin).",
+      "keywords": ["fields", "aid", "ComputerName", "UserName", "FileName", "common fields"]
+    },
+    {
+      "title": "Process Analysis",
+      "content": "ProcessRollup2 events track process execution. Key fields: FileName (process name), ImageFileName (full path), CommandLine (arguments), ParentProcessId (parent process), TargetProcessId (process ID), UserName (user), SHA256HashData (hash). Common patterns: parent-child relationships, LOLBin detection, command line analysis.",
+      "keywords": ["process", "ProcessRollup2", "execution", "process analysis"]
+    },
+    {
+      "title": "Network Analysis",
+      "content": "NetworkConnectIP4 events track network connections. Key fields: RemoteAddressIP4 (destination IP), RemotePort (destination port), LocalAddressIP4 (source IP), Protocol (TCP/UDP), ContextProcessId (process making connection). Correlate with ProcessRollup2 using: field=[aid, TargetProcessId=ContextProcessId]",
+      "keywords": ["network", "NetworkConnectIP4", "connections", "network analysis"]
+    },
+    {
+      "title": "Authentication Analysis",
+      "content": "UserLogon events track successful authentications. Key fields: UserName, UserSid, LogonType (2=interactive, 10=RDP), LogonDomain, RemoteAddressIP4 (for remote logons), UserIsAdmin. UserLogonFailed2 tracks failed attempts. Use for detecting lateral movement, brute force, and geographic anomalies.",
+      "keywords": ["authentication", "logon", "UserLogon", "RDP", "login"]
+    },
+    {
+      "title": "DNS Analysis",
+      "content": "DnsRequest events track DNS queries. Key fields: DomainName (queried domain), ContextProcessId (process making query), ContextBaseFileName (process name). Use for detecting C2 domains, DGA patterns, and data exfiltration. Can correlate with ProcessRollup2 using ContextProcessId.",
+      "keywords": ["dns", "DnsRequest", "domains", "dns analysis"]
+    }
+  ],
+  "quick_reference": {
+    "operators": ["=", "!=", ">", "<", ">=", "<=", "=*", "=/regex/", "in()", "AND", "OR", "NOT"],
+    "key_functions": ["groupBy", "join", "bucket", "timeChart", "ipLocation", "regex", "formatTime", "table", "sort", "head", "tail"],
+    "event_types": ["ProcessRollup2", "NetworkConnectIP4", "DnsRequest", "UserLogon", "UserLogonFailed2", "DriverLoad", "OsVersionInfo", "AgentOnline", "EndOfProcess"],
+    "common_fields": ["aid", "ComputerName", "UserName", "UserSid", "FileName", "ImageFileName", "CommandLine", "TargetProcessId", "@timestamp", "event_platform"],
+    "correlation_fields": ["aid", "TargetProcessId", "ContextProcessId", "UserSid", "ParentProcessId"]
+  }
+}

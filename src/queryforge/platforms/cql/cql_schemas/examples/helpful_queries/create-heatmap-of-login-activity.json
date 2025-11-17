@@ -1,0 +1,48 @@
+{
+  "id": "create-heatmap-of-login-activity",
+  "title": "Create Heatmap of Login Activity",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Create Heatmap of Login Activity.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "Accounts for when events do not contain all hour/day permutations:",
+  "mitre_attack": null,
+  "event_types": [
+    "UserLogon"
+  ],
+  "functions_used": [
+    "bucket",
+    "sort",
+    "sum"
+  ],
+  "operators_used": [
+    "=",
+    "|"
+  ],
+  "fields_referenced": [
+    "LogonTime",
+    "UserName",
+    "_bucket",
+    "_dayOfWeekName",
+    "as",
+    "field",
+    "function",
+    "ignoreCase",
+    "reverse",
+    "span"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "utility",
+  "platforms": [
+    "Cross-platform"
+  ],
+  "use_case": "Accounts for when events do not contain all hour/day permutations:",
+  "query": "#event_simpleName=UserLogon //UserName=\"name@example.com\"\n| UserName=~wildcard(?{UserName=\"*\"}, ignoreCase=true)\n| LogonTime:=LogonTime*1000\n| time:dayOfWeekName(LogonTime)\n| bucket(span=1h, field=[_hour,_dayOfWeekName])\n| time:dayOfWeekName(_bucket)\n| time:hour(_bucket)\n| groupby([_hour,_dayOfWeekName], function=sum(_count, as=\"count\"))\n| case{\n    _dayOfWeekName=\"Monday\"    | _dayOfWeekName:=\"1-Mon\";\n    _dayOfWeekName=\"Tuesday\"   | _dayOfWeekName:=\"2-Tu\"; \n    _dayOfWeekName=\"Wednesday\" | _dayOfWeekName:=\"3-Wed\";\n    _dayOfWeekName=\"Thursday\"  | _dayOfWeekName:=\"4-Thur\"; \n    _dayOfWeekName=\"Friday\"    | _dayOfWeekName:=\"5-Fri\";\n    _dayOfWeekName=\"Saturday\"  | _dayOfWeekName:=\"6-Sat\"; \n    _dayOfWeekName=\"Sunday\"    | _dayOfWeekName:=\"7-Sun\"; \n}\n| sort(field=_hour, reverse=false)\n| sort(field=_dayOfWeekName, reverse=false)",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "cross-platform",
+    "login",
+    "userlogon"
+  ]
+}

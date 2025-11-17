@@ -1,0 +1,17 @@
+$schema: https://schemas.humio.com/viewinteraction/v0.2.0
+interaction:
+  conditions:
+  - argument: ''
+    fieldName: user.email
+    operator: present
+  name: Investigate - Username
+  titleTemplate: ''
+  useWidgetTimeWindow: false
+  dashboardReference:
+    name: Web - User Investigation
+    packageSpecifier: zscaler/nss-web
+    repoOrViewName:
+  arguments:
+    Username: '{{fields.user.email}}'
+  openInNewTab: true
+  type: dashboardlink

@@ -1,0 +1,42 @@
+{
+  "name": "replace",
+  "category": "string",
+  "description": "Replaces each substring of the specified field's value that matches the given regular expression with the given replacement.",
+  "syntax": "| replace(regex=pattern, with=replacement, field=field_name, as=output_field)",
+  "parameters": [
+    {
+      "name": "regex",
+      "type": "regex",
+      "required": true,
+      "description": "The regular expression pattern to match"
+    },
+    {
+      "name": "with",
+      "type": "string",
+      "required": true,
+      "description": "The replacement string"
+    },
+    {
+      "name": "field",
+      "type": "field",
+      "required": false,
+      "description": "The field to perform replacement on. Defaults to @rawstring"
+    },
+    {
+      "name": "as",
+      "type": "field",
+      "required": false,
+      "description": "The output field name. Can be same as input for in-place replacement"
+    }
+  ],
+  "return_type": "transformed_events",
+  "examples": [
+    "| replace(regex=^apples$, with=oranges)",
+    "| ip =~replace(\".\", with=\"\")",
+    "| replace(regex=\"\\\"SHA1HashData\\\":\\\"0000000000000000000000000000000000000000\\\",\", with=\"\", field=@rawstring, as=@rawstring)"
+  ],
+  "related_functions": ["regex", "lower", "upper"],
+  "use_cases": ["Text normalization", "Data cleaning", "Removing sensitive data", "String manipulation"],
+  "notes": "Can use =~replace() syntax for inline field replacement. Supports regex patterns for complex matching.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-replace.html"
+}

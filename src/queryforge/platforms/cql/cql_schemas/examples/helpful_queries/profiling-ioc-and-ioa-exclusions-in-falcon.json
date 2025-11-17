@@ -1,0 +1,49 @@
+{
+  "id": "profiling-ioc-and-ioa-exclusions-in-falcon",
+  "title": "Profiling IOC and IOA Exclusions in Falcon",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Profiling IOC and IOA Exclusions in Falcon.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "DetectionExcluded"
+  ],
+  "functions_used": [
+    "count",
+    "groupBy",
+    "match",
+    "table"
+  ],
+  "operators_used": [
+    "=",
+    "match",
+    "|"
+  ],
+  "fields_referenced": [
+    "ExclusionSource",
+    "ExclusionType",
+    "PatternId",
+    "as",
+    "column",
+    "file",
+    "function",
+    "limit",
+    "sortby",
+    "strict"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "detection",
+  "platforms": [
+    "Lin"
+  ],
+  "use_case": "Detection query for Profiling IOC and IOA Exclusions in Falcon",
+  "query": "#event_simpleName=DetectionExcluded ExclusionSource=6\n| PatternId =~ match(file=\"falcon/investigate/detect_patterns.csv\", column=PatternId, strict=false)\n| case {\n    ExclusionType=1 | ExclusionType_Readable:=\"IOA\" | Detail:=CommandLine;\n    ExclusionType=2 | ExclusionType_Readable:=\"IOC\" | Detail:=TargetSHA256HashData;\n    ExclusionType=4 | ExclusionType_Readable:=\"Certificate\" | Detail:=TargetSHA256HashData;\n    *;\n}\n| groupBy([Tactic, Technique, ExclusionType_Readable, description], function=([count(aid, as=TotalDetections), collect([Detail, DetectName])]))\n| table([TotalDetections, ExclusionType_Readable, DetectName, Tactic, Technique, Detail], limit=20000, sortby=TotalDetections)",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "detectionexcluded",
+    "lin"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "title": "How to write a query that allows export to CSV in a multi-cluster view",
+  "slug": "how_to_write_a_query_that_allows_export_to_csv_in_a_multi-cluster_view",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "To ensure data exported from a multi\u2011cluster view is consistent, use select() to normalize column names and types across clusters before exporting CSV.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Produces a consistent set of columns from multiple clusters so CSV export has a unified schema across all search backends.",
+      "language": "logscale",
+      "query": "#view=all-falcon\n| select([@timestamp, clusterName, ComputerName, UserName, event_simpleName])"
+    }
+  ],
+  "tags": [
+    "cluster",
+    "export",
+    "select",
+    "views"
+  ],
+  "url": "https://library.humio.com/kb/kb-multi-cluster-export-csv.html",
+  "difficulty": "beginner",
+  "related_functions": [
+    "select"
+  ]
+}

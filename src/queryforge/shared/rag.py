@@ -656,11 +656,19 @@ def build_cql_documents(schema: Dict[str, Any]) -> List[Dict[str, Any]]:
     # Platform overview
     core = schema.get("core", {})
     if isinstance(core, dict):
-        platform = core.get("platform", "CrowdStrike Query Language (CQL)")
-        version = core.get("version", "placeholder")
-        description = core.get("description", "")
+        # Handle nested platform structure
+        platform_info = core.get("platform", {})
+        if isinstance(platform_info, dict):
+            platform_name = platform_info.get("name", "CrowdStrike Query Language (CQL)")
+            version = platform_info.get("version", "")
+            description = platform_info.get("description", "")
+        else:
+            # Fallback for simple string platform
+            platform_name = str(platform_info) if platform_info else "CrowdStrike Query Language (CQL)"
+            version = core.get("version", "")
+            description = core.get("description", "")
         
-        overview_lines = [platform]
+        overview_lines = [platform_name]
         if version:
             overview_lines.append(f"Version: {version}")
         if description:

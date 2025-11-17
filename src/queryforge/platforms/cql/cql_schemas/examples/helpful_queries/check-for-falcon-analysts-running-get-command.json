@@ -1,0 +1,42 @@
+{
+  "id": "check-for-falcon-analysts-running-get-command",
+  "title": "Check for Falcon Analysts Running \"get\" Command",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Check for Falcon Analysts Running \"get\" Command.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [],
+  "functions_used": [
+    "count",
+    "groupBy",
+    "regex"
+  ],
+  "operators_used": [
+    "=",
+    "regex",
+    "|"
+  ],
+  "fields_referenced": [
+    "Commands",
+    "ExternalApiType",
+    "as",
+    "function",
+    "regex",
+    "repo",
+    "separator"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "detection",
+  "platforms": [
+    "Cross-platform"
+  ],
+  "use_case": "Detection query for Check for Falcon Analysts Running \"get\" Command",
+  "query": "// Get UI Audit Events\n#repo=\"detections\" ExternalApiType=/Remote/\n\n// Check commands for \"get\"\n| array:regex(\"Commands[]\",regex=\"get\")\n\n// Create unified \"Commands\" field\n| concatArray(\"Commands\", separator=\"; \", as=Commands)\n\n// Check to make sure Commands is populated\n| Commands=*\n\n// Aggregate results\n| groupBy([UserName, AgentIdString], function=([collect([Commands])]))\n| groupBy([UserName], function=([count(AgentIdString, as=SystemsAccssed), collect([Commands])]))",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "cross-platform"
+  ]
+}

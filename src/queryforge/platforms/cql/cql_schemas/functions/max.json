@@ -1,0 +1,30 @@
+{
+  "name": "max",
+  "category": "aggregation",
+  "description": "Returns the maximum value of a specified field across events in a group. Typically used within groupBy() function to find the highest value in each group.",
+  "syntax": "max(field, as=output_field)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "Field to find the maximum value of"
+    },
+    {
+      "name": "as",
+      "type": "string",
+      "required": false,
+      "description": "Name for the output field containing the maximum value"
+    }
+  ],
+  "return_type": "numeric",
+  "examples": [
+    "| groupBy([UserId], function=max(@timestamp, as=lastSeen))",
+    "| groupBy([aid], function=([max(@timestamp, as=lastLogon), min(@timestamp, as=firstLogon)]))",
+    "| max(ProcessStartTime, as=latestExecution)"
+  ],
+  "related_functions": ["min", "avg", "sum", "groupBy"],
+  "use_cases": ["Finding latest timestamp", "Maximum value analysis", "Peak detection", "Statistical analysis"],
+  "notes": "Commonly used with timestamps to find the most recent event in a group.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-max.html"
+}

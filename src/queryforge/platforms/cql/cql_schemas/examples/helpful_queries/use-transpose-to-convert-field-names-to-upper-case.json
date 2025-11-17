@@ -1,0 +1,41 @@
+{
+  "id": "use-transpose-to-convert-field-names-to-upper-case",
+  "title": "Use Transpose to Convert Field Names to Upper Case",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Use Transpose to Convert Field Names to Upper Case.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [],
+  "functions_used": [
+    "drop",
+    "kvParse",
+    "transpose",
+    "upper"
+  ],
+  "operators_used": [
+    "=",
+    "|"
+  ],
+  "fields_referenced": [
+    "color",
+    "column",
+    "header",
+    "limit",
+    "shape",
+    "size"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "utility",
+  "platforms": [
+    "Cross-platform"
+  ],
+  "use_case": "Utility query for Use Transpose to Convert Field Names to Upper Case",
+  "query": "| createEvents([\"color=blue\", \"shape=round\", \"size=large\"])\n| kvParse()\n| transpose(limit=1000)\n| column := upper(column)\n| transpose(header=column,limit=1000)\n| drop(column)",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "cross-platform"
+  ]
+}

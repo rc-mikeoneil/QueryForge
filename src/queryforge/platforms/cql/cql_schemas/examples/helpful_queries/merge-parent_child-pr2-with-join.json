@@ -1,0 +1,50 @@
+{
+  "id": "merge-parent_child-pr2-with-join",
+  "title": "Merge Parent_Child PR2 with Join",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Merge Parent_Child PR2 with Join.md",
+  "category": "helpful_query",
+  "subcategory": "process",
+  "description": "#### Version with wildcard parameters",
+  "mitre_attack": null,
+  "event_types": [
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "groupBy",
+    "join"
+  ],
+  "operators_used": [
+    "<",
+    "=",
+    ">",
+    "|"
+  ],
+  "fields_referenced": [
+    "ImageFileName",
+    "ParentBaseFileName",
+    "aid",
+    "field",
+    "include",
+    "key",
+    "limit"
+  ],
+  "correlation_patterns": [
+    "join"
+  ],
+  "difficulty": "advanced",
+  "query_type": "analysis",
+  "platforms": [
+    "Lin"
+  ],
+  "use_case": "#### Version with wildcard parameters",
+  "query": "aid=?aid #event_simpleName=ProcessRollup2 ImageFileName=/\\\\outlook.exe/i\n| ImageFileName=/(\\/|\\\\)(?<FileName>\\w*\\.?\\w*)$/\n| join( {\n  aid=?aid\n  | #event_simpleName=ProcessRollup2\n  | ParentBaseFileName=/outlook.exe/i\n  | ImageFileName=/(chrome|firefox|iexplore)\\.exe/i\n  | MD5 := MD5HashData\n  | ImageFileName=/(\\/|\\\\)(?<ChildFileName>\\w*\\.?\\w*)$/\n  | ChildCLI := CommandLine\n  }, key=ParentProcessId, field=TargetProcessId, include=[MD5, ChildFileName, ChildCLI])\n| groupBy([aid, FileName, CommandLine, ChildFileName, ChildCLI, MD5], limit=max)",
+  "key_features": [
+    "Uses join for correlation"
+  ],
+  "related_examples": [],
+  "tags": [
+    "join",
+    "lin",
+    "processrollup2"
+  ]
+}

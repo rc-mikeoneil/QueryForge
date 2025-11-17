@@ -1,0 +1,52 @@
+{
+  "id": "osversioninfo-osversionfiledata-decode",
+  "title": "OsVersionInfo OsVersionFileData Decode",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/OsVersionInfo OsVersionFileData Decode.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "OR",
+  "mitre_attack": null,
+  "event_types": [
+    "OsVersionInfo"
+  ],
+  "functions_used": [
+    "groupBy",
+    "match",
+    "regex",
+    "replace"
+  ],
+  "operators_used": [
+    "<",
+    "=",
+    ">",
+    "match",
+    "regex",
+    "|"
+  ],
+  "fields_referenced": [
+    "OSVersionFileData",
+    "PRETTY_NAME",
+    "as",
+    "field",
+    "file",
+    "function",
+    "ignoreCase",
+    "include",
+    "strict",
+    "with"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Lin"
+  ],
+  "use_case": "OR",
+  "query": "#event_simpleName=OsVersionInfo event_platform=Lin\n| OSVersionFileData=*\n| replace(\"([0-9A-Fa-f]{2})\", with=\"%$1\", field=OSVersionFileData, as=OSVersionFileData)\n| OSVersionFileData:=urlDecode(\"OSVersionFileData\")\n| regex(\"PRETTY_NAME=\\\"(?<DistroName>[^\\\"]+)\\\"\", field=OSVersionFileData, strict=false)\n| match(file=\"fdr_aidmaster.csv\", field=aid, include=ComputerName, ignoreCase=true, strict=false)\n| groupBy(aid, function=([selectLast([ComputerName, DistroName, DistroVersion, AgentVersion])]))",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "lin",
+    "osversioninfo"
+  ]
+}

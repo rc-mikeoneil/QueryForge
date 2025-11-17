@@ -1,0 +1,90 @@
+{
+  "table": "UserAccountDeleted",
+  "category": "endpoint_user_management",
+  "description": "User account deletion events. Captures when user accounts are deleted from the system, useful for audit trails and detecting evidence destruction attempts.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["UserAccountDeleted"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win", "Lin"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "UserName",
+      "type": "string",
+      "description": "Username of the deleted account",
+      "searchable": true,
+      "common_usage": ["filtering", "deleted account tracking"]
+    },
+    {
+      "name": "UserSid",
+      "type": "string",
+      "description": "Windows Security Identifier for the deleted user",
+      "searchable": true,
+      "common_usage": ["filtering", "correlation"]
+    },
+    {
+      "name": "SubjectUserName",
+      "type": "string",
+      "description": "Username of the account that deleted the user",
+      "searchable": true,
+      "common_usage": ["actor identification", "audit trail"]
+    },
+    {
+      "name": "SubjectUserSid",
+      "type": "string",
+      "description": "SID of the account that deleted the user",
+      "searchable": true,
+      "common_usage": ["actor correlation"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "timeline creation"]
+    }
+  ],
+  "col_count": 10,
+  "common_filters": [
+    "event_platform=Win"
+  ],
+  "common_fields": ["aid", "ComputerName", "UserName", "SubjectUserName"],
+  "common_operations": [
+    "Detect evidence destruction attempts",
+    "Track account lifecycle",
+    "Audit account deletion activity",
+    "Correlate with incident response activities"
+  ],
+  "generated_at": "2025-11-15T00:00:00Z"
+}

@@ -1,0 +1,27 @@
+{
+  "title": "How-To: Sorting by Timestamps within groupBy()",
+  "slug": "sorting_by_timestamps_within_groupby",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Describes how to sort events by timestamp inside each group to identify earliest, latest,\nor ordered sequences using groupBy() combined with collectSorted() or similar functions.",
+  "examples": [
+    {
+      "name": "Collect events ordered by time per host",
+      "description": "Collects @timestamp values in ascending order per ComputerName.",
+      "language": "logscale",
+      "query": "groupBy(ComputerName, function=collectSorted(@timestamp))"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "groupBy",
+    "sorting",
+    "timestamps"
+  ],
+  "difficulty": "advanced",
+  "related_functions": [
+    "collectSorted",
+    "groupBy"
+  ]
+}

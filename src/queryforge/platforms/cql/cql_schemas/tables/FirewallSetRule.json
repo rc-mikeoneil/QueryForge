@@ -1,0 +1,112 @@
+{
+  "table": "FirewallSetRule",
+  "category": "endpoint_system_changes",
+  "description": "Firewall rule modification events capturing when firewall rules are added, modified, or deleted. Critical for detecting firewall tampering and persistence mechanisms.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["FirewallSetRule"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win", "Lin"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "UserName",
+      "type": "string",
+      "description": "Username that modified the firewall rule",
+      "searchable": true,
+      "common_usage": ["filtering", "actor identification"]
+    },
+    {
+      "name": "RuleName",
+      "type": "string",
+      "description": "Name of the firewall rule",
+      "searchable": true,
+      "common_usage": ["filtering", "rule tracking"]
+    },
+    {
+      "name": "RuleAction",
+      "type": "string",
+      "description": "Action performed on the rule",
+      "example_values": ["Add", "Modify", "Delete"],
+      "common_usage": ["filtering", "change tracking"]
+    },
+    {
+      "name": "RuleDirection",
+      "type": "string",
+      "description": "Direction of the firewall rule",
+      "example_values": ["Inbound", "Outbound"],
+      "common_usage": ["filtering", "rule analysis"]
+    },
+    {
+      "name": "Port",
+      "type": "long",
+      "description": "Port number specified in the rule",
+      "common_usage": ["filtering", "port analysis"]
+    },
+    {
+      "name": "Protocol",
+      "type": "string",
+      "description": "Protocol specified in the rule",
+      "example_values": ["TCP", "UDP"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "RuleEnabled",
+      "type": "boolean",
+      "description": "Whether the rule is enabled",
+      "common_usage": ["filtering", "active rule detection"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "change tracking"]
+    }
+  ],
+  "col_count": 13,
+  "common_filters": [
+    "RuleAction=Add",
+    "RuleDirection=Inbound",
+    "RuleEnabled=true"
+  ],
+  "common_fields": ["aid", "ComputerName", "RuleName", "RuleAction", "Port"],
+  "common_operations": [
+    "Detect firewall rule tampering",
+    "Track inbound rule additions",
+    "Monitor for persistence via firewall rules",
+    "Identify unauthorized firewall changes",
+    "Alert on suspicious port openings"
+  ],
+  "generated_at": "2025-11-15T00:00:00Z"
+}

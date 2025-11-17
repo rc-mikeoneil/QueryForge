@@ -1,0 +1,61 @@
+{
+  "id": "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries",
+  "title": "2023-09-20 - Cool Query Friday - Up-leveling Teams With Text-box Driven Queries",
+  "source_file": "Queries-Only/Cool-Query-Friday/2023-09-20 - Cool Query Friday - Up-leveling Teams With Text-box Driven Queries.md",
+  "category": "cool_query_friday",
+  "subcategory": "network",
+  "description": "[Full post text.](https://community.crowdstrike.com/cool-query-friday-77/2023-09-20-cool-query-friday-live-from-fal-con-up-leveling-teams-with-multipurpose-text-box-driven-queries-420)",
+  "mitre_attack": null,
+  "event_types": [
+    "DnsRequest",
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "count",
+    "drop",
+    "format",
+    "groupBy",
+    "selfJoinFilter"
+  ],
+  "operators_used": [
+    "=",
+    "and",
+    "|"
+  ],
+  "fields_referenced": [
+    "ComputerName",
+    "DomainName",
+    "FileName",
+    "ParentBaseFileName",
+    "UserName",
+    "as",
+    "distinct",
+    "eventCount",
+    "field",
+    "format",
+    "function",
+    "id",
+    "ignoreCase",
+    "where"
+  ],
+  "correlation_patterns": [
+    "selfJoinFilter"
+  ],
+  "difficulty": "expert",
+  "query_type": "analysis",
+  "platforms": [
+    "Lin"
+  ],
+  "use_case": "[Full post text.](https://community.crowdstrike.com/cool-query-friday-77/2023-09-20-cool-query-friday-live-from-fal-con-up-leveling-teams-with-multipurpose-text-box-driven-queries-420)",
+  "query": "// Get specific events and provide option to specify host\n#event_simpleName=/^(ProcessRollup2|DnsRequest)$/\n// Get details for specific system\n| ComputerName=~wildcard(?ComputerName, ignoreCase=true)\n\n// Normalize UPID value\n| falconPID:=TargetProcessId \n| falconPID:=ContextProcessId\n\n// Create case statement to manipulate fields based on event type and provide option to specifiy parameters based on file type\n| case {\n    #event_simpleName=ProcessRollup2 | UserName=~wildcard(?UserName, ignoreCase=true) | FileName=~wildcard(?FileName, ignoreCase=true) | ParentBaseFileName=~wildcard(?ParentBaseFileName, ignoreCase=true) | ExecutionChain:=format(format=\"%s\\n\\t└ %s (%s)\", field=[ParentBaseFileName, FileName, RawProcessId]);\n    #event_simpleName=DnsRequest | DomainName=~wildcard(?DomainName, ignoreCase=true);\n}\n// Use selfJoin to filter our instances on only one event happening\n| selfJoinFilter(field=[aid, falconPID], where=[{#event_simpleName=ProcessRollup2}, {#event_simpleName=DnsRequest}])\n\n// Aggregate to include desired fields\n| groupBy([aid, falconPID], function=([count(#event_simpleName, as=eventCount, distinct=true), collect([ComputerName, UserName, ExecutionChain, DomainName, CommandLine])]))\n\n// Remove unneeded fields\n| drop(eventCount)\n\n// Add link to graph explorer\n| format(\"[Graph Explorer](https://falcon.us-2.crowdstrike.com/graphs/process-explorer/graph?id=pid:%s:%s)\", field=[\"aid\", \"falconPID\"], as=\"Graph Explorer\")",
+  "key_features": [
+    "Uses selfJoinFilter for correlation",
+    "Advanced correlation techniques"
+  ],
+  "related_examples": [],
+  "tags": [
+    "dnsrequest",
+    "lin",
+    "processrollup2"
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "table": "UserLogon",
+  "category": "endpoint_authentication",
+  "description": "Successful user logon events on Windows endpoints. Captures interactive, remote, and service logons. Used for authentication tracking, lateral movement detection, and access analysis.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["UserLogon"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint where logon occurred",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "UserName",
+      "type": "string",
+      "description": "Username of the account that logged on",
+      "searchable": true,
+      "common_usage": ["filtering", "grouping", "user tracking", "geolocation analysis"]
+    },
+    {
+      "name": "UserSid",
+      "type": "string",
+      "description": "Windows Security Identifier for the user",
+      "searchable": true,
+      "example_values": ["S-1-5-21-*"],
+      "common_usage": ["filtering", "user correlation", "non-domain account filtering"]
+    },
+    {
+      "name": "LogonType",
+      "type": "string",
+      "description": "Windows logon type code",
+      "example_values": ["2", "3", "7", "10"],
+      "common_usage": ["filtering", "logon method classification"],
+      "notes": "2=Interactive, 3=Network, 7=Unlock, 10=RemoteInteractive (RDP)"
+    },
+    {
+      "name": "LogonDomain",
+      "type": "string",
+      "description": "Domain name for domain-joined accounts",
+      "searchable": true,
+      "common_usage": ["filtering", "domain vs local account classification"]
+    },
+    {
+      "name": "ClientComputerName",
+      "type": "string",
+      "description": "Name of the client computer initiating the logon",
+      "searchable": true,
+      "common_usage": ["lateral movement detection", "source tracking"]
+    },
+    {
+      "name": "UserIsAdmin",
+      "type": "string",
+      "description": "Indicates if the user has administrative privileges",
+      "common_usage": ["privilege tracking", "admin logon monitoring"]
+    },
+    {
+      "name": "RemoteAccount",
+      "type": "string",
+      "description": "Indicates if the account is a remote/network account",
+      "common_usage": ["remote access tracking"]
+    },
+    {
+      "name": "AuthenticationPackage",
+      "type": "string",
+      "description": "Windows authentication package used",
+      "example_values": ["NTLM", "Kerberos", "Negotiate"],
+      "common_usage": ["authentication method analysis", "NTLM usage tracking"]
+    },
+    {
+      "name": "PasswordLastSet",
+      "type": "long",
+      "description": "Timestamp when password was last set (epoch, needs conversion)",
+      "common_usage": ["password age analysis", "stale account detection"]
+    },
+    {
+      "name": "aip",
+      "type": "ip_address",
+      "description": "External/public IP address from which logon originated",
+      "common_usage": ["geolocation", "anomalous location detection", "impossible travel analysis"]
+    },
+    {
+      "name": "RemoteAddressIP4",
+      "type": "ip_address",
+      "description": "Remote IPv4 address for RDP/remote logons",
+      "common_usage": ["RDP source tracking", "geolocation", "world map visualization"]
+    },
+    {
+      "name": "LocalAddressIP4",
+      "type": "ip_address",
+      "description": "Local IPv4 address of the endpoint",
+      "common_usage": ["network tracking"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "time-based aggregation", "impossible travel calculations"]
+    },
+    {
+      "name": "@timestamp",
+      "type": "datetime",
+      "description": "Event timestamp in ISO format",
+      "common_usage": ["display", "time range filtering"]
+    }
+  ],
+  "col_count": 19,
+  "common_filters": [
+    "event_platform=Win",
+    "UserSid=S-1-5-21-*",
+    "LogonType=2",
+    "LogonType=10",
+    "in(LogonType, values=[\"2\",\"10\"])"
+  ],
+  "common_fields": ["aid", "ComputerName", "UserName", "UserSid", "LogonType", "aip", "RemoteAddressIP4"],
+  "common_operations": [
+    "RDP login tracking (LogonType=10)",
+    "Geolocation via ipLocation(aip) or ipLocation(RemoteAddressIP4)",
+    "World map visualization of RDP logins",
+    "Impossible time-to-travel detection",
+    "Login heatmap creation",
+    "Failed vs successful logon correlation",
+    "Admin logon monitoring via UserIsAdmin",
+    "Enrichment with $falcon/helper:enrich(field=UserIsAdmin)",
+    "Enrichment with $falcon/helper:enrich(field=UserLogon)",
+    "Password age analysis via PasswordLastSet"
+  ],
+  "enrichment_helpers": [
+    "$falcon/helper:enrich(field=UserIsAdmin) - Converts UserIsAdmin codes to human-readable",
+    "$falcon/helper:enrich(field=UserLogon) - Converts LogonType codes to human-readable"
+  ],
+  "generated_at": "2025-11-14T23:45:00Z"
+}

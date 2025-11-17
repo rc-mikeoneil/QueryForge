@@ -1,0 +1,67 @@
+{
+  "id": "calculate-process-run-time",
+  "title": "Calculate Process Run Time",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Calculate Process Run Time.md",
+  "category": "helpful_query",
+  "subcategory": "process",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "EndOfProcess",
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "count",
+    "drop",
+    "groupBy",
+    "max",
+    "min",
+    "regex",
+    "selfJoinFilter",
+    "test"
+  ],
+  "operators_used": [
+    "<",
+    "=",
+    ">",
+    "or",
+    "regex",
+    "|"
+  ],
+  "fields_referenced": [
+    "ImageFileName",
+    "_ise",
+    "as",
+    "distinct",
+    "eventCount",
+    "field",
+    "format",
+    "from",
+    "function",
+    "precision",
+    "prefilter",
+    "strict",
+    "where"
+  ],
+  "correlation_patterns": [
+    "selfJoinFilter"
+  ],
+  "difficulty": "expert",
+  "query_type": "analysis",
+  "platforms": [
+    "Win"
+  ],
+  "use_case": "Analysis query for Calculate Process Run Time",
+  "query": "(#event_simpleName=ProcessRollup2 ImageFileName=/\\\\powershell(_ise)?\\.exe/i) OR (#event_simpleName=EndOfProcess event_platform=Win CLICreationCount>0)\n| selfJoinFilter([aid, TargetProcessId], where=[{#event_simpleName=ProcessRollup2}, {#event_simpleName=EndOfProcess}], prefilter=true)\n| regex(\".+\\\\\\(?<FileName>.+$)\", field=ImageFileName, strict=false)\n| groupBy([aid, TargetProcessId], function=([count(#event_simpleName, distinct=true, as=eventCount), min(ProcessStartTime, as=processStartTime), max(ContextTimeStamp, as=processEndTime), collect([CLICreationCount, FileName])]))\n| test(eventCount==2)\n| processStartTime := processStartTime*1000\n| processEndTime := processEndTime*1000\n| runTime := processEndTime-processStartTime\n| formatDuration(runTime, from=ms, precision=4, as=programRunTime)\n| formatTime(format=\"%F %T.%L\", field=processStartTime, as=\"processStartTime\")\n| formatTime(format=\"%F %T.%L\", field=processEndTime, as=\"processEndTime\")\n| drop([eventCount, runTime])",
+  "key_features": [
+    "Uses selfJoinFilter for correlation",
+    "Advanced correlation techniques"
+  ],
+  "related_examples": [],
+  "tags": [
+    "endofprocess",
+    "process",
+    "processrollup2",
+    "win"
+  ]
+}

@@ -315,7 +315,7 @@ def register_cql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
             Do not present invalid queries as final results.
         """
         try:
-            validator = FQLValidator(schema_loader)
+            validator = CQLValidator(schema_loader)
             result = validator.validate(query, dataset, metadata)
             
             logger.info(
@@ -377,7 +377,7 @@ def register_cql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
             }
         """
         try:
-            validator = FQLValidator(schema_loader)
+            validator = CQLValidator(schema_loader)
             corrections_applied = []
             retry_count = 0
 

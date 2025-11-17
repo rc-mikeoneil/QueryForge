@@ -1,0 +1,38 @@
+{
+  "id": "decoding-windowflags-bitmask",
+  "title": "Decoding WindowFlags Bitmask",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Decoding WindowFlags Bitmask.md",
+  "category": "helpful_query",
+  "subcategory": "process",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "ProcessRollup2"
+  ],
+  "functions_used": [],
+  "operators_used": [
+    "=",
+    "|"
+  ],
+  "fields_referenced": [
+    "WindowFlags",
+    "field",
+    "output"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "basic",
+  "query_type": "monitoring",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "Monitoring query for Decoding WindowFlags Bitmask",
+  "query": "#event_simpleName=ProcessRollup2 WindowFlags=*\n| bitfield:extractFlags(\nfield=WindowFlags,\n output=[\n   [0, STARTF_USESHOWWINDOW],\n   [1, STARTF_USESIZE],\n   [2, STARTF_USEPOSITION],\n   [3, STARTF_USECOUNTCHARS],\n   [4, STARTF_USEFILLATTRIBUTE],\n   [5, STARTF_RUNFULLSCREEN],\n   [6, STARTF_FORCEONFEEDBACK],\n   [7, STARTF_FORCEOFFFEEDBACK],\n   [8, STARTF_USESTDHANDLES],\n   [9, STARTF_USEHOTKEY],\n   [10, STARTF_TITLEISLINKNAME],\n   [11, STARTF_TITLEISAPPID],\n   [12, STARTF_PREVENTPINNING],\n   [13, STARTF_UNTRUSTEDSOURCE],\n   [14, STARTF_MONITOR],\n   [15, STARTF_SCREENSAVER]\n])",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "lin",
+    "processrollup2",
+    "win"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "name": "correlate",
+  "category": "advanced",
+  "description": "Looks for patterns across given search parameters. Can correlate multiple events based on matching fields within a time window, with optional sequence enforcement.",
+  "syntax": "correlate(name1: {query1} include: [fields], name2: {query2} include: [fields], sequence=bool, within=duration)",
+  "parameters": [
+    {
+      "name": "search_parameters",
+      "type": "named_queries",
+      "required": true,
+      "description": "Named sub-queries to correlate (e.g., whoami: {...}, net: {...})"
+    },
+    {
+      "name": "include",
+      "type": "array",
+      "required": true,
+      "description": "Fields to include from each sub-query in the output"
+    },
+    {
+      "name": "sequence",
+      "type": "boolean",
+      "required": false,
+      "description": "Whether the events must occur in the specified order (default: true)"
+    },
+    {
+      "name": "within",
+      "type": "time_duration",
+      "required": true,
+      "description": "Time window within which events must occur (e.g., 5m, 1h)"
+    }
+  ],
+  "return_type": "correlated_events",
+  "examples": [
+    "correlate(\n    whoami: {\n        #repo=\"base_sensor\" #event_simpleName=ProcessRollup2 event_platform=Win FileName=\"whoami.exe\" \n    } include: [aid, ComputerName, FileName],\n    net: {\n        #repo=\"base_sensor\" #event_simpleName=ProcessRollup2 event_platform=Win FileName=/^net1?\\.exe$/\n          | aid <=> whoami.aid\n          } include: [aid, ComputerName, FileName],\n    systeminfo: {\n        #repo=\"base_sensor\" #event_simpleName=ProcessRollup2 event_platform=Win FileName=\"systeminfo.exe\"\n          | aid <=> net.aid\n          } include: [aid, ComputerName, FileName],\nsequence=false, within=5m)"
+  ],
+  "related_functions": ["selfJoinFilter", "join"],
+  "use_cases": ["Threat hunting", "Attack pattern detection", "Behavioral analysis", "Multi-stage attack detection"],
+  "notes": "Use the <=> operator within sub-queries to reference fields from other named queries.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-correlate.html"
+}

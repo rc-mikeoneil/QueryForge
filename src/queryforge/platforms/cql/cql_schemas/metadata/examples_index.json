@@ -1,0 +1,2069 @@
+{
+  "metadata": {
+    "total_queries": 123,
+    "last_updated": "2025-11-14",
+    "version": "1.0.0"
+  },
+  "summary": {
+    "by_category": {
+      "cool_query_friday": 5,
+      "mitre_attack": 25,
+      "helpful_query": 93
+    },
+    "by_difficulty": {
+      "expert": 12,
+      "intermediate": 59,
+      "basic": 39,
+      "advanced": 13
+    },
+    "by_query_type": {
+      "hunting": 26,
+      "monitoring": 2,
+      "analysis": 39,
+      "utility": 33,
+      "inventory": 8,
+      "detection": 13,
+      "visualization": 2
+    },
+    "by_platform": {
+      "Lin": 61,
+      "Win": 65,
+      "Cross-platform": 34,
+      "Mac": 14
+    }
+  },
+  "top_statistics": {
+    "top_event_types": [
+      [
+        "ProcessRollup2",
+        40
+      ],
+      [
+        "OsVersionInfo",
+        14
+      ],
+      [
+        "UserLogon",
+        7
+      ],
+      [
+        "DnsRequest",
+        4
+      ],
+      [
+        "NetworkConnectIP4",
+        4
+      ],
+      [
+        "AgentOnline",
+        3
+      ],
+      [
+        "ResourceUtilization",
+        2
+      ],
+      [
+        "SystemCapacity",
+        2
+      ],
+      [
+        "ReflectiveDotnetModuleLoad",
+        2
+      ],
+      [
+        "InstalledBrowserExtension",
+        2
+      ]
+    ],
+    "top_functions": [
+      [
+        "groupBy",
+        63
+      ],
+      [
+        "count",
+        40
+      ],
+      [
+        "format",
+        28
+      ],
+      [
+        "drop",
+        25
+      ],
+      [
+        "table",
+        22
+      ],
+      [
+        "default",
+        16
+      ],
+      [
+        "match",
+        16
+      ],
+      [
+        "rename",
+        16
+      ],
+      [
+        "in",
+        15
+      ],
+      [
+        "join",
+        13
+      ]
+    ],
+    "top_tags": [
+      [
+        "win",
+        65
+      ],
+      [
+        "lin",
+        61
+      ],
+      [
+        "processrollup2",
+        40
+      ],
+      [
+        "cross-platform",
+        34
+      ],
+      [
+        "mac",
+        14
+      ],
+      [
+        "osversioninfo",
+        14
+      ],
+      [
+        "join",
+        13
+      ],
+      [
+        "userlogon",
+        7
+      ],
+      [
+        "user",
+        6
+      ],
+      [
+        "dnsrequest",
+        4
+      ],
+      [
+        "file",
+        4
+      ],
+      [
+        "process",
+        4
+      ],
+      [
+        "networkconnectip4",
+        4
+      ],
+      [
+        "agentonline",
+        3
+      ],
+      [
+        "network",
+        3
+      ],
+      [
+        "resourceutilization",
+        2
+      ],
+      [
+        "systemcapacity",
+        2
+      ],
+      [
+        "reflectivedotnetmoduleload",
+        2
+      ],
+      [
+        "login",
+        2
+      ],
+      [
+        "installedbrowserextension",
+        2
+      ]
+    ]
+  },
+  "mitre_attack": {
+    "tactics": {
+      "TA007 - Discovery": 25
+    },
+    "techniques": {
+      "T1615 - Group Policy Discovery": 1,
+      "T1083 - File and Directory Discovery": 1,
+      "T1057 - Process Discovery": 1,
+      "T1652 - Device Driver Discovery": 1,
+      "T1082 - System Information Discovery": 1,
+      "T1580 - Cloud Infrastructure Discovery": 1,
+      "T1120 - Peripheral Device Discovery": 1,
+      "T1201 - Password Policy Discovery": 1,
+      "T1482 - Domain Trust Discovery": 1,
+      "T1135 - Network Share Discovery": 1,
+      "T1033 - System Owner_User Discovery": 1,
+      "T1217 - Browser Information Discovery": 1,
+      "T1012 - Query Registry": 1,
+      "T1018 - Remote System Discovery": 1,
+      "T1010 - Application Window Discovery": 1,
+      "T1016 - System Network Configuration Discovery/(T1016": 1,
+      "T1518 - Software Discovery/(T1518": 1,
+      "T1614 - System Location Discovery/(T1614": 1,
+      "T1087 - Account Discovery/(T1087": 4,
+      "T1069 - Permission Groups Discovery/(T1069": 3
+    },
+    "total_coverage": 20
+  },
+  "queries": [
+    {
+      "id": "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11",
+      "title": "2021-10-29 - Cool Query Friday - CPU, RAM, Disk, Firmware, TPM 2.0, and Windows 11",
+      "category": "cool_query_friday",
+      "difficulty": "expert",
+      "query_type": "hunting",
+      "event_types": [
+        "ResourceUtilization",
+        "ZeroTrustHostAssessment",
+        "SystemCapacity",
+        "AgentOnline"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "cool_query_friday/2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "2023-06-14-cool-query-friday-watching-the-watchers-profiling-falcon-console-logins-via-geohashing",
+      "title": "2023-06-14 - Cool Query Friday - Watching the Watchers - Profiling Falcon Console Logins via Geohashing",
+      "category": "cool_query_friday",
+      "difficulty": "intermediate",
+      "query_type": "monitoring",
+      "event_types": [],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "cool_query_friday/2023-06-14-cool-query-friday-watching-the-watchers-profiling-falcon-console-logins-via-geohashing.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths",
+      "title": "2023-09-08 - Cool Query Friday - Reflective .Net Module Loads and Program Database (PDB) File Paths",
+      "category": "cool_query_friday",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "ReflectiveDotnetModuleLoad"
+      ],
+      "platforms": [
+        "Win"
+      ],
+      "file": "cool_query_friday/2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries",
+      "title": "2023-09-20 - Cool Query Friday - Up-leveling Teams With Text-box Driven Queries",
+      "category": "cool_query_friday",
+      "difficulty": "expert",
+      "query_type": "analysis",
+      "event_types": [
+        "DnsRequest",
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin"
+      ],
+      "file": "cool_query_friday/2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "2024-03-01-cqf-live-supporting-queries",
+      "title": "2024-03-01 CQF Live Supporting Queries",
+      "category": "cool_query_friday",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "cool_query_friday/2024-03-01-cqf-live-supporting-queries.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "aggregate-detection-data-by-host",
+      "title": "Aggregate Detection Data by Host",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "detection",
+      "event_types": [],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/aggregate-detection-data-by-host.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "associatetreeidwithroot-to-pattern-details",
+      "title": "AssociateTreeIdWithRoot to Pattern Details",
+      "category": "helpful_query",
+      "difficulty": "basic",
+      "query_type": "detection",
+      "event_types": [
+        "AssociateTreeIdWithRoot"
+      ],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/associatetreeidwithroot-to-pattern-details.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "bottom-10-of-networkconnct-port-values",
+      "title": "Bottom 10% of NetworkConnct Port Values",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "NetworkConnectIP4"
+      ],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/bottom-10-of-networkconnct-port-values.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "cve-2025-1146-system-scoping-osversioninfo-with-logon-data",
+      "title": "CVE-2025-1146 System Scoping (OsVersionInfo with Logon Data)",
+      "category": "helpful_query",
+      "difficulty": "advanced",
+      "query_type": "hunting",
+      "event_types": [
+        "UserLogon",
+        "OsVersionInfo"
+      ],
+      "platforms": [
+        "Lin",
+        "Mac"
+      ],
+      "file": "helpful_query/cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "cve-2025-1146-system-scoping-osversioninfo",
+      "title": "CVE-2025-1146 System Scoping (OsVersionInfo)",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "hunting",
+      "event_types": [
+        "OsVersionInfo"
+      ],
+      "platforms": [
+        "Lin",
+        "Mac"
+      ],
+      "file": "helpful_query/cve-2025-1146-system-scoping-osversioninfo.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "cve-2025-1146-system-scoping-aid_master",
+      "title": "CVE-2025-1146 System Scoping (aid_master)",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "hunting",
+      "event_types": [],
+      "platforms": [
+        "Lin",
+        "Mac"
+      ],
+      "file": "helpful_query/cve-2025-1146-system-scoping-aid_master.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "cve-2025-42701-and-cve-2025-42706-falcon-version-scoping-osversioninfo",
+      "title": "CVE-2025-42701 and CVE-2025-42706 Falcon Version Scoping (OsVersionInfo)",
+      "category": "helpful_query",
+      "difficulty": "advanced",
+      "query_type": "hunting",
+      "event_types": [
+        "OsVersionInfo"
+      ],
+      "platforms": [
+        "Mac",
+        "Win"
+      ],
+      "file": "helpful_query/cve-2025-42701-and-cve-2025-42706-falcon-version-scoping-osversioninfo.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "cve-2025-42701-and-cve-2025-42706-falcon-version-scoping-aid_master_main",
+      "title": "CVE-2025-42701 and CVE-2025-42706 Falcon Version Scoping (aid_master_main)",
+      "category": "helpful_query",
+      "difficulty": "advanced",
+      "query_type": "hunting",
+      "event_types": [],
+      "platforms": [
+        "Mac",
+        "Win"
+      ],
+      "file": "helpful_query/cve-2025-42701-and-cve-2025-42706-falcon-version-scoping-aid_master_main.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "cve-2025-53770-sharepoint-toolshell",
+      "title": "CVE-2025-53770 - SharePoint ToolShell",
+      "category": "helpful_query",
+      "difficulty": "expert",
+      "query_type": "detection",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "helpful_query/cve-2025-53770-sharepoint-toolshell.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "calculate-last-windows-boot-time",
+      "title": "Calculate Last Windows Boot Time",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "AgentOnline"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "helpful_query/calculate-last-windows-boot-time.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "calculate-process-run-time",
+      "title": "Calculate Process Run Time",
+      "category": "helpful_query",
+      "difficulty": "expert",
+      "query_type": "analysis",
+      "event_types": [
+        "EndOfProcess",
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Win"
+      ],
+      "file": "helpful_query/calculate-process-run-time.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "case-to-convert-size-to-appropriate-unit-of-measure",
+      "title": "Case to convert Size to appropriate unit of measure",
+      "category": "helpful_query",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/case-to-convert-size-to-appropriate-unit-of-measure.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "cheat-bucket-using-groupby",
+      "title": "Cheat bucket Using groupBy",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "OsVersionInfo"
+      ],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/cheat-bucket-using-groupby.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "check-for-falcon-analysts-running-get-command",
+      "title": "Check for Falcon Analysts Running \"get\" Command",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "detection",
+      "event_types": [],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/check-for-falcon-analysts-running-get-command.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "check-for-rtr-being-disabled",
+      "title": "Check for RTR Being Disabled",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "SensorHeartbeat"
+      ],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/check-for-rtr-being-disabled.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "check-for-sensors-in-rfm",
+      "title": "Check for Sensors in RFM",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "OsVersionInfo"
+      ],
+      "platforms": [
+        "Lin"
+      ],
+      "file": "helpful_query/check-for-sensors-in-rfm.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "check-for-unsupported-sensors",
+      "title": "Check for Unsupported Sensors",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "hunting",
+      "event_types": [
+        "OsVersionInfo"
+      ],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/check-for-unsupported-sensors.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "chrome-version-number-evaluation",
+      "title": "Chrome Version Number Evaluation",
+      "category": "helpful_query",
+      "difficulty": "advanced",
+      "query_type": "analysis",
+      "event_types": [
+        "PeVersionInfo",
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Win"
+      ],
+      "file": "helpful_query/chrome-version-number-evaluation.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "clickfixhunting",
+      "title": "ClickFixHunting",
+      "category": "helpful_query",
+      "difficulty": "basic",
+      "query_type": "detection",
+      "event_types": [],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/clickfixhunting.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "combine-processrollup2-and-dnsrequest-events",
+      "title": "Combine ProcessRollup2 and DnsRequest Events",
+      "category": "helpful_query",
+      "difficulty": "expert",
+      "query_type": "analysis",
+      "event_types": [
+        "DnsRequest",
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "helpful_query/combine-processrollup2-and-dnsrequest-events.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "combine-processrollup2-and-filewritten-events",
+      "title": "Combine ProcessRollup2 and FileWritten Events",
+      "category": "helpful_query",
+      "difficulty": "expert",
+      "query_type": "analysis",
+      "event_types": [
+        "ZipFileWritten",
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Win"
+      ],
+      "file": "helpful_query/combine-processrollup2-and-filewritten-events.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "combine-processrollup2-and-networkconnectip4-events",
+      "title": "Combine ProcessRollup2 and NetworkConnectIP4 Events",
+      "category": "helpful_query",
+      "difficulty": "expert",
+      "query_type": "analysis",
+      "event_types": [
+        "NetworkConnectIP4",
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "helpful_query/combine-processrollup2-and-networkconnectip4-events.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "count-windows-discovery-commands-per-user",
+      "title": "Count Windows Discovery Commands Per User",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "helpful_query/count-windows-discovery-commands-per-user.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "create-heatmap-of-login-activity",
+      "title": "Create Heatmap of Login Activity",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "utility",
+      "event_types": [
+        "UserLogon"
+      ],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/create-heatmap-of-login-activity.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "critical-environment-variable-changed-ssh",
+      "title": "Critical Environment Variable Changed SSH",
+      "category": "helpful_query",
+      "difficulty": "basic",
+      "query_type": "hunting",
+      "event_types": [
+        "CriticalEnvironmentVariableChanged"
+      ],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/critical-environment-variable-changed-ssh.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "custom-weighting-command-line-and-file-name",
+      "title": "Custom Weighting Command Line and File Name",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "hunting",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "helpful_query/custom-weighting-command-line-and-file-name.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "decode-base64",
+      "title": "Decode Base64",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "helpful_query/decode-base64.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "decode-signinfoflags",
+      "title": "Decode SignInfoFlags",
+      "category": "helpful_query",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Win"
+      ],
+      "file": "helpful_query/decode-signinfoflags.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "decode-volumedevicecharacteristics-bitmask",
+      "title": "Decode VolumeDeviceCharacteristics Bitmask",
+      "category": "helpful_query",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/decode-volumedevicecharacteristics-bitmask.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "decoding-windowflags-bitmask",
+      "title": "Decoding WindowFlags Bitmask",
+      "category": "helpful_query",
+      "difficulty": "basic",
+      "query_type": "monitoring",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "helpful_query/decoding-windowflags-bitmask.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "enumerate-chrome-edge-browser-extension-on-win-and-mac",
+      "title": "Enumerate Chrome + Edge Browser Extension on Win and Mac",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "inventory",
+      "event_types": [
+        "InstalledBrowserExtension"
+      ],
+      "platforms": [
+        "Lin",
+        "Mac",
+        "Win"
+      ],
+      "file": "helpful_query/enumerate-chrome-edge-browser-extension-on-win-and-mac.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "enumerate-windows-driver-loads",
+      "title": "Enumerate Windows Driver Loads",
+      "category": "helpful_query",
+      "difficulty": "expert",
+      "query_type": "detection",
+      "event_types": [
+        "DriverLoad"
+      ],
+      "platforms": [
+        "Win"
+      ],
+      "file": "helpful_query/enumerate-windows-driver-loads.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "evaluate-falcon-agent-version",
+      "title": "Evaluate Falcon Agent Version",
+      "category": "helpful_query",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [
+        "OsVersionInfo"
+      ],
+      "platforms": [
+        "Win"
+      ],
+      "file": "helpful_query/evaluate-falcon-agent-version.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "evaluate-operating-system-prevalence",
+      "title": "Evaluate Operating System Prevalence",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "OsVersionInfo"
+      ],
+      "platforms": [
+        "Win"
+      ],
+      "file": "helpful_query/evaluate-operating-system-prevalence.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "failed-user-logon-thresholding",
+      "title": "Failed User Logon Thresholding",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "UserLogonFailed2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "helpful_query/failed-user-logon-thresholding.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "failed-and-successful-user-logon-events",
+      "title": "Failed and Successful User Logon Events",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "UserLogon",
+        "UserLogonFailed2"
+      ],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/failed-and-successful-user-logon-events.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "falcon-authentication-from-unexpected-geohash",
+      "title": "Falcon Authentication from Unexpected GeoHash",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "helpful_query/falcon-authentication-from-unexpected-geohash.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "files-written-to-removable-media",
+      "title": "Files Written to Removable Media",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [],
+      "platforms": [
+        "Win"
+      ],
+      "file": "helpful_query/files-written-to-removable-media.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "firewall-rule-additions",
+      "title": "Firewall Rule Additions",
+      "category": "helpful_query",
+      "difficulty": "advanced",
+      "query_type": "utility",
+      "event_types": [
+        "ProcessRollup2",
+        "FirewallSetRule"
+      ],
+      "platforms": [
+        "Lin"
+      ],
+      "file": "helpful_query/firewall-rule-additions.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "frequency-analysis-via-program-clustering",
+      "title": "Frequency Analysis via Program Clustering",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "hunting",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "helpful_query/frequency-analysis-via-program-clustering.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "get-dns-resolutions-from-browser-processes",
+      "title": "Get DNS Resolutions from Browser Processes",
+      "category": "helpful_query",
+      "difficulty": "expert",
+      "query_type": "analysis",
+      "event_types": [
+        "DnsRequest",
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Win"
+      ],
+      "file": "helpful_query/get-dns-resolutions-from-browser-processes.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "get-repository-ingestion-data-for-logscale-saas",
+      "title": "Get Repository Ingestion Data for LogScale SaaS",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "visualization",
+      "event_types": [],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/get-repository-ingestion-data-for-logscale-saas.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "get-repository-ingestion-in-raptor",
+      "title": "Get Repository Ingestion in Raptor",
+      "category": "helpful_query",
+      "difficulty": "basic",
+      "query_type": "hunting",
+      "event_types": [],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/get-repository-ingestion-in-raptor.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "get-windows-os-boot-time",
+      "title": "Get Windows OS Boot Time",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "AgentOnline"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "helpful_query/get-windows-os-boot-time.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "httprequestdetect",
+      "title": "HttpRequestDetect",
+      "category": "helpful_query",
+      "difficulty": "basic",
+      "query_type": "detection",
+      "event_types": [
+        "HttpRequestDetect"
+      ],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/httprequestdetect.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "hunt-pbd-file-paths-in-reflective-net-module-loads",
+      "title": "Hunt PBD File Paths in Reflective .net Module Loads",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "hunting",
+      "event_types": [
+        "ReflectiveDotnetModuleLoad"
+      ],
+      "platforms": [
+        "Win"
+      ],
+      "file": "helpful_query/hunt-pbd-file-paths-in-reflective-net-module-loads.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "hunting-edr-freeze",
+      "title": "Hunting EDR Freeze",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "detection",
+      "event_types": [
+        "FalconProcessHandleOpDetectInfo"
+      ],
+      "platforms": [
+        "Lin"
+      ],
+      "file": "helpful_query/hunting-edr-freeze.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "hunting-bcdeditexe-usage",
+      "title": "Hunting bcdedit.exe usage",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "hunting",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "helpful_query/hunting-bcdeditexe-usage.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "iso_img-written-to-disk-w_-responsible-process",
+      "title": "ISO_IMG Written to Disk w_ Responsible Process",
+      "category": "helpful_query",
+      "difficulty": "advanced",
+      "query_type": "utility",
+      "event_types": [
+        "ImgExtensionFileWritten",
+        "ProcessRollup2",
+        "IsoExtensionFileWritten"
+      ],
+      "platforms": [
+        "Lin"
+      ],
+      "file": "helpful_query/iso_img-written-to-disk-w_-responsible-process.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "impossible-time-to-travel-userlogon",
+      "title": "Impossible Time To Travel (UserLogon)",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "hunting",
+      "event_types": [
+        "UserLogon"
+      ],
+      "platforms": [
+        "Lin",
+        "Mac",
+        "Win"
+      ],
+      "file": "helpful_query/impossible-time-to-travel-userlogon.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "installed-browser-extensions",
+      "title": "Installed Browser Extensions",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "InstalledBrowserExtension"
+      ],
+      "platforms": [
+        "Lin"
+      ],
+      "file": "helpful_query/installed-browser-extensions.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "leveraging-the-aidmaster-repo",
+      "title": "Leveraging the aidmaster repo",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [],
+      "platforms": [
+        "Lin",
+        "Mac"
+      ],
+      "file": "helpful_query/leveraging-the-aidmaster-repo.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "linux-kernel-version",
+      "title": "Linux Kernel Version",
+      "category": "helpful_query",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [
+        "OsVersionInfo"
+      ],
+      "platforms": [
+        "Lin"
+      ],
+      "file": "helpful_query/linux-kernel-version.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "linux-sensors-in-kernel-mode-user-mode-and-rfm",
+      "title": "Linux Sensors in Kernel Mode, User Mode, and RFM",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "OsVersionInfo"
+      ],
+      "platforms": [
+        "Lin"
+      ],
+      "file": "helpful_query/linux-sensors-in-kernel-mode-user-mode-and-rfm.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "list-all-itp-detections",
+      "title": "List All ITP Detections",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "detection",
+      "event_types": [],
+      "platforms": [
+        "Lin"
+      ],
+      "file": "helpful_query/list-all-itp-detections.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "listening-programs-with-low-port-numbers",
+      "title": "Listening Programs with low port numbers",
+      "category": "helpful_query",
+      "difficulty": "expert",
+      "query_type": "inventory",
+      "event_types": [
+        "NetworkListenIP4",
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Win"
+      ],
+      "file": "helpful_query/listening-programs-with-low-port-numbers.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "look-for-files-running-outside-windows-systems-folders-with-name-masquerading",
+      "title": "Look for files running outside Windows systems folders with name masquerading",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "hunting",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "helpful_query/look-for-files-running-outside-windows-systems-folders-with-name-masquerading.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "map-agent-id-values-to-host-group-names",
+      "title": "Map Agent ID values to Host Group Names",
+      "category": "helpful_query",
+      "difficulty": "advanced",
+      "query_type": "hunting",
+      "event_types": [],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/map-agent-id-values-to-host-group-names.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "mean-time-to-react-respond-and-resolve",
+      "title": "Mean Time to React, Respond, and Resolve",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "detection",
+      "event_types": [],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/mean-time-to-react-respond-and-resolve.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "merge-legacy-aid-master-info",
+      "title": "Merge Legacy AID Master Info",
+      "category": "helpful_query",
+      "difficulty": "advanced",
+      "query_type": "utility",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "helpful_query/merge-legacy-aid-master-info.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "merge-parent_child-pr2-with-join",
+      "title": "Merge Parent_Child PR2 with Join",
+      "category": "helpful_query",
+      "difficulty": "advanced",
+      "query_type": "analysis",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin"
+      ],
+      "file": "helpful_query/merge-parent_child-pr2-with-join.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "omit-rfc1819-cidr-ranges-from-search",
+      "title": "Omit RFC1819 CIDR Ranges from Search",
+      "category": "helpful_query",
+      "difficulty": "basic",
+      "query_type": "hunting",
+      "event_types": [
+        "NetworkConnectIP4"
+      ],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/omit-rfc1819-cidr-ranges-from-search.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "osversioninfo-osversionfiledata-decode",
+      "title": "OsVersionInfo OsVersionFileData Decode",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "OsVersionInfo"
+      ],
+      "platforms": [
+        "Lin"
+      ],
+      "file": "helpful_query/osversioninfo-osversionfiledata-decode.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "pr2-dns-cheat-join",
+      "title": "PR2 + DNS Cheat Join",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "hunting",
+      "event_types": [
+        "DnsRequest",
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "helpful_query/pr2-dns-cheat-join.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "parse-windows-call-stack",
+      "title": "Parse Windows Call Stack",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "hunting",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "helpful_query/parse-windows-call-stack.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "percentage-of-sensors-in-rfm",
+      "title": "Percentage of Sensors in RFM",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "SensorHeartbeat"
+      ],
+      "platforms": [
+        "Lin",
+        "Mac",
+        "Win"
+      ],
+      "file": "helpful_query/percentage-of-sensors-in-rfm.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "percentage-of-windows_mac_linux-endpoints",
+      "title": "Percentage of Windows_Mac_Linux Endpoints",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "OsVersionInfo"
+      ],
+      "platforms": [
+        "Lin",
+        "Mac",
+        "Win"
+      ],
+      "file": "helpful_query/percentage-of-windows_mac_linux-endpoints.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "process-processcreateflags",
+      "title": "Process ProcessCreateFlags",
+      "category": "helpful_query",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [],
+      "platforms": [
+        "Win"
+      ],
+      "file": "helpful_query/process-processcreateflags.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "processrollup2-curation",
+      "title": "ProcessRollup2 Curation",
+      "category": "helpful_query",
+      "difficulty": "advanced",
+      "query_type": "hunting",
+      "event_types": [
+        "UserIdentity",
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "helpful_query/processrollup2-curation.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "processrollup2-files-with-mark-of-the-web",
+      "title": "ProcessRollup2 Files With Mark of the Web",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "hunting",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "helpful_query/processrollup2-files-with-mark-of-the-web.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "profiling-ioc-and-ioa-exclusions-in-falcon",
+      "title": "Profiling IOC and IOA Exclusions in Falcon",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "detection",
+      "event_types": [
+        "DetectionExcluded"
+      ],
+      "platforms": [
+        "Lin"
+      ],
+      "file": "helpful_query/profiling-ioc-and-ioa-exclusions-in-falcon.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "rdp-login-world-map",
+      "title": "RDP Login World Map",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "visualization",
+      "event_types": [
+        "UserLogon"
+      ],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/rdp-login-world-map.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "rfm-state-by-day",
+      "title": "RFM State by Day",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "OsVersionInfo"
+      ],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/rfm-state-by-day.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "rmm-tool-hunting",
+      "title": "RMM Tool Hunting",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "hunting",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Win"
+      ],
+      "file": "helpful_query/rmm-tool-hunting.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "rare-and-common-encrypted-command-lines",
+      "title": "Rare and Common Encrypted Command Lines",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "helpful_query/rare-and-common-encrypted-command-lines.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "resource-utilization",
+      "title": "Resource Utilization",
+      "category": "helpful_query",
+      "difficulty": "expert",
+      "query_type": "analysis",
+      "event_types": [
+        "SystemCapacity",
+        "ResourceUtilization"
+      ],
+      "platforms": [
+        "Lin",
+        "Mac"
+      ],
+      "file": "helpful_query/resource-utilization.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "scope-network-accept-events",
+      "title": "Scope Network Accept Events",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "NetworkReceiveAcceptIP4"
+      ],
+      "platforms": [
+        "Win"
+      ],
+      "file": "helpful_query/scope-network-accept-events.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "script-content-entropy",
+      "title": "Script Content Entropy",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "ScriptControlScanInfo"
+      ],
+      "platforms": [
+        "Win"
+      ],
+      "file": "helpful_query/script-content-entropy.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "searching-comma-delineated-list-with-user-input",
+      "title": "Searching Comma Delineated List With User Input",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "hunting",
+      "event_types": [
+        "OsVersionInfo"
+      ],
+      "platforms": [
+        "Lin"
+      ],
+      "file": "helpful_query/searching-comma-delineated-list-with-user-input.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "show-sensor-update-policies",
+      "title": "Show Sensor Update Policies",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [],
+      "platforms": [
+        "Mac"
+      ],
+      "file": "helpful_query/show-sensor-update-policies.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "support-ends",
+      "title": "Support Ends",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "hunting",
+      "event_types": [],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/support-ends.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "survival-of-the-fastest",
+      "title": "Survival of the Fastest",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "detection",
+      "event_types": [],
+      "platforms": [
+        "Lin"
+      ],
+      "file": "helpful_query/survival-of-the-fastest.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "systemcapacity-resourceutilization",
+      "title": "SystemCapacity & ResourceUtilization",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/systemcapacity-resourceutilization.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "systems-initiating-connections-to-a-high-number-of-ports",
+      "title": "Systems Initiating Connections to a High Number of Ports",
+      "category": "helpful_query",
+      "difficulty": "expert",
+      "query_type": "analysis",
+      "event_types": [
+        "NetworkConnectIP4",
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin"
+      ],
+      "file": "helpful_query/systems-initiating-connections-to-a-high-number-of-ports.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "two-whoami-commands-run",
+      "title": "Two whoami Commands Run",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin"
+      ],
+      "file": "helpful_query/two-whoami-commands-run.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "use-join-on-two-scoped-events",
+      "title": "Use Join on Two Scoped Events",
+      "category": "helpful_query",
+      "difficulty": "advanced",
+      "query_type": "utility",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "helpful_query/use-join-on-two-scoped-events.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "use-transpose-to-convert-field-names-to-upper-case",
+      "title": "Use Transpose to Convert Field Names to Upper Case",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "utility",
+      "event_types": [],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/use-transpose-to-convert-field-names-to-upper-case.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "user-added-to-group",
+      "title": "User Added to Group",
+      "category": "helpful_query",
+      "difficulty": "advanced",
+      "query_type": "hunting",
+      "event_types": [
+        "UserAccountAddedToGroup"
+      ],
+      "platforms": [
+        "Win"
+      ],
+      "file": "helpful_query/user-added-to-group.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "userlogon",
+      "title": "UserLogon",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "utility",
+      "event_types": [
+        "UserLogon"
+      ],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/userlogon.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "userlogon-query",
+      "title": "UserLogon Query",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "utility",
+      "event_types": [
+        "UserLogon"
+      ],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/userlogon-query.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "using-editable-threshold-values",
+      "title": "Using Editable Threshold Values",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "analysis",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/using-editable-threshold-values.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "view-recent-rtr-sessions",
+      "title": "View Recent RTR Sessions",
+      "category": "helpful_query",
+      "difficulty": "intermediate",
+      "query_type": "detection",
+      "event_types": [
+        "Event_RemoteResponseSessionStartEvent"
+      ],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/view-recent-rtr-sessions.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "zero-trust-host-assessment-scores",
+      "title": "Zero Trust Host Assessment Scores",
+      "category": "helpful_query",
+      "difficulty": "advanced",
+      "query_type": "analysis",
+      "event_types": [],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "helpful_query/zero-trust-host-assessment-scores.json",
+      "mitre_technique": null
+    },
+    {
+      "id": "application-window-discovery",
+      "title": "(T1010) Application Window Discovery",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [],
+      "platforms": [
+        "Win"
+      ],
+      "file": "mitre_attack/application-window-discovery.json",
+      "mitre_technique": "T1010"
+    },
+    {
+      "id": "query-registry",
+      "title": "(T1012) Query Registry",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [],
+      "platforms": [
+        "Win"
+      ],
+      "file": "mitre_attack/query-registry.json",
+      "mitre_technique": "T1012"
+    },
+    {
+      "id": "system-network-configuration-discovery-internet-connection-discovery",
+      "title": "(T1016.001) System Network Configuration Discovery - Internet Connection Discovery",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Mac"
+      ],
+      "file": "mitre_attack/system-network-configuration-discovery-internet-connection-discovery.json",
+      "mitre_technique": "T1016"
+    },
+    {
+      "id": "remote-system-discovery",
+      "title": "(T1018) Remote System Discovery",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "inventory",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "mitre_attack/remote-system-discovery.json",
+      "mitre_technique": "T1018"
+    },
+    {
+      "id": "system-owner_user-discovery",
+      "title": "(T1033) System Owner_User Discovery",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Mac"
+      ],
+      "file": "mitre_attack/system-owner_user-discovery.json",
+      "mitre_technique": "T1033"
+    },
+    {
+      "id": "process-discovery",
+      "title": "(T1057) Process Discovery",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "inventory",
+      "event_types": [],
+      "platforms": [
+        "Win"
+      ],
+      "file": "mitre_attack/process-discovery.json",
+      "mitre_technique": "T1057"
+    },
+    {
+      "id": "permission-groups-discovery-local-groups",
+      "title": "(T1069.001) Permission Groups Discovery - Local Groups",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "mitre_attack/permission-groups-discovery-local-groups.json",
+      "mitre_technique": "T1069"
+    },
+    {
+      "id": "permission-groups-discovery-domain-groups",
+      "title": "(T1069.002) Permission Groups Discovery - Domain Groups",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "mitre_attack/permission-groups-discovery-domain-groups.json",
+      "mitre_technique": "T1069"
+    },
+    {
+      "id": "permission-groups-discovery-cloud-groups",
+      "title": "(T1069.003) Permission Groups Discovery - Cloud Groups",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "inventory",
+      "event_types": [],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "mitre_attack/permission-groups-discovery-cloud-groups.json",
+      "mitre_technique": "T1069"
+    },
+    {
+      "id": "system-information-discovery",
+      "title": "(T1082) System Information Discovery",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "mitre_attack/system-information-discovery.json",
+      "mitre_technique": "T1082"
+    },
+    {
+      "id": "file-and-directory-discovery",
+      "title": "(T1083) File and Directory Discovery",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "hunting",
+      "event_types": [],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "mitre_attack/file-and-directory-discovery.json",
+      "mitre_technique": "T1083"
+    },
+    {
+      "id": "account-discovery-local-account",
+      "title": "(T1087.001) Account Discovery - Local Account",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "mitre_attack/account-discovery-local-account.json",
+      "mitre_technique": "T1087"
+    },
+    {
+      "id": "account-discovery-domain-account",
+      "title": "(T1087.002) Account Discovery - Domain Account",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "mitre_attack/account-discovery-domain-account.json",
+      "mitre_technique": "T1087"
+    },
+    {
+      "id": "account-discovery-email-account",
+      "title": "(T1087.003) Account Discovery - Email Account",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "inventory",
+      "event_types": [],
+      "platforms": [
+        "Win"
+      ],
+      "file": "mitre_attack/account-discovery-email-account.json",
+      "mitre_technique": "T1087"
+    },
+    {
+      "id": "account-discovery-cloud-account",
+      "title": "(T1087.004) Account Discovery - Cloud Account",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [],
+      "platforms": [
+        "Win"
+      ],
+      "file": "mitre_attack/account-discovery-cloud-account.json",
+      "mitre_technique": "T1087"
+    },
+    {
+      "id": "peripheral-device-discovery",
+      "title": "(T1120) Peripheral Device Discovery",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "mitre_attack/peripheral-device-discovery.json",
+      "mitre_technique": "T1120"
+    },
+    {
+      "id": "network-share-discovery",
+      "title": "(T1135) Network Share Discovery",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "mitre_attack/network-share-discovery.json",
+      "mitre_technique": "T1135"
+    },
+    {
+      "id": "password-policy-discovery",
+      "title": "(T1201) Password Policy Discovery",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "mitre_attack/password-policy-discovery.json",
+      "mitre_technique": "T1201"
+    },
+    {
+      "id": "browser-information-discovery",
+      "title": "(T1217) Browser Information Discovery",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "mitre_attack/browser-information-discovery.json",
+      "mitre_technique": "T1217"
+    },
+    {
+      "id": "domain-trust-discovery",
+      "title": "(T1482) Domain Trust Discovery",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "mitre_attack/domain-trust-discovery.json",
+      "mitre_technique": "T1482"
+    },
+    {
+      "id": "software-discovery-security-software-discovery",
+      "title": "(T1518.001) Software Discovery - Security Software Discovery",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "mitre_attack/software-discovery-security-software-discovery.json",
+      "mitre_technique": "T1518"
+    },
+    {
+      "id": "cloud-infrastructure-discovery",
+      "title": "(T1580) Cloud Infrastructure Discovery",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "inventory",
+      "event_types": [],
+      "platforms": [
+        "Cross-platform"
+      ],
+      "file": "mitre_attack/cloud-infrastructure-discovery.json",
+      "mitre_technique": "T1580"
+    },
+    {
+      "id": "system-location-discovery-system-language-discovery",
+      "title": "(T1614.001) System Location Discovery - System Language Discovery",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "inventory",
+      "event_types": [],
+      "platforms": [
+        "Win"
+      ],
+      "file": "mitre_attack/system-location-discovery-system-language-discovery.json",
+      "mitre_technique": "T1614"
+    },
+    {
+      "id": "group-policy-discovery",
+      "title": "(T1615) Group Policy Discovery",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [],
+      "platforms": [
+        "Win"
+      ],
+      "file": "mitre_attack/group-policy-discovery.json",
+      "mitre_technique": "T1615"
+    },
+    {
+      "id": "device-driver-discovery",
+      "title": "(T1652) Device Driver Discovery",
+      "category": "mitre_attack",
+      "difficulty": "basic",
+      "query_type": "utility",
+      "event_types": [
+        "ProcessRollup2"
+      ],
+      "platforms": [
+        "Lin",
+        "Win"
+      ],
+      "file": "mitre_attack/device-driver-discovery.json",
+      "mitre_technique": "T1652"
+    }
+  ]
+}

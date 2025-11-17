@@ -1,0 +1,55 @@
+{
+  "id": "look-for-files-running-outside-windows-systems-folders-with-name-masquerading",
+  "title": "Look for files running outside Windows systems folders with name masquerading",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Look for files running outside Windows systems folders with name masquerading.md",
+  "category": "helpful_query",
+  "subcategory": "process",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "groupBy",
+    "match",
+    "table"
+  ],
+  "operators_used": [
+    "!=",
+    "<",
+    "=",
+    ">",
+    "in",
+    "match",
+    "not",
+    "|"
+  ],
+  "fields_referenced": [
+    "FileName",
+    "FilePath",
+    "field",
+    "file",
+    "function",
+    "include",
+    "name",
+    "query",
+    "start",
+    "strict"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "hunting",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "Hunting query for Look for files running outside Windows systems folders with name masquerading",
+  "query": "// Create a live table of the executables in System32/SysWOW64\n| defineTable(query={\n    #event_simpleName=ProcessRollup2 event_platform=Win FilePath=/\\\\Windows\\\\(System32|SysWOW64)\\\\/ FileName=/\\.exe$/\n    | FilePath=/(\\\\Device\\\\HarddiskVolume\\d+)?(?<ExpectedFilePath>\\\\.+)/\n    | groupBy([FileName, ExpectedFilePath], function=[])\n    }, \n    include=[FileName, ExpectedFilePath], name=\"LOLBinLocation\", start=7d)\n    \n// Search for running executables not in System32/SysWOW64\n| #event_simpleName=ProcessRollup2 event_platform=Win FilePath!=/\\\\Windows\\\\(System32|SysWOW64)\\\\/ FileName=/\\.exe$/\n\n// Look for when the name of a file running outside System32/SysWOW64 matches the file name of a binary in System32/SysWOW64\n| match(file=\"LOLBinLocation\", field=[FileName], include=[ExpectedFilePath], strict=true)\n\n// Shorten file path\n| FilePath=/(\\\\Device\\\\HarddiskVolume\\d+)?(?<FilePath>\\\\.+)/\n\n// Output to table\n| table([@timestamp, aid, ComputerName, UserName, FileName, FilePath, ExpectedFilePath, CommandLine])",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "lin",
+    "processrollup2",
+    "win"
+  ]
+}

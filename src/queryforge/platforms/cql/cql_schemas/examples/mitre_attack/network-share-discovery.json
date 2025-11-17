@@ -1,0 +1,42 @@
+{
+  "id": "network-share-discovery",
+  "title": "(T1135) Network Share Discovery",
+  "source_file": "Queries-Only/MITRE-ATT&CK-Enterprise/(TA007) Discovery/(T1135) Network Share Discovery.md",
+  "category": "mitre_attack",
+  "subcategory": "network",
+  "description": "https://attack.mitre.org/techniques/T1135/",
+  "mitre_attack": {
+    "tactic_code": "TA007",
+    "tactic_name": "Discovery",
+    "technique_id": "T1135",
+    "technique_name": "Network Share Discovery",
+    "sub_technique_id": null
+  },
+  "event_types": [],
+  "functions_used": [],
+  "operators_used": [
+    "=",
+    "or",
+    "|"
+  ],
+  "fields_referenced": [
+    "CommandLine",
+    "ImageFileName"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "basic",
+  "query_type": "utility",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "https://attack.mitre.org/techniques/T1135/",
+  "query": "#event_simpleName=/^(ProcessRollup2|CommandHistory|ScriptControl)/ event_platform=Win ((ImageFileName=/\\\\net1?\\.exe/i CommandLine=/\\s+(view|share)\\s+/i) OR (ImageFileName=/\\\\netview\\.exe/i) OR (/NetShareEnum/))",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "lin",
+    "network",
+    "win"
+  ]
+}

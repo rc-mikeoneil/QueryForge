@@ -1,0 +1,72 @@
+{
+  "id": "custom-weighting-command-line-and-file-name",
+  "title": "Custom Weighting Command Line and File Name",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Custom Weighting Command Line and File Name.md",
+  "category": "helpful_query",
+  "subcategory": "process",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "count",
+    "default",
+    "drop",
+    "format",
+    "lower",
+    "regex",
+    "sort",
+    "sum"
+  ],
+  "operators_used": [
+    "<",
+    "=",
+    ">",
+    ">=",
+    "and",
+    "in",
+    "or",
+    "regex",
+    "|"
+  ],
+  "fields_referenced": [
+    "CommandLine",
+    "FileName",
+    "ImageFileName",
+    "aid_tok",
+    "as",
+    "behaviorWeight",
+    "computer",
+    "customer_tok",
+    "distinct",
+    "earliest",
+    "executionDetails",
+    "field",
+    "format",
+    "function",
+    "latest",
+    "limit",
+    "locale",
+    "netFlag",
+    "strict",
+    "timezone"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "hunting",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "Hunting query for Custom Weighting Command Line and File Name",
+  "query": "// Get all Windows ProcessRollup2 Events\n#event_simpleName=ProcessRollup2 event_platform=Win\n// Narrow to processes of interest and create FileName variable\n| ImageFileName=/\\\\(?<FileName>(whoami|net1?|systeminfo|ping|nltest|sc|hostname|ipconfig)\\.exe)/i\n// Get timestamp value with date and hour value\n| ProcessStartTime := ProcessStartTime*1000\n| dayBucket := formatTime(\"%Y-%m-%d %H\", field=ProcessStartTime, locale=en_US, timezone=Z)\n// Force CommandLine and FileName into lower case\n| CommandLine := lower(CommandLine)\n| FileName := lower(FileName)\n// Parse flag used in \"net\" command\n| regex(\"(sc|net1?)\\s+(?<netFlag>\\S+)\\s+\", field=CommandLine, strict=false)\n// Force netFlag to lower case\n| netFlag := lower(netFlag)\n// Create evaulation criteria and weighting for process usage; modified behaviorWeight integer as desired\n| case {\n       FileName=/net1?\\.exe/ AND netFlag=\"start\" | behaviorWeight := \"4\" ;\n       FileName=/net1?\\.exe/ AND netFlag=\"stop\" | behaviorWeight := \"4\" ;\n       FileName=/net1?\\.exe/ AND netFlag=\"stop\" AND CommandLine=/falcon/i | behaviorWeight := \"25\" ;\n       FileName=/sc\\.exe/ AND netFlag=\"start\" | behaviorWeight := \"4\" ;\n       FileName=/sc\\.exe/ AND netFlag=\"stop\" | behaviorWeight := \"4\" ;\n       FileName=/sc\\.exe/ AND netFlag=/(query|stop)/i AND CommandLine=/csagent/i | behaviorWeight := \"25\" ;\n       FileName=/net1?\\.exe/ AND netFlag=\"share\" | behaviorWeight := \"2\" ;\n       FileName=/net1?\\.exe/ AND netFlag=\"user\" AND CommandLine=/\\/delete/i | behaviorWeight := \"10\" ;\n       FileName=/net1?\\.exe/ AND netFlag=\"user\" AND CommandLine=/\\/add/i | behaviorWeight := \"10\" ;\n       FileName=/net1?\\.exe/ AND netFlag=\"group\" AND CommandLine=/\\/domain\\s+/i | behaviorWeight := \"5\" ;\n       FileName=/net1?\\.exe/ AND netFlag=\"group\" AND CommandLine=/admin/i | behaviorWeight := \"5\" ;\n       FileName=/net1?\\.exe/ AND netFlag=\"localgroup\" AND CommandLine=/\\/add/i | behaviorWeight := \"10\" ;\n       FileName=/net1?\\.exe/ AND netFlag=\"localgroup\" AND CommandLine=/\\/delete/i | behaviorWeight := \"10\" ;\n       FileName=/nltest\\.exe/ | behaviorWeight := \"3\" ;\n       FileName=/systeminfo\\.exe/ | behaviorWeight := \"3\" ;\n       FileName=/whoami\\.exe/ | behaviorWeight := \"3\" ;\n       FileName=/ping\\.exe/ | behaviorWeight := \"3\" ;\n       FileName=/hostname\\.exe/ | behaviorWeight := \"3\" ;\n       FileName=/ipconfig\\.exe/ | behaviorWeight := \"3\" ;\n * }\n| default(field=behaviorWeight, value=1)\n// Create FileName and CommandLine one-liner\n| format(format=\"(Score: %s) %s • %s\", field=[behaviorWeight, FileName, CommandLine], as=\"executionDetails\")\n// Group and organize output\n| groupby([cid,aid, dayBucket], function=[count(FileName, distinct=true, as=\"fileCount\"), sum(behaviorWeight, as=\"behaviorWeight\"), series(executionDetails)], limit=max)\n// Set thresholds\n| fileCount >= 5 OR behaviorWeight > 30\n// Add Host Search link\n| format(\"[Host Search](https://falcon.crowdstrike.com/investigate/events/en-us/app/eam2/investigate__computer?earliest=-24h&latest=now&computer=*&aid_tok=%s&customer_tok=*)\", field=[\"aid\"], as=\"Host Search\")\n// Sort descending by behavior weighting\n| sort(behaviorWeight)\n| drop([@timestamp, _duration])",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "file",
+    "lin",
+    "processrollup2",
+    "win"
+  ]
+}

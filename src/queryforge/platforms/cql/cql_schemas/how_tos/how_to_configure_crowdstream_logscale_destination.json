@@ -1,0 +1,24 @@
+{
+  "title": "How-To: How to Configure CrowdStream LogScale Destination",
+  "slug": "how_to_configure_crowdstream_logscale_destination",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "integration",
+  "description": "Walks through configuring a CrowdStream/Cribl destination that forwards data into LogScale,\nincluding endpoint URL, ingest token, and basic validation steps.",
+  "examples": [
+    {
+      "name": "Set LogScale endpoint and token",
+      "description": "Example destination config values: LogScale endpoint URL and ingest token.",
+      "language": "json",
+      "query": "{\n  \"type\": \"logscale\",\n  \"endpoint\": \"https://logscale.example.com/api/v1/ingest/hec\",\n  \"token\": \"<INGEST_TOKEN>\"\n}"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "cribl",
+    "crowdstream",
+    "destination",
+    "ingest"
+  ],
+  "difficulty": "beginner"
+}

@@ -1,0 +1,43 @@
+{
+  "name": "format",
+  "category": "string",
+  "description": "Used to format strings using printf style. The formatted string is put in a new field. The input parameters can be one field or an array of fields. Supports various format specifiers for strings, numbers, and hex conversion.",
+  "syntax": "format(format=pattern, field=[fields], as=output_field)",
+  "parameters": [
+    {
+      "name": "format",
+      "type": "string",
+      "required": true,
+      "description": "Printf-style format string (e.g., '%s > %s', '%,.2f', '%x')"
+    },
+    {
+      "name": "field",
+      "type": "string_or_array",
+      "required": true,
+      "description": "Field(s) to use as input for formatting"
+    },
+    {
+      "name": "as",
+      "type": "string",
+      "required": true,
+      "description": "Name of the output field"
+    }
+  ],
+  "return_type": "enriched_events",
+  "format_specifiers": {
+    "string": "%s",
+    "integer": "%d",
+    "hex": "%x",
+    "float": "%f",
+    "formatted_float": "%,.2f (2 decimal places with comma thousands separator)"
+  },
+  "examples": [
+    "| format(format=\"%s > %s > %s { %s }\", field=[GrandParentBaseFileName, ParentBaseFileName, fileName, CommandLine], as=\"processLineage\")",
+    "| Status_hex := format(field=Status, \"%x\")",
+    "| format(\"[Virus Total](https://www.virustotal.com/gui/file/%s)\", field=[SHA256HashData], as=\"VT\")",
+    "| FileSizeMB:=(Size/1024/1024)\n| format(\"%,.2f MB\",field=[\"FileSizeMB\"], as=\"FileSize\")"
+  ],
+  "related_functions": ["concat", "formatTime", "formatDuration"],
+  "use_cases": ["String formatting", "Number formatting", "URL construction", "Hex conversion", "Process lineage visualization"],
+  "documentation_url": "https://library.humio.com/data-analysis/functions-format.html"
+}

@@ -1,0 +1,190 @@
+{
+  "table": "ProcessRollup2",
+  "category": "endpoint_process",
+  "description": "Process execution events capturing command-line execution on Windows, Mac, and Linux endpoints. This is the most frequently used event type for threat hunting and process analysis.",
+  "source_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide",
+  "columns": [
+    {
+      "name": "event_simpleName",
+      "type": "string",
+      "description": "Event type identifier",
+      "required": true,
+      "example_values": ["ProcessRollup2"]
+    },
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "required": true,
+      "common_usage": ["grouping", "filtering", "correlation", "joining"]
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "required": true,
+      "common_usage": ["grouping", "filtering"]
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "required": true,
+      "example_values": ["Win", "Mac", "Lin"],
+      "common_usage": ["filtering"]
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "searchable": true,
+      "common_usage": ["display", "filtering", "grouping"]
+    },
+    {
+      "name": "UserName",
+      "type": "string",
+      "description": "Username associated with the process execution",
+      "searchable": true,
+      "common_usage": ["filtering", "grouping", "analysis"]
+    },
+    {
+      "name": "UserSid",
+      "type": "string",
+      "description": "Windows Security Identifier for the user",
+      "searchable": true,
+      "example_values": ["S-1-5-21-*"],
+      "common_usage": ["filtering", "correlation", "joining"]
+    },
+    {
+      "name": "ImageFileName",
+      "type": "string",
+      "description": "Full path to the process executable",
+      "searchable": true,
+      "supports_regex": true,
+      "example_values": ["\\Device\\HarddiskVolume1\\Windows\\System32\\cmd.exe", "\\chrome.exe", "\\powershell.exe"],
+      "common_usage": ["filtering", "pattern matching", "threat hunting"]
+    },
+    {
+      "name": "FileName",
+      "type": "string",
+      "description": "Base filename of the executable (without path)",
+      "searchable": true,
+      "supports_regex": true,
+      "example_values": ["cmd.exe", "powershell.exe", "chrome.exe", "whoami.exe"],
+      "common_usage": ["filtering", "grouping", "frequency analysis"]
+    },
+    {
+      "name": "CommandLine",
+      "type": "string",
+      "description": "Full command line arguments passed to the process",
+      "searchable": true,
+      "supports_regex": true,
+      "common_usage": ["filtering", "threat hunting", "behavioral analysis"]
+    },
+    {
+      "name": "TargetProcessId",
+      "type": "long",
+      "description": "Falcon's unique process identifier (UPID) for correlation across events",
+      "required": true,
+      "common_usage": ["correlation", "joining", "process tree analysis"]
+    },
+    {
+      "name": "ParentProcessId",
+      "type": "long",
+      "description": "Falcon process identifier of the parent process",
+      "common_usage": ["correlation", "process tree analysis", "parent-child relationships"]
+    },
+    {
+      "name": "ParentBaseFileName",
+      "type": "string",
+      "description": "Base filename of the parent process",
+      "searchable": true,
+      "example_values": ["explorer.exe", "services.exe", "outlook.exe"],
+      "common_usage": ["filtering", "process tree analysis"]
+    },
+    {
+      "name": "ProcessStartTime",
+      "type": "long",
+      "description": "Process start timestamp (epoch time, needs conversion)",
+      "common_usage": ["temporal analysis", "timeline creation", "time-based filtering"]
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "common_usage": ["temporal analysis", "aggregation"]
+    },
+    {
+      "name": "MD5HashData",
+      "type": "string",
+      "description": "MD5 hash of the process executable",
+      "searchable": true,
+      "common_usage": ["threat intelligence", "IOC matching", "deduplication"]
+    },
+    {
+      "name": "SHA256HashData",
+      "type": "string",
+      "description": "SHA256 hash of the process executable",
+      "searchable": true,
+      "common_usage": ["threat intelligence", "IOC matching", "deduplication"]
+    },
+    {
+      "name": "SHA1HashData",
+      "type": "string",
+      "description": "SHA1 hash of the process executable",
+      "searchable": true,
+      "common_usage": ["threat intelligence", "IOC matching"]
+    },
+    {
+      "name": "SignInfoFlags",
+      "type": "long",
+      "description": "Bitmask indicating code signature validation results",
+      "common_usage": ["signature validation", "unsigned binary detection", "bitfield extraction"]
+    },
+    {
+      "name": "ZoneIdentifier",
+      "type": "string",
+      "description": "Mark of the Web (MOTW) zone identifier indicating file download source",
+      "searchable": true,
+      "common_usage": ["downloaded file detection", "security analysis"]
+    },
+    {
+      "name": "ConfigBuild",
+      "type": "string",
+      "description": "Falcon sensor configuration build version",
+      "supports_regex": true,
+      "common_usage": ["cloud region identification", "sensor version tracking"]
+    },
+    {
+      "name": "UID",
+      "type": "string",
+      "description": "Unix User ID (Linux/Mac)",
+      "common_usage": ["filtering", "user tracking on Unix systems"]
+    },
+    {
+      "name": "GID",
+      "type": "string",
+      "description": "Unix Group ID (Linux/Mac)",
+      "common_usage": ["filtering", "permission analysis on Unix systems"]
+    }
+  ],
+  "col_count": 23,
+  "common_filters": [
+    "event_platform=Win",
+    "event_platform=Mac",
+    "event_platform=Lin",
+    "UserSid=S-1-5-21-*",
+    "ImageFileName=/\\\\(cmd|powershell|net|whoami)\\.exe/i"
+  ],
+  "common_fields": ["aid", "ComputerName", "UserName", "UserSid", "ImageFileName", "FileName", "CommandLine", "TargetProcessId"],
+  "common_operations": [
+    "Join with NetworkConnectIP4 via TargetProcessId for network correlation",
+    "Join with DnsRequest via TargetProcessId for DNS correlation",
+    "Join with EndOfProcess for process runtime calculation",
+    "Join with UserIdentity via UserSid for username enrichment",
+    "Parent-child process tree analysis via ParentProcessId",
+    "Frequency analysis via program clustering",
+    "Behavioral scoring based on command patterns"
+  ],
+  "generated_at": "2025-11-14T23:45:00Z"
+}

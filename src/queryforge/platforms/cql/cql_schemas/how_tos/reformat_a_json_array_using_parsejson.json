@@ -1,0 +1,27 @@
+{
+  "title": "How-To: Reformat a JSON Array using parseJson()",
+  "slug": "reformat_a_json_array_using_parsejson",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Shows how to parse a JSON array inside a field into structured elements, and optionally\nflatten, transform, or re-serialize it.",
+  "examples": [
+    {
+      "name": "Expand and flatten JSON array",
+      "description": "Parses a jsonPayload field and expands each element into its own event row.",
+      "language": "logscale",
+      "query": "| parseJson(field=jsonPayload, as=payload)\n| arrayExpand(payload)"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "json",
+    "parseJson",
+    "arrays"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "arrayExpand",
+    "parseJson"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "title": "Using the assignment operator",
+  "slug": "using_the_assignment_operator",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "Use := to create or overwrite fields in the pipeline. This is essential for normalization, enrichment, and building helper fields used later in the query.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Creates a lower\u2011cased file name field and a derived boolean field marking suspicious temp\u2011folder executions.",
+      "language": "logscale",
+      "query": "#event_simpleName=ProcessRollup2\n| ImageFileName_lower := lower(ImageFileName)\n| suspicious := ImageFileName_lower=\"*\\temp*\"\n| select([@timestamp, ComputerName, ImageFileName, suspicious])"
+    }
+  ],
+  "tags": [
+    "assignment"
+  ],
+  "url": "https://library.humio.com/kb/kb-using-the-assignment-operator.html",
+  "difficulty": "beginner",
+  "related_functions": [
+    "lower",
+    "select"
+  ]
+}

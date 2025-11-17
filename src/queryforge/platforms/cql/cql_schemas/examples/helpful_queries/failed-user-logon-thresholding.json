@@ -1,0 +1,52 @@
+{
+  "id": "failed-user-logon-thresholding",
+  "title": "Failed User Logon Thresholding",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Failed User Logon Thresholding.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "UserLogonFailed2"
+  ],
+  "functions_used": [
+    "count",
+    "format",
+    "groupBy",
+    "max",
+    "min",
+    "sort",
+    "upper"
+  ],
+  "operators_used": [
+    "=",
+    ">",
+    "|"
+  ],
+  "fields_referenced": [
+    "SubStatus_hex",
+    "as",
+    "field",
+    "format",
+    "function",
+    "limit",
+    "order"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "Analysis query for Failed User Logon Thresholding",
+  "query": "// Get Windows UserLogonFailed events\nevent_platform=Win #event_simpleName=UserLogonFailed2\n\n// This line is completely optional, but converts SubStatus to hex\n| SubStatus_hex:=format(field=SubStatus, \"%x\") | SubStatus_hex:=upper(SubStatus_hex) | SubStatus_hex:=format(format=\"0x%s\", field=[SubStatus_hex])\n\n// Aggregate results\n| groupBy([aid, ComputerName, UserName, LogonType, SubStatus_hex, SubStatus], function=([count(aid, as=FailCount), min(ContextTimeStamp, as=FirstLogonAttempt), max(ContextTimeStamp, as=LastLogonAttempt), collect([LocalAddressIP4, aip])]))\n\n// Perform rate calculations\n| firstLastDeltaHours:=((LastLogonAttempt-FirstLogonAttempt)/60/60) | round(\"firstLastDeltaHours\")\n| logonAttemptsPerHour:=(failCount/firstLastDeltaHours) | round(\"logonAttemptsPerHour\")\n\n// Convert timestamps from epoch to human\n| FirstLogonAttempt:=formatTime(format=\"%F %T.%L\", field=\"FirstLogonAttempt\")\n| LastLogonAttempt:=formatTime(format=\"%F %T.%L\", field=\"LastLogonAttempt\")\n\n// Optional: set threshold for failed logins\n| FailCount> 5\n\n// Sort descending\n| sort(FailCount, order=desc, limit=2000)\n\n// Convert fields from decimal to human readable\n| $falcon/helper:enrich(field=LogonType)\n| $falcon/helper:enrich(field=SubStatus)",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "lin",
+    "user",
+    "userlogonfailed2",
+    "win"
+  ]
+}

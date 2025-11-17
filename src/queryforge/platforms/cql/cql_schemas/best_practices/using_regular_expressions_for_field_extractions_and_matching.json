@@ -1,0 +1,25 @@
+{
+  "title": "Using regular expressions for field extractions and matching",
+  "slug": "using_regular_expressions_for_field_extractions_and_matching",
+  "type": "best-practice",
+  "product": "Falcon LogScale",
+  "category": "general",
+  "description": "Apply regex to parse unstructured strings into structured fields and to perform advanced pattern matching. Use named groups and anchor expressions for clarity and efficiency.",
+  "examples": [
+    {
+      "name": "Example",
+      "description": "Extracts IP, HTTP method, and path from a raw log line using a single regex with named groups.",
+      "language": "logscale",
+      "query": "raw=/^(?<ip>\\d+\\.\\d+\\.\\d+\\.\\d+) (?<method>\\S+) (?<path>\\S+)/\n| select([ip, method, path])"
+    }
+  ],
+  "tags": [
+    "match",
+    "regex"
+  ],
+  "url": "https://library.humio.com/kb/kb-regex-field-extractions-matching.html",
+  "difficulty": "advanced",
+  "related_functions": [
+    "select"
+  ]
+}

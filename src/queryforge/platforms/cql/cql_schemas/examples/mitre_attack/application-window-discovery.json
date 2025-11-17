@@ -1,0 +1,35 @@
+{
+  "id": "application-window-discovery",
+  "title": "(T1010) Application Window Discovery",
+  "source_file": "Queries-Only/MITRE-ATT&CK-Enterprise/(TA007) Discovery/(T1010) Application Window Discovery.md",
+  "category": "mitre_attack",
+  "subcategory": null,
+  "description": "https://attack.mitre.org/techniques/T1010/",
+  "mitre_attack": {
+    "tactic_code": "TA007",
+    "tactic_name": "Discovery",
+    "technique_id": "T1010",
+    "technique_name": "Application Window Discovery",
+    "sub_technique_id": null
+  },
+  "event_types": [],
+  "functions_used": [],
+  "operators_used": [
+    "=",
+    "|"
+  ],
+  "fields_referenced": [],
+  "correlation_patterns": [],
+  "difficulty": "basic",
+  "query_type": "utility",
+  "platforms": [
+    "Win"
+  ],
+  "use_case": "https://attack.mitre.org/techniques/T1010/",
+  "query": "#event_simpleName=/^(ProcessRollup2|CommandHistory|ScriptControl)/ event_platform=Win /(mainWindowTitle|Get-Process|GetForegroundWindow|mainWindowTitle)/i",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "win"
+  ]
+}

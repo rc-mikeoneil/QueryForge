@@ -1,0 +1,26 @@
+{
+  "title": "How-To: On Correlating Events",
+  "slug": "on_correlating_events",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Introduces methods for correlating related events using fields such as aid, user, IP address,\nor session IDs, often via join(), selfJoin(), or groupBy() across multiple event types.",
+  "examples": [
+    {
+      "name": "Correlate process and network events by aid and ProcessId",
+      "description": "Joins process events to network connection events to see which processes opened ports.",
+      "language": "logscale",
+      "query": "#event_simpleName=ProcessRollup2\n| join({#event_simpleName=NetworkConnectIP4}, field=TargetProcessId, key=ContextProcessId, include=[RemoteIP, RemotePort])"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "correlation",
+    "join",
+    "selfJoin"
+  ],
+  "difficulty": "advanced",
+  "related_functions": [
+    "join"
+  ]
+}

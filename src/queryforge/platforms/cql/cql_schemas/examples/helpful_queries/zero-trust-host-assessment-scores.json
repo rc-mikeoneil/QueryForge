@@ -1,0 +1,44 @@
+{
+  "id": "zero-trust-host-assessment-scores",
+  "title": "Zero Trust Host Assessment Scores",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Zero Trust Host Assessment Scores.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [],
+  "functions_used": [
+    "groupBy",
+    "join",
+    "selectFromMax"
+  ],
+  "operators_used": [
+    "=",
+    "|"
+  ],
+  "fields_referenced": [
+    "data_source_name",
+    "field",
+    "function",
+    "include",
+    "query"
+  ],
+  "correlation_patterns": [
+    "join"
+  ],
+  "difficulty": "advanced",
+  "query_type": "analysis",
+  "platforms": [
+    "Cross-platform"
+  ],
+  "use_case": "Analysis query for Zero Trust Host Assessment Scores",
+  "query": "event_type=ZeroTrustHostAssessment\n| groupBy([aid], function=([selectFromMax(field=\"@timestamp\", include=[scores.os, scores.sensor, scores.overall])]))\n| join(query={#data_source_name=aidmaster }, field=[aid], include=[ComputerName, event_platform])",
+  "key_features": [
+    "Uses join for correlation"
+  ],
+  "related_examples": [],
+  "tags": [
+    "cross-platform",
+    "join"
+  ]
+}

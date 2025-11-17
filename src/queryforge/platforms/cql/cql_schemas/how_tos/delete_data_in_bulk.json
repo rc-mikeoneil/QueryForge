@@ -1,0 +1,26 @@
+{
+  "title": "How-To: Delete Data in Bulk",
+  "slug": "delete_data_in_bulk",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "admin",
+  "description": "Covers bulk deletion of data from a repository, typically via delete queries or administrative tools.\nThis is usually constrained to specific time ranges, tags, or other filters to avoid accidental loss.",
+  "examples": [
+    {
+      "name": "Delete data by tag and time range (conceptual)",
+      "description": "Illustrates a guarded delete operation scoped by tag and time; actual syntax depends on admin tooling.",
+      "language": "pseudo",
+      "query": "DELETE FROM repo WHERE #datasource=\"test\" AND @timestamp < now() - 90d"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "admin",
+    "data_retention",
+    "delete"
+  ],
+  "difficulty": "beginner",
+  "related_functions": [
+    "now"
+  ]
+}

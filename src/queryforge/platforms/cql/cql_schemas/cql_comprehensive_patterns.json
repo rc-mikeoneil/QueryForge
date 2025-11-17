@@ -1,0 +1,190 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Comprehensive query patterns for CQL",
+  "patterns": {
+    "filtering": {
+      "description": "Patterns for filtering events",
+      "examples": [
+        {
+          "pattern": "Simple field filter",
+          "template": "#event_simpleName=<event_type> <field>=<value>",
+          "example": "#event_simpleName=ProcessRollup2 FileName=powershell.exe"
+        },
+        {
+          "pattern": "Multiple field filters",
+          "template": "#event_simpleName=<event_type> <field1>=<value1> <field2>=<value2>",
+          "example": "#event_simpleName=ProcessRollup2 event_platform=Win FileName=cmd.exe"
+        },
+        {
+          "pattern": "Wildcard filtering",
+          "template": "#event_simpleName=<event_type> <field>=*<pattern>*",
+          "example": "#event_simpleName=ProcessRollup2 CommandLine=*encoded*"
+        },
+        {
+          "pattern": "Multi-value filtering with in()",
+          "template": "#event_simpleName=<event_type> in(<field>, values=[<val1>, <val2>])",
+          "example": "#event_simpleName=UserLogon in(LogonType, values=[2,10])"
+        }
+      ]
+    },
+    "aggregation": {
+      "description": "Patterns for aggregating and grouping data",
+      "examples": [
+        {
+          "pattern": "Simple groupBy",
+          "template": "#event_simpleName=<event_type> | groupBy([<field>])",
+          "example": "#event_simpleName=ProcessRollup2 | groupBy([ComputerName])"
+        },
+        {
+          "pattern": "GroupBy with count",
+          "template": "#event_simpleName=<event_type> | groupBy([<field>], function=count())",
+          "example": "#event_simpleName=ProcessRollup2 | groupBy([FileName], function=count())"
+        },
+        {
+          "pattern": "Multi-field groupBy",
+          "template": "#event_simpleName=<event_type> | groupBy([<field1>, <field2>], function=count())",
+          "example": "#event_simpleName=ProcessRollup2 | groupBy([ComputerName, FileName], function=count())"
+        },
+        {
+          "pattern": "GroupBy with multiple aggregations",
+          "template": "#event_simpleName=<event_type> | groupBy([<field>], function=[count(), count(<field2>, distinct=true)])",
+          "example": "#event_simpleName=ProcessRollup2 | groupBy([FileName], function=[count(), count(aid, distinct=true, as=endpoints)])"
+        }
+      ]
+    },
+    "correlation": {
+      "description": "Patterns for correlating events",
+      "examples": [
+        {
+          "pattern": "Basic join",
+          "template": "#event_simpleName=<event1> | join(query={#event_simpleName=<event2>}, field=[aid, <field1>=<field2>])",
+          "example": "#event_simpleName=ProcessRollup2 | join(query={#event_simpleName=NetworkConnectIP4}, field=[aid, TargetProcessId=ContextProcessId])"
+        },
+        {
+          "pattern": "Join with field inclusion",
+          "template": "#event_simpleName=<event1> | join(query={#event_simpleName=<event2>}, field=[aid, <field1>=<field2>], include=[<fields>])",
+          "example": "#event_simpleName=ProcessRollup2 | join(query={#event_simpleName=NetworkConnectIP4}, field=[aid, TargetProcessId=ContextProcessId], include=[RemoteAddressIP4, RemotePort])"
+        }
+      ]
+    },
+    "time_series": {
+      "description": "Patterns for time-based analysis",
+      "examples": [
+        {
+          "pattern": "Time bucketing",
+          "template": "#event_simpleName=<event_type> | bucket(field=@timestamp, span=<duration>, function=count())",
+          "example": "#event_simpleName=ProcessRollup2 | bucket(field=@timestamp, span=1h, function=count())"
+        },
+        {
+          "pattern": "Time chart",
+          "template": "#event_simpleName=<event_type> | timeChart(span=<duration>, function=count())",
+          "example": "#event_simpleName=ProcessRollup2 | timeChart(span=5m, function=count())"
+        }
+      ]
+    },
+    "geolocation": {
+      "description": "Patterns for geographic analysis",
+      "examples": [
+        {
+          "pattern": "IP geolocation",
+          "template": "#event_simpleName=<event_type> | ipLocation(<ip_field>)",
+          "example": "#event_simpleName=UserLogon LogonType=10 | ipLocation(RemoteAddressIP4)"
+        },
+        {
+          "pattern": "Geographic aggregation",
+          "template": "#event_simpleName=<event_type> | ipLocation(<ip_field>) | groupBy([<ip_field>.country], function=count())",
+          "example": "#event_simpleName=UserLogon LogonType=10 | ipLocation(RemoteAddressIP4) | groupBy([RemoteAddressIP4.country], function=count())"
+        }
+      ]
+    },
+    "transformation": {
+      "description": "Patterns for data transformation",
+      "examples": [
+        {
+          "pattern": "Field extraction with regex",
+          "template": "| regex(field=<field>, regex=\"(?<name>pattern)\")",
+          "example": "| regex(field=CommandLine, regex=\"-enc[^ ]* (?<encoded>.+)\")"
+        },
+        {
+          "pattern": "Field formatting",
+          "template": "| formatTime(format=\"<pattern>\", field=<timestamp_field>, as=<output_field>)",
+          "example": "| formatTime(format=\"%Y-%m-%d %H:%M:%S\", field=@timestamp, as=event_time)"
+        },
+        {
+          "pattern": "Conditional field assignment",
+          "template": "case { <condition1> | <field>:=<value1>; <condition2> | <field>:=<value2>; * | <field>:=<default> }",
+          "example": "case { event_platform=\"Win\" | os:=\"Windows\"; event_platform=\"Lin\" | os:=\"Linux\"; * | os:=\"Other\" }"
+        }
+      ]
+    },
+    "output": {
+      "description": "Patterns for formatting output",
+      "examples": [
+        {
+          "pattern": "Table output",
+          "template": "| table([<fields>], limit=<n>)",
+          "example": "| table([ComputerName, UserName, CommandLine], limit=100)"
+        },
+        {
+          "pattern": "Sorted output",
+          "template": "| sort(<field>, order=<asc|desc>, limit=<n>)",
+          "example": "| sort(_count, order=desc, limit=20)"
+        },
+        {
+          "pattern": "Limited output",
+          "template": "| head(limit=<n>)",
+          "example": "| head(limit=1000)"
+        }
+      ]
+    }
+  },
+  "common_combinations": [
+    {
+      "name": "Filter, aggregate, sort",
+      "pattern": "#event_simpleName=<event_type> <filters> | groupBy([<field>], function=count()) | sort(_count, order=desc)",
+      "example": "#event_simpleName=ProcessRollup2 event_platform=Win | groupBy([FileName], function=count()) | sort(_count, order=desc, limit=20)"
+    },
+    {
+      "name": "Filter, join, aggregate",
+      "pattern": "#event_simpleName=<event1> <filters> | join(query={#event_simpleName=<event2>}, field=[aid, <field>]) | groupBy([<field>], function=count())",
+      "example": "#event_simpleName=ProcessRollup2 | join(query={#event_simpleName=NetworkConnectIP4}, field=[aid, TargetProcessId=ContextProcessId]) | groupBy([FileName, RemoteAddressIP4], function=count())"
+    },
+    {
+      "name": "Filter, transform, output",
+      "pattern": "#event_simpleName=<event_type> <filters> | <transformation> | table([<fields>])",
+      "example": "#event_simpleName=UserLogon LogonType=10 | ipLocation(RemoteAddressIP4) | table([UserName, ComputerName, RemoteAddressIP4.country])"
+    }
+  ],
+  "anti_patterns": [
+    {
+      "name": "Missing event type filter",
+      "bad": "aid=* | groupBy([ComputerName])",
+      "good": "#event_simpleName=ProcessRollup2 aid=* | groupBy([ComputerName])",
+      "reason": "Always start with #event_simpleName for efficient filtering"
+    },
+    {
+      "name": "High cardinality groupBy",
+      "bad": "#event_simpleName=ProcessRollup2 | groupBy([CommandLine])",
+      "good": "#event_simpleName=ProcessRollup2 | groupBy([FileName])",
+      "reason": "Avoid grouping by very high cardinality fields"
+    },
+    {
+      "name": "Multiple OR instead of in()",
+      "bad": "LogonType=2 OR LogonType=3 OR LogonType=10",
+      "good": "in(LogonType, values=[2,3,10])",
+      "reason": "in() is more efficient and cleaner"
+    },
+    {
+      "name": "Missing aid in joins",
+      "bad": "join(query={...}, field=[TargetProcessId=ContextProcessId])",
+      "good": "join(query={...}, field=[aid, TargetProcessId=ContextProcessId])",
+      "reason": "Always include aid to ensure events are from same endpoint"
+    },
+    {
+      "name": "Leading wildcards",
+      "bad": "ImageFileName=*powershell.exe",
+      "good": "ImageFileName=*\\powershell.exe OR FileName=powershell.exe",
+      "reason": "Leading wildcards prevent index usage"
+    }
+  ]
+}

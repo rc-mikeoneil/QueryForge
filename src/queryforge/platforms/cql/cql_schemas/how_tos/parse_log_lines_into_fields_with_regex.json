@@ -1,0 +1,26 @@
+{
+  "title": "How-To: Parse Log Lines into Fields with Regex",
+  "slug": "parse_log_lines_into_fields_with_regex",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "query",
+  "description": "Explains how to extract structured fields from unstructured log lines using regex() or parse(),\nmapping parts of the line into named fields.",
+  "examples": [
+    {
+      "name": "Parse common Apache-style log line",
+      "description": "Extracts client IP, method, path, and status from an HTTP access log line.",
+      "language": "logscale",
+      "query": "| regex(\"^(?<ClientIP>\\S+) \\S+ \\S+ \\[(?<Time>[^\\]]+)\\] \\\"(?<Method>\\S+) (?<Path>\\S+) \\S+\\\" (?<Status>\\d+)\", field=@rawstring)"
+    }
+  ],
+  "tags": [
+    "how-to",
+    "regex",
+    "parsing",
+    "fields"
+  ],
+  "difficulty": "advanced",
+  "related_functions": [
+    "regex"
+  ]
+}

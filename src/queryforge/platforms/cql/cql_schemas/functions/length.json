@@ -1,0 +1,29 @@
+{
+  "name": "length",
+  "category": "string",
+  "description": "Returns the number of characters in a string field.",
+  "syntax": "| length(field, as=output_field)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "field",
+      "required": true,
+      "description": "The string field to measure"
+    },
+    {
+      "name": "as",
+      "type": "field",
+      "required": false,
+      "description": "The name of the output field to store the length value"
+    }
+  ],
+  "return_type": "number",
+  "examples": [
+    "| length(\"CommandLine\", as=\"cmdLength\")",
+    "| length(ImageFileName, as=fileNameLength)",
+    "| cmdLen := length(CommandLine)"
+  ],
+  "related_functions": ["lower", "upper", "substring"],
+  "use_cases": ["Analyzing command line length for detection", "Finding long file paths", "Data quality checks", "Filtering by string length"],
+  "documentation_url": "https://library.humio.com/data-analysis/functions-length.html"
+}

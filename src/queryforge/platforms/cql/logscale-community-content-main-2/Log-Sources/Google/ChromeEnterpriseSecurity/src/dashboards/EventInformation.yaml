@@ -1,0 +1,171 @@
+name: Event Information
+timeSelector: {}
+sharedTimeInterval:
+  enabled: false
+  isLive: false
+  start: 1d
+widgets:
+  09633019-569e-4656-b009-fa400210ac8a:
+    x: 0
+    y: 0
+    height: 8
+    queryString: |-
+      #Vendor="google"
+      |Vendor.client_type = ?client_type
+      |event.action = ?event
+      |os.type = ?os_platform
+      |event.reason = ?reason
+      |rename(device.id, as="Device ID") |rename(device.user, as="Device User") |rename(Vendor.client_type, as="Client Type") |rename(event.action, as="Event") |rename(Vendor.content_name, as="Content Name") |rename(Vendor.browser_version, as="Browser Version") |rename(os.type, as="OS Platform") |rename(os.version, as="OS Version") |rename(Vendor.reason, as="Reason") |rename(Vendor.reason, as="Result") |rename(Vendor.trigger_type, as="Trigger Type") |rename(Vendor.agents.crowdstrike.agentId, as="CrowdStrike Agent ID") |rename(Vendor.agents.crowdstrike.customerId, as="CrowdStrike Customer ID")
+
+      |select([@timestamp, "Device ID", "Device User", "Client Type", "Event", "Content Name", "Browser Version", "OS Platform", "OS Version", "Reason", "Result", "Trigger Type", "CrowdStrike Agent ID", "CrowdStrike Customer ID"])
+    end: now
+    start: 30d
+    width: 12
+    options:
+      cell-overflow: wrap-text
+      configured-columns: {}
+      row-numbers-enabled: false
+    visualization: table-view
+    title: Events
+    isLive: false
+    type: query
+  8f4a0a32-fe3e-4bef-b7c6-1af1a9fac6b2:
+    x: 0
+    y: 16
+    height: 4
+    queryString: |-
+      #Vendor="google"
+      |event.action = "browserCrashEvent"
+      | device.id=?device_id | device.name=?device_name | device.user=?device_user | Vendor.browser_version=?{browser_version=*} | Vendor.browser_channel=?{browser_channel=*}
+      |rename(device.id, as="Device ID") |rename(device.name, as="Device Name") |rename(device.user, as="Device User") |rename(Vendor.browser_version, as="Browser Version") |rename(Vendor.browser_channel, as="Browser Channel")
+      |select(["Device Name","Device ID", "Device User", "Profile User", "Browser Version", "Browser Channel"])
+    end: now
+    start: 1y
+    width: 12
+    options:
+      cell-overflow: wrap-text
+      configured-columns: {}
+      row-numbers-enabled: false
+    visualization: table-view
+    title: Chrome Browser Crash Events
+    isLive: false
+    type: query
+  91a8bcca-d9c6-40af-9f67-1cce7db9b1f8:
+    x: 0
+    y: 8
+    height: 4
+    queryString: |-
+      #Vendor="google"
+      |event.reason=?reason
+      |timeChart(event.reason,limit=10)
+    end: now
+    start: 1d
+    width: 12
+    options:
+      connect-points: false
+      imputation: none
+    visualization: time-chart
+    title: Security Events by Reason Timechart
+    isLive: false
+    type: query
+  f908ce5e-62c8-4a72-95d4-40e6227d509d:
+    x: 0
+    y: 12
+    height: 4
+    queryString: |-
+      #Vendor="google"
+      |event.action=?event
+      |timeChart(event.action,limit=10)
+    end: now
+    start: 1d
+    width: 12
+    options:
+      connect-points: false
+      imputation: none
+    visualization: time-chart
+    title: Security Events Timechart
+    isLive: false
+    type: query
+$schema: https://schemas.humio.com/dashboard/v0.15.0
+parameters:
+  device_name:
+    label: Device Name
+    query: '#Vendor = "google" | groupBy("device.name", function=[])'
+    timeInterval: 1d
+    useDashboardTimeIfSet: true
+    type: query
+    defaultValue: '*'
+    order: 50
+    valueField: device.name
+  device_id:
+    label: Device ID
+    query: '#Vendor = "google" | groupBy("device.id", function=[])'
+    timeInterval: 1d
+    useDashboardTimeIfSet: false
+    type: query
+    defaultValue: '*'
+    order: 50
+    valueField: device.id
+  event:
+    label: Event Type
+    query: '#Vendor = "google" | groupBy("event.action", function=[])'
+    timeInterval: 1d
+    useDashboardTimeIfSet: true
+    type: query
+    defaultValue: '*'
+    order: 50
+    valueField: event.action
+  reason:
+    label: Reason
+    query: '#Vendor = "google" | groupBy("event.reason", function=[])'
+    timeInterval: 1d
+    useDashboardTimeIfSet: true
+    type: query
+    defaultValue: '*'
+    order: 50
+    valueField: event.reason
+  device_user:
+    label: Device User
+    query: '#Vendor = "google" | groupBy("device.user", function=[])'
+    timeInterval: 1d
+    useDashboardTimeIfSet: true
+    type: query
+    defaultValue: '*'
+    order: 50
+    valueField: device.user
+  client_type:
+    label: Client Type
+    query: '#Vendor = "google" | groupBy("Vendor.client_type", function=[])'
+    timeInterval: 1d
+    useDashboardTimeIfSet: true
+    type: query
+    defaultValue: '*'
+    order: 50
+    valueField: Vendor.client_type
+  os_platform:
+    label: Operating System
+    query: '#Vendor = "google" | groupBy("os.type", function=[])'
+    timeInterval: 1d
+    useDashboardTimeIfSet: true
+    type: query
+    defaultValue: '*'
+    order: 50
+    valueField: os.type
+  browser_version:
+    label: Browser Version
+    query: '#Vendor = "google" | groupBy("Vendor.browser_version", function=[])'
+    timeInterval: 1d
+    useDashboardTimeIfSet: true
+    type: query
+    defaultValue: '*'
+    order: 50
+    valueField: Vendor.browser_version
+  browser_channel:
+    label: Browser Channel
+    query: '#Vendor = "google" | groupBy("Vendor.browser_channel", function=[])'
+    timeInterval: 1d
+    useDashboardTimeIfSet: true
+    type: query
+    defaultValue: '*'
+    order: 50
+    valueField: Vendor.browser_channel

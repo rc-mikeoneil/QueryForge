@@ -1,0 +1,51 @@
+{
+  "id": "count-windows-discovery-commands-per-user",
+  "title": "Count Windows Discovery Commands Per User",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Count Windows Discovery Commands Per User.md",
+  "category": "helpful_query",
+  "subcategory": "process",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "case",
+    "groupBy",
+    "rename",
+    "sum",
+    "table"
+  ],
+  "operators_used": [
+    "=",
+    ">",
+    "in",
+    "|"
+  ],
+  "fields_referenced": [
+    "FileName",
+    "UserSid",
+    "as",
+    "field",
+    "function",
+    "limit",
+    "optional"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "analysis",
+  "platforms": [
+    "Lin",
+    "Win"
+  ],
+  "use_case": "Analysis query for Count Windows Discovery Commands Per User",
+  "query": "// Insert Discovery commands of interest here\nevent_platform=Win #event_simpleName=ProcessRollup2 FileName=/(whoami|ping|net1?|systeminfo|quser|ipconfig)/iF\n\n// Restrict to non-system UserSid Values\n| UserSid=S-1-5-21-*\n\n// User case() to create discovery command counter\n| case {\n    FileName=/whoami/iF     | whoami:=\"1\";\n    FileName=/ping/iF       | ping:=\"1\";\n    FileName=/net1?/iF      | net:=\"1\";\n    FileName=/systeminfo/iF | systeminfo:=\"1\";\n    FileName=/quser/iF      | quser:=\"1\";\n    FileName=/ipconfig/iF   | ipconfig:=\"1\";\n}\n\n// Aggregate results by duration used in time picker\n| groupBy([UserName, UserSid], function=([sum(whoami, as=whoami), sum(ping, as=ping), sum(net, as=net), sum(systeminfo, as=systeminfo), sum(quser, as=quser), sum(ipconfig, as=ipconfig), selectLast([CommandLine])]), limit=max)\n\n// Rename field for clarity\n| rename(field=\"CommandLine\", as=\"LastCommandRun\")\n\n// Get total number of discovery commands run per UserName/UserSid key pair\n| totalDiscovery:=whoami+ping+net+systeminfo+quser+ipconfig\n\n// Set threshold for commands runs (optional)\n| totalDiscovery>5\n\n// Reorder using table for easier reading\n| table([UserName, UserSid, totalDiscovery, whoami, ping, net, systeminfo, quser, ipconfig, LastCommandRun])",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "lin",
+    "processrollup2",
+    "user",
+    "win"
+  ]
+}

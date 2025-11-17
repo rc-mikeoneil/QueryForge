@@ -1,0 +1,39 @@
+{
+  "id": "get-repository-ingestion-data-for-logscale-saas",
+  "title": "Get Repository Ingestion Data for LogScale SaaS",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Get Repository Ingestion Data for LogScale SaaS.md",
+  "category": "helpful_query",
+  "subcategory": null,
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [],
+  "functions_used": [
+    "sum",
+    "timechart"
+  ],
+  "operators_used": [
+    "=",
+    "|"
+  ],
+  "fields_referenced": [
+    "function",
+    "ingestAfterFieldRemovalSize",
+    "limit",
+    "minSpan",
+    "sampleType"
+  ],
+  "correlation_patterns": [],
+  "difficulty": "intermediate",
+  "query_type": "visualization",
+  "platforms": [
+    "Cross-platform"
+  ],
+  "use_case": "Visualization query for Get Repository Ingestion Data for LogScale SaaS",
+  "query": "#sampleType = repository\n| timechart(repo,\nfunction={sum(ingestAfterFieldRemovalSize)}, minSpan=1h, limit=20)",
+  "key_features": [],
+  "related_examples": [],
+  "tags": [
+    "cross-platform",
+    "timechart"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "selfJoinFilter",
+  "category": "advanced",
+  "description": "Filters events by joining them with other events from the same stream based on common field values. Useful for correlating related events.",
+  "syntax": "| selfJoinFilter([field1, field2], where=[{condition1}, {condition2}], prefilter=boolean)",
+  "parameters": [
+    {
+      "name": "fields",
+      "type": "array",
+      "required": true,
+      "description": "Array of fields to join on (common values across events)"
+    },
+    {
+      "name": "where",
+      "type": "array",
+      "required": true,
+      "description": "Array of condition objects that events must satisfy"
+    },
+    {
+      "name": "prefilter",
+      "type": "boolean",
+      "required": false,
+      "description": "Whether to apply filtering before the join operation"
+    }
+  ],
+  "return_type": "filtered_events",
+  "examples": [
+    "| selfJoinFilter([aid, falconPID], where=[{#event_simpleName=ProcessRollup2}, {#event_simpleName=DnsRequest}], prefilter=true)",
+    "event_platform=Win #event_simpleName=/^(ProcessRollup2|DnsRequest)$/\n| falconPID := TargetProcessId\n| falconPID := ContextProcessId\n| selfJoinFilter([aid, falconPID], where=[{#event_simpleName=ProcessRollup2}, {#event_simpleName=DnsRequest}], prefilter=true)\n| groupBy([aid, falconPID], function=([count(#event_simpleName, distinct=true, as=eventCount), collect([ParentBaseFileName, ImageFileName, CommandLine])]))\n| test(eventCount==2)"
+  ],
+  "related_functions": ["join", "groupBy", "test"],
+  "use_cases": ["Event correlation", "Process-network correlation", "Multi-event analysis", "Complex filtering"],
+  "notes": "Powerful for correlating related events like matching process creation with network activity. Often used with groupBy for aggregating correlated events.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-selfjoinfilter.html"
+}

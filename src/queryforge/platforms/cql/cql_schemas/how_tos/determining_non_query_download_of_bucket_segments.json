@@ -1,0 +1,23 @@
+{
+  "title": "How-To: Determining Non-query Download of Bucket Segments",
+  "slug": "determining_non_query_download_of_bucket_segments",
+  "type": "how-to",
+  "product": "Falcon LogScale",
+  "category": "admin",
+  "description": "Helps identify when bucket segments are being downloaded for reasons other than interactive queries,\nsuch as backups, rebalance operations, or background jobs, so that you can troubleshoot bandwidth usage.",
+  "examples": [
+    {
+      "name": "Identify non-query segment downloads",
+      "description": "Filters internal logs for segment downloads where the requester is not a query worker.",
+      "language": "logscale",
+      "query": "#event_simpleName=SegmentDownload requester!=\"query-worker\""
+    }
+  ],
+  "tags": [
+    "how-to",
+    "segments",
+    "storage",
+    "troubleshooting"
+  ],
+  "difficulty": "beginner"
+}

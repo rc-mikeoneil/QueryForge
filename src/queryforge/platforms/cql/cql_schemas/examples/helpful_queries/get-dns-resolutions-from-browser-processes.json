@@ -1,0 +1,55 @@
+{
+  "id": "get-dns-resolutions-from-browser-processes",
+  "title": "Get DNS Resolutions from Browser Processes",
+  "source_file": "Queries-Only/Helpful-CQL-Queries/Get DNS Resolutions from Browser Processes.md",
+  "category": "helpful_query",
+  "subcategory": "network",
+  "description": "",
+  "mitre_attack": null,
+  "event_types": [
+    "DnsRequest",
+    "ProcessRollup2"
+  ],
+  "functions_used": [
+    "concat",
+    "groupBy",
+    "in",
+    "selfJoinFilter"
+  ],
+  "operators_used": [
+    "=",
+    "and",
+    "in",
+    "or",
+    "|"
+  ],
+  "fields_referenced": [
+    "ComputerName",
+    "field",
+    "function",
+    "ignoreCase",
+    "values",
+    "where"
+  ],
+  "correlation_patterns": [
+    "selfJoinFilter"
+  ],
+  "difficulty": "expert",
+  "query_type": "analysis",
+  "platforms": [
+    "Win"
+  ],
+  "use_case": "Analysis query for Get DNS Resolutions from Browser Processes",
+  "query": "// Get all process execution and DNS events on Windows\n(#event_simpleName=ProcessRollup2 OR #event_simpleName=DnsRequest) event_platform=Win\n| ComputerName=~wildcard(?ComputerName, ignoreCase=true)\n// Normalize file name value across both events\n| fileName:=concat([FileName, ContextBaseFileName])\n// Make sure responsible process is a web browser\n| in(field=\"fileName\", values=[chrome.exe, firefox.exe, msedge.exe], ignoreCase=true)\n// Normalize Falcon UPID\n| falconPID:=TargetProcessId | falconPID:=ContextProcessId\n// Use selfJoinFilter to make sure execution and DNS resolution occured under the same UPID value\n| selfJoinFilter(field=[aid, falconPID], where=[{#event_simpleName=ProcessRollup2}, {#event_simpleName=DnsRequest}])\n// Aggregate results\n| groupBy([aid, falconPID], function=([collect([ComputerName, UserName, fileName, DomainName])]))",
+  "key_features": [
+    "Uses selfJoinFilter for correlation",
+    "Advanced correlation techniques"
+  ],
+  "related_examples": [],
+  "tags": [
+    "dns",
+    "dnsrequest",
+    "processrollup2",
+    "win"
+  ]
+}

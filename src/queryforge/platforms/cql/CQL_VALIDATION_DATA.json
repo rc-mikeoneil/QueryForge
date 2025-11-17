@@ -1,0 +1,2891 @@
+{
+  "summary": {
+    "total_examples": 123,
+    "total_unique_tables": 31,
+    "total_unique_functions": 99,
+    "total_unique_operators": 20,
+    "total_unique_fields": 436,
+    "tables_coverage": "31/31",
+    "functions_coverage": "48/99",
+    "operators_coverage": "13/20"
+  },
+  "missing_tables": {},
+  "missing_fields": {
+    "ProcessRollup2": {
+      "function": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "field": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "ignoreCase": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "as": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "where": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "ExecutionChain": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "eventCount": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "distinct": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "DomainName": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "id": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "format": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "falconPID": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "RemoteAddressIP4": [
+        "combine-processrollup2-and-networkconnectip4-events.json"
+      ],
+      "prefilter": [
+        "combine-processrollup2-and-networkconnectip4-events.json"
+      ],
+      "WrittenFilePath": [
+        "combine-processrollup2-and-filewritten-events.json"
+      ],
+      "ExecutingFileName": [
+        "combine-processrollup2-and-filewritten-events.json"
+      ],
+      "TargetFileName": [
+        "combine-processrollup2-and-filewritten-events.json"
+      ],
+      "ExecutingFilePath": [
+        "combine-processrollup2-and-filewritten-events.json"
+      ],
+      "WrittenFileName": [
+        "combine-processrollup2-and-filewritten-events.json"
+      ],
+      "limit": [
+        "frequency-analysis-via-program-clustering.json"
+      ],
+      "span": [
+        "frequency-analysis-via-program-clustering.json"
+      ],
+      "fNameCount": [
+        "frequency-analysis-via-program-clustering.json"
+      ],
+      "UserID": [
+        "systems-initiating-connections-to-a-high-number-of-ports.json"
+      ],
+      "RemotePort": [
+        "systems-initiating-connections-to-a-high-number-of-ports.json"
+      ],
+      "uniquePortCount": [
+        "systems-initiating-connections-to-a-high-number-of-ports.json"
+      ],
+      "separator": [
+        "systems-initiating-connections-to-a-high-number-of-ports.json"
+      ],
+      "repo": [
+        "merge-legacy-aid-master-info.json"
+      ],
+      "key": [
+        "merge-legacy-aid-master-info.json"
+      ],
+      "include": [
+        "merge-legacy-aid-master-info.json"
+      ],
+      "query": [
+        "merge-legacy-aid-master-info.json"
+      ],
+      "LocalPort": [
+        "listening-programs-with-low-port-numbers.json"
+      ],
+      "column": [
+        "listening-programs-with-low-port-numbers.json"
+      ],
+      "file": [
+        "listening-programs-with-low-port-numbers.json"
+      ],
+      "ChildCommandLine": [
+        "use-join-on-two-scoped-events.json"
+      ],
+      "ChildImageFileName": [
+        "use-join-on-two-scoped-events.json"
+      ],
+      "GrandParentFileName": [
+        "use-join-on-two-scoped-events.json"
+      ],
+      "ParentCmdLine": [
+        "use-join-on-two-scoped-events.json"
+      ],
+      "ParentImageFileName": [
+        "use-join-on-two-scoped-events.json"
+      ],
+      "ExpectedFilePath": [
+        "look-for-files-running-outside-windows-systems-folders-with-name-masquerading.json"
+      ],
+      "name": [
+        "look-for-files-running-outside-windows-systems-folders-with-name-masquerading.json"
+      ],
+      "timestamp": [
+        "look-for-files-running-outside-windows-systems-folders-with-name-masquerading.json"
+      ],
+      "FilePath": [
+        "look-for-files-running-outside-windows-systems-folders-with-name-masquerading.json"
+      ],
+      "strict": [
+        "look-for-files-running-outside-windows-systems-folders-with-name-masquerading.json"
+      ],
+      "start": [
+        "look-for-files-running-outside-windows-systems-folders-with-name-masquerading.json"
+      ],
+      "output": [
+        "decode-signinfoflags.json"
+      ],
+      "dayBucket": [
+        "custom-weighting-command-line-and-file-name.json"
+      ],
+      "value": [
+        "custom-weighting-command-line-and-file-name.json"
+      ],
+      "earliest": [
+        "custom-weighting-command-line-and-file-name.json"
+      ],
+      "executionDetails": [
+        "custom-weighting-command-line-and-file-name.json"
+      ],
+      "latest": [
+        "custom-weighting-command-line-and-file-name.json"
+      ],
+      "fileCount": [
+        "custom-weighting-command-line-and-file-name.json"
+      ],
+      "aid_tok": [
+        "custom-weighting-command-line-and-file-name.json"
+      ],
+      "computer": [
+        "custom-weighting-command-line-and-file-name.json"
+      ],
+      "timezone": [
+        "custom-weighting-command-line-and-file-name.json"
+      ],
+      "behaviorWeight": [
+        "custom-weighting-command-line-and-file-name.json"
+      ],
+      "customer_tok": [
+        "custom-weighting-command-line-and-file-name.json"
+      ],
+      "locale": [
+        "custom-weighting-command-line-and-file-name.json"
+      ],
+      "netFlag": [
+        "custom-weighting-command-line-and-file-name.json"
+      ],
+      "Explorer": [
+        "pr2-dns-cheat-join.json"
+      ],
+      "fileName": [
+        "pr2-dns-cheat-join.json"
+      ],
+      "Process": [
+        "pr2-dns-cheat-join.json"
+      ],
+      "myThreshold": [
+        "using-editable-threshold-values.json"
+      ],
+      "then": [
+        "using-editable-threshold-values.json"
+      ],
+      "condition": [
+        "using-editable-threshold-values.json"
+      ],
+      "executionCount": [
+        "using-editable-threshold-values.json"
+      ],
+      "else": [
+        "using-editable-threshold-values.json"
+      ],
+      "within": [
+        "cve-2025-53770-sharepoint-toolshell.json"
+      ],
+      "sequence": [
+        "cve-2025-53770-sharepoint-toolshell.json"
+      ],
+      "ContextProcessId": [
+        "cve-2025-53770-sharepoint-toolshell.json"
+      ],
+      "uniqueEndpoitnCount": [
+        "rare-and-common-encrypted-command-lines.json"
+      ],
+      "order": [
+        "rare-and-common-encrypted-command-lines.json"
+      ],
+      "cmdLength": [
+        "rare-and-common-encrypted-command-lines.json"
+      ],
+      "MD5": [
+        "merge-parent_child-pr2-with-join.json"
+      ],
+      "ChildCLI": [
+        "merge-parent_child-pr2-with-join.json"
+      ],
+      "ChildFileName": [
+        "merge-parent_child-pr2-with-join.json"
+      ],
+      "s": [
+        "decode-base64.json"
+      ],
+      "b64ShannonEntropy": [
+        "decode-base64.json"
+      ],
+      "psEncFlag": [
+        "decode-base64.json"
+      ],
+      "cmdLinePrefix": [
+        "decode-base64.json"
+      ],
+      "decodedCommand": [
+        "decode-base64.json"
+      ],
+      "uniqueEndpointCount": [
+        "decode-base64.json"
+      ],
+      "stdDevCmdLength": [
+        "decode-base64.json"
+      ],
+      "b64String": [
+        "decode-base64.json"
+      ],
+      "charset": [
+        "decode-base64.json"
+      ],
+      "values": [
+        "get-dns-resolutions-from-browser-processes.json"
+      ],
+      "array": [
+        "parse-windows-call-stack.json"
+      ],
+      "with": [
+        "parse-windows-call-stack.json"
+      ],
+      "CallStackModuleNames": [
+        "parse-windows-call-stack.json"
+      ],
+      "x": [
+        "parse-windows-call-stack.json"
+      ],
+      "var": [
+        "parse-windows-call-stack.json"
+      ],
+      "regex": [
+        "parse-windows-call-stack.json"
+      ],
+      "optional": [
+        "parse-windows-call-stack.json"
+      ],
+      "by": [
+        "parse-windows-call-stack.json"
+      ],
+      "loadedFile": [
+        "parse-windows-call-stack.json"
+      ],
+      "index": [
+        "processrollup2-curation.json"
+      ],
+      "RTR": [
+        "processrollup2-curation.json"
+      ],
+      "EventType": [
+        "processrollup2-curation.json"
+      ],
+      "processLineage": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "WindowFlags": [
+        "decoding-windowflags-bitmask.json"
+      ],
+      "operator": [
+        "hunting-bcdeditexe-usage.json"
+      ],
+      "flags": [
+        "hunting-bcdeditexe-usage.json"
+      ],
+      "ProcessLineage": [
+        "hunting-bcdeditexe-usage.json"
+      ],
+      "actions": [
+        "hunting-bcdeditexe-usage.json"
+      ],
+      "whoamiCount": [
+        "two-whoami-commands-run.json"
+      ],
+      "ShortFilePath": [
+        "rmm-tool-hunting.json"
+      ],
+      "UniqueEndpoints": [
+        "rmm-tool-hunting.json"
+      ],
+      "FirewallRuleId": [
+        "firewall-rule-additions.json"
+      ],
+      "FirewallRule": [
+        "firewall-rule-additions.json"
+      ],
+      "plus": [
+        "processrollup2-files-with-mark-of-the-web.json"
+      ],
+      "filePath": [
+        "processrollup2-files-with-mark-of-the-web.json"
+      ],
+      "HA": [
+        "processrollup2-files-with-mark-of-the-web.json"
+      ],
+      "endpointCount": [
+        "processrollup2-files-with-mark-of-the-web.json"
+      ],
+      "rootURL": [
+        "processrollup2-files-with-mark-of-the-web.json"
+      ],
+      "colon": [
+        "processrollup2-files-with-mark-of-the-web.json"
+      ],
+      "Graph": [
+        "processrollup2-files-with-mark-of-the-web.json"
+      ],
+      "config": [
+        "processrollup2-files-with-mark-of-the-web.json"
+      ],
+      "VT": [
+        "processrollup2-files-with-mark-of-the-web.json"
+      ],
+      "tick": [
+        "processrollup2-files-with-mark-of-the-web.json"
+      ],
+      "indicators": [
+        "processrollup2-files-with-mark-of-the-web.json"
+      ],
+      "cloudDecimal": [
+        "processrollup2-files-with-mark-of-the-web.json"
+      ],
+      "opSystem": [
+        "processrollup2-files-with-mark-of-the-web.json"
+      ],
+      "falconBuild": [
+        "processrollup2-files-with-mark-of-the-web.json"
+      ],
+      "quser": [
+        "count-windows-discovery-commands-per-user.json"
+      ],
+      "ping": [
+        "count-windows-discovery-commands-per-user.json"
+      ],
+      "LastCommandRun": [
+        "count-windows-discovery-commands-per-user.json"
+      ],
+      "net": [
+        "count-windows-discovery-commands-per-user.json"
+      ],
+      "ipconfig": [
+        "count-windows-discovery-commands-per-user.json"
+      ],
+      "systeminfo": [
+        "count-windows-discovery-commands-per-user.json"
+      ],
+      "totalDiscovery": [
+        "count-windows-discovery-commands-per-user.json"
+      ],
+      "whoami": [
+        "count-windows-discovery-commands-per-user.json"
+      ],
+      "CLICreationCount": [
+        "calculate-process-run-time.json"
+      ],
+      "from": [
+        "calculate-process-run-time.json"
+      ],
+      "runTime": [
+        "calculate-process-run-time.json"
+      ],
+      "processEndTime": [
+        "calculate-process-run-time.json"
+      ],
+      "precision": [
+        "calculate-process-run-time.json"
+      ],
+      "processStartTime": [
+        "calculate-process-run-time.json"
+      ],
+      "CompanyName": [
+        "chrome-version-number-evaluation.json"
+      ],
+      "minorVersion": [
+        "chrome-version-number-evaluation.json"
+      ],
+      "majorVersion": [
+        "chrome-version-number-evaluation.json"
+      ],
+      "minorBuildNumber": [
+        "chrome-version-number-evaluation.json"
+      ],
+      "buildNumber": [
+        "chrome-version-number-evaluation.json"
+      ],
+      "FixedFileVersion": [
+        "chrome-version-number-evaluation.json"
+      ]
+    },
+    "DnsRequest": {
+      "function": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "field": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "ignoreCase": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "as": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "ParentBaseFileName": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "where": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "ExecutionChain": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "eventCount": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "distinct": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "id": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "format": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "falconPID": [
+        "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json"
+      ],
+      "ImageFileName": [
+        "combine-processrollup2-and-dnsrequest-events.json"
+      ],
+      "prefilter": [
+        "combine-processrollup2-and-dnsrequest-events.json"
+      ],
+      "Explorer": [
+        "pr2-dns-cheat-join.json"
+      ],
+      "CommandLine": [
+        "pr2-dns-cheat-join.json"
+      ],
+      "limit": [
+        "pr2-dns-cheat-join.json"
+      ],
+      "fileName": [
+        "pr2-dns-cheat-join.json"
+      ],
+      "Process": [
+        "pr2-dns-cheat-join.json"
+      ],
+      "values": [
+        "get-dns-resolutions-from-browser-processes.json"
+      ]
+    },
+    "ReflectiveDotnetModuleLoad": {
+      "function": [
+        "2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths.json"
+      ],
+      "field": [
+        "2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths.json"
+      ],
+      "as": [
+        "2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths.json"
+      ],
+      "include": [
+        "2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths.json"
+      ],
+      "uniqueManagedPdbBuildPath": [
+        "2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths.json"
+      ],
+      "FileName": [
+        "2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths.json"
+      ],
+      "ManagedPdbBuildPath": [
+        "2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths.json"
+      ],
+      "distinct": [
+        "2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths.json"
+      ],
+      "FilePath": [
+        "2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths.json"
+      ],
+      "rootURL": [
+        "2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths.json"
+      ],
+      "executionCount": [
+        "2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths.json"
+      ],
+      "values": [
+        "2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths.json"
+      ],
+      "uniqueEndpoints": [
+        "2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths.json"
+      ],
+      "id": [
+        "2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths.json"
+      ]
+    },
+    "ZeroTrustHostAssessment": {
+      "function": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "field": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "binary": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "CpuProcessorName": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "where": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "replaceEmpty": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "TPM": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "limit": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "value": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "MemoryTotal": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "from": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "UEFI": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "BiosManufacturer": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "TpmFirmwareVersion": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "Version": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "AverageUsedRam": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "include": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "to": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "file": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "ChasisManufacturer": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "AverageCpuUsage": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "values": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "AvailableDiskSpace": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ]
+    },
+    "SystemCapacity": {
+      "function": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "field": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "binary": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "CpuProcessorName": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "where": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "replaceEmpty": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "TPM": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "limit": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "value": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "MemoryTotal": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "from": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "UEFI": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "BiosManufacturer": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "TpmFirmwareVersion": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "Version": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "AverageUsedRam": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "include": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "to": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "file": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "ChasisManufacturer": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "AverageCpuUsage": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "values": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "AvailableDiskSpace": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "OS": [
+        "resource-utilization.json"
+      ],
+      "repo": [
+        "resource-utilization.json"
+      ],
+      "as": [
+        "resource-utilization.json"
+      ],
+      "data_source_name": [
+        "resource-utilization.json"
+      ],
+      "PercentDiskUsed": [
+        "resource-utilization.json"
+      ],
+      "Endpoint": [
+        "resource-utilization.json"
+      ],
+      "RAM": [
+        "resource-utilization.json"
+      ],
+      "Site": [
+        "resource-utilization.json"
+      ],
+      "Physical": [
+        "resource-utilization.json"
+      ],
+      "Domain": [
+        "resource-utilization.json"
+      ],
+      "Falcon": [
+        "resource-utilization.json"
+      ],
+      "Cores": [
+        "resource-utilization.json"
+      ],
+      "ID": [
+        "resource-utilization.json"
+      ],
+      "Agent": [
+        "resource-utilization.json"
+      ],
+      "format": [
+        "resource-utilization.json"
+      ],
+      "Used": [
+        "resource-utilization.json"
+      ],
+      "Platform": [
+        "resource-utilization.json"
+      ],
+      "Disk": [
+        "resource-utilization.json"
+      ],
+      "Max": [
+        "resource-utilization.json"
+      ],
+      "CPU": [
+        "resource-utilization.json"
+      ],
+      "MaxUsedRam": [
+        "resource-utilization.json"
+      ],
+      "Logical": [
+        "resource-utilization.json"
+      ],
+      "ProductType": [
+        "resource-utilization.json"
+      ],
+      "Type": [
+        "resource-utilization.json"
+      ],
+      "Avg": [
+        "resource-utilization.json"
+      ],
+      "MaxCpuUsage": [
+        "resource-utilization.json"
+      ]
+    },
+    "ResourceUtilization": {
+      "function": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "field": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "binary": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "CpuProcessorName": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "where": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "replaceEmpty": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "TPM": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "limit": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "value": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "MemoryTotal": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "from": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "UEFI": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "BiosManufacturer": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "TpmFirmwareVersion": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "Version": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "AverageUsedRam": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "include": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "to": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "file": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "ChasisManufacturer": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "AverageCpuUsage": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "values": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "AvailableDiskSpace": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "OS": [
+        "resource-utilization.json"
+      ],
+      "repo": [
+        "resource-utilization.json"
+      ],
+      "as": [
+        "resource-utilization.json"
+      ],
+      "data_source_name": [
+        "resource-utilization.json"
+      ],
+      "PercentDiskUsed": [
+        "resource-utilization.json"
+      ],
+      "Endpoint": [
+        "resource-utilization.json"
+      ],
+      "RAM": [
+        "resource-utilization.json"
+      ],
+      "Site": [
+        "resource-utilization.json"
+      ],
+      "Physical": [
+        "resource-utilization.json"
+      ],
+      "Domain": [
+        "resource-utilization.json"
+      ],
+      "Falcon": [
+        "resource-utilization.json"
+      ],
+      "Cores": [
+        "resource-utilization.json"
+      ],
+      "ID": [
+        "resource-utilization.json"
+      ],
+      "Agent": [
+        "resource-utilization.json"
+      ],
+      "format": [
+        "resource-utilization.json"
+      ],
+      "Used": [
+        "resource-utilization.json"
+      ],
+      "Platform": [
+        "resource-utilization.json"
+      ],
+      "Disk": [
+        "resource-utilization.json"
+      ],
+      "Max": [
+        "resource-utilization.json"
+      ],
+      "CPU": [
+        "resource-utilization.json"
+      ],
+      "MaxUsedRam": [
+        "resource-utilization.json"
+      ],
+      "Logical": [
+        "resource-utilization.json"
+      ],
+      "ProductType": [
+        "resource-utilization.json"
+      ],
+      "Type": [
+        "resource-utilization.json"
+      ],
+      "Avg": [
+        "resource-utilization.json"
+      ],
+      "MaxCpuUsage": [
+        "resource-utilization.json"
+      ]
+    },
+    "AgentOnline": {
+      "function": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "field": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "binary": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "CpuProcessorName": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "where": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "replaceEmpty": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "TPM": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "limit": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "value": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "MemoryTotal": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "from": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "UEFI": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "BiosManufacturer": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "TpmFirmwareVersion": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "Version": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "AverageUsedRam": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "include": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "to": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "file": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "ChasisManufacturer": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "AverageCpuUsage": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "values": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "AvailableDiskSpace": [
+        "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json"
+      ],
+      "LastReboot": [
+        "calculate-last-windows-boot-time.json"
+      ],
+      "LastRebootAgo": [
+        "calculate-last-windows-boot-time.json"
+      ],
+      "precision": [
+        "calculate-last-windows-boot-time.json"
+      ],
+      "LastReboot_milli": [
+        "calculate-last-windows-boot-time.json"
+      ],
+      "format": [
+        "calculate-last-windows-boot-time.json"
+      ],
+      "realBootTimeHuman": [
+        "get-windows-os-boot-time.json"
+      ],
+      "realBootTime": [
+        "get-windows-os-boot-time.json"
+      ],
+      "locale": [
+        "get-windows-os-boot-time.json"
+      ],
+      "uptimeDays": [
+        "get-windows-os-boot-time.json"
+      ],
+      "timezone": [
+        "get-windows-os-boot-time.json"
+      ]
+    },
+    "OsVersionInfo": {
+      "Windows": [
+        "percentage-of-windows_mac_linux-endpoints.json"
+      ],
+      "function": [
+        "percentage-of-windows_mac_linux-endpoints.json"
+      ],
+      "field": [
+        "percentage-of-windows_mac_linux-endpoints.json"
+      ],
+      "linuxPercentage": [
+        "percentage-of-windows_mac_linux-endpoints.json"
+      ],
+      "totalcount": [
+        "percentage-of-windows_mac_linux-endpoints.json"
+      ],
+      "as": [
+        "percentage-of-windows_mac_linux-endpoints.json"
+      ],
+      "macPercentage": [
+        "percentage-of-windows_mac_linux-endpoints.json"
+      ],
+      "distinct": [
+        "percentage-of-windows_mac_linux-endpoints.json"
+      ],
+      "windowsPercentage": [
+        "percentage-of-windows_mac_linux-endpoints.json"
+      ],
+      "Mac": [
+        "percentage-of-windows_mac_linux-endpoints.json"
+      ],
+      "Linux": [
+        "percentage-of-windows_mac_linux-endpoints.json"
+      ],
+      "format": [
+        "percentage-of-windows_mac_linux-endpoints.json"
+      ],
+      "replaceEmpty": [
+        "cve-2025-1146-system-scoping-osversioninfo.json"
+      ],
+      "limit": [
+        "cve-2025-1146-system-scoping-osversioninfo.json"
+      ],
+      "value": [
+        "cve-2025-1146-system-scoping-osversioninfo.json"
+      ],
+      "External": [
+        "cve-2025-1146-system-scoping-osversioninfo.json"
+      ],
+      "IP": [
+        "cve-2025-1146-system-scoping-osversioninfo.json"
+      ],
+      "ID": [
+        "cve-2025-1146-system-scoping-osversioninfo.json"
+      ],
+      "strict": [
+        "cve-2025-1146-system-scoping-osversioninfo.json"
+      ],
+      "Agent": [
+        "cve-2025-1146-system-scoping-osversioninfo.json"
+      ],
+      "Platform": [
+        "cve-2025-1146-system-scoping-osversioninfo.json"
+      ],
+      "include": [
+        "cve-2025-1146-system-scoping-osversioninfo.json"
+      ],
+      "minorVersion": [
+        "cve-2025-1146-system-scoping-osversioninfo.json"
+      ],
+      "Status": [
+        "cve-2025-1146-system-scoping-osversioninfo.json"
+      ],
+      "column": [
+        "cve-2025-1146-system-scoping-osversioninfo.json"
+      ],
+      "majorVersion": [
+        "cve-2025-1146-system-scoping-osversioninfo.json"
+      ],
+      "buildNumber": [
+        "cve-2025-1146-system-scoping-osversioninfo.json"
+      ],
+      "file": [
+        "cve-2025-1146-system-scoping-osversioninfo.json"
+      ],
+      "Pod": [
+        "cve-2025-1146-system-scoping-osversioninfo.json"
+      ],
+      "values": [
+        "cve-2025-1146-system-scoping-osversioninfo.json"
+      ],
+      "Customer": [
+        "cve-2025-1146-system-scoping-osversioninfo.json"
+      ],
+      "repeat": [
+        "searching-comma-delineated-list-with-user-input.json"
+      ],
+      "regex": [
+        "searching-comma-delineated-list-with-user-input.json"
+      ],
+      "field_matched": [
+        "searching-comma-delineated-list-with-user-input.json"
+      ],
+      "field_temp": [
+        "searching-comma-delineated-list-with-user-input.json"
+      ],
+      "UID": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "mode": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "LogonType": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "query": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "UserName": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "start": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "ignoreCase": [
+        "osversioninfo-osversionfiledata-decode.json"
+      ],
+      "with": [
+        "osversioninfo-osversionfiledata-decode.json"
+      ],
+      "PRETTY_NAME": [
+        "osversioninfo-osversionfiledata-decode.json"
+      ],
+      "DistroName": [
+        "osversioninfo-osversionfiledata-decode.json"
+      ],
+      "osData": [
+        "check-for-sensors-in-rfm.json"
+      ],
+      "LinuxSensorBackend": [
+        "check-for-sensors-in-rfm.json"
+      ],
+      "timezone": [
+        "rfm-state-by-day.json"
+      ],
+      "locale": [
+        "rfm-state-by-day.json"
+      ],
+      "day": [
+        "rfm-state-by-day.json"
+      ],
+      "kernelVersion": [
+        "linux-kernel-version.json"
+      ],
+      "buildPolicy": [
+        "evaluate-falcon-agent-version.json"
+      ],
+      "SUPPORT_ENDS": [
+        "check-for-unsupported-sensors.json"
+      ],
+      "BUILD": [
+        "check-for-unsupported-sensors.json"
+      ],
+      "SUPPORT_ENDS_EPOCH": [
+        "check-for-unsupported-sensors.json"
+      ]
+    },
+    "Event_RemoteResponseSessionStartEvent": {
+      "field": [
+        "view-recent-rtr-sessions.json"
+      ],
+      "repo": [
+        "view-recent-rtr-sessions.json"
+      ],
+      "StartTimestamp": [
+        "view-recent-rtr-sessions.json"
+      ],
+      "as": [
+        "view-recent-rtr-sessions.json"
+      ],
+      "limit": [
+        "view-recent-rtr-sessions.json"
+      ],
+      "column": [
+        "view-recent-rtr-sessions.json"
+      ],
+      "file": [
+        "view-recent-rtr-sessions.json"
+      ],
+      "strict": [
+        "view-recent-rtr-sessions.json"
+      ],
+      "format": [
+        "view-recent-rtr-sessions.json"
+      ]
+    },
+    "NetworkConnectIP4": {
+      "function": [
+        "combine-processrollup2-and-networkconnectip4-events.json"
+      ],
+      "ImageFileName": [
+        "combine-processrollup2-and-networkconnectip4-events.json"
+      ],
+      "as": [
+        "combine-processrollup2-and-networkconnectip4-events.json"
+      ],
+      "where": [
+        "combine-processrollup2-and-networkconnectip4-events.json"
+      ],
+      "prefilter": [
+        "combine-processrollup2-and-networkconnectip4-events.json"
+      ],
+      "eventCount": [
+        "combine-processrollup2-and-networkconnectip4-events.json"
+      ],
+      "distinct": [
+        "combine-processrollup2-and-networkconnectip4-events.json"
+      ],
+      "falconPID": [
+        "combine-processrollup2-and-networkconnectip4-events.json"
+      ],
+      "UserID": [
+        "systems-initiating-connections-to-a-high-number-of-ports.json"
+      ],
+      "field": [
+        "systems-initiating-connections-to-a-high-number-of-ports.json"
+      ],
+      "uniquePortCount": [
+        "systems-initiating-connections-to-a-high-number-of-ports.json"
+      ],
+      "limit": [
+        "systems-initiating-connections-to-a-high-number-of-ports.json"
+      ],
+      "separator": [
+        "systems-initiating-connections-to-a-high-number-of-ports.json"
+      ],
+      "percent": [
+        "bottom-10-of-networkconnct-port-values.json"
+      ],
+      "order": [
+        "bottom-10-of-networkconnct-port-values.json"
+      ],
+      "subnet": [
+        "omit-rfc1819-cidr-ranges-from-search.json"
+      ]
+    },
+    "ZipFileWritten": {
+      "function": [
+        "combine-processrollup2-and-filewritten-events.json"
+      ],
+      "ImageFileName": [
+        "combine-processrollup2-and-filewritten-events.json"
+      ],
+      "field": [
+        "combine-processrollup2-and-filewritten-events.json"
+      ],
+      "as": [
+        "combine-processrollup2-and-filewritten-events.json"
+      ],
+      "where": [
+        "combine-processrollup2-and-filewritten-events.json"
+      ],
+      "WrittenFilePath": [
+        "combine-processrollup2-and-filewritten-events.json"
+      ],
+      "prefilter": [
+        "combine-processrollup2-and-filewritten-events.json"
+      ],
+      "eventCount": [
+        "combine-processrollup2-and-filewritten-events.json"
+      ],
+      "distinct": [
+        "combine-processrollup2-and-filewritten-events.json"
+      ],
+      "ExecutingFileName": [
+        "combine-processrollup2-and-filewritten-events.json"
+      ],
+      "ExecutingFilePath": [
+        "combine-processrollup2-and-filewritten-events.json"
+      ],
+      "WrittenFileName": [
+        "combine-processrollup2-and-filewritten-events.json"
+      ],
+      "falconPID": [
+        "combine-processrollup2-and-filewritten-events.json"
+      ]
+    },
+    "UserLogon": {
+      "function": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "field": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "UID": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "mode": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "as": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "replaceEmpty": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "FirstSeen": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "limit": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "value": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "External": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "IP": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "ID": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "strict": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "format": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "Agent": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "Platform": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "SystemProductName": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "Version": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "MAC": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "AgentVersion": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "Time": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "include": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "minorVersion": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "Status": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "column": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "query": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "majorVersion": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "buildNumber": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "ProductType": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "file": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "SystemManufacturer": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "Pod": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "values": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "start": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "Customer": [
+        "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json"
+      ],
+      "sharedTime": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "Logons": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "UserHash": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "Mach": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "subnet": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "rootURL": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "lat2": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "lon2": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "sortby": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "System": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "LogonDelta": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "user": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "precision": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "isLive": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "TimeToTravel": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "prefix": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "IPs": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "lon1": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "SpeedKph": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "Travel": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "DistanceKm": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "order": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "LogonTime": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "lat1": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "Speed": [
+        "impossible-time-to-travel-userlogon.json"
+      ],
+      "TotalFailedLogins": [
+        "failed-and-successful-user-logon-events.json"
+      ],
+      "timezone": [
+        "failed-and-successful-user-logon-events.json"
+      ],
+      "FailedLogonTime": [
+        "failed-and-successful-user-logon-events.json"
+      ],
+      "SuccessLogonTime": [
+        "failed-and-successful-user-logon-events.json"
+      ],
+      "ignoreCase": [
+        "create-heatmap-of-login-activity.json"
+      ],
+      "span": [
+        "create-heatmap-of-login-activity.json"
+      ],
+      "reverse": [
+        "create-heatmap-of-login-activity.json"
+      ],
+      "country": [
+        "userlogon-query.json"
+      ],
+      "city": [
+        "userlogon-query.json"
+      ],
+      "locale": [
+        "userlogon-query.json"
+      ],
+      "state": [
+        "userlogon-query.json"
+      ],
+      "magnitude": [
+        "rdp-login-world-map.json"
+      ],
+      "lon": [
+        "rdp-login-world-map.json"
+      ],
+      "lat": [
+        "rdp-login-world-map.json"
+      ]
+    },
+    "NetworkListenIP4": {
+      "function": [
+        "listening-programs-with-low-port-numbers.json"
+      ],
+      "field": [
+        "listening-programs-with-low-port-numbers.json"
+      ],
+      "include": [
+        "listening-programs-with-low-port-numbers.json"
+      ],
+      "where": [
+        "listening-programs-with-low-port-numbers.json"
+      ],
+      "column": [
+        "listening-programs-with-low-port-numbers.json"
+      ],
+      "file": [
+        "listening-programs-with-low-port-numbers.json"
+      ],
+      "falconPID": [
+        "listening-programs-with-low-port-numbers.json"
+      ]
+    },
+    "DetectionExcluded": {
+      "function": [
+        "profiling-ioc-and-ioa-exclusions-in-falcon.json"
+      ],
+      "as": [
+        "profiling-ioc-and-ioa-exclusions-in-falcon.json"
+      ],
+      "Detail": [
+        "profiling-ioc-and-ioa-exclusions-in-falcon.json"
+      ],
+      "DetectName": [
+        "profiling-ioc-and-ioa-exclusions-in-falcon.json"
+      ],
+      "limit": [
+        "profiling-ioc-and-ioa-exclusions-in-falcon.json"
+      ],
+      "ExclusionSource": [
+        "profiling-ioc-and-ioa-exclusions-in-falcon.json"
+      ],
+      "column": [
+        "profiling-ioc-and-ioa-exclusions-in-falcon.json"
+      ],
+      "ExclusionType_Readable": [
+        "profiling-ioc-and-ioa-exclusions-in-falcon.json"
+      ],
+      "ExclusionType": [
+        "profiling-ioc-and-ioa-exclusions-in-falcon.json"
+      ],
+      "description": [
+        "profiling-ioc-and-ioa-exclusions-in-falcon.json"
+      ],
+      "Tactic": [
+        "profiling-ioc-and-ioa-exclusions-in-falcon.json"
+      ],
+      "file": [
+        "profiling-ioc-and-ioa-exclusions-in-falcon.json"
+      ],
+      "PatternId": [
+        "profiling-ioc-and-ioa-exclusions-in-falcon.json"
+      ],
+      "TotalDetections": [
+        "profiling-ioc-and-ioa-exclusions-in-falcon.json"
+      ],
+      "sortby": [
+        "profiling-ioc-and-ioa-exclusions-in-falcon.json"
+      ],
+      "strict": [
+        "profiling-ioc-and-ioa-exclusions-in-falcon.json"
+      ],
+      "Technique": [
+        "profiling-ioc-and-ioa-exclusions-in-falcon.json"
+      ]
+    },
+    "InstalledBrowserExtension": {
+      "function": [
+        "installed-browser-extensions.json"
+      ],
+      "TotalEndpoints": [
+        "installed-browser-extensions.json"
+      ],
+      "field": [
+        "installed-browser-extensions.json"
+      ],
+      "as": [
+        "installed-browser-extensions.json"
+      ],
+      "limit": [
+        "installed-browser-extensions.json"
+      ],
+      "distinct": [
+        "installed-browser-extensions.json"
+      ],
+      "order": [
+        "installed-browser-extensions.json"
+      ]
+    },
+    "FalconProcessHandleOpDetectInfo": {
+      "ParentCommandLine": [
+        "hunting-edr-freeze.json"
+      ],
+      "field": [
+        "hunting-edr-freeze.json"
+      ],
+      "CommandLine": [
+        "hunting-edr-freeze.json"
+      ],
+      "as": [
+        "hunting-edr-freeze.json"
+      ],
+      "timestamp": [
+        "hunting-edr-freeze.json"
+      ],
+      "ProcessLineage": [
+        "hunting-edr-freeze.json"
+      ],
+      "FileName": [
+        "hunting-edr-freeze.json"
+      ],
+      "ContextProcessId": [
+        "hunting-edr-freeze.json"
+      ],
+      "GrandparentCommandLine": [
+        "hunting-edr-freeze.json"
+      ],
+      "rootURL": [
+        "hunting-edr-freeze.json"
+      ],
+      "id": [
+        "hunting-edr-freeze.json"
+      ],
+      "format": [
+        "hunting-edr-freeze.json"
+      ]
+    },
+    "AssociateTreeIdWithRoot": {
+      "killchain_stage": [
+        "associatetreeidwithroot-to-pattern-details.json"
+      ],
+      "technique": [
+        "associatetreeidwithroot-to-pattern-details.json"
+      ],
+      "name": [
+        "associatetreeidwithroot-to-pattern-details.json"
+      ],
+      "objective": [
+        "associatetreeidwithroot-to-pattern-details.json"
+      ],
+      "tactic": [
+        "associatetreeidwithroot-to-pattern-details.json"
+      ],
+      "timestamp": [
+        "associatetreeidwithroot-to-pattern-details.json"
+      ],
+      "ComputerName": [
+        "associatetreeidwithroot-to-pattern-details.json"
+      ],
+      "column": [
+        "associatetreeidwithroot-to-pattern-details.json"
+      ],
+      "description": [
+        "associatetreeidwithroot-to-pattern-details.json"
+      ],
+      "scenarioFriendly": [
+        "associatetreeidwithroot-to-pattern-details.json"
+      ],
+      "pattern_updated": [
+        "associatetreeidwithroot-to-pattern-details.json"
+      ],
+      "show_in_ui": [
+        "associatetreeidwithroot-to-pattern-details.json"
+      ],
+      "file": [
+        "associatetreeidwithroot-to-pattern-details.json"
+      ],
+      "PatternId": [
+        "associatetreeidwithroot-to-pattern-details.json"
+      ],
+      "severity": [
+        "associatetreeidwithroot-to-pattern-details.json"
+      ],
+      "scenario": [
+        "associatetreeidwithroot-to-pattern-details.json"
+      ],
+      "strict": [
+        "associatetreeidwithroot-to-pattern-details.json"
+      ]
+    },
+    "SensorHeartbeat": {
+      "function": [
+        "check-for-rtr-being-disabled.json"
+      ],
+      "field": [
+        "check-for-rtr-being-disabled.json"
+      ],
+      "output": [
+        "check-for-rtr-being-disabled.json"
+      ],
+      "RTR_Locally_Disabled": [
+        "check-for-rtr-being-disabled.json"
+      ],
+      "limit": [
+        "check-for-rtr-being-disabled.json"
+      ],
+      "as": [
+        "percentage-of-sensors-in-rfm.json"
+      ],
+      "include": [
+        "percentage-of-sensors-in-rfm.json"
+      ],
+      "Total": [
+        "percentage-of-sensors-in-rfm.json"
+      ],
+      "OK": [
+        "percentage-of-sensors-in-rfm.json"
+      ],
+      "RFM": [
+        "percentage-of-sensors-in-rfm.json"
+      ],
+      "SensorStateBitMap": [
+        "percentage-of-sensors-in-rfm.json"
+      ],
+      "format": [
+        "percentage-of-sensors-in-rfm.json"
+      ],
+      "PercentRFM": [
+        "percentage-of-sensors-in-rfm.json"
+      ]
+    },
+    "UserIdentity": {
+      "function": [
+        "processrollup2-curation.json"
+      ],
+      "field": [
+        "processrollup2-curation.json"
+      ],
+      "as": [
+        "processrollup2-curation.json"
+      ],
+      "FileName": [
+        "processrollup2-curation.json"
+      ],
+      "index": [
+        "processrollup2-curation.json"
+      ],
+      "ImageFileName": [
+        "processrollup2-curation.json"
+      ],
+      "Explorer": [
+        "processrollup2-curation.json"
+      ],
+      "CommandLine": [
+        "processrollup2-curation.json"
+      ],
+      "include": [
+        "processrollup2-curation.json"
+      ],
+      "executionCount": [
+        "processrollup2-curation.json"
+      ],
+      "values": [
+        "processrollup2-curation.json"
+      ],
+      "by": [
+        "processrollup2-curation.json"
+      ],
+      "Process": [
+        "processrollup2-curation.json"
+      ],
+      "TargetProcessId": [
+        "processrollup2-curation.json"
+      ],
+      "RTR": [
+        "processrollup2-curation.json"
+      ],
+      "EventType": [
+        "processrollup2-curation.json"
+      ],
+      "start": [
+        "processrollup2-curation.json"
+      ]
+    },
+    "NetworkReceiveAcceptIP4": {
+      "function": [
+        "scope-network-accept-events.json"
+      ],
+      "hostname": [
+        "scope-network-accept-events.json"
+      ],
+      "country": [
+        "scope-network-accept-events.json"
+      ],
+      "field": [
+        "scope-network-accept-events.json"
+      ],
+      "as": [
+        "scope-network-accept-events.json"
+      ],
+      "limit": [
+        "scope-network-accept-events.json"
+      ],
+      "subnet": [
+        "scope-network-accept-events.json"
+      ],
+      "uniqueEndpoints": [
+        "scope-network-accept-events.json"
+      ],
+      "sourceip": [
+        "scope-network-accept-events.json"
+      ],
+      "communityId": [
+        "scope-network-accept-events.json"
+      ],
+      "city": [
+        "scope-network-accept-events.json"
+      ],
+      "proto": [
+        "scope-network-accept-events.json"
+      ],
+      "totalConnections": [
+        "scope-network-accept-events.json"
+      ],
+      "distinct": [
+        "scope-network-accept-events.json"
+      ],
+      "order": [
+        "scope-network-accept-events.json"
+      ],
+      "destinationip": [
+        "scope-network-accept-events.json"
+      ],
+      "values": [
+        "scope-network-accept-events.json"
+      ]
+    },
+    "IsoExtensionFileWritten": {
+      "ImageFileName": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "field": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "ignoreCase": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "CommandLine": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "key": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "as": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "include": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "processLineage": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "file": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "s": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "strict": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "format": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ]
+    },
+    "ImgExtensionFileWritten": {
+      "ImageFileName": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "field": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "ignoreCase": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "CommandLine": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "key": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "as": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "include": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "processLineage": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "file": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "s": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "strict": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ],
+      "format": [
+        "iso_img-written-to-disk-w_-responsible-process.json"
+      ]
+    },
+    "DriverLoad": {
+      "function": [
+        "enumerate-windows-driver-loads.json"
+      ],
+      "field": [
+        "enumerate-windows-driver-loads.json"
+      ],
+      "repo": [
+        "enumerate-windows-driver-loads.json"
+      ],
+      "ExternalApiType": [
+        "enumerate-windows-driver-loads.json"
+      ],
+      "where": [
+        "enumerate-windows-driver-loads.json"
+      ],
+      "limit": [
+        "enumerate-windows-driver-loads.json"
+      ],
+      "value": [
+        "enumerate-windows-driver-loads.json"
+      ]
+    },
+    "UserLogonFailed2": {
+      "function": [
+        "failed-and-successful-user-logon-events.json"
+      ],
+      "field": [
+        "failed-and-successful-user-logon-events.json"
+      ],
+      "TotalFailedLogins": [
+        "failed-and-successful-user-logon-events.json"
+      ],
+      "as": [
+        "failed-and-successful-user-logon-events.json"
+      ],
+      "include": [
+        "failed-and-successful-user-logon-events.json"
+      ],
+      "UserSid": [
+        "failed-and-successful-user-logon-events.json"
+      ],
+      "timezone": [
+        "failed-and-successful-user-logon-events.json"
+      ],
+      "limit": [
+        "failed-and-successful-user-logon-events.json"
+      ],
+      "value": [
+        "failed-and-successful-user-logon-events.json"
+      ],
+      "PasswordLastSet": [
+        "failed-and-successful-user-logon-events.json"
+      ],
+      "order": [
+        "failed-and-successful-user-logon-events.json"
+      ],
+      "FailedLogonTime": [
+        "failed-and-successful-user-logon-events.json"
+      ],
+      "SuccessLogonTime": [
+        "failed-and-successful-user-logon-events.json"
+      ],
+      "format": [
+        "failed-and-successful-user-logon-events.json"
+      ],
+      "LastLogonAttempt": [
+        "failed-user-logon-thresholding.json"
+      ],
+      "FirstLogonAttempt": [
+        "failed-user-logon-thresholding.json"
+      ],
+      "FailCount": [
+        "failed-user-logon-thresholding.json"
+      ],
+      "logonAttemptsPerHour": [
+        "failed-user-logon-thresholding.json"
+      ],
+      "firstLastDeltaHours": [
+        "failed-user-logon-thresholding.json"
+      ]
+    },
+    "UserAccountAddedToGroup": {
+      "function": [
+        "user-added-to-group.json"
+      ],
+      "field": [
+        "user-added-to-group.json"
+      ],
+      "endian": [
+        "user-added-to-group.json"
+      ],
+      "as": [
+        "user-added-to-group.json"
+      ],
+      "include": [
+        "user-added-to-group.json"
+      ],
+      "radix": [
+        "user-added-to-group.json"
+      ],
+      "query": [
+        "user-added-to-group.json"
+      ],
+      "rootURL": [
+        "user-added-to-group.json"
+      ],
+      "id": [
+        "user-added-to-group.json"
+      ],
+      "format": [
+        "user-added-to-group.json"
+      ]
+    },
+    "FirewallSetRule": {
+      "ImageFileName": [
+        "firewall-rule-additions.json"
+      ],
+      "field": [
+        "firewall-rule-additions.json"
+      ],
+      "FirewallRuleId": [
+        "firewall-rule-additions.json"
+      ],
+      "FirewallRule": [
+        "firewall-rule-additions.json"
+      ],
+      "fileName": [
+        "firewall-rule-additions.json"
+      ],
+      "CommandLine": [
+        "firewall-rule-additions.json"
+      ],
+      "key": [
+        "firewall-rule-additions.json"
+      ],
+      "include": [
+        "firewall-rule-additions.json"
+      ],
+      "UserSid": [
+        "firewall-rule-additions.json"
+      ]
+    },
+    "CriticalEnvironmentVariableChanged": {
+      "remotePort": [
+        "critical-environment-variable-changed-ssh.json"
+      ],
+      "userName": [
+        "critical-environment-variable-changed-ssh.json"
+      ],
+      "EnvironmentVariableName": [
+        "critical-environment-variable-changed-ssh.json"
+      ],
+      "field": [
+        "critical-environment-variable-changed-ssh.json"
+      ],
+      "remoteIP": [
+        "critical-environment-variable-changed-ssh.json"
+      ],
+      "localPort": [
+        "critical-environment-variable-changed-ssh.json"
+      ],
+      "localIP": [
+        "critical-environment-variable-changed-ssh.json"
+      ],
+      "timestamp": [
+        "critical-environment-variable-changed-ssh.json"
+      ],
+      "EnvironmentVariableValue": [
+        "critical-environment-variable-changed-ssh.json"
+      ]
+    },
+    "HttpRequestDetect": {
+      "MagicNumber": [
+        "httprequestdetect.json"
+      ],
+      "Version": [
+        "httprequestdetect.json"
+      ],
+      "ImageFileName": [
+        "httprequestdetect.json"
+      ],
+      "field": [
+        "httprequestdetect.json"
+      ],
+      "h": [
+        "httprequestdetect.json"
+      ],
+      "as": [
+        "httprequestdetect.json"
+      ],
+      "HttpUrl": [
+        "httprequestdetect.json"
+      ],
+      "H": [
+        "httprequestdetect.json"
+      ],
+      "HttpRequestHeader": [
+        "httprequestdetect.json"
+      ],
+      "FilePath": [
+        "httprequestdetect.json"
+      ],
+      "UserAgentString": [
+        "httprequestdetect.json"
+      ],
+      "HttpMethod": [
+        "httprequestdetect.json"
+      ],
+      "charset": [
+        "httprequestdetect.json"
+      ],
+      "format": [
+        "httprequestdetect.json"
+      ]
+    },
+    "EndOfProcess": {
+      "function": [
+        "calculate-process-run-time.json"
+      ],
+      "field": [
+        "calculate-process-run-time.json"
+      ],
+      "as": [
+        "calculate-process-run-time.json"
+      ],
+      "where": [
+        "calculate-process-run-time.json"
+      ],
+      "prefilter": [
+        "calculate-process-run-time.json"
+      ],
+      "from": [
+        "calculate-process-run-time.json"
+      ],
+      "strict": [
+        "calculate-process-run-time.json"
+      ],
+      "format": [
+        "calculate-process-run-time.json"
+      ],
+      "runTime": [
+        "calculate-process-run-time.json"
+      ],
+      "processEndTime": [
+        "calculate-process-run-time.json"
+      ],
+      "precision": [
+        "calculate-process-run-time.json"
+      ],
+      "eventCount": [
+        "calculate-process-run-time.json"
+      ],
+      "distinct": [
+        "calculate-process-run-time.json"
+      ],
+      "processStartTime": [
+        "calculate-process-run-time.json"
+      ]
+    },
+    "ScriptControlScanInfo": {
+      "function": [
+        "script-content-entropy.json"
+      ],
+      "field": [
+        "script-content-entropy.json"
+      ],
+      "ScriptContent": [
+        "script-content-entropy.json"
+      ],
+      "as": [
+        "script-content-entropy.json"
+      ],
+      "endpointCount": [
+        "script-content-entropy.json"
+      ],
+      "entropy": [
+        "script-content-entropy.json"
+      ],
+      "distinct": [
+        "script-content-entropy.json"
+      ],
+      "order": [
+        "script-content-entropy.json"
+      ],
+      "appearenceCount": [
+        "script-content-entropy.json"
+      ]
+    },
+    "PeVersionInfo": {
+      "function": [
+        "chrome-version-number-evaluation.json"
+      ],
+      "ImageFileName": [
+        "chrome-version-number-evaluation.json"
+      ],
+      "field": [
+        "chrome-version-number-evaluation.json"
+      ],
+      "ignoreCase": [
+        "chrome-version-number-evaluation.json"
+      ],
+      "include": [
+        "chrome-version-number-evaluation.json"
+      ],
+      "minorVersion": [
+        "chrome-version-number-evaluation.json"
+      ],
+      "majorVersion": [
+        "chrome-version-number-evaluation.json"
+      ],
+      "minorBuildNumber": [
+        "chrome-version-number-evaluation.json"
+      ],
+      "buildNumber": [
+        "chrome-version-number-evaluation.json"
+      ],
+      "FixedFileVersion": [
+        "chrome-version-number-evaluation.json"
+      ],
+      "file": [
+        "chrome-version-number-evaluation.json"
+      ],
+      "fileName": [
+        "chrome-version-number-evaluation.json"
+      ],
+      "strict": [
+        "chrome-version-number-evaluation.json"
+      ]
+    }
+  },
+  "missing_functions": {
+    "geohash": [
+      "2023-06-14-cool-query-friday-watching-the-watchers-profiling-falcon-console-logins-via-geohashing.json",
+      "falcon-authentication-from-unexpected-geohash.json"
+    ],
+    "s": [
+      "2023-06-14-cool-query-friday-watching-the-watchers-profiling-falcon-console-logins-via-geohashing.json",
+      "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json",
+      "hunting-edr-freeze.json",
+      "falcon-authentication-from-unexpected-geohash.json",
+      "linux-kernel-version.json",
+      "httprequestdetect.json"
+    ],
+    "collect": [
+      "2023-06-14-cool-query-friday-watching-the-watchers-profiling-falcon-console-logins-via-geohashing.json",
+      "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json",
+      "2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths.json",
+      "combine-processrollup2-and-networkconnectip4-events.json",
+      "combine-processrollup2-and-filewritten-events.json",
+      "frequency-analysis-via-program-clustering.json",
+      "systems-initiating-connections-to-a-high-number-of-ports.json",
+      "listening-programs-with-low-port-numbers.json",
+      "profiling-ioc-and-ioa-exclusions-in-falcon.json",
+      "combine-processrollup2-and-dnsrequest-events.json",
+      "pr2-dns-cheat-join.json",
+      "impossible-time-to-travel-userlogon.json",
+      "rare-and-common-encrypted-command-lines.json",
+      "files-written-to-removable-media.json",
+      "get-dns-resolutions-from-browser-processes.json",
+      "parse-windows-call-stack.json",
+      "enumerate-windows-driver-loads.json",
+      "hunting-bcdeditexe-usage.json",
+      "aggregate-detection-data-by-host.json",
+      "check-for-falcon-analysts-running-get-command.json",
+      "falcon-authentication-from-unexpected-geohash.json",
+      "hunt-pbd-file-paths-in-reflective-net-module-loads.json",
+      "survival-of-the-fastest.json",
+      "two-whoami-commands-run.json",
+      "user-added-to-group.json",
+      "rmm-tool-hunting.json",
+      "failed-user-logon-thresholding.json",
+      "processrollup2-files-with-mark-of-the-web.json",
+      "calculate-process-run-time.json",
+      "script-content-entropy.json"
+    ],
+    "wildcard": [
+      "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json",
+      "get-dns-resolutions-from-browser-processes.json",
+      "parse-windows-call-stack.json",
+      "create-heatmap-of-login-activity.json"
+    ],
+    "filter": [
+      "2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths.json",
+      "parse-windows-call-stack.json"
+    ],
+    "selectLast": [
+      "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json",
+      "calculate-last-windows-boot-time.json",
+      "cve-2025-1146-system-scoping-osversioninfo.json",
+      "resource-utilization.json",
+      "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json",
+      "mean-time-to-react-respond-and-resolve.json",
+      "osversioninfo-osversionfiledata-decode.json",
+      "get-windows-os-boot-time.json",
+      "check-for-rtr-being-disabled.json",
+      "cve-2025-42701-and-cve-2025-42706-falcon-version-scoping-osversioninfo.json",
+      "rfm-state-by-day.json",
+      "cheat-bucket-using-groupby.json",
+      "processrollup2-curation.json",
+      "survival-of-the-fastest.json",
+      "linux-kernel-version.json",
+      "linux-sensors-in-kernel-mode-user-mode-and-rfm.json",
+      "evaluate-falcon-agent-version.json",
+      "systemcapacity-resourceutilization.json",
+      "evaluate-operating-system-prevalence.json",
+      "count-windows-discovery-commands-per-user.json",
+      "chrome-version-number-evaluation.json"
+    ],
+    "convert": [
+      "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json",
+      "case-to-convert-size-to-appropriate-unit-of-measure.json",
+      "files-written-to-removable-media.json"
+    ],
+    "match": [
+      "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json",
+      "view-recent-rtr-sessions.json",
+      "cve-2025-1146-system-scoping-osversioninfo.json",
+      "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json",
+      "listening-programs-with-low-port-numbers.json",
+      "profiling-ioc-and-ioa-exclusions-in-falcon.json",
+      "look-for-files-running-outside-windows-systems-folders-with-name-masquerading.json",
+      "osversioninfo-osversionfiledata-decode.json",
+      "associatetreeidwithroot-to-pattern-details.json",
+      "support-ends.json",
+      "cve-2025-42701-and-cve-2025-42706-falcon-version-scoping-osversioninfo.json",
+      "iso_img-written-to-disk-w_-responsible-process.json",
+      "show-sensor-update-policies.json",
+      "systemcapacity-resourceutilization.json",
+      "check-for-unsupported-sensors.json",
+      "chrome-version-number-evaluation.json"
+    ],
+    "OR": [
+      "combine-processrollup2-and-networkconnectip4-events.json",
+      "combine-processrollup2-and-filewritten-events.json",
+      "resource-utilization.json",
+      "listening-programs-with-low-port-numbers.json",
+      "mean-time-to-react-respond-and-resolve.json",
+      "combine-processrollup2-and-dnsrequest-events.json",
+      "pr2-dns-cheat-join.json",
+      "enumerate-windows-driver-loads.json",
+      "calculate-process-run-time.json",
+      "system-information-discovery.json",
+      "system-owner_user-discovery.json",
+      "process-discovery.json",
+      "remote-system-discovery.json",
+      "query-registry.json",
+      "network-share-discovery.json",
+      "software-discovery-security-software-discovery.json",
+      "account-discovery-domain-account.json",
+      "cloud-infrastructure-discovery.json",
+      "password-policy-discovery.json",
+      "device-driver-discovery.json",
+      "domain-trust-discovery.json",
+      "permission-groups-discovery-local-groups.json"
+    ],
+    "now": [
+      "calculate-last-windows-boot-time.json",
+      "get-windows-os-boot-time.json",
+      "leveraging-the-aidmaster-repo.json",
+      "survival-of-the-fastest.json",
+      "check-for-unsupported-sensors.json"
+    ],
+    "group_info": [
+      "map-agent-id-values-to-host-group-names.json"
+    ],
+    "systems": [
+      "cve-2025-1146-system-scoping-osversioninfo.json",
+      "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json",
+      "cve-2025-1146-system-scoping-aid_master.json"
+    ],
+    "Lin": [
+      "cve-2025-1146-system-scoping-osversioninfo.json",
+      "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json",
+      "cve-2025-1146-system-scoping-aid_master.json"
+    ],
+    "enrich": [
+      "resource-utilization.json",
+      "listening-programs-with-low-port-numbers.json",
+      "failed-and-successful-user-logon-events.json",
+      "failed-user-logon-thresholding.json",
+      "userlogon.json"
+    ],
+    "Win": [
+      "listening-programs-with-low-port-numbers.json",
+      "system-information-discovery.json",
+      "process-discovery.json",
+      "remote-system-discovery.json",
+      "group-policy-discovery.json",
+      "query-registry.json",
+      "network-share-discovery.json",
+      "software-discovery-security-software-discovery.json",
+      "password-policy-discovery.json",
+      "device-driver-discovery.json",
+      "domain-trust-discovery.json",
+      "permission-groups-discovery-local-groups.json"
+    ],
+    "Event_": [
+      "mean-time-to-react-respond-and-resolve.json"
+    ],
+    "detections": [
+      "mean-time-to-react-respond-and-resolve.json"
+    ],
+    "extractFlags": [
+      "decode-signinfoflags.json",
+      "check-for-rtr-being-disabled.json",
+      "decoding-windowflags-bitmask.json",
+      "decode-volumedevicecharacteristics-bitmask.json",
+      "process-processcreateflags.json"
+    ],
+    "urlDecode": [
+      "osversioninfo-osversionfiledata-decode.json",
+      "linux-sensors-in-kernel-mode-user-mode-and-rfm.json",
+      "httprequestdetect.json"
+    ],
+    "groupby": [
+      "custom-weighting-command-line-and-file-name.json",
+      "pr2-dns-cheat-join.json",
+      "rare-and-common-encrypted-command-lines.json",
+      "decode-base64.json",
+      "create-heatmap-of-login-activity.json",
+      "linux-kernel-version.json",
+      "evaluate-falcon-agent-version.json",
+      "evaluate-operating-system-prevalence.json"
+    ],
+    "series": [
+      "custom-weighting-command-line-and-file-name.json"
+    ],
+    "AND": [
+      "pr2-dns-cheat-join.json"
+    ],
+    "if": [
+      "using-editable-threshold-values.json"
+    ],
+    "md5": [
+      "impossible-time-to-travel-userlogon.json"
+    ],
+    "neighbor": [
+      "impossible-time-to-travel-userlogon.json"
+    ],
+    "distance": [
+      "impossible-time-to-travel-userlogon.json"
+    ],
+    "parseTimestamp": [
+      "support-ends.json",
+      "check-for-unsupported-sensors.json"
+    ],
+    "http": [
+      "decode-base64.json"
+    ],
+    "shannonEntropy": [
+      "decode-base64.json",
+      "script-content-entropy.json"
+    ],
+    "base64Decode": [
+      "decode-base64.json",
+      "httprequestdetect.json"
+    ],
+    "Windows": [
+      "get-dns-resolutions-from-browser-processes.json"
+    ],
+    "cid_name": [
+      "cve-2025-42701-and-cve-2025-42706-falcon-version-scoping-osversioninfo.json",
+      "cve-2025-42701-and-cve-2025-42706-falcon-version-scoping-aid_master_main.json"
+    ],
+    "addresses": [
+      "parse-windows-call-stack.json"
+    ],
+    "simpleName": [
+      "processrollup2-curation.json"
+    ],
+    "exe": [
+      "processrollup2-curation.json"
+    ],
+    "communityId": [
+      "scope-network-accept-events.json"
+    ],
+    "bcdedit": [
+      "hunting-bcdeditexe-usage.json"
+    ],
+    "hour": [
+      "create-heatmap-of-login-activity.json"
+    ],
+    "dayOfWeekName": [
+      "create-heatmap-of-login-activity.json"
+    ],
+    "formattime": [
+      "two-whoami-commands-run.json"
+    ],
+    "usersid_username_win": [
+      "user-added-to-group.json"
+    ],
+    "parseInt": [
+      "user-added-to-group.json"
+    ],
+    "n": [
+      "critical-environment-variable-changed-ssh.json"
+    ],
+    "d": [
+      "httprequestdetect.json"
+    ],
+    "AddComputerName": [
+      "httprequestdetect.json"
+    ],
+    "BZ": [
+      "httprequestdetect.json"
+    ],
+    "parseHexString": [
+      "httprequestdetect.json"
+    ],
+    "HttpMethod": [
+      "httprequestdetect.json"
+    ],
+    "runs": [
+      "count-windows-discovery-commands-per-user.json"
+    ],
+    "powershell": [
+      "calculate-process-run-time.json"
+    ],
+    "ProcessRollup2": [
+      "system-owner_user-discovery.json"
+    ]
+  },
+  "missing_operators": {
+    "in(": [
+      "2023-06-14-cool-query-friday-watching-the-watchers-profiling-falcon-console-logins-via-geohashing.json",
+      "2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths.json",
+      "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json",
+      "map-agent-id-values-to-host-group-names.json",
+      "cve-2025-1146-system-scoping-osversioninfo.json",
+      "merge-legacy-aid-master-info.json",
+      "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json",
+      "mean-time-to-react-respond-and-resolve.json",
+      "use-join-on-two-scoped-events.json",
+      "merge-parent_child-pr2-with-join.json",
+      "get-dns-resolutions-from-browser-processes.json",
+      "cve-2025-42701-and-cve-2025-42706-falcon-version-scoping-osversioninfo.json",
+      "clickfixhunting.json",
+      "cve-2025-1146-system-scoping-aid_master.json",
+      "zero-trust-host-assessment-scores.json",
+      "cve-2025-42701-and-cve-2025-42706-falcon-version-scoping-aid_master_main.json",
+      "processrollup2-curation.json",
+      "scope-network-accept-events.json",
+      "iso_img-written-to-disk-w_-responsible-process.json",
+      "aggregate-detection-data-by-host.json",
+      "failed-and-successful-user-logon-events.json",
+      "show-sensor-update-policies.json",
+      "userlogon-query.json",
+      "falcon-authentication-from-unexpected-geohash.json",
+      "hunt-pbd-file-paths-in-reflective-net-module-loads.json",
+      "survival-of-the-fastest.json",
+      "user-added-to-group.json",
+      "rmm-tool-hunting.json",
+      "firewall-rule-additions.json",
+      "failed-user-logon-thresholding.json",
+      "userlogon.json",
+      "calculate-process-run-time.json",
+      "chrome-version-number-evaluation.json"
+    ],
+    "and": [
+      "2023-06-14-cool-query-friday-watching-the-watchers-profiling-falcon-console-logins-via-geohashing.json",
+      "2023-09-20-cool-query-friday-up-leveling-teams-with-text-box-driven-queries.json",
+      "2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths.json",
+      "cve-2025-1146-system-scoping-osversioninfo.json",
+      "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json",
+      "listening-programs-with-low-port-numbers.json",
+      "installed-browser-extensions.json",
+      "custom-weighting-command-line-and-file-name.json",
+      "pr2-dns-cheat-join.json",
+      "get-windows-os-boot-time.json",
+      "impossible-time-to-travel-userlogon.json",
+      "decode-base64.json",
+      "get-dns-resolutions-from-browser-processes.json",
+      "cve-2025-42701-and-cve-2025-42706-falcon-version-scoping-osversioninfo.json",
+      "cve-2025-1146-system-scoping-aid_master.json",
+      "cve-2025-42701-and-cve-2025-42706-falcon-version-scoping-aid_master_main.json",
+      "processrollup2-curation.json",
+      "enumerate-windows-driver-loads.json",
+      "falcon-authentication-from-unexpected-geohash.json",
+      "hunt-pbd-file-paths-in-reflective-net-module-loads.json",
+      "survival-of-the-fastest.json",
+      "percentage-of-sensors-in-rfm.json",
+      "evaluate-falcon-agent-version.json",
+      "systemcapacity-resourceutilization.json",
+      "processrollup2-files-with-mark-of-the-web.json",
+      "script-content-entropy.json",
+      "chrome-version-number-evaluation.json"
+    ],
+    "in": [
+      "2023-09-08-cool-query-friday-reflective-net-module-loads-and-program-database-pdb-file-paths.json",
+      "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json",
+      "view-recent-rtr-sessions.json",
+      "frequency-analysis-via-program-clustering.json",
+      "cve-2025-1146-system-scoping-osversioninfo.json",
+      "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json",
+      "mean-time-to-react-respond-and-resolve.json",
+      "look-for-files-running-outside-windows-systems-folders-with-name-masquerading.json",
+      "installed-browser-extensions.json",
+      "custom-weighting-command-line-and-file-name.json",
+      "get-windows-os-boot-time.json",
+      "impossible-time-to-travel-userlogon.json",
+      "get-dns-resolutions-from-browser-processes.json",
+      "parse-windows-call-stack.json",
+      "cve-2025-1146-system-scoping-aid_master.json",
+      "cve-2025-42701-and-cve-2025-42706-falcon-version-scoping-aid_master_main.json",
+      "processrollup2-curation.json",
+      "scope-network-accept-events.json",
+      "enumerate-windows-driver-loads.json",
+      "show-sensor-update-policies.json",
+      "userlogon-query.json",
+      "hunt-pbd-file-paths-in-reflective-net-module-loads.json",
+      "survival-of-the-fastest.json",
+      "percentage-of-sensors-in-rfm.json",
+      "rmm-tool-hunting.json",
+      "check-for-unsupported-sensors.json",
+      "userlogon.json",
+      "count-windows-discovery-commands-per-user.json"
+    ],
+    "match": [
+      "2021-10-29-cool-query-friday-cpu-ram-disk-firmware-tpm-20-and-windows-11.json",
+      "view-recent-rtr-sessions.json",
+      "cve-2025-1146-system-scoping-osversioninfo.json",
+      "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json",
+      "listening-programs-with-low-port-numbers.json",
+      "profiling-ioc-and-ioa-exclusions-in-falcon.json",
+      "look-for-files-running-outside-windows-systems-folders-with-name-masquerading.json",
+      "osversioninfo-osversionfiledata-decode.json",
+      "check-for-sensors-in-rfm.json",
+      "associatetreeidwithroot-to-pattern-details.json",
+      "support-ends.json",
+      "cve-2025-42701-and-cve-2025-42706-falcon-version-scoping-osversioninfo.json",
+      "rfm-state-by-day.json",
+      "cheat-bucket-using-groupby.json",
+      "iso_img-written-to-disk-w_-responsible-process.json",
+      "show-sensor-update-policies.json",
+      "systemcapacity-resourceutilization.json",
+      "check-for-unsupported-sensors.json",
+      "processrollup2-files-with-mark-of-the-web.json",
+      "httprequestdetect.json",
+      "chrome-version-number-evaluation.json"
+    ],
+    "or": [
+      "combine-processrollup2-and-networkconnectip4-events.json",
+      "combine-processrollup2-and-filewritten-events.json",
+      "cve-2025-1146-system-scoping-osversioninfo.json",
+      "resource-utilization.json",
+      "cve-2025-1146-system-scoping-osversioninfo-with-logon-data.json",
+      "listening-programs-with-low-port-numbers.json",
+      "mean-time-to-react-respond-and-resolve.json",
+      "combine-processrollup2-and-dnsrequest-events.json",
+      "custom-weighting-command-line-and-file-name.json",
+      "pr2-dns-cheat-join.json",
+      "hunting-edr-freeze.json",
+      "get-dns-resolutions-from-browser-processes.json",
+      "cve-2025-42701-and-cve-2025-42706-falcon-version-scoping-osversioninfo.json",
+      "parse-windows-call-stack.json",
+      "cve-2025-42701-and-cve-2025-42706-falcon-version-scoping-aid_master_main.json",
+      "iso_img-written-to-disk-w_-responsible-process.json",
+      "enumerate-windows-driver-loads.json",
+      "calculate-process-run-time.json",
+      "system-information-discovery.json",
+      "system-owner_user-discovery.json",
+      "process-discovery.json",
+      "remote-system-discovery.json",
+      "group-policy-discovery.json",
+      "query-registry.json",
+      "network-share-discovery.json",
+      "software-discovery-security-software-discovery.json",
+      "account-discovery-domain-account.json",
+      "cloud-infrastructure-discovery.json",
+      "password-policy-discovery.json",
+      "device-driver-discovery.json",
+      "domain-trust-discovery.json",
+      "permission-groups-discovery-local-groups.json"
+    ],
+    "regex": [
+      "searching-comma-delineated-list-with-user-input.json",
+      "osversioninfo-osversionfiledata-decode.json",
+      "custom-weighting-command-line-and-file-name.json",
+      "parse-windows-call-stack.json",
+      "hunting-bcdeditexe-usage.json",
+      "check-for-falcon-analysts-running-get-command.json",
+      "linux-sensors-in-kernel-mode-user-mode-and-rfm.json",
+      "calculate-process-run-time.json"
+    ],
+    "not": [
+      "look-for-files-running-outside-windows-systems-folders-with-name-masquerading.json",
+      "impossible-time-to-travel-userlogon.json",
+      "parse-windows-call-stack.json",
+      "processrollup2-curation.json",
+      "survival-of-the-fastest.json"
+    ]
+  },
+  "all_tables_used": [
+    "AgentOnline",
+    "AssociateTreeIdWithRoot",
+    "CriticalEnvironmentVariableChanged",
+    "DetectionExcluded",
+    "DnsRequest",
+    "DriverLoad",
+    "EndOfProcess",
+    "Event_RemoteResponseSessionStartEvent",
+    "FalconProcessHandleOpDetectInfo",
+    "FirewallSetRule",
+    "HttpRequestDetect",
+    "ImgExtensionFileWritten",
+    "InstalledBrowserExtension",
+    "IsoExtensionFileWritten",
+    "NetworkConnectIP4",
+    "NetworkListenIP4",
+    "NetworkReceiveAcceptIP4",
+    "OsVersionInfo",
+    "PeVersionInfo",
+    "ProcessRollup2",
+    "ReflectiveDotnetModuleLoad",
+    "ResourceUtilization",
+    "ScriptControlScanInfo",
+    "SensorHeartbeat",
+    "SystemCapacity",
+    "UserAccountAddedToGroup",
+    "UserIdentity",
+    "UserLogon",
+    "UserLogonFailed2",
+    "ZeroTrustHostAssessment",
+    "ZipFileWritten"
+  ],
+  "all_functions_used": [
+    "AND",
+    "AddComputerName",
+    "BZ",
+    "Event_",
+    "HttpMethod",
+    "Lin",
+    "OR",
+    "ProcessRollup2",
+    "Win",
+    "Windows",
+    "addresses",
+    "asn",
+    "avg",
+    "base64Decode",
+    "bcdedit",
+    "bucket",
+    "case",
+    "cid_name",
+    "cidr",
+    "collect",
+    "communityId",
+    "concat",
+    "concatArray",
+    "convert",
+    "correlate",
+    "count",
+    "createEvents",
+    "d",
+    "dayOfWeekName",
+    "default",
+    "defineTable",
+    "detections",
+    "distance",
+    "drop",
+    "enrich",
+    "exe",
+    "extractFlags",
+    "filter",
+    "format",
+    "formatDuration",
+    "formatTime",
+    "formattime",
+    "geohash",
+    "groupBy",
+    "group_info",
+    "groupby",
+    "hour",
+    "http",
+    "if",
+    "in",
+    "ipLocation",
+    "join",
+    "kvParse",
+    "length",
+    "lower",
+    "match",
+    "max",
+    "md5",
+    "min",
+    "n",
+    "neighbor",
+    "now",
+    "parseHexString",
+    "parseInt",
+    "parseJson",
+    "parseTimestamp",
+    "powershell",
+    "rdns",
+    "readFile",
+    "regex",
+    "rename",
+    "replace",
+    "round",
+    "runs",
+    "s",
+    "select",
+    "selectFromMax",
+    "selectFromMin",
+    "selectLast",
+    "selfJoinFilter",
+    "series",
+    "shannonEntropy",
+    "simpleName",
+    "sort",
+    "split",
+    "splitString",
+    "stats",
+    "sum",
+    "systems",
+    "table",
+    "test",
+    "timechart",
+    "top",
+    "transpose",
+    "upper",
+    "urlDecode",
+    "usersid_username_win",
+    "wildcard",
+    "worldMap"
+  ],
+  "all_operators_used": [
+    "!=",
+    ":=",
+    "<",
+    "<=",
+    "<=>",
+    "=",
+    "=*",
+    "=~",
+    ">",
+    ">=",
+    "AND",
+    "OR",
+    "and",
+    "in",
+    "in(",
+    "match",
+    "not",
+    "or",
+    "regex",
+    "|"
+  ]
+}

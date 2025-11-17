@@ -1,0 +1,594 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2025-11-15T00:00:00Z",
+  "description": "Enhanced field descriptions with security context for threat hunting and analysis",
+  "common_fields": [
+    {
+      "name": "aid",
+      "type": "string",
+      "description": "Agent ID - unique identifier for the endpoint",
+      "security_context": {
+        "use_cases": [
+          "Endpoint correlation across multiple event types",
+          "Tracking malicious activity to specific hosts",
+          "Identifying compromised systems in lateral movement"
+        ],
+        "threat_hunting_tips": [
+          "Group by aid to find systems with unusual activity patterns",
+          "Join with SensorHeartbeat to identify offline/tampered sensors",
+          "Correlate suspicious events across event types using aid"
+        ],
+        "common_patterns": [
+          "groupBy([aid], function=count())",
+          "| join({...}, field=aid)"
+        ]
+      }
+    },
+    {
+      "name": "cid",
+      "type": "string",
+      "description": "Customer ID - unique identifier for the CrowdStrike tenant",
+      "security_context": {
+        "use_cases": [
+          "Multi-tenant analysis",
+          "Cross-organization threat intelligence sharing",
+          "Tenant-specific configuration tracking"
+        ],
+        "threat_hunting_tips": [
+          "Filter by cid in multi-tenant environments",
+          "Track sensor distribution across organizations"
+        ]
+      }
+    },
+    {
+      "name": "ComputerName",
+      "type": "string",
+      "description": "Hostname of the endpoint",
+      "security_context": {
+        "use_cases": [
+          "Human-readable system identification",
+          "Asset inventory and tracking",
+          "Geographic or organizational grouping"
+        ],
+        "threat_hunting_tips": [
+          "Look for unusual naming patterns that might indicate test/staging systems",
+          "Group by ComputerName to identify heavily targeted hosts",
+          "Check for hostname changes that might indicate system reimaging or evasion"
+        ],
+        "limitations": [
+          "Hostnames can be spoofed or changed",
+          "Use aid for reliable system identification"
+        ],
+        "common_patterns": [
+          "groupBy([ComputerName])",
+          "ComputerName=*PROD* OR ComputerName=*DEV*"
+        ]
+      }
+    },
+    {
+      "name": "UserName",
+      "type": "string",
+      "description": "Username associated with the activity",
+      "security_context": {
+        "use_cases": [
+          "User behavior analysis",
+          "Insider threat detection",
+          "Compromised account identification"
+        ],
+        "threat_hunting_tips": [
+          "Filter out system accounts to reduce noise",
+          "Look for service accounts performing unusual actions",
+          "Identify users accessing systems outside normal working hours",
+          "Track privilege escalation patterns"
+        ],
+        "common_filters": [
+          "UserName!=/^(SYSTEM|LOCAL SERVICE|NETWORK SERVICE)$/",
+          "UserName!=/(\\$\\$|^DWM-|LOCAL\\\\sSERVICE|^UMFD-|^$)/"
+        ],
+        "limitations": [
+          "Usernames can be spoofed in some contexts",
+          "Use UserSid for reliable user correlation"
+        ],
+        "common_patterns": [
+          "groupBy([UserName], function=count())",
+          "| join({...UserIdentity...}, field=UserSid, include=UserName)"
+        ]
+      }
+    },
+    {
+      "name": "UserSid",
+      "type": "string",
+      "description": "Windows Security Identifier (SID) for the user",
+      "security_context": {
+        "use_cases": [
+          "Reliable user correlation (SIDs cannot be easily spoofed)",
+          "Tracking user activity across name changes",
+          "Identifying built-in accounts (well-known SIDs)"
+        ],
+        "threat_hunting_tips": [
+          "Use UserSid instead of UserName for accurate user tracking",
+          "Look for SIDs ending in -500 (built-in Administrator)",
+          "Track SIDs with RID >= 1000 (user accounts)",
+          "Identify service accounts by SID patterns"
+        ],
+        "well_known_sids": {
+          "S-1-5-18": "SYSTEM",
+          "S-1-5-19": "LOCAL SERVICE",
+          "S-1-5-20": "NETWORK SERVICE",
+          "S-1-5-21-*-500": "Built-in Administrator",
+          "S-1-5-21-*-501": "Built-in Guest"
+        },
+        "common_filters": [
+          "UserSid=S-1-5-21-* (domain/local users)",
+          "UserSid=/.*-500$/ (Administrator accounts)"
+        ],
+        "common_patterns": [
+          "| join({#event_simpleName=/^(UserIdentity|UserLogon)$/}, field=UserSid, include=UserName)"
+        ]
+      }
+    },
+    {
+      "name": "ImageFileName",
+      "type": "string",
+      "description": "Full path to the process executable",
+      "security_context": {
+        "use_cases": [
+          "Process identification and tracking",
+          "Living-off-the-land binary detection",
+          "Malware file path analysis",
+          "Execution from unusual locations"
+        ],
+        "threat_hunting_tips": [
+          "Look for executables running from user temp directories",
+          "Identify processes with randomized filenames",
+          "Check for known LOLBins (powershell.exe, cmd.exe, wmic.exe, etc.)",
+          "Find executables masquerading as legitimate Windows binaries",
+          "Track execution from web browser cache directories"
+        ],
+        "suspicious_patterns": [
+          "Execution from \\AppData\\Local\\Temp\\",
+          "Execution from \\Users\\Public\\",
+          "System binaries (cmd.exe, powershell.exe) in non-standard paths",
+          "Executables with random/gibberish names",
+          "Double extensions (file.pdf.exe)"
+        ],
+        "common_filters": [
+          "ImageFileName=*/\\\\(powershell|cmd|wmic|mshta|rundll32)\\.exe/i",
+          "ImageFileName=*\\\\Temp\\\\*",
+          "ImageFileName=*\\\\AppData\\\\*"
+        ],
+        "common_patterns": [
+          "ImageFileName=/(?<FilePath>(\\/|\\\\).+(\\/|\\\\))(?<FileName>.+$)/"
+        ]
+      }
+    },
+    {
+      "name": "FileName",
+      "type": "string",
+      "description": "Base filename of the executable (without path)",
+      "security_context": {
+        "use_cases": [
+          "Process frequency analysis",
+          "Quick executable identification",
+          "Software inventory"
+        ],
+        "threat_hunting_tips": [
+          "Count occurrences to find rare/unusual executables",
+          "Look for typosquatting (scvhost.exe vs svchost.exe)",
+          "Identify executables with suspicious extensions",
+          "Track specific malware families by known filenames"
+        ],
+        "suspicious_patterns": [
+          "Typosquatted system binaries",
+          "Executables mimicking common tools",
+          "Files with multiple extensions",
+          "Numeric or random character filenames"
+        ],
+        "common_patterns": [
+          "groupBy([FileName], function=count()) | sort(_count, order=asc)",
+          "FileName=/^[a-f0-9]{8,}\\.(exe|dll)$/ (random hex names)"
+        ]
+      }
+    },
+    {
+      "name": "CommandLine",
+      "type": "string",
+      "description": "Full command line arguments passed to the process",
+      "security_context": {
+        "use_cases": [
+          "Detecting malicious command patterns",
+          "Identifying encoded/obfuscated commands",
+          "Finding credential theft attempts",
+          "Tracking lateral movement techniques"
+        ],
+        "threat_hunting_tips": [
+          "Look for base64 encoded commands (-enc, -encodedcommand)",
+          "Find credential dumping tools (mimikatz, lsass, etc.)",
+          "Identify remote execution (psexec, wmic /node:, etc.)",
+          "Track PowerShell download cradles (IEX, Invoke-WebRequest)",
+          "Find unusual file transfers (certutil, bitsadmin)",
+          "Detect living-off-the-land techniques"
+        ],
+        "suspicious_patterns": [
+          "-enc, -encodedcommand (PowerShell obfuscation)",
+          "IEX, Invoke-Expression (PowerShell execution)",
+          "downloadstring, downloadfile (file downloads)",
+          "mimikatz, sekurlsa, lsadump (credential theft)",
+          "net user, net localgroup (account manipulation)",
+          "wmic process call create (remote execution)",
+          "certutil -decode, -urlcache (LOLBin abuse)",
+          "schtasks /create (persistence)",
+          "reg add (registry modification)"
+        ],
+        "common_filters": [
+          "CommandLine=*-enc* OR CommandLine=*-encodedcommand*",
+          "CommandLine=*/download*/i",
+          "CommandLine=*/mimikatz*/i",
+          "CommandLine=*Invoke-Expression* OR CommandLine=*IEX*"
+        ]
+      }
+    },
+    {
+      "name": "TargetProcessId",
+      "type": "long",
+      "description": "Falcon's unique process identifier (UPID) for correlation",
+      "security_context": {
+        "use_cases": [
+          "Process tree reconstruction",
+          "Multi-event correlation (process + network + file events)",
+          "Attack chain analysis",
+          "Parent-child relationship tracking"
+        ],
+        "threat_hunting_tips": [
+          "Join ProcessRollup2 with NetworkConnectIP4 to find processes with network activity",
+          "Correlate with DnsRequest to track DNS queries by specific processes",
+          "Build process family trees to understand attack progression",
+          "Track suspicious child processes spawned from common applications"
+        ],
+        "common_patterns": [
+          "| join({#event_simpleName=NetworkConnectIP4}, field=TargetProcessId)",
+          "| join({#event_simpleName=DnsRequest}, field=TargetProcessId)",
+          "ParentProcessId correlation for process trees"
+        ]
+      }
+    },
+    {
+      "name": "ParentProcessId",
+      "type": "long",
+      "description": "Falcon process identifier of the parent process",
+      "security_context": {
+        "use_cases": [
+          "Process tree analysis",
+          "Identifying unusual parent-child relationships",
+          "Detecting process injection",
+          "Tracking execution chains"
+        ],
+        "threat_hunting_tips": [
+          "Look for uncommon parent-child relationships (e.g., Word spawning PowerShell)",
+          "Find processes with no parent (orphaned/injected)",
+          "Track legitimate processes spawning suspicious children",
+          "Identify suspicious processes masquerading with legitimate parents"
+        ],
+        "suspicious_patterns": [
+          "Office apps (winword.exe, excel.exe) spawning cmd/powershell",
+          "Browser spawning unusual processes",
+          "Services spawning interactive shells",
+          "explorer.exe as parent for system utilities"
+        ],
+        "common_patterns": [
+          "groupBy([ParentBaseFileName, FileName])",
+          "ParentBaseFileName=winword.exe FileName=/^(cmd|powershell|wscript)\\.exe$/i"
+        ]
+      }
+    },
+    {
+      "name": "ParentBaseFileName",
+      "type": "string",
+      "description": "Base filename of the parent process",
+      "security_context": {
+        "use_cases": [
+          "Quick parent process identification",
+          "Process tree analysis",
+          "Identifying injection and hollowing"
+        ],
+        "threat_hunting_tips": [
+          "Look for scripting engines spawned by Office apps",
+          "Find system utilities spawned by user applications",
+          "Identify browsers spawning unusual processes",
+          "Track service processes as parents"
+        ],
+        "suspicious_patterns": [
+          "Office apps → PowerShell/CMD",
+          "Browser → wscript/cscript",
+          "svchost.exe → cmd.exe",
+          "explorer.exe → net.exe/whoami.exe"
+        ]
+      }
+    },
+    {
+      "name": "SHA256HashData",
+      "type": "string",
+      "description": "SHA256 hash of the process executable",
+      "security_context": {
+        "use_cases": [
+          "IOC matching and threat intelligence correlation",
+          "Unique file identification",
+          "Malware family tracking",
+          "File deduplication"
+        ],
+        "threat_hunting_tips": [
+          "Compare against known malicious hashes (VirusTotal, MISP, etc.)",
+          "Group by hash to find file prevalence across environment",
+          "Track hash changes that might indicate polymorphic malware",
+          "Use for exact match IOC hunting"
+        ],
+        "common_patterns": [
+          "SHA256HashData=<known_bad_hash>",
+          "groupBy([SHA256HashData], function=count())",
+          "SHA256HashData=* (files with hash data)"
+        ]
+      }
+    },
+    {
+      "name": "MD5HashData",
+      "type": "string",
+      "description": "MD5 hash of the process executable",
+      "security_context": {
+        "use_cases": [
+          "Legacy IOC matching",
+          "Quick file identification",
+          "Threat intelligence correlation"
+        ],
+        "threat_hunting_tips": [
+          "Use for legacy IOC feeds that still use MD5",
+          "Prefer SHA256 for new threat intelligence",
+          "MD5 is susceptible to collisions, use with caution"
+        ],
+        "limitations": [
+          "MD5 is cryptographically broken and can have collisions",
+          "Prefer SHA256 for reliable file identification"
+        ]
+      }
+    },
+    {
+      "name": "SignInfoFlags",
+      "type": "long",
+      "description": "Bitmask indicating code signature validation results",
+      "security_context": {
+        "use_cases": [
+          "Unsigned executable detection",
+          "Invalid signature identification",
+          "Trust verification",
+          "Hunting for potentially malicious files"
+        ],
+        "threat_hunting_tips": [
+          "Look for unsigned executables from unusual locations",
+          "Find expired or revoked certificates",
+          "Identify self-signed code",
+          "Track certificate validity changes"
+        ],
+        "common_patterns": [
+          "Extract signature flags using bitfield operations",
+          "Filter for unsigned binaries in sensitive directories"
+        ]
+      }
+    },
+    {
+      "name": "ZoneIdentifier",
+      "type": "string",
+      "description": "Mark of the Web (MOTW) zone identifier",
+      "security_context": {
+        "use_cases": [
+          "Downloaded file detection",
+          "Internet-sourced executable tracking",
+          "Email attachment analysis",
+          "Browser download monitoring"
+        ],
+        "threat_hunting_tips": [
+          "Track executables downloaded from the internet",
+          "Identify files from untrusted zones",
+          "Monitor email attachments that execute",
+          "Find files bypassing download warnings"
+        ],
+        "zone_values": {
+          "0": "Local Machine",
+          "1": "Local Intranet",
+          "2": "Trusted Sites",
+          "3": "Internet",
+          "4": "Restricted Sites"
+        },
+        "common_patterns": [
+          "ZoneIdentifier=3 (Internet downloads)",
+          "ZoneIdentifier=4 (Restricted sites)"
+        ]
+      }
+    },
+    {
+      "name": "RemoteAddressIP4",
+      "type": "string",
+      "description": "IPv4 address of remote connection endpoint",
+      "security_context": {
+        "use_cases": [
+          "Command & control detection",
+          "Lateral movement tracking",
+          "External connection analysis",
+          "Geographic threat analysis"
+        ],
+        "threat_hunting_tips": [
+          "Use ipLocation() for geographic enrichment",
+          "Use cidr() to filter private vs public IPs",
+          "Look for connections to unusual countries/ASNs",
+          "Track connections to known malicious IPs",
+          "Identify beaconing behavior to external IPs"
+        ],
+        "common_patterns": [
+          "!cidr(RemoteAddressIP4, subnet=[\"10.0.0.0/8\", \"172.16.0.0/12\", \"192.168.0.0/16\"])",
+          "| ipLocation(RemoteAddressIP4)",
+          "| asn(RemoteAddressIP4)"
+        ],
+        "suspicious_patterns": [
+          "Connections to rare ASNs",
+          "High-entropy IPs (randomly distributed)",
+          "Connections to hosting providers (VPS abuse)",
+          "Connections to known bulletproof hosting"
+        ]
+      }
+    },
+    {
+      "name": "RemotePort",
+      "type": "long",
+      "description": "TCP/UDP port of remote connection endpoint",
+      "security_context": {
+        "use_cases": [
+          "Service identification",
+          "Uncommon port detection",
+          "C2 channel analysis",
+          "Protocol analysis"
+        ],
+        "threat_hunting_tips": [
+          "Look for non-standard ports for common protocols",
+          "Find high-numbered ephemeral ports used for C2",
+          "Track SMB (445) for lateral movement",
+          "Monitor RDP (3389) for remote access",
+          "Identify reverse shells on common ports (4444, 8080, etc.)"
+        ],
+        "common_ports": {
+          "80": "HTTP",
+          "443": "HTTPS",
+          "445": "SMB",
+          "3389": "RDP",
+          "22": "SSH",
+          "21": "FTP",
+          "25": "SMTP"
+        },
+        "suspicious_patterns": [
+          "Non-standard ports for web traffic",
+          "SMB to external IPs",
+          "RDP to unusual destinations",
+          "Known C2 ports (4444, 31337, etc.)"
+        ]
+      }
+    },
+    {
+      "name": "LogonType",
+      "type": "long",
+      "description": "Windows logon type identifier",
+      "security_context": {
+        "use_cases": [
+          "Authentication method tracking",
+          "Remote access detection",
+          "Lateral movement identification",
+          "User behavior analysis"
+        ],
+        "logon_types": {
+          "2": "Interactive (local console)",
+          "3": "Network (SMB, mapped drives)",
+          "4": "Batch (scheduled tasks)",
+          "5": "Service",
+          "7": "Unlock (workstation unlock)",
+          "8": "NetworkCleartext (IIS basic auth)",
+          "9": "NewCredentials (RunAs)",
+          "10": "RemoteInteractive (RDP, Terminal Services)",
+          "11": "CachedInteractive (cached credentials)"
+        },
+        "threat_hunting_tips": [
+          "Look for Type 10 (RDP) from unusual sources",
+          "Track Type 3 (Network) for lateral movement",
+          "Monitor Type 9 (RunAs) for privilege escalation",
+          "Find Type 4 (Batch) for persistence via scheduled tasks"
+        ],
+        "common_patterns": [
+          "LogonType=10 (RDP access)",
+          "LogonType=3 (Network/SMB access)",
+          "LogonType=2 (Interactive console)"
+        ]
+      }
+    },
+    {
+      "name": "event_platform",
+      "type": "string",
+      "description": "Operating system platform",
+      "security_context": {
+        "use_cases": [
+          "Platform-specific query filtering",
+          "Cross-platform threat tracking",
+          "OS-specific technique detection"
+        ],
+        "values": {
+          "Win": "Windows",
+          "Mac": "macOS",
+          "Lin": "Linux"
+        },
+        "threat_hunting_tips": [
+          "Use for platform-specific queries",
+          "Track threats across different OS platforms",
+          "Identify OS-specific attack techniques"
+        ],
+        "common_patterns": [
+          "event_platform=Win",
+          "event_platform=Lin OR event_platform=Mac (Unix-like)"
+        ]
+      }
+    },
+    {
+      "name": "ContextTimeStamp",
+      "type": "long",
+      "description": "Event timestamp in epoch milliseconds",
+      "security_context": {
+        "use_cases": [
+          "Temporal analysis",
+          "Time-based correlation",
+          "Attack timeline reconstruction",
+          "Dwell time calculation"
+        ],
+        "threat_hunting_tips": [
+          "Use bucket() for time-based aggregation",
+          "Calculate time deltas between related events",
+          "Look for activity outside business hours",
+          "Find rapid sequences of events (automated attacks)"
+        ],
+        "common_patterns": [
+          "| bucket(timeField=@timestamp, span=1h)",
+          "| formatTime(field=@timestamp, format=\"%Y-%m-%d %H:%M:%S\")"
+        ]
+      }
+    }
+  ],
+  "field_naming_conventions": {
+    "prefixes": {
+      "Target": "Primary subject of the event",
+      "Parent": "Parent process related fields",
+      "Remote": "Remote endpoint in network connections",
+      "Local": "Local endpoint in network connections"
+    },
+    "suffixes": {
+      "FileName": "Base filename without path",
+      "ProcessId": "Falcon's unique process identifier",
+      "TimeStamp": "Time value in epoch milliseconds",
+      "IP4": "IPv4 address",
+      "IP6": "IPv6 address",
+      "Sid": "Windows Security Identifier",
+      "HashData": "Cryptographic hash value"
+    }
+  },
+  "performance_tips": {
+    "high_cardinality_fields": [
+      "CommandLine",
+      "ImageFileName",
+      "SHA256HashData",
+      "TargetProcessId",
+      "ContextTimeStamp"
+    ],
+    "recommended_filters": [
+      "Always filter by #event_simpleName first",
+      "Use event_platform early in queries",
+      "Apply time ranges to limit data volume",
+      "Use specific aid values when investigating known systems"
+    ],
+    "avoid": [
+      "Unbounded wildcards on CommandLine without other filters",
+      "groupBy() on high-cardinality fields without limits",
+      "Regex on large text fields without pre-filtering"
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "join",
+  "category": "advanced",
+  "description": "Joins two LogScale searches. When joining two searches, you need to define the keys/fields that are used to match up results using the 'field' parameter.",
+  "syntax": "join({subquery}, field=join_field, include=fields, mode=join_type)",
+  "parameters": [
+    {
+      "name": "subquery",
+      "type": "query",
+      "required": true,
+      "description": "Sub-query to join with the main query"
+    },
+    {
+      "name": "field",
+      "type": "string_or_array",
+      "required": true,
+      "description": "Field(s) to use as join keys (can be single field or array)"
+    },
+    {
+      "name": "include",
+      "type": "string_or_array",
+      "required": false,
+      "description": "Fields to include from the sub-query in the result"
+    },
+    {
+      "name": "mode",
+      "type": "string",
+      "required": false,
+      "description": "Join type: 'left' (default), 'inner', etc."
+    }
+  ],
+  "return_type": "joined_events",
+  "examples": [
+    "| join({#event_simpleName=/^(UserIdentity|UserLogon)$/ | UserName!=/($\\$|^DWM-|LOCAL\\\\sSERVICE|^UMFD-|^$)/}, field=UserSid, include=UserName, mode=left)",
+    "#event_simpleName=ProcessRollup2\n| ImageFileName=/(?<FilePath>(\\/|\\\\).+(\\/|\\\\))(?<FileName>.+$)/\n| FileName=~wildcard(?FileName, ignoreCase=true)\n| select([aid, ComputerName, UserSid, UserName, FilePath, FileName, CommandLine])\n| join({#event_simpleName=/^(UserIdentity|UserLogon)$/ | UserName!=/($\\$|^DWM-|LOCAL\\\\sSERVICE|^UMFD-|^$)/}, field=UserSid, include=UserName, mode=left)\n| UserName=~wildcard(?UserName, ignoreCase=true)"
+  ],
+  "related_functions": ["selfJoinFilter", "correlate"],
+  "use_cases": ["Data enrichment", "Cross-event correlation", "User context addition", "Multi-source analysis"],
+  "documentation_url": "https://library.humio.com/data-analysis/functions-join.html"
+}
