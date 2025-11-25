@@ -116,7 +116,9 @@ Category: network_connections
     else:
         print(f"⚠️  Query not enhanced (same term count)")
     
-    return query_enhanced, metadata_enhanced
+    # Assert that the query was built successfully
+    assert query_enhanced is not None
+    assert metadata_enhanced is not None
 
 
 def test_smb_query_enhancement():
@@ -152,7 +154,9 @@ Values: 445, 139, 135""",
     print(f"Query: {query}")
     print(f"Terms: {len(metadata['recognised'])}")
     
-    return query, metadata
+    # Assert that the query was built successfully
+    assert query is not None
+    assert metadata is not None
 
 
 if __name__ == "__main__":

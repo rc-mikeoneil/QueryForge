@@ -70,7 +70,7 @@ class TestCBRReadOnlyTools:
 
     def test_list_datasets(self, runtime):
         """Test cbr_list_datasets returns datasets."""
-        from server_tools_cbr import register_cbr_tools
+        from queryforge.server.server_tools_cbr import register_cbr_tools
         from fastmcp import FastMCP
         
         mcp = FastMCP(name="test")
@@ -88,7 +88,7 @@ class TestCBRReadOnlyTools:
 
     def test_get_fields(self, runtime):
         """Test cbr_get_fields returns field information."""
-        from server_tools_cbr import register_cbr_tools
+        from queryforge.server.server_tools_cbr import register_cbr_tools
         from fastmcp import FastMCP
         
         mcp = FastMCP(name="test")
@@ -105,7 +105,7 @@ class TestCBRReadOnlyTools:
 
     def test_get_operator_reference(self, runtime):
         """Test cbr_get_operator_reference returns operators."""
-        from server_tools_cbr import register_cbr_tools
+        from queryforge.server.server_tools_cbr import register_cbr_tools
         from fastmcp import FastMCP
         
         mcp = FastMCP(name="test")
@@ -120,7 +120,7 @@ class TestCBRReadOnlyTools:
 
     def test_get_best_practices(self, runtime):
         """Test cbr_get_best_practices returns practices."""
-        from server_tools_cbr import register_cbr_tools
+        from queryforge.server.server_tools_cbr import register_cbr_tools
         from fastmcp import FastMCP
         
         mcp = FastMCP(name="test")
@@ -134,7 +134,7 @@ class TestCBRReadOnlyTools:
 
     def test_get_examples(self, runtime):
         """Test cbr_get_examples returns examples."""
-        from server_tools_cbr import register_cbr_tools
+        from queryforge.server.server_tools_cbr import register_cbr_tools
         from fastmcp import FastMCP
         
         mcp = FastMCP(name="test")
@@ -153,7 +153,7 @@ class TestCBRQueryBuilding:
 
     def test_build_query_with_terms(self, runtime):
         """Test building query with structured terms."""
-        from server_tools_cbr import register_cbr_tools
+        from queryforge.server.server_tools_cbr import register_cbr_tools
         from fastmcp import FastMCP
         
         mcp = FastMCP(name="test")
@@ -172,7 +172,7 @@ class TestCBRQueryBuilding:
 
     def test_build_query_with_natural_language(self, runtime):
         """Test building query with natural language intent."""
-        from server_tools_cbr import register_cbr_tools
+        from queryforge.server.server_tools_cbr import register_cbr_tools
         from fastmcp import FastMCP
         
         mcp = FastMCP(name="test")
@@ -195,7 +195,7 @@ class TestCBRValidation:
 
     def test_validate_valid_query(self, runtime):
         """Test validation of a valid query."""
-        from server_tools_cbr import register_cbr_tools
+        from queryforge.server.server_tools_cbr import register_cbr_tools
         from fastmcp import FastMCP
         
         mcp = FastMCP(name="test")
@@ -213,7 +213,7 @@ class TestCBRValidation:
 
     def test_validate_invalid_query(self, runtime):
         """Test validation of an invalid query."""
-        from server_tools_cbr import register_cbr_tools
+        from queryforge.server.server_tools_cbr import register_cbr_tools
         from fastmcp import FastMCP
         
         mcp = FastMCP(name="test")
@@ -235,7 +235,7 @@ class TestCBRCombinedTool:
 
     def test_build_query_validated_success(self, runtime):
         """Test combined tool with valid query."""
-        from server_tools_cbr import register_cbr_tools
+        from queryforge.server.server_tools_cbr import register_cbr_tools
         from fastmcp import FastMCP
         
         mcp = FastMCP(name="test")

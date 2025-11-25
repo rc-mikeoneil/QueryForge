@@ -1,5 +1,5 @@
 import pytest
-from cbc import query_builder as cbc_query_builder
+from queryforge.platforms.cbc import query_builder as cbc_query_builder
 from tests.base_query_builder_test import (
     BaseQueryBuilderTest,
     SecurityValidationMixin,

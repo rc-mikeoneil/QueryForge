@@ -31,8 +31,8 @@ MAX_QUERY_LENGTH = 10000
 UNBOUNDED_WARNING_THRESHOLD = 1000
 
 # Common CQL operators and functions
-CQL_OPERATORS = {'=', '!=', '>', '>=', '<', '<=', 'contains', 'startswith', 'endswith', 'in', 'not in', '=~', '!~'}
-CQL_FUNCTIONS = {'now', 'hour', 'day', 'week', 'month', 'year'}
+CQL_OPERATORS = {'=', '!=', '>', '>=', '<', '<=', 'contains', 'startswith', 'endswith', 'in()', 'not in', '=~', '!~'}
+CQL_FUNCTIONS = {'now', 'hour', 'day', 'week', 'month', 'year', 'in'}
 
 logger = logging.getLogger(__name__)
 
@@ -143,21 +143,63 @@ class CQLValidator(BaseValidator):
                 suggestion="Use double backslashes for literal backslashes, e.g., 'C:\\\\Windows\\\\System32'"
             ))
 
-        # Check for IN clause format
-        in_clauses = re.findall(r'\bIN\s*\([^)]+\)', query, re.IGNORECASE)
-        for in_clause in in_clauses:
-            # Verify values are quoted
-            values_section = re.search(r'\(([^)]+)\)', in_clause)
-            if values_section:
-                values = values_section.group(1)
-                # Check if values are properly quoted
-                if not re.search(r"'[^']*'", values):
-                    issues.append(ValidationIssue(
-                        severity=ValidationSeverity.WARNING,
-                        category="syntax",
-                        message=f"IN clause may have unquoted values: {in_clause[:50]}...",
-                        suggestion="Ensure all values in IN clauses are single-quoted, e.g., IN ('val1', 'val2')"
-                    ))
+        # Check for SQL-style IN operator (field_name IN (values))
+        # This is SQL syntax, not valid CQL syntax which uses in() function
+        
+        # Process the query line by line for better accuracy
+        lines = query.split("\n")
+        for i, line in enumerate(lines):
+            # Skip lines that are part of CQL in() function syntax
+            if "in(" in line.lower() and "values=" in line.lower():
+                continue
+            
+            # Look specifically for SQL-style IN operator
+            # Pattern: word boundary + field name + whitespace + IN + whitespace + opening paren
+            matches = re.findall(r'\b([a-zA-Z_]\w*)\s+IN\s*\(', line, re.IGNORECASE)
+            for field_name in matches:
+                # Skip special cases and keywords
+                if field_name.lower() in ['processrollup2', 'networkconnectip4', 'in', 'not', 'and', 'or', 'where']:
+                    continue
+                
+                issues.append(ValidationIssue(
+                    severity=ValidationSeverity.ERROR,
+                    category="syntax",
+                    message=f"SQL-style 'IN' syntax is not valid in CQL: '{field_name} IN (...)'",
+                    suggestion=f"Use CQL function syntax instead: in({field_name}, values=[...])"
+                ))
+
+        # Validate proper CQL in() function syntax
+        cql_in_pattern = re.findall(r'\bin\s*\([^,]+,\s*values\s*=\s*\[[^\]]*\]\)', query, re.IGNORECASE)
+        for in_func in cql_in_pattern:
+            # Validate that string values in the array are properly quoted
+            # Extract the values array
+            values_match = re.search(r'values\s*=\s*\[([^\]]*)\]', in_func, re.IGNORECASE)
+            if values_match:
+                values_str = values_match.group(1)
+                # Check for unquoted string values (strings that aren't numbers and aren't quoted)
+                # Split by comma and check each value
+                values = [v.strip() for v in values_str.split(',')]
+                for value in values:
+                    # Skip empty values
+                    if not value:
+                        continue
+                    # Check if it's a number (int or float)
+                    try:
+                        float(value)
+                        continue  # It's a number, which is fine unquoted
+                    except ValueError:
+                        pass
+                    # Check if it's properly quoted
+                    if not (value.startswith('"') and value.endswith('"')) and \
+                       not (value.startswith("'") and value.endswith("'")):
+                        # Might be an unquoted string
+                        issues.append(ValidationIssue(
+                            severity=ValidationSeverity.WARNING,
+                            category="syntax",
+                            message=f"in() function may have unquoted string value: {value}",
+                            suggestion="Ensure string values in in() function are quoted: in(field, values=['val1', 'val2'])"
+                        ))
+                        break  # Only report once per in() function
 
         return issues
 

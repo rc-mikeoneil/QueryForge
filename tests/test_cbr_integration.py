@@ -13,7 +13,7 @@ from queryforge.platforms.cbr.validator import CBRValidator
 @pytest.fixture
 def cbr_cache():
     """Load CBR schema cache"""
-    schema_dir = Path(__file__).parent.parent / "cbr"
+    schema_dir = Path(__file__).parent.parent / "src" / "queryforge" / "platforms" / "cbr"
     return CBResponseSchemaCache(schema_path=schema_dir)
 
 

@@ -50,7 +50,7 @@ _USERNAME_RE = re.compile(
     re.IGNORECASE,
 )
 _DOMAIN_RE = re.compile(
-    r"domain\s+(?:is|=|equals|contains)?\s*[\"']?([A-Za-z0-9_.-]+)[\"']?",
+    r"domain\s+(?:is|=|equals|contains|to)?\s*[\"']?([A-Za-z0-9_.-]+(?:\.[A-Za-z0-9_.-]+)*)[\"']?",
     re.IGNORECASE,
 )
 _PROCESS_GUID_RE = re.compile(

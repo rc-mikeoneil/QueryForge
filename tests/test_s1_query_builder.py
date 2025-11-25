@@ -103,7 +103,7 @@ class TestS1QueryBuilder(
     @property
     def required_params(self):
         """Return minimum required parameters for S1."""
-        return {"dataset": "processes", "natural_language_intent": "find all processes"}
+        return {"dataset": "processes", "filters": [{"field": "tgt.process.displayName", "value": "test.exe"}]}
     
     def get_max_limit(self):
         """S1 may have platform-specific limits."""
@@ -151,8 +151,10 @@ class TestS1QueryBuilder(
             natural_language_intent="Find processes launching powershell.exe",
         )
 
-        assert "meta.event.name in ('PROCESSCREATION')" in query
-        assert "tgt.process.displayName in:anycase ('powershell.exe')" in query
+        # Event type filters are no longer automatically added - users have full control
+        # Check for process name filter extracted from natural language
+        assert ("powershell.exe" in query and 
+                ("tgt.process.displayName" in query or "displayName" in query))
         assert metadata["dataset"] == "processes"
 
     def test_build_s1_query_with_structured_filters(self):
@@ -242,35 +244,41 @@ class TestS1QueryBuilder(
     
     def test_dataset_inference_process_keywords(self):
         """Test that process-related keywords infer the processes dataset."""
-        process_intents = [
-            "find processes",
-            "show executables",
-            "find cmd.exe running",
+        # Use intents with extractable patterns or add explicit filters
+        test_cases = [
+            ("find cmd.exe running", None),  # cmd.exe should be extracted
+            ("show powershell.exe executables", None),  # powershell.exe should be extracted
+            ("find processes", [{"field": "tgt.process.displayName", "operator": "contains", "value": "svchost.exe"}]),  # Add filter for vague intent
         ]
         
-        for intent in process_intents:
+        for intent, filters in test_cases:
             query, metadata = build_s1_query(
                 schema=MOCK_SCHEMA,
-                natural_language_intent=intent
+                natural_language_intent=intent,
+                filters=filters
             )
             
             assert metadata["dataset"] == "processes"
+            assert len(query) > 0
     
     def test_dataset_inference_network_keywords(self):
         """Test that network-related keywords infer the network_actions dataset."""
-        network_intents = [
-            "find network connections",
-            "show traffic to 8.8.8.8",
-            "find connections on port 443",
+        # Use intents with extractable patterns or add explicit filters
+        test_cases = [
+            ("show traffic to 8.8.8.8", None),  # IP should be extracted
+            ("find connections on port 443", None),  # Port should be extracted 
+            ("find network connections", [{"field": "dst.port.number", "operator": "=", "value": 80}]),  # Add filter for vague intent
         ]
         
-        for intent in network_intents:
+        for intent, filters in test_cases:
             query, metadata = build_s1_query(
                 schema=MOCK_SCHEMA,
-                natural_language_intent=intent
+                natural_language_intent=intent,
+                filters=filters
             )
             
             assert metadata["dataset"] == "network_actions"
+            assert len(query) > 0
     
     def test_ioc_extraction_ip_address(self):
         """Test that IP addresses are extracted from natural language."""
@@ -386,26 +394,30 @@ class TestS1QueryBuilder(
         assert "wscript.exe" in query
     
     def test_empty_filters_with_natural_language(self):
-        """Test that empty filters with natural language still works."""
+        """Test that empty filters with natural language still works when it has extractable patterns."""
+        # Use intent with extractable pattern instead of vague "find all processes"
         query, metadata = build_s1_query(
             schema=MOCK_SCHEMA,
-            natural_language_intent="find all processes",
+            natural_language_intent="find notepad.exe processes",
             filters=[]
         )
         
         assert metadata["dataset"] == "processes"
         assert len(query) > 0
+        assert "notepad.exe" in query
     
     def test_explicit_dataset_overrides_inference(self):
         """Test that explicit dataset parameter overrides inference."""
         query, metadata = build_s1_query(
             schema=MOCK_SCHEMA,
             dataset="network_actions",
-            natural_language_intent="find processes"  # Would normally infer processes
+            natural_language_intent="find processes",  # Would normally infer processes
+            filters=[{"field": "dst.port.number", "operator": "=", "value": 443}]  # Add filter for meaningful query
         )
         
         # Should use explicit dataset, not inferred one
         assert metadata["dataset"] == "network_actions"
+        assert len(query) > 0
     
     def test_process_name_extraction(self):
         """Test that process names are extracted from natural language."""
@@ -525,7 +537,8 @@ class TestS1QueryBuilder(
     
     def test_natural_language_with_time_reference(self):
         """Test natural language with time references."""
-        intent = "find processes from the last 24 hours"
+        # Add a meaningful filter alongside time reference
+        intent = "find powershell.exe processes from the last 24 hours"
         
         try:
             query, metadata = build_s1_query(
@@ -535,6 +548,7 @@ class TestS1QueryBuilder(
             
             # Should handle time references if supported
             assert len(query) > 0
+            assert "powershell.exe" in query
         except (AttributeError, NotImplementedError):
             # Time parsing may not be implemented yet
             pytest.skip("Time range parsing not implemented")

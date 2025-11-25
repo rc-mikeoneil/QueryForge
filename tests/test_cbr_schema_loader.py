@@ -25,7 +25,7 @@ def test_schema_loading():
     print("=" * 60)
     
     # Initialize cache pointing to cbr directory
-    cbr_dir = Path(__file__).parent.parent / "cbr"
+    cbr_dir = Path(__file__).parent.parent / "src" / "queryforge" / "platforms" / "cbr"
     cache = CBResponseSchemaCache(cbr_dir)
     
     print("\n1. Loading schema...")
@@ -119,7 +119,9 @@ def test_schema_loading():
     print(f"  - Example categories: {len(examples)}")
     print(f"  - Cache file: {cache.cache_file}")
     
-    return True
+    # Assert that schema loading succeeded
+    assert schema is not None
+    assert len(search_types) > 0
 
 
 def test_granular_field_sets():
@@ -128,7 +130,7 @@ def test_granular_field_sets():
     print("Testing Granular Field Sets")
     print("=" * 60)
     
-    cbr_dir = Path(__file__).parent.parent / "cbr"
+    cbr_dir = Path(__file__).parent.parent / "src" / "queryforge" / "platforms" / "cbr"
     cache = CBResponseSchemaCache(cbr_dir)
     schema = cache.load()
     

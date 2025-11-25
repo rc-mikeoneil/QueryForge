@@ -31,12 +31,13 @@ CBC_SCHEMA = {
 KQL_SCHEMA = {
     "DeviceNetworkEvents": {
         "description": "Network connection events",
-        "columns": {
-            "RemotePort": {"type": "int"},
-            "RemoteIP": {"type": "string"},
-            "InitiatingProcessFileName": {"type": "string"},
-            "InitiatingProcessCommandLine": {"type": "string"},
-        }
+        "columns": [
+            {"name": "RemotePort", "type": "int"},
+            {"name": "RemoteIP", "type": "string"},
+            {"name": "InitiatingProcessFileName", "type": "string"},
+            {"name": "InitiatingProcessCommandLine", "type": "string"},
+            {"name": "Timestamp", "type": "datetime"},
+        ]
     }
 }
 
@@ -53,13 +54,23 @@ CORTEX_SCHEMA = {
 
 S1_SCHEMA = {
     "datasets": {
-        "network": {"description": "Network events"}
+        "network": {
+            "description": "Network events",
+            "fields": {
+                "src.process.name": {"type": "string", "data_type": "string"},
+                "dst.port.number": {"type": "number", "data_type": "numeric"},
+                "src.process.cmdline": {"type": "string", "data_type": "string"},
+            }
+        }
     },
-    "network_fields": {
-        "src.process.name": {"type": "string"},
-        "dst.port.number": {"type": "number"},
-        "src.process.cmdline": {"type": "string"},
-    }
+    "operators": {
+        "operators": [
+            {"name": "equals", "symbols": ["="]},
+            {"name": "contains", "symbols": ["contains"]},
+            {"name": "in", "symbols": ["in"]},
+        ]
+    },
+    "common_fields": {}
 }
 
 
@@ -115,15 +126,20 @@ class TestCrossPlatformRDPQueries:
         query, metadata = build_kql_query(
             KQL_SCHEMA,
             natural_language_intent="RDP connections",
-            dataset="DeviceNetworkEvents",
+            table="DeviceNetworkEvents",
             rag_context=rag_context
         )
         
         assert query is not None
+        assert isinstance(metadata, dict), f"Expected dict, got {type(metadata)}"
         query_lower = query.lower()
         
         # Should reference DeviceNetworkEvents table
         assert "devicenetworkevents" in query_lower
+        
+        # Verify metadata contains expected keys
+        assert "table" in metadata
+        assert metadata["table"] == "DeviceNetworkEvents"
         
         print(f"KQL RDP Query: {query}")
         print(f"KQL Metadata: {metadata}")
@@ -148,14 +164,23 @@ class TestCrossPlatformRDPQueries:
         """Test SentinelOne RDP query is enhanced with multiple indicators."""
         rag_context = self.get_rdp_rag_context()
         
+        # S1 requires specific filters - provide explicit port filter
+        # The RAG context will enhance with additional indicators
         query, metadata = build_s1_query(
             S1_SCHEMA,
             natural_language_intent="RDP connections",
             dataset="network",
+            filters=[
+                {"field": "dst.port.number", "operator": "=", "value": 3389}
+            ],
             rag_context=rag_context
         )
         
         assert query is not None
+        assert isinstance(metadata, dict), f"Expected dict, got {type(metadata)}"
+        
+        # Should contain port reference (3389 is RDP)
+        assert "3389" in query
         
         print(f"S1 RDP Query: {query}")
         print(f"S1 Metadata: {metadata}")

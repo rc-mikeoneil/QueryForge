@@ -10,7 +10,11 @@ def test_s1_query_without_rag_context():
         "datasets": {
             "processes": {
                 "name": "Processes",
-                "description": "Process creation events"
+                "description": "Process creation events",
+                "fields": {
+                    "tgt.process.displayName": {"data_type": "string"},
+                    "tgt.process.cmdline": {"data_type": "string"}
+                }
             }
         },
         "common_fields": {
@@ -19,14 +23,16 @@ def test_s1_query_without_rag_context():
         }
     }
     
+    # Use specific executable name for extraction - "powershell.exe" is a pattern that can be extracted
     query, metadata = build_s1_query(
         schema,
         dataset="processes",
-        natural_language_intent="PowerShell execution"
+        natural_language_intent="Find powershell.exe execution"
     )
     
     assert query is not None
     assert metadata["dataset"] == "processes"
+    assert "powershell.exe" in query.lower()
 
 
 def test_s1_query_with_rag_context():
@@ -62,22 +68,22 @@ def test_s1_query_with_rag_context():
         }
     ]
     
+    # Use specific executable name to provide a base filter
     query, metadata = build_s1_query(
         schema,
         dataset="processes",
-        natural_language_intent="PowerShell execution",
+        natural_language_intent="Find powershell.exe execution",
         rag_context=rag_context
     )
     
     assert query is not None
     assert metadata["dataset"] == "processes"
     
-    # Check for RAG-enhanced expressions
+    # Should contain powershell.exe from natural language extraction
     query_lower = query.lower()
-    has_rag_enhancement = any(term in query_lower for term in ['powershell.exe', 'pwsh.exe'])
+    assert "powershell.exe" in query_lower or "pwsh.exe" in query_lower
     
     print(f"Query: {query}")
-    print(f"Has RAG enhancement: {has_rag_enhancement}")
     print(f"Metadata: {metadata}")
 
 
@@ -87,7 +93,10 @@ def test_s1_query_rag_enhancement_with_low_confidence():
         "datasets": {
             "processes": {
                 "name": "Processes",
-                "description": "Process creation events"
+                "description": "Process creation events",
+                "fields": {
+                    "tgt.process.displayName": {"data_type": "string"}
+                }
             }
         },
         "common_fields": {
@@ -104,15 +113,17 @@ def test_s1_query_rag_enhancement_with_low_confidence():
         }
     ]
     
+    # Add explicit filter to make query meaningful - "suspicious.exe" should be extracted
     query, metadata = build_s1_query(
         schema,
         dataset="processes",
-        natural_language_intent="suspicious processes",
+        natural_language_intent="suspicious.exe processes",
         rag_context=rag_context
     )
     
     assert query is not None
     assert metadata["dataset"] == "processes"
+    assert "suspicious.exe" in query.lower()
     print(f"Query: {query}")
     print(f"Metadata: {metadata}")
 
