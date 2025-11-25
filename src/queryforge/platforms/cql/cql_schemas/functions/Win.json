@@ -1,0 +1,17 @@
+{
+  "name": "Win",
+  "category": "constant",
+  "description": "Platform constant representing the Windows operating system. Used to filter or match Windows-specific events in CQL queries.",
+  "syntax": "Win",
+  "parameters": [],
+  "return_type": "string",
+  "examples": [
+    "event_platform=Win",
+    "| where event_platform=Win",
+    "| groupBy([event_platform]) | where event_platform=Win"
+  ],
+  "related_functions": ["Mac", "Lin"],
+  "use_cases": ["Platform filtering", "OS-specific queries", "Windows event isolation"],
+  "notes": "This is a constant value, not a function call. Typically used with event_platform field to filter for Windows events. Equivalent to the string value 'Win'.",
+  "documentation_url": "https://falcon.crowdstrike.com/documentation/84/falcon-data-replicator-guide"
+}

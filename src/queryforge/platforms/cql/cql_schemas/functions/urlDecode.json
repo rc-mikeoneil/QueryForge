@@ -1,0 +1,29 @@
+{
+  "name": "urlDecode",
+  "category": "transformation",
+  "description": "Decodes URL-encoded strings, converting percent-encoded characters back to their original form.",
+  "syntax": "urlDecode(field)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "URL-encoded string to decode"
+    }
+  ],
+  "return_type": "string",
+  "examples": [
+    "decodedUrl := urlDecode(HttpUrl)",
+    "| urlDecode(CommandLine)"
+  ],
+  "related_functions": [
+    "base64Decode",
+    "parseJson"
+  ],
+  "use_cases": [
+    "URL decoding",
+    "HTTP request analysis",
+    "Encoded string parsing"
+  ],
+  "notes": "Useful for analyzing web traffic and HTTP request data."
+}

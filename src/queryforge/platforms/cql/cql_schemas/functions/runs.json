@@ -1,0 +1,29 @@
+{
+  "name": "runs",
+  "category": "analysis",
+  "description": "Identifies runs or sequences of similar values in sorted data. Used for detecting patterns and anomalies.",
+  "syntax": "runs(field)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "Field to analyze for runs"
+    }
+  ],
+  "return_type": "run_data",
+  "examples": [
+    "| runs(CommandLine)",
+    "| runs(ImageFileName) | where runLength > 5"
+  ],
+  "related_functions": [
+    "groupBy",
+    "sort"
+  ],
+  "use_cases": [
+    "Pattern detection",
+    "Anomaly identification",
+    "Sequence analysis"
+  ],
+  "notes": "Useful for detecting repeated executions or sequences of similar events."
+}

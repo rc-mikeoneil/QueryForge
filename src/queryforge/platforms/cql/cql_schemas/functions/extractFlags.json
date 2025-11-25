@@ -1,0 +1,32 @@
+{
+  "name": "extractFlags",
+  "category": "bitfield",
+  "description": "Extracts and decodes individual flags from a bitmask field. Returns human-readable flag names based on bit positions.",
+  "syntax": "extractFlags(field, [mapping])",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "long",
+      "required": true,
+      "description": "Bitmask field to decode"
+    },
+    {
+      "name": "mapping",
+      "type": "object",
+      "required": false,
+      "description": "Mapping of bit positions to flag names"
+    }
+  ],
+  "return_type": "array",
+  "examples": [
+    "flags := extractFlags(SignInfoFlags)",
+    "| extractFlags(WindowFlags, output=decodedFlags)"
+  ],
+  "related_functions": [],
+  "use_cases": [
+    "Bitmask decoding",
+    "Flag extraction",
+    "Binary field parsing"
+  ],
+  "notes": "Useful for fields like SignInfoFlags, WindowFlags, and other bitmask values in Falcon data."
+}

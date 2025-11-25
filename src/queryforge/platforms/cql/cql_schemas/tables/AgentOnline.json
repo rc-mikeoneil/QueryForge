@@ -9,63 +9,151 @@
       "type": "string",
       "description": "Event type identifier",
       "required": true,
-      "example_values": ["AgentOnline"]
+      "example_values": [
+        "AgentOnline"
+      ]
     },
     {
       "name": "aid",
       "type": "string",
       "description": "Agent ID - unique identifier for the endpoint",
       "required": true,
-      "common_usage": ["grouping", "filtering", "correlation"]
+      "common_usage": [
+        "grouping",
+        "filtering",
+        "correlation"
+      ]
     },
     {
       "name": "cid",
       "type": "string",
       "description": "Customer ID - unique identifier for the CrowdStrike tenant",
       "required": true,
-      "common_usage": ["grouping", "filtering"]
+      "common_usage": [
+        "grouping",
+        "filtering"
+      ]
     },
     {
       "name": "event_platform",
       "type": "string",
       "description": "Operating system platform",
       "required": true,
-      "example_values": ["Win", "Mac", "Lin"],
-      "common_usage": ["filtering"]
+      "example_values": [
+        "Win",
+        "Mac",
+        "Lin"
+      ],
+      "common_usage": [
+        "filtering"
+      ]
     },
     {
       "name": "ComputerName",
       "type": "string",
       "description": "Hostname of the endpoint",
       "searchable": true,
-      "common_usage": ["display", "filtering"]
+      "common_usage": [
+        "display",
+        "filtering"
+      ]
     },
     {
       "name": "BaseTime",
       "type": "long",
       "description": "Base time value used for calculating system boot time (Windows-specific)",
-      "common_usage": ["boot time calculation", "uptime analysis"]
+      "common_usage": [
+        "boot time calculation",
+        "uptime analysis"
+      ]
     },
     {
       "name": "ContextTimeStamp",
       "type": "long",
       "description": "Event timestamp in epoch milliseconds",
-      "common_usage": ["temporal analysis", "last online tracking"]
+      "common_usage": [
+        "temporal analysis",
+        "last online tracking"
+      ]
     },
     {
       "name": "@timestamp",
       "type": "datetime",
       "description": "Event timestamp in ISO format",
-      "common_usage": ["display", "time range filtering"]
+      "common_usage": [
+        "display",
+        "time range filtering"
+      ]
+    },
+    {
+      "name": "CpuProcessorName",
+      "type": "string",
+      "description": "CPU processor name",
+      "field_category": "source",
+      "searchable": true,
+      "common_usage": [
+        "inventory"
+      ]
+    },
+    {
+      "name": "MemoryTotal",
+      "type": "long",
+      "description": "Total memory in bytes",
+      "field_category": "source",
+      "common_usage": [
+        "capacity tracking"
+      ]
+    },
+    {
+      "name": "UEFI",
+      "type": "boolean",
+      "description": "UEFI firmware indicator",
+      "field_category": "source",
+      "common_usage": [
+        "firmware type"
+      ]
+    },
+    {
+      "name": "TPM",
+      "type": "string",
+      "description": "TPM information",
+      "field_category": "source",
+      "common_usage": [
+        "security posture"
+      ]
+    },
+    {
+      "name": "TpmFirmwareVersion",
+      "type": "string",
+      "description": "TPM firmware version",
+      "field_category": "source",
+      "common_usage": [
+        "firmware tracking"
+      ]
+    },
+    {
+      "name": "BiosManufacturer",
+      "type": "string",
+      "description": "BIOS manufacturer",
+      "field_category": "source",
+      "searchable": true,
+      "common_usage": [
+        "vendor tracking"
+      ]
     }
   ],
-  "col_count": 8,
+  "col_count": 14,
   "common_filters": [
     "event_platform=Win",
     "event_platform=Mac",
     "event_platform=Lin"
   ],
-  "common_fields": ["aid", "ComputerName", "BaseTime", "event_platform"],
+  "common_fields": [
+    "aid",
+    "ComputerName",
+    "BaseTime",
+    "event_platform"
+  ],
   "common_operations": [
     "Windows boot time calculation using BaseTime",
     "System uptime calculation (time since last reboot)",

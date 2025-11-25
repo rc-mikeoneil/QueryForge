@@ -1,8 +1,10 @@
 {
-  "name": "groupBy",
+  "name": "groupby",
   "category": "aggregation",
-  "description": "Groups together events by one or more specified fields. Similar to the GROUP BY method in SQL databases. Can execute aggregate functions on each group. Results are returned in the _field parameter for each aggregate function.",
-  "syntax": "groupBy([field1, field2, ...], function=([aggregate_functions]), limit=max)",
+  "description": "Lowercase variant of groupBy function. Groups events by specified fields and allows aggregation operations.",
+  "alias_of": "groupBy",
+  "case_sensitive": false,
+  "syntax": "groupby([field1, field2, ...], function=[aggregation])",
   "parameters": [
     {
       "name": "fields",
@@ -14,23 +16,33 @@
       "name": "function",
       "type": "aggregation_function",
       "required": false,
-      "description": "Aggregate functions to apply to each group (e.g., count(), collect())"
-    },
-    {
-      "name": "limit",
-      "type": "number",
-      "required": false,
-      "description": "Maximum number of groups to return (use 'max' for unlimited)"
+      "description": "Aggregation function to apply (count, sum, avg, min, max, etc.)"
     }
   ],
-  "return_type": "grouped_events",
+  "returns": {
+    "type": "grouped_events",
+    "description": "Events grouped by specified fields with aggregation results"
+  },
   "examples": [
-    "| groupBy([aid, UserSid], function=([count(aid, as=executionCount), collect([CommandLine])]), limit=max)",
-    "| groupBy([ComputerName], function=count())",
-    "| groupBy([aid, falconPID], function=collect([ImageFileName]))"
+    {
+      "description": "Group processes by image filename with count",
+      "query": "#event_simpleName=ProcessRollup2 | groupby([ImageFileName], function=count())"
+    },
+    {
+      "description": "Group by computer and user with event count",
+      "query": "groupby([ComputerName, UserName], function=count(aid))"
+    }
   ],
-  "related_functions": ["count", "bucket", "stats", "collect"],
-  "use_cases": ["Aggregation", "Event grouping", "Statistical analysis", "Data summarization"],
-  "notes": "The _count field is automatically created if the count() function is used.",
-  "documentation_url": "https://library.humio.com/data-analysis/functions-groupby.html"
+  "use_cases": [
+    "Event aggregation",
+    "Counting occurrences",
+    "Statistical analysis",
+    "Data summarization"
+  ],
+  "related_functions": ["groupBy", "stats", "count", "aggregate"],
+  "notes": [
+    "Functionally identical to groupBy() with uppercase 'B'",
+    "CQL is case-insensitive for function names",
+    "Prefer groupBy() for consistency with CrowdStrike documentation"
+  ]
 }

@@ -1,0 +1,36 @@
+{
+  "name": "parseInt",
+  "category": "transformation",
+  "description": "Parses a string value as an integer number. Useful for converting string fields to numeric types.",
+  "syntax": "parseInt(field, [radix])",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "String to parse as integer"
+    },
+    {
+      "name": "radix",
+      "type": "number",
+      "required": false,
+      "default": 10,
+      "description": "Number base (e.g., 10, 16)"
+    }
+  ],
+  "return_type": "long",
+  "examples": [
+    "numValue := parseInt(stringField)",
+    "hexValue := parseInt(hexString, radix=16)"
+  ],
+  "related_functions": [
+    "convert",
+    "round"
+  ],
+  "use_cases": [
+    "String to number conversion",
+    "Type casting",
+    "Numeric operations"
+  ],
+  "notes": "Returns NaN for non-numeric strings. Radix 16 for hexadecimal parsing."
+}

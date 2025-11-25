@@ -1,0 +1,35 @@
+{
+  "name": "filter",
+  "category": "filtering",
+  "description": "Filters array or collection elements based on a condition. Returns a subset of elements matching the specified criteria.",
+  "syntax": "filter(array, condition)",
+  "parameters": [
+    {
+      "name": "array",
+      "type": "array",
+      "required": true,
+      "description": "Array to filter"
+    },
+    {
+      "name": "condition",
+      "type": "expression",
+      "required": true,
+      "description": "Boolean condition to evaluate for each element"
+    }
+  ],
+  "return_type": "array",
+  "examples": [
+    "| filter(collection, element > threshold)",
+    "validItems := filter(items, match(element, pattern))"
+  ],
+  "related_functions": [
+    "collect",
+    "select"
+  ],
+  "use_cases": [
+    "Array filtering",
+    "Collection subset",
+    "Conditional selection"
+  ],
+  "notes": "Useful for filtering collected arrays or multi-value fields."
+}

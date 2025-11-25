@@ -1,0 +1,36 @@
+{
+  "name": "parseTimestamp",
+  "category": "time",
+  "description": "Parses a timestamp string into epoch time format. Supports various date/time formats.",
+  "syntax": "parseTimestamp(field, [format])",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "Timestamp string to parse"
+    },
+    {
+      "name": "format",
+      "type": "string",
+      "required": false,
+      "description": "Expected timestamp format pattern"
+    }
+  ],
+  "return_type": "long",
+  "examples": [
+    "epochTime := parseTimestamp(timeString)",
+    "timestamp := parseTimestamp(dateField, format=\"%Y-%m-%d\")"
+  ],
+  "related_functions": [
+    "formatTime",
+    "bucket",
+    "now"
+  ],
+  "use_cases": [
+    "Timestamp parsing",
+    "Date conversion",
+    "Time normalization"
+  ],
+  "notes": "Converts various timestamp formats to epoch time for temporal operations."
+}

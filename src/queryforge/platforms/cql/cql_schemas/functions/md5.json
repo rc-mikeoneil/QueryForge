@@ -1,0 +1,29 @@
+{
+  "name": "md5",
+  "category": "hash",
+  "description": "Calculates MD5 hash of a string value. Used for creating unique identifiers or fingerprints.",
+  "syntax": "md5(field)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "String to hash"
+    }
+  ],
+  "return_type": "string",
+  "examples": [
+    "userHash := md5(UserName)",
+    "fingerprint := md5(concat(field1, field2))"
+  ],
+  "related_functions": [
+    "sha256",
+    "concat"
+  ],
+  "use_cases": [
+    "Unique ID generation",
+    "Data fingerprinting",
+    "Deduplication"
+  ],
+  "notes": "MD5 is not cryptographically secure but useful for non-security hashing."
+}

@@ -1,0 +1,31 @@
+{
+  "name": "collect",
+  "category": "aggregation",
+  "description": "Aggregates values from a field into a collection, typically used with groupBy() for collecting multiple values per group. Returns an array containing all values for the specified field within each group.",
+  "syntax": "collect([field1, field2, ...]) or collect(field)",
+  "parameters": [
+    {
+      "name": "fields",
+      "type": "array",
+      "required": true,
+      "description": "Array of field names to collect values from, or a single field name"
+    },
+    {
+      "name": "distinct",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Whether to collect only unique values"
+    }
+  ],
+  "return_type": "array",
+  "examples": [
+    "| groupBy([aid], function=collect([CommandLine]))",
+    "| groupBy([ComputerName], function=collect(ImageFileName))",
+    "| groupBy([UserSid], function=collect([DomainName], distinct=true))"
+  ],
+  "related_functions": ["groupBy", "count", "selectLast", "stats"],
+  "use_cases": ["Data aggregation", "Collecting related values", "Building lists per group", "Multi-value analysis"],
+  "notes": "Most commonly used with groupBy() to collect field values for each group. The result field is typically named after the collected field with '_collection' suffix.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-collect.html"
+}

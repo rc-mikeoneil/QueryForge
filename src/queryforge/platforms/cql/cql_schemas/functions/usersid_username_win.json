@@ -1,0 +1,29 @@
+{
+  "name": "usersid_username_win",
+  "category": "enrichment",
+  "description": "Enriches Windows SID values with corresponding usernames. Maps Security Identifiers to user account names.",
+  "syntax": "usersid_username_win(sid_field)",
+  "parameters": [
+    {
+      "name": "sid_field",
+      "type": "string",
+      "required": true,
+      "description": "Windows SID to resolve"
+    }
+  ],
+  "return_type": "string",
+  "examples": [
+    "userName := usersid_username_win(UserSid)",
+    "| usersid_username_win(TargetUserSid)"
+  ],
+  "related_functions": [
+    "enrich",
+    "match"
+  ],
+  "use_cases": [
+    "SID to username mapping",
+    "Windows user enrichment",
+    "Identity resolution"
+  ],
+  "notes": "Windows-specific function for resolving SID values to usernames."
+}

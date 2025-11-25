@@ -1,0 +1,29 @@
+{
+  "name": "parseHexString",
+  "category": "transformation",
+  "description": "Parses hexadecimal string into binary or string representation.",
+  "syntax": "parseHexString(hex_field)",
+  "parameters": [
+    {
+      "name": "hex_field",
+      "type": "string",
+      "required": true,
+      "description": "Hexadecimal string to parse"
+    }
+  ],
+  "return_type": "string",
+  "examples": [
+    "decoded := parseHexString(hexData)",
+    "| parseHexString(MagicNumber)"
+  ],
+  "related_functions": [
+    "parseInt",
+    "base64Decode"
+  ],
+  "use_cases": [
+    "Hex decoding",
+    "Binary data parsing",
+    "Magic number decoding"
+  ],
+  "notes": "Commonly used for parsing binary data encoded as hex strings."
+}

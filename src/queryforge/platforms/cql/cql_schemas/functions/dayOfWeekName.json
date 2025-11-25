@@ -1,0 +1,29 @@
+{
+  "name": "dayOfWeekName",
+  "category": "time",
+  "description": "Returns the name of the day of week (Monday, Tuesday, etc.) for a given timestamp.",
+  "syntax": "dayOfWeekName(timestamp_field)",
+  "parameters": [
+    {
+      "name": "timestamp_field",
+      "type": "long",
+      "required": true,
+      "description": "Timestamp to get day name from"
+    }
+  ],
+  "return_type": "string",
+  "examples": [
+    "dayName := dayOfWeekName(@timestamp)",
+    "| groupBy([dayOfWeekName(@timestamp)])"
+  ],
+  "related_functions": [
+    "hour",
+    "formatTime"
+  ],
+  "use_cases": [
+    "Weekly pattern analysis",
+    "Day grouping",
+    "Temporal reporting"
+  ],
+  "notes": "Returns full day name in English (e.g., 'Monday', 'Tuesday')."
+}

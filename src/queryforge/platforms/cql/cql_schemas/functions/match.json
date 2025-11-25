@@ -1,0 +1,37 @@
+{
+  "name": "match",
+  "category": "pattern",
+  "description": "Performs pattern matching on a field value. Can be used as either a function or an infix operator for string matching against patterns or regular expressions.",
+  "syntax": "match(field, pattern) or field match pattern",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "The field to match against"
+    },
+    {
+      "name": "pattern",
+      "type": "string",
+      "required": true,
+      "description": "String pattern or regular expression to match against"
+    },
+    {
+      "name": "ignoreCase",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Whether to perform case-insensitive matching"
+    }
+  ],
+  "return_type": "boolean",
+  "examples": [
+    "| where match(CommandLine, \"*powershell*\", ignoreCase=true)",
+    "| where ImageFileName match \"*cmd.exe\"",
+    "| where UserName match /[Aa]dmin.*/"
+  ],
+  "related_functions": ["wildcard", "regex", "in()"],
+  "use_cases": ["Pattern matching", "String filtering", "Substring search", "Regular expression matching"],
+  "notes": "Can be used both as a function and as an infix operator. For complex regular expressions, the regex operator is preferred.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-match.html"
+}

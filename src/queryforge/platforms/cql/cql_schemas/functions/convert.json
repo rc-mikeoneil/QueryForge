@@ -1,0 +1,41 @@
+{
+  "name": "convert",
+  "category": "transformation",
+  "description": "Converts values between different units or formats. Commonly used for size conversions (bytes to KB/MB/GB) and data type transformations.",
+  "syntax": "convert(value, from=unit, to=unit)",
+  "parameters": [
+    {
+      "name": "value",
+      "type": "number",
+      "required": true,
+      "description": "Value to convert"
+    },
+    {
+      "name": "from",
+      "type": "string",
+      "required": true,
+      "description": "Source unit or format"
+    },
+    {
+      "name": "to",
+      "type": "string",
+      "required": true,
+      "description": "Target unit or format"
+    }
+  ],
+  "return_type": "number",
+  "examples": [
+    "sizeGB := convert(FileSize, from=bytes, to=GB)",
+    "sizeMB := convert(MemoryTotal, from=bytes, to=MB)"
+  ],
+  "related_functions": [
+    "format",
+    "round"
+  ],
+  "use_cases": [
+    "Unit conversion",
+    "Size formatting",
+    "Data transformation"
+  ],
+  "notes": "Commonly used for converting byte values to human-readable sizes."
+}

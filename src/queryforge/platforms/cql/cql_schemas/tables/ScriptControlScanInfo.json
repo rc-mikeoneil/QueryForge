@@ -9,85 +9,148 @@
       "type": "string",
       "description": "Event type identifier",
       "required": true,
-      "example_values": ["ScriptControlScanInfo"]
+      "example_values": [
+        "ScriptControlScanInfo"
+      ]
     },
     {
       "name": "aid",
       "type": "string",
       "description": "Agent ID - unique identifier for the endpoint",
       "required": true,
-      "common_usage": ["grouping", "filtering", "correlation"]
+      "common_usage": [
+        "grouping",
+        "filtering",
+        "correlation"
+      ]
     },
     {
       "name": "cid",
       "type": "string",
       "description": "Customer ID - unique identifier for the CrowdStrike tenant",
       "required": true,
-      "common_usage": ["grouping", "filtering"]
+      "common_usage": [
+        "grouping",
+        "filtering"
+      ]
     },
     {
       "name": "event_platform",
       "type": "string",
       "description": "Operating system platform",
       "required": true,
-      "example_values": ["Win", "Mac", "Lin"],
-      "common_usage": ["filtering"]
+      "example_values": [
+        "Win",
+        "Mac",
+        "Lin"
+      ],
+      "common_usage": [
+        "filtering"
+      ]
     },
     {
       "name": "ComputerName",
       "type": "string",
       "description": "Hostname of the endpoint",
       "searchable": true,
-      "common_usage": ["display", "filtering", "grouping"]
+      "common_usage": [
+        "display",
+        "filtering",
+        "grouping"
+      ]
     },
     {
       "name": "SHA256HashData",
       "type": "string",
       "description": "SHA256 hash of the scanned script",
       "searchable": true,
-      "common_usage": ["correlation", "IOC matching"]
+      "common_usage": [
+        "correlation",
+        "IOC matching"
+      ]
     },
     {
       "name": "ScanResult",
       "type": "string",
       "description": "Result of the script scan",
-      "example_values": ["Clean", "Suspicious", "Malicious"],
-      "common_usage": ["filtering", "threat detection"]
+      "example_values": [
+        "Clean",
+        "Suspicious",
+        "Malicious"
+      ],
+      "common_usage": [
+        "filtering",
+        "threat detection"
+      ]
     },
     {
       "name": "ThreatLevel",
       "type": "string",
       "description": "Threat level assessment",
-      "example_values": ["Low", "Medium", "High"],
-      "common_usage": ["filtering", "risk analysis"]
+      "example_values": [
+        "Low",
+        "Medium",
+        "High"
+      ],
+      "common_usage": [
+        "filtering",
+        "risk analysis"
+      ]
     },
     {
       "name": "DetectionName",
       "type": "string",
       "description": "Name of the detection if malicious",
       "searchable": true,
-      "common_usage": ["threat identification", "alerting"]
+      "common_usage": [
+        "threat identification",
+        "alerting"
+      ]
     },
     {
       "name": "BehavioralIndicators",
       "type": "string",
       "description": "Behavioral indicators identified in the script",
       "searchable": true,
-      "common_usage": ["threat analysis", "pattern matching"]
+      "common_usage": [
+        "threat analysis",
+        "pattern matching"
+      ]
     },
     {
       "name": "ContextTimeStamp",
       "type": "long",
       "description": "Event timestamp in epoch milliseconds",
-      "common_usage": ["temporal analysis"]
+      "common_usage": [
+        "temporal analysis"
+      ]
+    },
+    {
+      "name": "ScriptContent",
+      "type": "string",
+      "description": "Content of the scanned script",
+      "field_category": "source",
+      "searchable": true,
+      "supports_regex": true,
+      "common_usage": [
+        "script analysis",
+        "malware detection",
+        "content inspection"
+      ]
     }
   ],
-  "col_count": 11,
+  "col_count": 12,
   "common_filters": [
     "ScanResult=/Suspicious|Malicious/",
     "ThreatLevel=/Medium|High/"
   ],
-  "common_fields": ["aid", "ComputerName", "ScanResult", "ThreatLevel", "DetectionName"],
+  "common_fields": [
+    "aid",
+    "ComputerName",
+    "ScanResult",
+    "ThreatLevel",
+    "DetectionName"
+  ],
   "common_operations": [
     "Join with ScriptControl via SHA256HashData for full script context",
     "Alert on malicious script detections",

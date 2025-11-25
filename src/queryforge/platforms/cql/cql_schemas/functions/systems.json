@@ -1,0 +1,22 @@
+{
+  "name": "systems",
+  "category": "enrichment",
+  "description": "Retrieves system information and metadata. Used to access system-level details beyond standard event fields.",
+  "syntax": "systems()",
+  "parameters": [],
+  "return_type": "table",
+  "examples": [
+    "| systems()",
+    "| join({systems()}, field=aid)"
+  ],
+  "related_functions": [
+    "enrich",
+    "match"
+  ],
+  "use_cases": [
+    "System metadata retrieval",
+    "Inventory queries",
+    "Asset enrichment"
+  ],
+  "notes": "Provides access to system-level information not available in standard events."
+}

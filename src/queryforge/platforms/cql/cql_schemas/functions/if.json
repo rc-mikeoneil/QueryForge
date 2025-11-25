@@ -1,0 +1,40 @@
+{
+  "name": "if",
+  "category": "conditional",
+  "description": "Conditional expression that returns different values based on a boolean condition. Similar to ternary operator.",
+  "syntax": "if(condition, then=value1, else=value2)",
+  "parameters": [
+    {
+      "name": "condition",
+      "type": "boolean",
+      "required": true,
+      "description": "Condition to evaluate"
+    },
+    {
+      "name": "then",
+      "type": "any",
+      "required": true,
+      "description": "Value if condition is true"
+    },
+    {
+      "name": "else",
+      "type": "any",
+      "required": true,
+      "description": "Value if condition is false"
+    }
+  ],
+  "return_type": "any",
+  "examples": [
+    "result := if(count > threshold, then=\"High\", else=\"Normal\")",
+    "category := if(entropy > 5.0, then=\"Suspicious\", else=\"Normal\")"
+  ],
+  "related_functions": [
+    "case"
+  ],
+  "use_cases": [
+    "Conditional logic",
+    "Value transformation",
+    "Categorization"
+  ],
+  "notes": "Can be nested for complex conditional logic."
+}

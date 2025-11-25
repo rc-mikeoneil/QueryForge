@@ -9,58 +9,90 @@
       "type": "string",
       "description": "Event type identifier",
       "required": true,
-      "example_values": ["CriticalEnvironmentVariableChanged"]
+      "example_values": [
+        "CriticalEnvironmentVariableChanged"
+      ]
     },
     {
       "name": "aid",
       "type": "string",
       "description": "Agent ID - unique identifier for the endpoint",
       "required": true,
-      "common_usage": ["grouping", "filtering", "correlation"]
+      "common_usage": [
+        "grouping",
+        "filtering",
+        "correlation"
+      ]
     },
     {
       "name": "cid",
       "type": "string",
       "description": "Customer ID - unique identifier for the CrowdStrike tenant",
       "required": true,
-      "common_usage": ["grouping", "filtering"]
+      "common_usage": [
+        "grouping",
+        "filtering"
+      ]
     },
     {
       "name": "event_platform",
       "type": "string",
       "description": "Operating system platform",
       "required": true,
-      "example_values": ["Win", "Lin", "Mac"],
-      "common_usage": ["filtering"]
+      "example_values": [
+        "Win",
+        "Lin",
+        "Mac"
+      ],
+      "common_usage": [
+        "filtering"
+      ]
     },
     {
       "name": "ComputerName",
       "type": "string",
       "description": "Hostname of the endpoint",
       "searchable": true,
-      "common_usage": ["display", "filtering", "grouping"]
+      "common_usage": [
+        "display",
+        "filtering",
+        "grouping"
+      ]
     },
     {
       "name": "UserName",
       "type": "string",
       "description": "Username that modified the environment variable",
       "searchable": true,
-      "common_usage": ["filtering", "actor identification"]
+      "common_usage": [
+        "filtering",
+        "actor identification"
+      ]
     },
     {
       "name": "VariableName",
       "type": "string",
       "description": "Name of the environment variable that was changed",
       "searchable": true,
-      "example_values": ["PATH", "LD_LIBRARY_PATH", "PYTHONPATH"],
-      "common_usage": ["filtering", "variable tracking"]
+      "example_values": [
+        "PATH",
+        "LD_LIBRARY_PATH",
+        "PYTHONPATH"
+      ],
+      "common_usage": [
+        "filtering",
+        "variable tracking"
+      ]
     },
     {
       "name": "OldValue",
       "type": "string",
       "description": "Previous value of the environment variable",
       "searchable": true,
-      "common_usage": ["change analysis", "baseline comparison"]
+      "common_usage": [
+        "change analysis",
+        "baseline comparison"
+      ]
     },
     {
       "name": "NewValue",
@@ -68,27 +100,63 @@
       "description": "New value of the environment variable",
       "searchable": true,
       "supports_regex": true,
-      "common_usage": ["change analysis", "malicious path detection"]
+      "common_usage": [
+        "change analysis",
+        "malicious path detection"
+      ]
     },
     {
       "name": "ContextProcessId",
       "type": "long",
       "description": "Falcon process ID of the process making the change",
-      "common_usage": ["correlation", "joining with ProcessRollup2"]
+      "common_usage": [
+        "correlation",
+        "joining with ProcessRollup2"
+      ]
     },
     {
       "name": "ContextTimeStamp",
       "type": "long",
       "description": "Event timestamp in epoch milliseconds",
-      "common_usage": ["temporal analysis", "change tracking"]
+      "common_usage": [
+        "temporal analysis",
+        "change tracking"
+      ]
+    },
+    {
+      "name": "EnvironmentVariableName",
+      "type": "string",
+      "description": "Name of the environment variable that was changed",
+      "field_category": "source",
+      "searchable": true,
+      "common_usage": [
+        "env var monitoring",
+        "configuration change detection"
+      ]
+    },
+    {
+      "name": "EnvironmentVariableValue",
+      "type": "string",
+      "description": "New value of the environment variable",
+      "field_category": "source",
+      "searchable": true,
+      "common_usage": [
+        "value analysis",
+        "change tracking"
+      ]
     }
   ],
-  "col_count": 11,
+  "col_count": 13,
   "common_filters": [
     "VariableName=PATH",
     "NewValue=/\\\\Temp\\\\/i"
   ],
-  "common_fields": ["aid", "ComputerName", "VariableName", "NewValue"],
+  "common_fields": [
+    "aid",
+    "ComputerName",
+    "VariableName",
+    "NewValue"
+  ],
   "common_operations": [
     "Detect PATH environment variable hijacking",
     "Monitor for persistence via environment variables",

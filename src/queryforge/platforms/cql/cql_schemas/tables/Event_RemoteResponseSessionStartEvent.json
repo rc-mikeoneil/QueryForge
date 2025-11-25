@@ -9,78 +9,132 @@
       "type": "string",
       "description": "Event type identifier",
       "required": true,
-      "example_values": ["Event_RemoteResponseSessionStartEvent"]
+      "example_values": [
+        "Event_RemoteResponseSessionStartEvent"
+      ]
     },
     {
       "name": "aid",
       "type": "string",
       "description": "Agent ID - unique identifier for the endpoint",
       "required": true,
-      "common_usage": ["grouping", "filtering", "correlation"]
+      "common_usage": [
+        "grouping",
+        "filtering",
+        "correlation"
+      ]
     },
     {
       "name": "cid",
       "type": "string",
       "description": "Customer ID - unique identifier for the CrowdStrike tenant",
       "required": true,
-      "common_usage": ["grouping", "filtering"]
+      "common_usage": [
+        "grouping",
+        "filtering"
+      ]
     },
     {
       "name": "event_platform",
       "type": "string",
       "description": "Operating system platform",
       "required": true,
-      "example_values": ["Win", "Mac", "Lin"],
-      "common_usage": ["filtering"]
+      "example_values": [
+        "Win",
+        "Mac",
+        "Lin"
+      ],
+      "common_usage": [
+        "filtering"
+      ]
     },
     {
       "name": "ComputerName",
       "type": "string",
       "description": "Hostname of the endpoint",
       "searchable": true,
-      "common_usage": ["display", "filtering", "grouping"]
+      "common_usage": [
+        "display",
+        "filtering",
+        "grouping"
+      ]
     },
     {
       "name": "SessionId",
       "type": "string",
       "description": "Unique RTR session identifier",
       "searchable": true,
-      "common_usage": ["session tracking", "correlation"]
+      "common_usage": [
+        "session tracking",
+        "correlation"
+      ]
     },
     {
       "name": "UserName",
       "type": "string",
       "description": "Username of the analyst initiating the RTR session",
       "searchable": true,
-      "common_usage": ["filtering", "analyst activity tracking", "audit trail"]
+      "common_usage": [
+        "filtering",
+        "analyst activity tracking",
+        "audit trail"
+      ]
     },
     {
       "name": "UserPrincipal",
       "type": "string",
       "description": "User principal name of the analyst",
       "searchable": true,
-      "common_usage": ["analyst identification"]
+      "common_usage": [
+        "analyst identification"
+      ]
     },
     {
       "name": "SessionType",
       "type": "string",
       "description": "Type of RTR session",
-      "example_values": ["Standard", "Admin", "Active Responder"],
-      "common_usage": ["filtering", "session classification"]
+      "example_values": [
+        "Standard",
+        "Admin",
+        "Active Responder"
+      ],
+      "common_usage": [
+        "filtering",
+        "session classification"
+      ]
     },
     {
       "name": "ContextTimeStamp",
       "type": "long",
       "description": "Event timestamp in epoch milliseconds",
-      "common_usage": ["temporal analysis", "session duration calculation"]
+      "common_usage": [
+        "temporal analysis",
+        "session duration calculation"
+      ]
+    },
+    {
+      "name": "StartTimestamp",
+      "type": "long",
+      "description": "Timestamp when the RTR session started (epoch milliseconds)",
+      "field_category": "source",
+      "common_usage": [
+        "session tracking",
+        "timeline analysis"
+      ]
     }
   ],
-  "col_count": 10,
+  "col_count": 11,
   "common_filters": [
     "SessionType=Admin",
     "UserName=*"
   ],
-  "common_fields": ["aid", "ComputerName", "UserName", "SessionId", "SessionType"],
+  "common_fields": [
+    "aid",
+    "ComputerName",
+    "UserName",
+    "SessionId",
+    "SessionType"
+  ],
   "common_operations": [
     "Track analyst RTR activity",
     "Audit incident response operations",

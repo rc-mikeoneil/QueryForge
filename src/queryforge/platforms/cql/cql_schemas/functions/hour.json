@@ -1,0 +1,29 @@
+{
+  "name": "hour",
+  "category": "time",
+  "description": "Extracts the hour component (0-23) from a timestamp.",
+  "syntax": "hour(timestamp_field)",
+  "parameters": [
+    {
+      "name": "timestamp_field",
+      "type": "long",
+      "required": true,
+      "description": "Timestamp to extract hour from"
+    }
+  ],
+  "return_type": "number",
+  "examples": [
+    "loginHour := hour(@timestamp)",
+    "| groupBy([hour(@timestamp)])"
+  ],
+  "related_functions": [
+    "formatTime",
+    "bucket"
+  ],
+  "use_cases": [
+    "Time-of-day analysis",
+    "Temporal grouping",
+    "Activity pattern detection"
+  ],
+  "notes": "Returns hour in 24-hour format (0-23)."
+}

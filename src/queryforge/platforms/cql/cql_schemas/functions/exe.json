@@ -1,0 +1,28 @@
+{
+  "name": "exe",
+  "category": "transformation",
+  "description": "Extracts executable name from a process or file path.",
+  "syntax": "exe(path_field)",
+  "parameters": [
+    {
+      "name": "path_field",
+      "type": "string",
+      "required": true,
+      "description": "Process or file path"
+    }
+  ],
+  "return_type": "string",
+  "examples": [
+    "exeName := exe(ImageFileName)",
+    "| groupBy([exe(CommandLine)])"
+  ],
+  "related_functions": [
+    "simpleName",
+    "split"
+  ],
+  "use_cases": [
+    "Executable extraction",
+    "Process name normalization"
+  ],
+  "notes": "Similar to simpleName but specifically for executables."
+}

@@ -1,0 +1,33 @@
+{
+  "name": "series",
+  "category": "analysis",
+  "description": "Creates a time series analysis of events, organizing data into temporal buckets for trend analysis.",
+  "syntax": "series(field, [span])",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "Field to analyze over time"
+    },
+    {
+      "name": "span",
+      "type": "string",
+      "required": false,
+      "description": "Time bucket size"
+    }
+  ],
+  "return_type": "series_data",
+  "examples": [
+    "| series(count(), span=1h)"
+  ],
+  "related_functions": [
+    "timechart",
+    "bucket"
+  ],
+  "use_cases": [
+    "Time series analysis",
+    "Trend detection"
+  ],
+  "notes": "Used for temporal pattern analysis."
+}

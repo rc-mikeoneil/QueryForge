@@ -1,0 +1,22 @@
+{
+  "name": "Mac",
+  "category": "constant",
+  "description": "Platform constant representing the macOS operating system. Used to filter or match Mac-specific events in CQL queries.",
+  "syntax": "Mac",
+  "parameters": [],
+  "return_type": "string",
+  "examples": [
+    "event_platform=Mac",
+    "| where event_platform=Mac"
+  ],
+  "related_functions": [
+    "Win",
+    "Lin"
+  ],
+  "use_cases": [
+    "Platform filtering",
+    "OS-specific queries",
+    "macOS event isolation"
+  ],
+  "notes": "This is a constant value, not a function call. Typically used with event_platform field to filter for Mac events."
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Lin",
+  "category": "constant",
+  "description": "Platform constant representing the Linux operating system. Used to filter or match Linux-specific events in CQL queries.",
+  "syntax": "Lin",
+  "parameters": [],
+  "return_type": "string",
+  "examples": [
+    "event_platform=Lin",
+    "| where event_platform=Lin"
+  ],
+  "related_functions": [
+    "Win",
+    "Mac"
+  ],
+  "use_cases": [
+    "Platform filtering",
+    "OS-specific queries",
+    "Linux event isolation"
+  ],
+  "notes": "This is a constant value, not a function call. Typically used with event_platform field to filter for Linux events."
+}

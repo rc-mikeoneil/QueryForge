@@ -13,13 +13,15 @@ This repository provides machine-readable schemas and human-readable documentati
 
 ## Project Status
 
-**Version:** 2.0.0
-**Status:** Production Ready
-**Completion:** 100% (All phases complete)
-**Total Schemas:** 270 JSON files
-**Total Examples:** 123 categorized queries
-**How-Tos:** 54 guides
-**Best Practices:** 34 guides
+**Version:** 2.1.0  
+**Status:** ✅ Production Ready (Validated 2025-11-25)  
+**Schema Coverage:** 88% Functions | 100% Operators | 100% Tables  
+**Total Schemas:** 280+ JSON files  
+**Total Examples:** 123 categorized queries  
+**How-Tos:** 54 guides  
+**Best Practices:** 34 guides  
+
+📊 **Quick Status:** See [CQL_SCHEMA_STATUS.md](CQL_SCHEMA_STATUS.md) for current coverage metrics
 
 ## Repository Structure
 
@@ -371,13 +373,26 @@ with open('cql_schemas/builder/validation_rules.json') as f:
 
 ## Documentation
 
+### Primary Documentation
+- **[CQL_SCHEMA_STATUS.md](CQL_SCHEMA_STATUS.md)** - 📊 Current status dashboard and quick stats
+- **[VALIDATION_SUMMARY.md](VALIDATION_SUMMARY.md)** - ✅ Validation metrics and coverage
+- **[SCHEMA_MAINTENANCE_GUIDE.md](SCHEMA_MAINTENANCE_GUIDE.md)** - 🔧 How to maintain schemas
 - **[cql_schemas/README.md](cql_schemas/README.md)** - Schema usage guide
-- **[cql_schemas/SCHEMA_STRUCTURE.md](cql_schemas/SCHEMA_STRUCTURE.md)** - Detailed schema format documentation
+- **[CHANGELOG.md](CHANGELOG.md)** - Version history and updates
+
+### Detailed Analysis
+- **[CQL_VALIDATION_REPORT.md](CQL_VALIDATION_REPORT.md)** - Full validation methodology and findings
+- **[CQL_VALIDATION_ANALYSIS_AND_REVISION_PLAN.md](CQL_VALIDATION_ANALYSIS_AND_REVISION_PLAN.md)** - Validation corrections
+- **[REMAINING_FIELD_ANALYSIS.md](REMAINING_FIELD_ANALYSIS.md)** - Field investigation details
+- **[CQL_VALIDATION_DATA.json](CQL_VALIDATION_DATA.json)** - Raw validation data (85KB)
+
+### Schema Structure
+- **[cql_schemas/SCHEMA_STRUCTURE.md](cql_schemas/SCHEMA_STRUCTURE.md)** - Detailed schema format
 - **[cql_schemas/CATALOG_SUMMARY.md](cql_schemas/CATALOG_SUMMARY.md)** - Schema statistics
 - **[cql_schemas/QUICK_REFERENCE.md](cql_schemas/QUICK_REFERENCE.md)** - Quick start guide
-- **[CHANGELOG.md](CHANGELOG.md)** - Version history and updates
-- **[VALIDATION_REPORT.md](VALIDATION_REPORT.md)** - Schema validation results
-- **[docs/SCHEMA_REVIEW_FINDINGS.md](docs/SCHEMA_REVIEW_FINDINGS.md)** - Schema review findings
+
+### Historical
+- **[CQL_SCHEMA_IMPROVEMENTS_SUMMARY.md](CQL_SCHEMA_IMPROVEMENTS_SUMMARY.md)** - Previous improvements
 - **[docs/archive/](docs/archive/)** - Historical documentation
 
 ## Contributing
@@ -412,14 +427,28 @@ For questions or issues:
 
 ---
 
-**Last Updated:** 2025-11-15
-**Schema Version:** 2.0.0
-**Project Status:** Production Ready
+**Last Updated:** 2025-11-25  
+**Schema Version:** 2.1.0  
+**Project Status:** ✅ Production Ready (Validated)
 
-## Recent Updates (v2.0.0)
+## Recent Updates (v2.1.0 - 2025-11-25)
 
-- ✅ **Unified How-Tos and Best Practices Schemas** - Standardized 88 guidance documents
-- ✅ **New Directories** - Added `cql_schemas/how_tos/` and `cql_schemas/best_practices/`
-- ✅ **New Indexes** - Created `how_tos_index.json` and `best_practices_index.json`
-- ✅ **Documentation Reorganization** - Moved historical docs to `docs/archive/`
-- ✅ **Enhanced Master Index** - Updated with how-tos and best practices sections
+### Schema Enhancements
+- ✅ **Added Function Variants** - `groupby.json` and `formattime.json` (lowercase variants)
+- ✅ **Validated Coverage** - Corrected metrics: 88% functions, 100% operators
+- ✅ **Improved 28+ Functions** - Added previously missing definitions
+- ✅ **Enhanced Table Schemas** - Added 25+ missing fields across 13 tables
+
+### Documentation Updates
+- ✅ **New Status Dashboard** - [CQL_SCHEMA_STATUS.md](CQL_SCHEMA_STATUS.md) for quick reference
+- ✅ **Corrected Validation Reports** - Updated with accurate coverage percentages
+- ✅ **Consolidated Documentation** - Removed redundant files, created clear index
+- ✅ **Validation Analysis** - Detailed accuracy assessment and corrections
+
+### Key Findings
+- Schema quality: **EXCELLENT** (production-ready with 88% function coverage)
+- All critical functions and operators: **PRESENT**
+- Only 12 low-priority specialized functions missing
+- Field investigation: 306 fields mostly calculated/aggregate (not source fields)
+
+See [CQL_SCHEMA_STATUS.md](CQL_SCHEMA_STATUS.md) for complete status and metrics.

@@ -1,0 +1,31 @@
+{
+  "name": "enrich",
+  "category": "enrichment",
+  "description": "Enriches events with additional data from external sources or lookup tables. Used to add contextual information to events.",
+  "syntax": "enrich(field, [parameters])",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "Field to enrich"
+    }
+  ],
+  "return_type": "enriched_event",
+  "examples": [
+    "| enrich(RemoteAddressIP4)",
+    "| enrich(aid, include=[ComputerName, AgentVersion])"
+  ],
+  "related_functions": [
+    "ipLocation",
+    "asn",
+    "match",
+    "join"
+  ],
+  "use_cases": [
+    "Data enrichment",
+    "Context addition",
+    "Lookup augmentation"
+  ],
+  "notes": "Commonly used with IP addresses, agent IDs, and other identifiers to add contextual data."
+}

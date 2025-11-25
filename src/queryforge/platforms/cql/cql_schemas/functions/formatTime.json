@@ -1,52 +1,79 @@
 {
-  "name": "formatTime",
+  "name": "formattime",
   "category": "time",
-  "description": "Formats times using a subset of the Java Formatter pattern format. Supports a wide range of date and time format symbols for custom timestamp formatting.",
-  "syntax": "formatTime(format=pattern, field=input_field, as=output_field, locale=locale, timezone=tz)",
+  "description": "Lowercase variant of formatTime function. Formats timestamp fields into human-readable strings using strftime-style format patterns.",
+  "alias_of": "formatTime",
+  "case_sensitive": false,
+  "syntax": "formattime(format=\"pattern\", field=timestamp_field, [timezone=\"tz\"], [locale=\"locale\"])",
   "parameters": [
     {
       "name": "format",
       "type": "string",
       "required": true,
-      "description": "Format pattern using Java Formatter symbols (e.g., %Y-%m-%d %H:%M:%S)"
+      "description": "strftime format pattern (e.g., '%Y-%m-%d %H:%M:%S')"
     },
     {
       "name": "field",
-      "type": "string",
-      "required": false,
-      "description": "Field containing timestamp to format (default: @timestamp)"
-    },
-    {
-      "name": "as",
-      "type": "string",
-      "required": false,
-      "description": "Name of output field"
-    },
-    {
-      "name": "locale",
-      "type": "string",
-      "required": false,
-      "description": "Locale for formatting (e.g., en_US)"
+      "type": "timestamp",
+      "required": true,
+      "description": "Timestamp field to format (milliseconds since epoch or @timestamp)"
     },
     {
       "name": "timezone",
       "type": "string",
       "required": false,
-      "description": "Timezone for formatting (e.g., Z, UTC)"
+      "description": "Timezone for formatting (e.g., 'America/New_York', 'UTC')"
+    },
+    {
+      "name": "locale",
+      "type": "string",
+      "required": false,
+      "description": "Locale for formatting (e.g., 'en_US')"
     }
   ],
-  "return_type": "enriched_events",
-  "format_symbols": {
-    "time": ["%H", "%I", "%k", "%l", "%M", "%S", "%L", "%N", "%p", "%z", "%Z", "%s", "%Q"],
-    "date": ["%B", "%b", "%h", "%A", "%a", "%C", "%Y", "%y", "%j", "%m", "%d", "%e"],
-    "combined": ["%R", "%T", "%r", "%D", "%F", "%c"]
+  "returns": {
+    "type": "string",
+    "description": "Formatted timestamp string"
+  },
+  "format_patterns": {
+    "%Y": "4-digit year (2024)",
+    "%m": "2-digit month (01-12)",
+    "%d": "2-digit day (01-31)",
+    "%H": "2-digit hour 24h (00-23)",
+    "%M": "2-digit minute (00-59)",
+    "%S": "2-digit second (00-59)",
+    "%a": "Abbreviated weekday (Mon)",
+    "%A": "Full weekday (Monday)",
+    "%b": "Abbreviated month (Jan)",
+    "%B": "Full month (January)",
+    "%z": "Timezone offset (+0000)",
+    "%Z": "Timezone name (UTC)"
   },
   "examples": [
-    "| formatTime(format=\"%Y-%m-%d %H:%M:%S.%L\", field=firstLogon, as=\"firstLogon\")",
-    "| day := formatTime(\"%Y-%m-%d\", field=@timestamp, locale=en_US, timezone=Z)",
-    "| _bucket := formatTime(\"%Y-%m-%d\", field=_bucket, locale=en_US, timezone=Z)"
+    {
+      "description": "Format timestamp as date",
+      "query": "day := formattime(\"%Y-%m-%d\", field=@timestamp)"
+    },
+    {
+      "description": "Format with timezone",
+      "query": "localTime := formattime(\"%Y-%m-%d %H:%M:%S\", field=ProcessStartTime, timezone=\"America/New_York\")"
+    },
+    {
+      "description": "Format with full month name",
+      "query": "dateStr := formattime(\"%B %d, %Y\", field=@timestamp)"
+    }
   ],
-  "related_functions": ["formatDuration", "bucket"],
-  "use_cases": ["Timestamp formatting", "Date display", "Time zone conversion", "Custom date formats"],
-  "documentation_url": "https://library.humio.com/data-analysis/functions-formattime.html"
+  "use_cases": [
+    "Convert timestamps to readable format",
+    "Group events by day/hour",
+    "Display times in local timezone",
+    "Create time-based labels"
+  ],
+  "related_functions": ["formatTime", "formatDuration", "bucket", "timeChart"],
+  "notes": [
+    "Functionally identical to formatTime() with uppercase 'T'",
+    "CQL is case-insensitive for function names",
+    "Timestamps in CQL are milliseconds since Unix epoch",
+    "Prefer formatTime() for consistency with CrowdStrike documentation"
+  ]
 }

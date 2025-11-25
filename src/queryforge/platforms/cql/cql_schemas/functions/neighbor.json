@@ -1,0 +1,36 @@
+{
+  "name": "neighbor",
+  "category": "analysis",
+  "description": "Accesses field values from neighboring (previous or next) events in a sorted sequence.",
+  "syntax": "neighbor(field, [offset])",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "Field to access from neighbor"
+    },
+    {
+      "name": "offset",
+      "type": "number",
+      "required": false,
+      "default": -1,
+      "description": "Offset (-1 for previous, 1 for next)"
+    }
+  ],
+  "return_type": "value",
+  "examples": [
+    "prevValue := neighbor(value, -1)",
+    "nextTimestamp := neighbor(@timestamp, 1)"
+  ],
+  "related_functions": [
+    "sort",
+    "groupBy"
+  ],
+  "use_cases": [
+    "Sequential analysis",
+    "Temporal comparison",
+    "State changes"
+  ],
+  "notes": "Requires sorted events. Commonly used for calculating deltas between sequential events."
+}

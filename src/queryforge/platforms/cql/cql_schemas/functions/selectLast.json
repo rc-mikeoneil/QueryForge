@@ -1,0 +1,30 @@
+{
+  "name": "selectLast",
+  "category": "aggregation",
+  "description": "Selects the last (most recent) value from a sorted collection or group. Typically used with groupBy() to get the final value after sorting by timestamp or another field.",
+  "syntax": "selectLast(field, [as=output_name])",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "The field name to select the last value from"
+    },
+    {
+      "name": "as",
+      "type": "string",
+      "required": false,
+      "description": "Alias name for the output field"
+    }
+  ],
+  "return_type": "value",
+  "examples": [
+    "| groupBy([aid], function=selectLast(@timestamp))",
+    "| groupBy([ComputerName], function=[selectLast(ConfigBuild, as=LatestBuild)])",
+    "| groupBy([UserSid], function=[selectLast(ContextTimeStamp, as=LastSeen)])"
+  ],
+  "related_functions": ["selectFromMin", "selectFromMax", "groupBy", "sort"],
+  "use_cases": ["Getting most recent value", "Latest state determination", "Temporal analysis", "Last-seen tracking"],
+  "notes": "Commonly used to find the latest configuration, timestamp, or state value within grouped events. Often paired with sort() or used after temporal grouping.",
+  "documentation_url": "https://library.humio.com/data-analysis/functions-selectlast.html"
+}

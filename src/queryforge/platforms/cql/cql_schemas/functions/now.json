@@ -1,0 +1,25 @@
+{
+  "name": "now",
+  "category": "time",
+  "description": "Returns the current timestamp as epoch time in seconds. Commonly used for calculating time deltas or relative timestamps.",
+  "syntax": "now()",
+  "parameters": [],
+  "return_type": "long",
+  "examples": [
+    "timeDelta := (now()*1000)-ProcessStartTime",
+    "LastRebootAgo := now()-LastReboot",
+    "| where @timestamp > now()-86400"
+  ],
+  "related_functions": [
+    "formatTime",
+    "formatDuration",
+    "bucket"
+  ],
+  "use_cases": [
+    "Time calculations",
+    "Relative time filtering",
+    "Uptime calculations",
+    "Age determination"
+  ],
+  "notes": "Returns epoch seconds. Multiply by 1000 to convert to milliseconds for comparison with CrowdStrike timestamps."
+}

@@ -9,122 +9,202 @@
       "type": "string",
       "description": "Event type identifier",
       "required": true,
-      "example_values": ["SystemCapacity"]
+      "example_values": [
+        "SystemCapacity"
+      ]
     },
     {
       "name": "aid",
       "type": "string",
       "description": "Agent ID - unique identifier for the endpoint",
       "required": true,
-      "common_usage": ["grouping", "filtering", "correlation"]
+      "common_usage": [
+        "grouping",
+        "filtering",
+        "correlation"
+      ]
     },
     {
       "name": "cid",
       "type": "string",
       "description": "Customer ID - unique identifier for the CrowdStrike tenant",
       "required": true,
-      "common_usage": ["grouping", "filtering"]
+      "common_usage": [
+        "grouping",
+        "filtering"
+      ]
     },
     {
       "name": "event_platform",
       "type": "string",
       "description": "Operating system platform",
       "required": true,
-      "example_values": ["Win", "Mac", "Lin"],
-      "common_usage": ["filtering"]
+      "example_values": [
+        "Win",
+        "Mac",
+        "Lin"
+      ],
+      "common_usage": [
+        "filtering"
+      ]
     },
     {
       "name": "ComputerName",
       "type": "string",
       "description": "Hostname of the endpoint",
       "searchable": true,
-      "common_usage": ["display", "filtering", "grouping"]
+      "common_usage": [
+        "display",
+        "filtering",
+        "grouping"
+      ]
     },
     {
       "name": "TotalCpuCores",
       "type": "long",
       "description": "Total number of CPU cores",
-      "common_usage": ["inventory", "capacity analysis"]
+      "common_usage": [
+        "inventory",
+        "capacity analysis"
+      ]
     },
     {
       "name": "TotalMemoryGB",
       "type": "long",
       "description": "Total memory in gigabytes",
-      "common_usage": ["inventory", "capacity planning"]
+      "common_usage": [
+        "inventory",
+        "capacity planning"
+      ]
     },
     {
       "name": "TotalDiskSpaceGB",
       "type": "long",
       "description": "Total disk space in gigabytes",
-      "common_usage": ["inventory", "capacity planning"]
+      "common_usage": [
+        "inventory",
+        "capacity planning"
+      ]
     },
     {
       "name": "SystemManufacturer",
       "type": "string",
       "description": "Hardware manufacturer",
       "searchable": true,
-      "common_usage": ["inventory", "asset management"]
+      "common_usage": [
+        "inventory",
+        "asset management"
+      ]
     },
     {
       "name": "SystemModel",
       "type": "string",
       "description": "Hardware model",
       "searchable": true,
-      "common_usage": ["inventory", "asset management"]
+      "common_usage": [
+        "inventory",
+        "asset management"
+      ]
     },
     {
       "name": "BiosManufacturer",
       "type": "string",
       "description": "BIOS manufacturer name",
       "searchable": true,
-      "common_usage": ["inventory", "firmware analysis"]
+      "common_usage": [
+        "inventory",
+        "firmware analysis"
+      ]
     },
     {
       "name": "ChasisManufacturer",
       "type": "string",
       "description": "Chassis manufacturer name",
       "searchable": true,
-      "common_usage": ["inventory", "hardware tracking"]
+      "common_usage": [
+        "inventory",
+        "hardware tracking"
+      ]
     },
     {
       "name": "CpuProcessorName",
       "type": "string",
       "description": "CPU processor model name",
       "searchable": true,
-      "common_usage": ["inventory", "performance analysis", "Windows 11 compatibility"]
+      "common_usage": [
+        "inventory",
+        "performance analysis",
+        "Windows 11 compatibility"
+      ]
     },
     {
       "name": "MemoryTotal",
       "type": "long",
       "description": "Total system memory (may require unit conversion to GB)",
-      "common_usage": ["inventory", "capacity planning", "Windows 11 compatibility"]
+      "common_usage": [
+        "inventory",
+        "capacity planning",
+        "Windows 11 compatibility"
+      ]
     },
     {
       "name": "TpmFirmwareVersion",
       "type": "string",
       "description": "TPM (Trusted Platform Module) firmware version",
       "searchable": true,
-      "common_usage": ["security analysis", "TPM 2.0 detection", "Windows 11 compatibility"]
+      "common_usage": [
+        "security analysis",
+        "TPM 2.0 detection",
+        "Windows 11 compatibility"
+      ]
     },
     {
       "name": "AvailableDiskSpace",
       "type": "long",
       "description": "Available disk space",
-      "common_usage": ["capacity monitoring", "disk space analysis"]
+      "common_usage": [
+        "capacity monitoring",
+        "disk space analysis"
+      ]
     },
     {
       "name": "ContextTimeStamp",
       "type": "long",
       "description": "Event timestamp in epoch milliseconds",
-      "common_usage": ["temporal analysis"]
+      "common_usage": [
+        "temporal analysis"
+      ]
+    },
+    {
+      "name": "UEFI",
+      "type": "boolean",
+      "description": "Whether system uses UEFI firmware",
+      "field_category": "source",
+      "common_usage": [
+        "firmware assessment"
+      ]
+    },
+    {
+      "name": "TPM",
+      "type": "string",
+      "description": "Trusted Platform Module information",
+      "field_category": "source",
+      "common_usage": [
+        "hardware security"
+      ]
     }
   ],
-  "col_count": 17,
+  "col_count": 19,
   "common_filters": [
     "TotalMemoryGB<8",
     "TotalCpuCores>16"
   ],
-  "common_fields": ["aid", "ComputerName", "TotalCpuCores", "TotalMemoryGB"],
+  "common_fields": [
+    "aid",
+    "ComputerName",
+    "TotalCpuCores",
+    "TotalMemoryGB"
+  ],
   "common_operations": [
     "Hardware inventory management",
     "Capacity planning",

@@ -9,36 +9,52 @@
       "type": "string",
       "description": "Event type identifier",
       "required": true,
-      "example_values": ["DriverLoad"]
+      "example_values": [
+        "DriverLoad"
+      ]
     },
     {
       "name": "aid",
       "type": "string",
       "description": "Agent ID - unique identifier for the endpoint",
       "required": true,
-      "common_usage": ["grouping", "filtering", "correlation"]
+      "common_usage": [
+        "grouping",
+        "filtering",
+        "correlation"
+      ]
     },
     {
       "name": "cid",
       "type": "string",
       "description": "Customer ID - unique identifier for the CrowdStrike tenant",
       "required": true,
-      "common_usage": ["grouping", "filtering"]
+      "common_usage": [
+        "grouping",
+        "filtering"
+      ]
     },
     {
       "name": "event_platform",
       "type": "string",
       "description": "Operating system platform",
       "required": true,
-      "example_values": ["Win"],
-      "common_usage": ["filtering"]
+      "example_values": [
+        "Win"
+      ],
+      "common_usage": [
+        "filtering"
+      ]
     },
     {
       "name": "ComputerName",
       "type": "string",
       "description": "Hostname of the endpoint",
       "searchable": true,
-      "common_usage": ["display", "filtering"]
+      "common_usage": [
+        "display",
+        "filtering"
+      ]
     },
     {
       "name": "FilePath",
@@ -46,16 +62,26 @@
       "description": "Full file path to the driver",
       "searchable": true,
       "supports_regex": true,
-      "example_values": ["\\Device\\HarddiskVolume1\\Windows\\System32\\drivers\\driver.sys"],
-      "common_usage": ["filtering", "path extraction"]
+      "example_values": [
+        "\\Device\\HarddiskVolume1\\Windows\\System32\\drivers\\driver.sys"
+      ],
+      "common_usage": [
+        "filtering",
+        "path extraction"
+      ]
     },
     {
       "name": "ShortFileParth",
       "type": "string",
       "description": "Shortened file path with volume prefix removed (calculated field)",
       "searchable": true,
-      "example_values": ["\\Windows\\System32\\drivers\\driver.sys"],
-      "common_usage": ["display", "cleaner output"],
+      "example_values": [
+        "\\Windows\\System32\\drivers\\driver.sys"
+      ],
+      "common_usage": [
+        "display",
+        "cleaner output"
+      ],
       "notes": "Typo 'Parth' is intentional - appears in query examples"
     },
     {
@@ -63,57 +89,101 @@
       "type": "string",
       "description": "Base filename of the driver",
       "searchable": true,
-      "example_values": ["driver.sys", "malicious.sys"],
-      "common_usage": ["filtering", "driver identification"]
+      "example_values": [
+        "driver.sys",
+        "malicious.sys"
+      ],
+      "common_usage": [
+        "filtering",
+        "driver identification"
+      ]
     },
     {
       "name": "OriginalFilename",
       "type": "string",
       "description": "Original filename from PE metadata (from Event_ModuleSummaryInfoEvent)",
       "searchable": true,
-      "common_usage": ["name mismatch detection", "renamed driver detection"]
+      "common_usage": [
+        "name mismatch detection",
+        "renamed driver detection"
+      ]
     },
     {
       "name": "SHA256HashData",
       "type": "string",
       "description": "SHA256 hash of the driver file",
       "searchable": true,
-      "common_usage": ["threat intelligence", "IOC matching", "correlation"]
+      "common_usage": [
+        "threat intelligence",
+        "IOC matching",
+        "correlation"
+      ]
     },
     {
       "name": "SubjectCN",
       "type": "string",
       "description": "Subject Common Name from code signing certificate (from Event_ModuleSummaryInfoEvent)",
       "searchable": true,
-      "common_usage": ["certificate validation", "signer identification"]
+      "common_usage": [
+        "certificate validation",
+        "signer identification"
+      ]
     },
     {
       "name": "IssuerCN",
       "type": "string",
       "description": "Issuer Common Name from code signing certificate (from Event_ModuleSummaryInfoEvent)",
       "searchable": true,
-      "common_usage": ["certificate validation", "CA identification"]
+      "common_usage": [
+        "certificate validation",
+        "CA identification"
+      ]
     },
     {
       "name": "ContextTimeStamp",
       "type": "long",
       "description": "Event timestamp in epoch milliseconds",
-      "common_usage": ["temporal analysis", "aggregation"]
+      "common_usage": [
+        "temporal analysis",
+        "aggregation"
+      ]
     },
     {
       "name": "@timestamp",
       "type": "datetime",
       "description": "Event timestamp in ISO format",
-      "common_usage": ["display", "time range filtering"]
+      "common_usage": [
+        "display",
+        "time range filtering"
+      ]
+    },
+    {
+      "name": "ExternalApiType",
+      "type": "string",
+      "description": "Type of external API used for driver loading",
+      "field_category": "source",
+      "searchable": true,
+      "common_usage": [
+        "API tracking",
+        "driver analysis"
+      ]
     }
   ],
-  "col_count": 14,
+  "col_count": 15,
   "common_filters": [
     "event_platform=Win",
     "FilePath=*",
     "FileName=*"
   ],
-  "common_fields": ["aid", "FilePath", "ShortFileParth", "FileName", "SHA256HashData", "SubjectCN", "IssuerCN"],
+  "common_fields": [
+    "aid",
+    "FilePath",
+    "ShortFileParth",
+    "FileName",
+    "SHA256HashData",
+    "SubjectCN",
+    "IssuerCN"
+  ],
   "common_operations": [
     "Join with Event_ModuleSummaryInfoEvent for certificate data enrichment",
     "Path shortening via regex to remove HarddiskVolume prefix",

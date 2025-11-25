@@ -1,0 +1,47 @@
+{
+  "name": "distance",
+  "category": "geospatial",
+  "description": "Calculates distance between two geographic coordinate pairs. Returns distance in kilometers.",
+  "syntax": "distance(lat1, lon1, lat2, lon2)",
+  "parameters": [
+    {
+      "name": "lat1",
+      "type": "number",
+      "required": true,
+      "description": "First latitude"
+    },
+    {
+      "name": "lon1",
+      "type": "number",
+      "required": true,
+      "description": "First longitude"
+    },
+    {
+      "name": "lat2",
+      "type": "number",
+      "required": true,
+      "description": "Second latitude"
+    },
+    {
+      "name": "lon2",
+      "type": "number",
+      "required": true,
+      "description": "Second longitude"
+    }
+  ],
+  "return_type": "number",
+  "examples": [
+    "distKm := distance(lat1, lon1, lat2, lon2)",
+    "| where distance(prevLat, prevLon, lat, lon) > 1000"
+  ],
+  "related_functions": [
+    "geohash",
+    "ipLocation"
+  ],
+  "use_cases": [
+    "Geographic distance calculation",
+    "Impossible travel detection",
+    "Location analysis"
+  ],
+  "notes": "Uses Haversine formula for spherical distance. Result in kilometers."
+}

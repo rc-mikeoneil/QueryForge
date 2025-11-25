@@ -166,9 +166,81 @@
       "type": "string",
       "description": "Unix Group ID (Linux/Mac)",
       "common_usage": ["filtering", "permission analysis on Unix systems"]
+    },
+    {
+      "name": "DomainName",
+      "type": "string",
+      "description": "Windows domain name associated with the user context",
+      "searchable": true,
+      "field_category": "enrichment",
+      "common_usage": ["filtering", "domain analysis", "identity correlation"]
+    },
+    {
+      "name": "RemoteAddressIP4",
+      "type": "string",
+      "description": "Remote IP address from network connections (enriched from NetworkConnectIP4)",
+      "searchable": true,
+      "field_category": "join_output",
+      "common_usage": ["network analysis", "threat hunting", "IP correlation"]
+    },
+    {
+      "name": "RemotePort",
+      "type": "long",
+      "description": "Remote port number from network connections (enriched from NetworkConnectIP4)",
+      "field_category": "join_output",
+      "common_usage": ["network analysis", "port scanning detection"]
+    },
+    {
+      "name": "LocalPort",
+      "type": "long",
+      "description": "Local port number from network connections (enriched from NetworkConnectIP4)",
+      "field_category": "join_output",
+      "common_usage": ["network analysis", "listening services"]
+    },
+    {
+      "name": "ExecutingFileName",
+      "type": "string",
+      "description": "Filename of the executing process (derived from cross-event correlation)",
+      "searchable": true,
+      "field_category": "join_output",
+      "common_usage": ["file analysis", "process correlation"]
+    },
+    {
+      "name": "WrittenFileName",
+      "type": "string",
+      "description": "Name of file written by process (enriched from FileWritten events)",
+      "searchable": true,
+      "field_category": "join_output",
+      "common_usage": ["file operations", "output analysis"]
+    },
+    {
+      "name": "WrittenFilePath",
+      "type": "string",
+      "description": "Full path of file written by process (enriched from FileWritten events)",
+      "searchable": true,
+      "field_category": "join_output",
+      "supports_regex": true,
+      "common_usage": ["file operations", "path analysis"]
+    },
+    {
+      "name": "ExecutingFilePath",
+      "type": "string",
+      "description": "Full path of the executing file (derived from cross-event correlation)",
+      "searchable": true,
+      "field_category": "join_output",
+      "supports_regex": true,
+      "common_usage": ["file analysis", "path correlation"]
+    },
+    {
+      "name": "TargetFileName",
+      "type": "string",
+      "description": "Target filename for process operations (derived from event correlation)",
+      "searchable": true,
+      "field_category": "join_output",
+      "common_usage": ["target analysis", "file operations"]
     }
   ],
-  "col_count": 23,
+  "col_count": 33,
   "common_filters": [
     "event_platform=Win",
     "event_platform=Mac",

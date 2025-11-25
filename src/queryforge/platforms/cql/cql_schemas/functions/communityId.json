@@ -1,0 +1,53 @@
+{
+  "name": "communityId",
+  "category": "network",
+  "description": "Generates a Community ID hash for network flows, enabling correlation across different data sources.",
+  "syntax": "communityId(src_ip, dst_ip, src_port, dst_port, protocol)",
+  "parameters": [
+    {
+      "name": "src_ip",
+      "type": "string",
+      "required": true,
+      "description": "Source IP address"
+    },
+    {
+      "name": "dst_ip",
+      "type": "string",
+      "required": true,
+      "description": "Destination IP address"
+    },
+    {
+      "name": "src_port",
+      "type": "number",
+      "required": true,
+      "description": "Source port"
+    },
+    {
+      "name": "dst_port",
+      "type": "number",
+      "required": true,
+      "description": "Destination port"
+    },
+    {
+      "name": "protocol",
+      "type": "string",
+      "required": true,
+      "description": "Protocol (TCP/UDP)"
+    }
+  ],
+  "return_type": "string",
+  "examples": [
+    "flowId := communityId(LocalAddressIP4, RemoteAddressIP4, LocalPort, RemotePort, Protocol)",
+    "| groupBy([communityId(src, dst, sport, dport, proto)])"
+  ],
+  "related_functions": [
+    "ipLocation",
+    "asn"
+  ],
+  "use_cases": [
+    "Network flow correlation",
+    "Cross-tool analysis",
+    "Flow hashing"
+  ],
+  "notes": "Standard community ID format for network flow correlation across security tools."
+}

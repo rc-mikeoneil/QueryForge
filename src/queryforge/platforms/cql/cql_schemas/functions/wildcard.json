@@ -1,0 +1,36 @@
+{
+  "name": "wildcard",
+  "category": "pattern",
+  "description": "Performs wildcard pattern matching on field values. Supports * for zero or more characters and ? for single character.",
+  "syntax": "wildcard(field, pattern)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "Field to match against"
+    },
+    {
+      "name": "pattern",
+      "type": "string",
+      "required": true,
+      "description": "Wildcard pattern (* and ? supported)"
+    }
+  ],
+  "return_type": "boolean",
+  "examples": [
+    "| where wildcard(ImageFileName, \"*powershell*\")",
+    "| where wildcard(FileName, \"cmd.???\")"
+  ],
+  "related_functions": [
+    "match",
+    "regex",
+    "=*"
+  ],
+  "use_cases": [
+    "Pattern matching",
+    "Substring search",
+    "Flexible filtering"
+  ],
+  "notes": "Alternative to =* operator. Useful for programmatic pattern matching."
+}

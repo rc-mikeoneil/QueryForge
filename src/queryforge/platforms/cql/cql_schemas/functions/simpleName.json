@@ -1,0 +1,29 @@
+{
+  "name": "simpleName",
+  "category": "transformation",
+  "description": "Extracts the simple filename from a full file path, removing directory components.",
+  "syntax": "simpleName(path_field)",
+  "parameters": [
+    {
+      "name": "path_field",
+      "type": "string",
+      "required": true,
+      "description": "Full file path"
+    }
+  ],
+  "return_type": "string",
+  "examples": [
+    "fileName := simpleName(ImageFileName)",
+    "| groupBy([simpleName(FilePath)])"
+  ],
+  "related_functions": [
+    "split",
+    "splitString"
+  ],
+  "use_cases": [
+    "Filename extraction",
+    "Path normalization",
+    "Grouping by filename"
+  ],
+  "notes": "Handles both forward slash and backslash path separators."
+}

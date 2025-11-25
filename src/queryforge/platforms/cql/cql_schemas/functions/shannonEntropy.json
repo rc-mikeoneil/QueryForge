@@ -1,0 +1,30 @@
+{
+  "name": "shannonEntropy",
+  "category": "analysis",
+  "description": "Calculates Shannon entropy of a string to measure randomness/complexity. Higher values indicate more random/encoded content.",
+  "syntax": "shannonEntropy(field)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "String to calculate entropy for"
+    }
+  ],
+  "return_type": "number",
+  "examples": [
+    "entropy := shannonEntropy(CommandLine)",
+    "| where shannonEntropy(ScriptContent) > 4.5"
+  ],
+  "related_functions": [
+    "base64Decode",
+    "length"
+  ],
+  "use_cases": [
+    "Encoded content detection",
+    "Obfuscation detection",
+    "Randomness analysis",
+    "Malware detection"
+  ],
+  "notes": "Values typically range from 0 (not random) to ~8 (highly random). Base64 encoded strings often have entropy around 5-6."
+}

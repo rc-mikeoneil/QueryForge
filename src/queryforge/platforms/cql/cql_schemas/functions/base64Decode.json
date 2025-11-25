@@ -1,0 +1,37 @@
+{
+  "name": "base64Decode",
+  "category": "transformation",
+  "description": "Decodes Base64-encoded strings back to their original content. Commonly used for analyzing encoded commands and payloads.",
+  "syntax": "base64Decode(field, [charset])",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "Base64-encoded string to decode"
+    },
+    {
+      "name": "charset",
+      "type": "string",
+      "required": false,
+      "default": "UTF-8",
+      "description": "Character encoding to use"
+    }
+  ],
+  "return_type": "string",
+  "examples": [
+    "decoded := base64Decode(b64String)",
+    "command := base64Decode(encodedCommand, charset=\"UTF-16LE\")"
+  ],
+  "related_functions": [
+    "urlDecode",
+    "shannonEntropy",
+    "parseJson"
+  ],
+  "use_cases": [
+    "Encoded command analysis",
+    "Payload decoding",
+    "PowerShell command inspection"
+  ],
+  "notes": "PowerShell often uses Base64 encoding with -enc flag. UTF-16LE charset common for Windows."
+}

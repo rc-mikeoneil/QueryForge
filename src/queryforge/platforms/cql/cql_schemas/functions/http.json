@@ -1,0 +1,29 @@
+{
+  "name": "http",
+  "category": "network",
+  "description": "Parses and analyzes HTTP request/response data from events.",
+  "syntax": "http(field)",
+  "parameters": [
+    {
+      "name": "field",
+      "type": "string",
+      "required": true,
+      "description": "HTTP data field to parse"
+    }
+  ],
+  "return_type": "parsed_http",
+  "examples": [
+    "| http(HttpRequestHeader)",
+    "parsedReq := http(requestData)"
+  ],
+  "related_functions": [
+    "urlDecode",
+    "parseJson"
+  ],
+  "use_cases": [
+    "HTTP analysis",
+    "Web traffic inspection",
+    "Request parsing"
+  ],
+  "notes": "Extracts HTTP method, URL, headers, and other request components."
+}
