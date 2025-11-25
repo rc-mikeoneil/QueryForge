@@ -2,7 +2,9 @@
 
 ## Overview
 
-This document describes the integration of OpenAI embeddings via LiteLLM proxy for semantic search capabilities in QueryForge.
+This document describes the **technical integration** of OpenAI embeddings via LiteLLM proxy for semantic search capabilities in QueryForge.
+
+> **📚 Also See:** [PREBUILT_EMBEDDINGS.md](PREBUILT_EMBEDDINGS.md) for **operational deployment** guide with pre-generated embeddings for faster startup.
 
 ## Architecture
 
@@ -52,6 +54,8 @@ export LITELLM_BASE_URL="https://your-litellm-proxy-url"  # Your LiteLLM proxy U
 export LITELLM_EMBEDDING_MODEL="text-embedding-3-large"  # Model name
 ```
 
+> **⚡ Fast Deployment:** For production deployments with pre-generated embeddings (< 2 second startup), see [PREBUILT_EMBEDDINGS.md](PREBUILT_EMBEDDINGS.md).
+
 ### Docker Compose
 
 The `docker-compose.yml` includes environment variable configuration:
@@ -63,15 +67,28 @@ environment:
   - LITELLM_EMBEDDING_MODEL=${LITELLM_EMBEDDING_MODEL:-text-embedding-3-large}
 ```
 
-To run with embeddings:
+### Development vs Production Setup
 
+#### Development (Runtime Generation)
 ```bash
 # Set your API key
 export LITELLM_API_KEY="your-key"
 
-# Start the service
+# Start the service (10-120 second startup)
 docker-compose up
 ```
+
+#### Production (Pre-generated Embeddings)
+```bash
+# Generate embeddings locally first
+python -c "from queryforge.server.server import rag_service; rag_service.ensure_index(force=True)"
+
+# Build and deploy with embeddings included (< 2 second startup)
+docker-compose build queryforge
+docker-compose up -d queryforge
+```
+
+> **📖 Full Production Guide:** See [PREBUILT_EMBEDDINGS.md](PREBUILT_EMBEDDINGS.md) for complete instructions.
 
 ## Features
 
@@ -105,11 +122,21 @@ The system gracefully falls back to RapidFuzz if:
 - Cache signature matches
 - All embeddings are present
 
+> **📋 Cache Details:** See `.cache/rag_metadata.json` format and management details in [RAG_INTERNALS.md](RAG_INTERNALS.md#caching-strategy).
+
 ### Performance
 
+#### Runtime Generation (Development)
 - **Indexing**: One-time cost at startup (~2-5 seconds for 1000 documents)
 - **Query**: Fast vector comparison (milliseconds)
 - **Storage**: 3072-dimensional vectors (~12KB per document)
+
+#### Pre-generated Embeddings (Production)
+- **Startup**: < 2 seconds (embeddings pre-cached)
+- **Query**: Same performance as runtime generation
+- **Storage**: 15-50MB Docker image increase
+
+> **⚡ Performance Details:** See [PREBUILT_EMBEDDINGS.md](PREBUILT_EMBEDDINGS.md#file-sizes) for complete performance comparison.
 
 ## Usage Examples
 
@@ -233,6 +260,8 @@ rm .cache/rag_metadata.json
 # Restart the service
 ```
 
+> **🔧 More Troubleshooting:** See [PREBUILT_EMBEDDINGS.md](PREBUILT_EMBEDDINGS.md#troubleshooting) for deployment-specific issues and [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for general RAG problems.
+
 ## Comparison: Semantic vs Fuzzy Search
 
 ### Query: "parent process information"
@@ -261,7 +290,7 @@ rm .cache/rag_metadata.json
 
 ## Performance Metrics
 
-### Indexing Performance
+### Indexing Performance (Runtime Generation)
 
 | Documents | Embedding Time | Cache Size |
 |-----------|----------------|------------|
@@ -272,6 +301,13 @@ rm .cache/rag_metadata.json
 
 *Note: Times are approximate and depend on network latency to LiteLLM proxy*
 
+### Startup Performance Comparison
+
+| Method | Startup Time | Use Case |
+|--------|-------------|----------|
+| Runtime Generation | 10-120 seconds | Development, schema changes |
+| Pre-generated Embeddings | < 2 seconds | Production, stable schemas |
+
 ### Query Performance
 
 Both semantic and fuzzy search have similar query performance:
@@ -279,6 +315,8 @@ Both semantic and fuzzy search have similar query performance:
 - Batch (5 queries): 5-20ms
 
 The main difference is **quality** of results, not speed.
+
+> **📊 Detailed Benchmarks:** See [PREBUILT_EMBEDDINGS.md](PREBUILT_EMBEDDINGS.md#benefits-summary) for comprehensive performance comparison.
 
 ## API Reference
 
@@ -308,6 +346,21 @@ def cosine_similarity(vec1: List[float], vec2: List[float]) -> float
 def create_embedding_service(config: Optional[LiteLLMConfig] = None) -> Optional[EmbeddingService]
 ```
 
+## Related Documentation
+
+### User Guides
+- **[PREBUILT_EMBEDDINGS.md](PREBUILT_EMBEDDINGS.md)** - Production deployment with pre-generated embeddings
+- **[RAG_ENHANCEMENT_GUIDE.md](RAG_ENHANCEMENT_GUIDE.md)** - Complete RAG feature guide for developers
+
+### Technical References
+- **[RAG_INTERNALS.md](RAG_INTERNALS.md)** - Deep technical dive into RAG system architecture
+- **[API_REFERENCE.md](API_REFERENCE.md)** - Complete MCP tool documentation
+- **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** - Common issues and solutions
+
+### System Documentation
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - Overall system architecture
+- **[DEPLOYMENT.md](DEPLOYMENT.md)** - General deployment guide
+
 ## Future Enhancements
 
 Potential improvements for future versions:
@@ -324,10 +377,11 @@ When modifying the embedding integration:
 
 1. Maintain backward compatibility with RapidFuzz fallback
 2. Add appropriate logging for debugging
-3. Update this documentation
+3. Update this documentation and [PREBUILT_EMBEDDINGS.md](PREBUILT_EMBEDDINGS.md) if deployment changes
 4. Test both embedding and fallback paths
 5. Consider cache invalidation logic
 
-## License
+---
 
-Same as the main project.
+**Last Updated:** 2025-11-25  
+**Version:** 2.0 - Added cross-references and deployment guidance

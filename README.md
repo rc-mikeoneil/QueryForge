@@ -2,7 +2,7 @@
 
 **Multi-Platform Security Query Builder with RAG Enhancement**
 
-QueryForge is a unified Model Context Protocol (MCP) server that helps security analysts transform natural-language intent into production-ready hunting queries across Microsoft Defender, VMware Carbon Black Cloud, Palo Alto Cortex XDR, and SentinelOne. The system includes a developer-friendly RAG layer, Docker-first deployment, and support for both stdio and SSE transports.
+QueryForge is a unified Model Context Protocol (MCP) server that helps security analysts transform natural-language intent into production-ready hunting queries across Microsoft Defender (KQL), CrowdStrike (CQL), VMware Carbon Black Cloud & Response, Palo Alto Cortex XDR, and SentinelOne. The system includes a developer-friendly RAG layer, Docker-first deployment, and support for both stdio and SSE transports.
 
 ## Quick Start
 
@@ -41,6 +41,8 @@ python -m queryforge.server.server
     - [Carbon Black Cloud Builder](#carbon-black-cloud-builder)
     - [Cortex XDR Builder](#cortex-xdr-builder)
     - [SentinelOne Builder](#sentinelone-builder)
+    - [CrowdStrike Query Language (CQL) Builder](#crowdstrike-query-language-cql-builder)
+    - [Carbon Black Response (CBR) Builder](#carbon-black-response-cbr-builder)
   - [Getting Started (Local Python)](#getting-started-local-python)
   - [Running with Docker](#running-with-docker)
     - [QueryForge](#queryforge-2)
@@ -52,10 +54,11 @@ python -m queryforge.server.server
     - [For Users](#for-users)
 
 ## Highlights
-- **Unified multi-platform service** that exposes Defender KQL, Carbon Black, Cortex XDR, and SentinelOne tooling from a single MCP endpoint with shared caching and retrieval-augmented generation (RAG).
+- **Unified multi-platform service** that exposes Defender KQL, Carbon Black Cloud & Response, CrowdStrike CQL, Cortex XDR, and SentinelOne tooling from a single MCP endpoint with shared caching and retrieval-augmented generation (RAG).
 - **RAG-Enhanced Query Building** transforms simple queries into comprehensive multi-indicator searches. Example: "RDP" becomes `(netconn_port:3389 OR process_name:mstsc.exe OR process_name:rdpclip.exe)` automatically.
+- **CrowdStrike Query Language (CQL)** support with 280+ schemas, 123 example queries, 43 functions, and 25 MITRE ATT&CK technique mappings for comprehensive threat hunting.
 - **Rapidfuzz-powered RAG index** that bootstraps at startup for low-latency context retrieval across all schemas.
-- **Expanded SentinelOne dataset coverage** with dataset inference helpers, boolean operator defaults, and schema-aware query validation.
+- **Combined build+validate tools** (`*_build_query_validated`) provide 10x faster query building with automatic validation and corrections in a single API call.
 - **First-class SSE transport** across Docker images and example clients, enabling easy integration with web apps and MCP extensions.
 - **Comprehensive regression tests** for parsers, schema caches, tool defaults, and guardrails across every builder.
 
@@ -65,7 +68,7 @@ Comprehensive documentation is available to help you get started and understand 
 
 ### Core Documentation
 - **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** - System design, data flows, and component architecture
-- **[API_REFERENCE.md](docs/API_REFERENCE.md)** - Complete API documentation for all 30+ MCP tools
+- **[API_REFERENCE.md](docs/API_REFERENCE.md)** - Complete API documentation for all 40+ MCP tools
 - **[DEPLOYMENT.md](docs/DEPLOYMENT.md)** - Deployment guides for local, Docker, Kubernetes, and cloud platforms
 - **[TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)** - Common issues and solutions
 
@@ -87,11 +90,12 @@ The project follows a clean, organized structure with clear separation of concer
 | `src/queryforge/server/` | MCP server implementation and tool registration |
 | `├── server.py` | FastMCP entry point with minimal orchestration logic |
 | `├── server_runtime.py` | Runtime coordination, schema management, and two-phase initialization |
-| `├── server_tools_*.py` | Modular tool registration files, one per platform (kql, cbc, cortex, s1, shared) |
+| `├── server_tools_*.py` | Modular tool registration files, one per platform (kql, cbc, cbr, cortex, cql, s1, shared) |
 | `src/queryforge/platforms/` | Platform-specific implementations |
 | `├── cbc/` | Carbon Black Cloud schema loaders, query builders, and RAG document builders |
 | `├── cbr/` | Carbon Black Response schema loaders and query builders |
 | `├── cortex/` | Cortex XDR dataset loaders, pipeline builders, function/operator references |
+| `├── cql/` | CrowdStrike query builder with 280+ schema files, functions, operators, and examples |
 | `├── kql/` | Defender KQL schema cache, query builder, and example query catalog |
 | `├── s1/` | SentinelOne schema loader, dataset inference helpers, and query builder utilities |
 | `src/queryforge/shared/` | Shared components including unified RAG service, configuration, and security utilities |
@@ -104,12 +108,12 @@ The project follows a clean, organized structure with clear separation of concer
 
 ### QueryForge
 The recommended entry point for production workflows. Key capabilities include:
-- Single MCP registration that surfaces `kql_*`, `cbc_*`, `cortex_*`, and `s1_*` tool namespaces.
+- Single MCP registration that surfaces `kql_*`, `cbc_*`, `cbr_*`, `cortex_*`, `cql_*`, and `s1_*` tool namespaces.
 - Automatic schema hydration with persisted caches under `.cache/` and refresh toggles per platform.
 - **RAG-Enhanced Query Building** that automatically expands security concepts into comprehensive multi-indicator queries.
 - Unified RAG layer that merges documentation snippets from all platforms and supports forced re-indexing.
 - Configurable SSE or stdio transport (Docker images default to SSE on port `8080`).
-- SentinelOne dataset inference and boolean operator defaults for fast hunting query construction.
+- Comprehensive support for 6 security platforms with 40+ MCP tools for query building, validation, and schema exploration.
 
 **RAG Enhancement Examples:**
 
@@ -145,6 +149,18 @@ See **[SECURITY_CONCEPTS.md](docs/SECURITY_CONCEPTS.md)** for the full list of r
 - Schema loader backed by the curated SentinelOne exports in `s1_builder/`.
 - Query builder with dataset inference (`infer_dataset`) and boolean defaults to streamline query authoring.
 - RAG document builder so SentinelOne fields and examples are searchable alongside other platforms.
+
+### CrowdStrike Query Language (CQL) Builder
+- Comprehensive schema repository with 280+ JSON files covering 10 event types, 43 functions, and 19 operators.
+- Query builder with autocomplete support and real-time validation for CQL syntax.
+- 123 categorized example queries including 25 MITRE ATT&CK technique mappings for threat hunting.
+- 54 how-to guides and 34 best practice documents for query optimization and security analysis.
+
+### Carbon Black Response (CBR) Builder
+- Dual dataset support for server-generated events (78 fields) and raw endpoint events (63 fields).
+- Natural language and structured query building for CBR's field:value syntax with IOC extraction.
+- Security concept expansion and RAG enhancement for comprehensive query coverage.
+- Comprehensive validation with performance optimization warnings and injection prevention.
 
 ## Getting Started (Local Python)
 1. **Create a virtual environment** (Python 3.10+ recommended):
@@ -203,7 +219,7 @@ docker run -d -p 8080:8080 --name queryforge queryforge:latest
    ```
    - Use `type: "stdio"` with a `command` array instead if you prefer running the Python script directly (`"command": ["python", "-m", "queryforge.server.server"]`, with appropriate `PYTHONPATH` set).
 4. **Reload VS Code** (or run “Cline: Reload MCP Servers”) so the extension discovers the new endpoint.
-5. **Connect and explore tools** from the Cline side panel; all 30+ MCP tools from QueryForge (KQL, CBC, Cortex, S1) are available.
+5. **Connect and explore tools** from the Cline side panel; all 40+ MCP tools from QueryForge (KQL, CBC, CBR, Cortex, CQL, S1) are available.
 
 ## Testing
 From the repository root run:
