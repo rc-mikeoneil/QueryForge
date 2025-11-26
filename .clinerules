@@ -13,7 +13,65 @@
 
 **CRITICAL**: When building queries for any security platform (CBC, Cortex, KQL, S1, CQL):
 
-### 1. Check for Exact Example Query Matches FIRST
+### 1. ALWAYS Consider Both Static AND Behavioral Detection
+
+**Security Query Design Philosophy:**
+
+When building security detection queries, you MUST consider BOTH approaches:
+
+1. **Behavioral Detection (PREFERRED)** - Detects what threats DO:
+   - Process execution patterns (e.g., web servers spawning shells)
+   - Network connections from unusual processes
+   - Privilege escalation attempts
+   - Suspicious parent-child process relationships
+   - Command-line patterns indicating malicious activity
+   - **Higher fidelity, fewer false positives**
+
+2. **Static Detection** - Detects what threats LOOK LIKE:
+   - File extensions and paths
+   - Hash values
+   - File sizes and attributes
+   - Registry keys or specific file locations
+   - **More false positives, easier to evade**
+
+**MANDATORY WORKFLOW for Threat Detection Queries:**
+
+1. **Ask yourself:** "What BEHAVIOR indicates this threat?"
+2. **Primary approach:** Build behavioral detection first
+3. **Secondary approach:** Consider static indicators as supplementary
+4. **Best practice:** Combine both when possible for defense-in-depth
+
+**Examples:**
+
+**Webshell Detection:**
+- ✅ BEHAVIORAL: `web_server_process spawning command_shell` (HIGH FIDELITY)
+- ❌ STATIC ONLY: `*.php files in /var/www/html` (HIGH FALSE POSITIVES)
+- ✅ COMBINED: Both behavioral + suspicious file creation in web dirs
+
+**Ransomware Detection:**
+- ✅ BEHAVIORAL: `process creating many encrypted files + deleting originals` (HIGH FIDELITY)
+- ❌ STATIC ONLY: `*.encrypted file extension` (HIGH FALSE POSITIVES)
+- ✅ COMBINED: Both behavioral + known ransomware file markers
+
+**Lateral Movement:**
+- ✅ BEHAVIORAL: `remote process creation + network authentication` (HIGH FIDELITY)
+- ❌ STATIC ONLY: `psexec.exe present on disk` (INCOMPLETE)
+- ✅ COMBINED: Both behavioral + tool artifacts
+
+**Why Behavioral Detection is Superior:**
+- Catches threats during active exploitation
+- Harder for attackers to evade
+- Works against zero-day threats
+- Detects technique, not specific implementation
+- Lower false positive rate for high-fidelity detections
+
+**When to Use Static Detection:**
+- Known IOCs (hashes, domains, IPs)
+- Compliance requirements (file inventory)
+- Post-incident forensics
+- As supplementary evidence alongside behavioral detection
+
+### 2. Check for Exact Example Query Matches FIRST
 
 Before building a query from scratch, check if an exact example query exists:
 

@@ -35,6 +35,21 @@ S1QL_FUNCTIONS = {'contains', 'startswith', 'endswith', 'in', 'between', 'regex'
 class S1Validator(BaseValidator):
     """Validator for SentinelOne S1QL queries."""
 
+    # Pre-compiled regex patterns for better performance (Optimization 1)
+    IN_CLAUSE_PATTERN = re.compile(r'\bin\s*:\s*matchcase\s*\([^)]+\)', re.IGNORECASE)
+    VALUES_SECTION_PATTERN = re.compile(r'\(([^)]+)\)')
+    UNQUOTED_VALUES_PATTERN = re.compile(r'\b\w+\b(?![^\']*\')')
+    BACKSLASH_PATTERN = re.compile(r'\\(?!\\)')
+    OR_PATTERN = re.compile(r'\bOR\b', re.IGNORECASE)
+    EQUALS_PATTERN = re.compile(r'=\s*[\'"][^\'"]+[\'"]')
+    REGEX_PATTERN = re.compile(r'regex\s*\([^)]+\)', re.IGNORECASE)
+    REGEX_ANCHOR_PATTERN = re.compile(r'[\^\\]A')
+    CONTAINS_NO_CASE_PATTERN = re.compile(r'\bcontains\s+(?!matchcase|anycase)\w+', re.IGNORECASE)
+    IN_MATCHCASE_PATTERN = re.compile(r'in\s*:\s*matchcase\s*\([^)]+\)', re.IGNORECASE)
+    HASH_MD5_PATTERN = re.compile(r'\b[a-f0-9]{32}\b', re.IGNORECASE)
+    HASH_SHA1_PATTERN = re.compile(r'\b[a-f0-9]{40}\b', re.IGNORECASE)
+    HASH_SHA256_PATTERN = re.compile(r'\b[a-f0-9]{64}\b', re.IGNORECASE)
+
     def get_platform_name(self) -> str:
         """Return platform name."""
         return "s1"
@@ -81,14 +96,14 @@ class S1Validator(BaseValidator):
         issues.extend(check_dangerous_characters(query, DANGEROUS_CHARS))
 
         # Check for proper IN clause syntax: "field in:matchcase ('val1', 'val2')"
-        in_clauses = re.findall(r'\bin\s*:\s*matchcase\s*\([^)]+\)', query, re.IGNORECASE)
+        in_clauses = self.IN_CLAUSE_PATTERN.findall(query)
         for in_clause in in_clauses:
             # Verify values are quoted
-            values_section = re.search(r'\(([^)]+)\)', in_clause)
+            values_section = self.VALUES_SECTION_PATTERN.search(in_clause)
             if values_section:
                 values = values_section.group(1)
                 # Each value should be quoted
-                unquoted_values = re.findall(r'\b\w+\b(?![^\']*\')', values)
+                unquoted_values = self.UNQUOTED_VALUES_PATTERN.findall(values)
                 if unquoted_values:
                     issues.append(ValidationIssue(
                         severity=ValidationSeverity.WARNING,
@@ -98,7 +113,7 @@ class S1Validator(BaseValidator):
                     ))
 
         # Check for potential escape issues with backslashes
-        if '\\' in query and '\\\\' not in query:
+        if self.BACKSLASH_PATTERN.search(query):
             issues.append(ValidationIssue(
                 severity=ValidationSeverity.WARNING,
                 category="syntax",
@@ -334,9 +349,9 @@ class S1Validator(BaseValidator):
             ))
 
         # Check for unanchored regex
-        regex_patterns = re.findall(r'regex\s*\([^)]+\)', query, re.IGNORECASE)
+        regex_patterns = self.REGEX_PATTERN.findall(query)
         for pattern in regex_patterns:
-            if not ('^' in pattern or '\\A' in pattern):
+            if not self.REGEX_ANCHOR_PATTERN.search(pattern):
                 issues.append(ValidationIssue(
                     severity=ValidationSeverity.INFO,
                     category="performance",
@@ -346,7 +361,7 @@ class S1Validator(BaseValidator):
                 ))
 
         # Check for contains without matchcase
-        contains_patterns = re.findall(r'\bcontains\s+(?!matchcase|anycase)\w+', query, re.IGNORECASE)
+        contains_patterns = self.CONTAINS_NO_CASE_PATTERN.findall(query)
         if contains_patterns:
             issues.append(ValidationIssue(
                 severity=ValidationSeverity.INFO,
@@ -356,7 +371,7 @@ class S1Validator(BaseValidator):
             ))
 
         # Check for IN clauses with many values
-        in_clauses = re.findall(r'in\s*:\s*matchcase\s*\([^)]+\)', query, re.IGNORECASE)
+        in_clauses = self.IN_MATCHCASE_PATTERN.findall(query)
         for in_clause in in_clauses:
             # Count comma-separated values
             values_count = in_clause.count(',') + 1
@@ -384,9 +399,9 @@ class S1Validator(BaseValidator):
 
         # Suggest using hash fields for hash values
         hash_patterns = {
-            'MD5': re.compile(r'\b[a-f0-9]{32}\b', re.IGNORECASE),
-            'SHA1': re.compile(r'\b[a-f0-9]{40}\b', re.IGNORECASE),
-            'SHA256': re.compile(r'\b[a-f0-9]{64}\b', re.IGNORECASE),
+            'MD5': self.HASH_MD5_PATTERN,
+            'SHA1': self.HASH_SHA1_PATTERN,
+            'SHA256': self.HASH_SHA256_PATTERN,
         }
 
         for hash_type, pattern in hash_patterns.items():
@@ -402,7 +417,7 @@ class S1Validator(BaseValidator):
                     ))
 
         # Check for multiple OR conditions that could be IN clause
-        or_count = len(re.findall(r'\bOR\b', query, re.IGNORECASE))
+        or_count = len(self.OR_PATTERN.findall(query))
         if or_count > 3:
             # Check if they're on the same field
             issues.append(ValidationIssue(
@@ -413,7 +428,7 @@ class S1Validator(BaseValidator):
             ))
 
         # Check for case-sensitive searches that might miss results
-        equals_without_case = re.findall(r'=\s*[\'"][^\'"]+[\'"]', query)
+        equals_without_case = self.EQUALS_PATTERN.findall(query)
         if equals_without_case and 'anycase' not in query.lower() and 'matchcase' not in query.lower():
             issues.append(ValidationIssue(
                 severity=ValidationSeverity.INFO,

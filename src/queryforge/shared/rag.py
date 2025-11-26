@@ -7,9 +7,11 @@ import hmac
 import json
 import logging
 import os
+import time
 from dataclasses import dataclass, field
+from functools import lru_cache
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional, Sequence
+from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple
 
 try:  # pragma: no cover - optional dependency
     from rapidfuzz import process as rapidfuzz_process
@@ -65,6 +67,13 @@ class UnifiedRAGService:
         self._source_versions: Dict[str, Optional[Union[str, int]]] = {}
         self._embedding_service: Optional[EmbeddingService] = None
         self._embedding_model: Optional[str] = None
+        
+        # Optimization 4: Query-level result caching
+        self._search_cache: Dict[str, Tuple[List[Dict[str, Any]], float]] = {}
+        self._cache_max_size: int = 1000
+        self._cache_ttl_seconds: int = 3600  # 1 hour TTL
+        self._cache_hits: int = 0
+        self._cache_misses: int = 0
 
     # ------------------------------------------------------------------
     # Helpers
@@ -146,6 +155,63 @@ class UnifiedRAGService:
             self._embedding_model or "rapidfuzz",
         )
         return True
+
+    # ------------------------------------------------------------------
+    # Optimization 4: Query-level caching methods
+    # ------------------------------------------------------------------
+    def _get_search_cache_key(self, query: str, k: int, source_filter: Optional[str]) -> str:
+        """Generate cache key for search results (Optimization 4)."""
+        cache_input = f"{query.lower().strip()}:{k}:{source_filter or 'all'}"
+        return hashlib.sha256(cache_input.encode()).hexdigest()
+
+    def _get_from_search_cache(self, cache_key: str) -> Optional[List[Dict[str, Any]]]:
+        """Get search results from cache if valid (Optimization 4)."""
+        if cache_key not in self._search_cache:
+            return None
+        
+        results, cached_at = self._search_cache[cache_key]
+        
+        # Check TTL
+        if time.time() - cached_at > self._cache_ttl_seconds:
+            del self._search_cache[cache_key]
+            return None
+        
+        return results
+
+    def _add_to_search_cache(self, cache_key: str, results: List[Dict[str, Any]]) -> None:
+        """Add search results to cache with TTL (Optimization 4)."""
+        # Simple eviction: if cache is full, clear oldest 10% of entries
+        if len(self._search_cache) >= self._cache_max_size:
+            num_to_remove = max(1, self._cache_max_size // 10)
+            # Remove oldest entries (simple FIFO based on dict insertion order)
+            keys_to_remove = list(self._search_cache.keys())[:num_to_remove]
+            for key in keys_to_remove:
+                del self._search_cache[key]
+
+        self._search_cache[cache_key] = (results.copy(), time.time())
+
+    def get_search_cache_stats(self) -> Dict[str, Any]:
+        """Get search cache statistics (Optimization 4)."""
+        total_requests = self._cache_hits + self._cache_misses
+        hit_rate = self._cache_hits / total_requests if total_requests > 0 else 0.0
+        
+        # Count valid (non-expired) entries
+        current_time = time.time()
+        valid_entries = sum(
+            1 for _, cached_at in self._search_cache.values()
+            if current_time - cached_at <= self._cache_ttl_seconds
+        )
+        
+        return {
+            "size": len(self._search_cache),
+            "valid_entries": valid_entries,
+            "max_size": self._cache_max_size,
+            "hits": self._cache_hits,
+            "misses": self._cache_misses,
+            "hit_rate": hit_rate,
+            "total_requests": total_requests,
+            "ttl_seconds": self._cache_ttl_seconds
+        }
 
     # ------------------------------------------------------------------
     # Public API
@@ -359,7 +425,7 @@ class UnifiedRAGService:
         logger.info("✅ RAG index initialization complete (%.2fs)", total_duration)
 
     def search(self, query: str, k: int = 5, source_filter: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Return the top-k documents matching the query.
+        """Return the top-k documents matching the query (Optimization 4: with caching).
 
         Parameters
         ----------
@@ -374,6 +440,14 @@ class UnifiedRAGService:
         if not query or not query.strip():
             raise ValueError("Query must be a non-empty string")
 
+        # Optimization 4: Check cache first
+        cache_key = self._get_search_cache_key(query, k, source_filter)
+        cached_result = self._get_from_search_cache(cache_key)
+        if cached_result is not None:
+            self._cache_hits += 1
+            return cached_result
+
+        self._cache_misses += 1
         self.ensure_index()
 
         candidates = [doc for doc in self._documents if not source_filter or doc.get("source") == source_filter]
@@ -387,16 +461,21 @@ class UnifiedRAGService:
         # Try semantic search with embeddings first
         if self._embedding_service and all("embedding" in doc for doc in candidates):
             try:
-                return self._semantic_search(query, candidates, top_k)
+                results = self._semantic_search(query, candidates, top_k)
             except Exception as exc:
                 logger.warning(
                     "Semantic search failed: %s. Falling back to RapidFuzz.",
                     exc,
                 )
                 # Fall through to RapidFuzz
+                results = self._fuzzy_search(query, candidates, top_k)
+        else:
+            # Fallback to RapidFuzz
+            results = self._fuzzy_search(query, candidates, top_k)
 
-        # Fallback to RapidFuzz
-        return self._fuzzy_search(query, candidates, top_k)
+        # Optimization 4: Cache the results
+        self._add_to_search_cache(cache_key, results)
+        return results
 
     def _semantic_search(
         self, query: str, candidates: List[Dict[str, Any]], top_k: int
@@ -480,12 +559,17 @@ class UnifiedRAGService:
         return results
 
     def clear_cache(self) -> None:
-        """Remove cached embeddings."""
+        """Remove cached embeddings and search results (Optimization 4)."""
 
         if self._metadata_path.exists():
             self._metadata_path.unlink()
         self._documents = []
         self._source_versions = {}
+        
+        # Clear search result cache
+        self._search_cache.clear()
+        self._cache_hits = 0
+        self._cache_misses = 0
 
 
 def build_s1_documents(schema: Dict[str, Any]) -> List[Dict[str, Any]]:
@@ -1281,10 +1365,13 @@ def build_cortex_documents(schema: Dict[str, Any]) -> List[Dict[str, Any]]:
             lines.append(f"Values: {preview}")
         return " ".join(lines).strip()
 
-    def add_document(doc_id: str, section: str, lines: List[str]) -> None:
+    def add_document(doc_id: str, section: str, lines: List[str], metadata: Optional[Dict[str, Any]] = None) -> None:
         text = "\n".join(line for line in lines if line).strip()
         if text:
-            documents.append({"id": f"cortex:{doc_id}", "section": section, "text": text})
+            doc_meta = {"section": section}
+            if metadata:
+                doc_meta.update(metadata)
+            documents.append({"id": f"cortex:{doc_id}", "text": text, "metadata": doc_meta})
 
     overview_lines: List[str] = []
     version = schema.get("version")
@@ -1597,7 +1684,12 @@ def build_cortex_documents(schema: Dict[str, Any]) -> List[Dict[str, Any]]:
                 if notes:
                     lines.append(f"Notes: {notes}")
 
-                add_document(f"comprehensive_pattern:{pattern_name}", "comprehensive_patterns", lines, {"pattern_name": pattern_name, "indicators": indicators, "dataset": dataset})
+                add_document(
+                    f"comprehensive_pattern:{pattern_name}",
+                    "comprehensive_patterns",
+                    lines,
+                    {"pattern_name": pattern_name, "indicators": indicators, "dataset": dataset}
+                )
 
     return documents
 
