@@ -19,34 +19,34 @@ The RAG (Retrieval-Augmented Generation) Enhancement system bridges the gap betw
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                     User Request                                 │
-│              "Show me RDP activity in last 3 days"               │
+│                     User Request                                │
+│              "Show me RDP activity in last 3 days"              │
 └────────────────────────┬────────────────────────────────────────┘
                          │
                          ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                    RAG Retrieval                                 │
-│  • Semantic search finds relevant docs about RDP                 │
-│  • Returns: netconn_port info, process names, examples           │
+│                    RAG Retrieval                                │
+│  • Semantic search finds relevant docs about RDP                │
+│  • Returns: netconn_port info, process names, examples          │
 └────────────────────────┬────────────────────────────────────────┘
                          │
                          ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│               RAG Context Parser (NEW)                           │
+│               RAG Context Parser (NEW)                          │
 │  • Extracts fields: [netconn_port, process_name]                │
 │  • Extracts values: {process_name: [mstsc.exe, rdpclip.exe]}    │
-│  • Parses example patterns                                       │
-│  • Identifies field relationships                                │
-│  • Calculates confidence score                                   │
+│  • Parses example patterns                                      │
+│  • Identifies field relationships                               │
+│  • Calculates confidence score                                  │
 └────────────────────────┬────────────────────────────────────────┘
                          │
                          ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│              Query Builder (ENHANCED)                            │
-│  • Combines user intent + RAG insights                           │
+│              Query Builder (ENHANCED)                           │
+│  • Combines user intent + RAG insights                          │
 │  • Generates: (netconn_port:3389 OR                             │
-│                process_name:mstsc.exe OR                         │
-│                process_name:rdpclip.exe)                         │
+│                process_name:mstsc.exe OR                        │
+│                process_name:rdpclip.exe)                        │
 └────────────────────────┬────────────────────────────────────────┘
                          │
                          ▼
@@ -59,8 +59,8 @@ The RAG (Retrieval-Augmented Generation) Enhancement system bridges the gap betw
                          │
                          ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                 Enhanced Query Result                            │
-│  User receives validated, comprehensive query                    │
+│                 Enhanced Query Result                           │
+│  User receives validated, comprehensive query                   │
 └─────────────────────────────────────────────────────────────────┘
 ```
 

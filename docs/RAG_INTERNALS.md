@@ -37,29 +37,29 @@ When users provide natural language intent, the RAG service:
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                  UnifiedRAGService                       │
-│                                                          │
-│  ┌────────────────────────────────────────────────┐    │
-│  │          Document Store                         │    │
-│  │  - Platform schemas                             │    │
-│  │  - Field definitions                            │    │
-│  │  - Example queries                              │    │
-│  │  - Best practices                               │    │
-│  └────────────┬───────────────────────────────────┘    │
-│               │                                          │
-│  ┌────────────▼───────────────────────────────────┐    │
-│  │        Rapidfuzz Search Engine                  │    │
-│  │  - Fuzzy string matching                        │    │
-│  │  - Score calculation                            │    │
-│  │  - Result ranking                               │    │
-│  └────────────┬───────────────────────────────────┘    │
-│               │                                          │
-│  ┌────────────▼───────────────────────────────────┐    │
-│  │          Cache Layer                            │    │
-│  │  - Persistent storage (JSON)                    │    │
-│  │  - Version tracking                             │    │
-│  │  - Auto-invalidation                            │    │
-│  └─────────────────────────────────────────────────┘    │
+│                  UnifiedRAGService                      │
+│                                                         │
+│  ┌────────────────────────────────────────────────┐     │
+│  │          Document Store                        │     │
+│  │  - Platform schemas                            │     │
+│  │  - Field definitions                           │     │
+│  │  - Example queries                             │     │
+│  │  - Best practices                              │     │
+│  └────────────┬───────────────────────────────────┘     │
+│               │                                         │
+│  ┌────────────▼───────────────────────────────────┐     │
+│  │        Rapidfuzz Search Engine                 │     │
+│  │  - Fuzzy string matching                       │     │
+│  │  - Score calculation                           │     │
+│  │  - Result ranking                              │     │
+│  └────────────┬───────────────────────────────────┘     │
+│               │                                         │
+│  ┌────────────▼───────────────────────────────────┐     │
+│  │          Cache Layer                           │     │
+│  │  - Persistent storage (JSON)                   │     │
+│  │  - Version tracking                            │     │
+│  │  - Auto-invalidation                           │     │
+│  └────────────────────────────────────────────────┘     │
 └─────────────────────────────────────────────────────────┘
 ```
 
