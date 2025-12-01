@@ -2,7 +2,7 @@
 
 ## Overview
 
-The MCP Security Query Builders project is a suite of Model Context Protocol (MCP) servers designed to transform natural-language security hunting intent into production-ready queries across four major security platforms: Microsoft Defender, Carbon Black Cloud, Cortex XDR, and SentinelOne.
+QueryForge is a Model Context Protocol (MCP) server designed to transform natural-language security hunting intent into production-ready queries across six major security platforms: Carbon Black Cloud (CBC), Carbon Black Response (CBR), Cortex XDR, CrowdStrike Falcon (CQL), Microsoft Defender (KQL), and SentinelOne (S1).
 
 ## System Architecture
 
@@ -19,16 +19,18 @@ The MCP Security Query Builders project is a suite of Model Context Protocol (MC
 │                  QueryForge Server                          │
 │                    (FastMCP Entry Point)                    │
 │                                                             │
-│  ┌────────────┐  ┌────────────┐  ┌────────────┐  ┌───────┐  │
-│  │ KQL        │  │ CBC        │  │ Cortex     │  │ S1    │  │
-│  │ Tools      │  │ Tools      │  │ Tools      │  │ Tools │  │
-│  │ (8 tools)  │  │ (6 tools)  │  │ (7 tools)  │  │(3 tls)│  │
-│  └─────┬──────┘  └─────┬──────┘  └─────┬──────┘  └───┬───┘  │
-│        │               │               │             │      │
-│  ┌─────▼───────────────▼───────────────▼─────────────▼───┐  │
-│  │            Unified RAG Service                        │  │
-│  │         (FAISS/Rapidfuzz-based retrieval)             │  │
-│  └────────────────────┬──────────────────────────────────┘  │
+│ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌─────┐ │
+│ │   KQL    │ │   CBC    │ │   CBR    │ │ Cortex   │ │ CQL │ │
+│ │  Tools   │ │  Tools   │ │  Tools   │ │  Tools   │ │Tools│ │
+│ │(8 tools) │ │(6 tools) │ │(6 tools) │ │(7 tools) │ │(6tl)│ │
+│ └─────┬────┘ └─────┬────┘ └─────┬────┘ └─────┬────┘ └──┬──┘ │
+│       │            │            │            │         │    │
+│ ┌─────┴──┐ ┌───────────────────────────────────────────┴──┐ │
+│ │   S1   │ │            Unified RAG Service              │ │
+│ │ Tools  │ │        (Rapidfuzz-based retrieval)          │ │
+│ │(6 tls) │ └────────────────┬────────────────────────────┘ │
+│ └────┬───┘                 │                              │
+│      └─────────────────────┘                              │
 └───────────────────────┼─────────────────────────────────────┘
                         │
          ┌──────────────┴──────────────┐
@@ -77,12 +79,24 @@ Each platform has a dedicated query builder module responsible for:
 - Field validation and suggestion
 - Best practices enforcement
 
+**CBR Builder** (`src/queryforge/platforms/cbr/query_builder.py`)
+- Server and endpoint event search
+- Legacy Carbon Black Response query syntax
+- Field mapping and validation
+- Sensor and process event filtering
+
 **Cortex Builder** (`src/queryforge/platforms/cortex/query_builder.py`)
 - XQL pipeline assembly
 - Dataset validation
 - Filter expression construction
 - Field projection management
 - Operator and enum validation
+
+**CQL Builder** (`src/queryforge/platforms/cql/query_builder.py`)
+- CrowdStrike Falcon LogScale queries
+- Dataset and field validation
+- Operator normalization (case-sensitive handling)
+- Time range and aggregation support
 
 **S1 Builder** (`src/queryforge/platforms/s1/query_builder.py`)
 - Dataset inference from context
@@ -105,10 +119,12 @@ class SchemaCache:
 ```
 
 **Schema Sources**:
-- **KQL**: JSON files in `defender_xdr_kql_schema_fuller/`
-- **CBC**: Single JSON file `cbc_schema.json`
-- **Cortex**: Single JSON file `cortex_xdr_schema.json`
-- **S1**: Multiple JSON files in `s1_schemas/`
+- **KQL**: JSON files in `kql/` directory
+- **CBC**: Multiple JSON files in `cbc/` directory 
+- **CBR**: Multiple JSON files in `cbr/` directory
+- **Cortex**: Multiple JSON files in `cortex/` directory
+- **CQL**: Multiple JSON files in `cql/cql_schemas/` directory
+- **S1**: Multiple JSON files in `s1/` directory
 
 **Caching Strategy**:
 - Schemas loaded once at startup
@@ -139,7 +155,7 @@ Natural Language Query
 - **Document Store**: In-memory collection of schema passages
 - **Search Engine**: Rapidfuzz-based fuzzy string matching
 - **Cache**: Persisted embeddings and document index
-- **Source Filter**: Platform-specific filtering (cbc, kql, cortex, s1)
+- **Source Filter**: Platform-specific filtering (cbc, cbr, cortex, cql, kql, s1)
 
 **Document Sources**:
 - Table/dataset descriptions

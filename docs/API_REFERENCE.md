@@ -6,7 +6,9 @@ Complete reference for all MCP tools exposed by the QueryForge server.
 
 - [Overview](#overview)
 - [Carbon Black Cloud (CBC) Tools](#carbon-black-cloud-cbc-tools)
+- [Carbon Black Response (CBR) Tools](#carbon-black-response-cbr-tools)
 - [Cortex XDR Tools](#cortex-xdr-tools)
+- [CrowdStrike Falcon (CQL) Tools](#crowdstrike-falcon-cql-tools)
 - [Microsoft Defender KQL Tools](#microsoft-defender-kql-tools)
 - [SentinelOne Tools](#sentinelone-tools)
 - [Shared Tools](#shared-tools)
@@ -15,17 +17,21 @@ Complete reference for all MCP tools exposed by the QueryForge server.
 
 ## Overview
 
-QueryForge exposes 30+ MCP tools organized into platform-specific namespaces:
+QueryForge exposes 50+ MCP tools organized into platform-specific namespaces:
 
 | Namespace | Tools | Purpose |
 |-----------|-------|---------|
-| `cbc_*` | 6 tools | Carbon Black Cloud query building |
-| `cortex_*` | 7 tools | Cortex XDR XQL query building |
-| `kql_*` | 8 tools | Microsoft Defender KQL query building |
-| `s1_*` | 3 tools | SentinelOne S1QL query building |
+| `cbc_*` | 7 tools | Carbon Black Cloud query building & validation |
+| `cbr_*` | 7 tools | Carbon Black Response query building & validation |
+| `cortex_*` | 7 tools | Cortex XDR XQL query building & validation |
+| `cql_*` | 7 tools | CrowdStrike Falcon CQL query building & validation |
+| `kql_*` | 8 tools | Microsoft Defender KQL query building & validation |
+| `s1_*` | 6 tools | SentinelOne S1QL query building & validation |
 | `retrieve_context` | 1 tool | Cross-platform RAG retrieval |
 
 All tools return JSON responses with consistent structure and error handling.
+
+**Note**: Each platform now includes combined build+validate tools (e.g., `cbc_build_query_validated`, `kql_build_query_validated`) that optimize the query building process by automatically validating and correcting queries in a single operation, reducing latency by up to 10x.
 
 ## Carbon Black Cloud (CBC) Tools
 

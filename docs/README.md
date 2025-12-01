@@ -83,12 +83,13 @@ Welcome to the QueryForge documentation! This guide helps you find the right doc
 
 ### Platform Support
 
-QueryForge supports multiple security platforms:
-- **Carbon Black Cloud (CBC)** - Process search, alert search
+QueryForge supports six major security platforms:
+- **Carbon Black Cloud (CBC)** - Process search, alert search, binary search
+- **Carbon Black Response (CBR)** - Endpoint and server event search
 - **Cortex XDR** - XQL queries across datasets
+- **CrowdStrike (CQL)** - Falcon LogScale query language
 - **Microsoft Defender (KQL)** - Advanced hunting queries
 - **SentinelOne (S1)** - Deep visibility queries
-- **CrowdStrike (CQL)** - LogScale query language
 
 See [API Reference](API_REFERENCE.md) for platform-specific tools and examples.
 
