@@ -32,13 +32,48 @@ MAX_VALUE_LENGTH = 2000  # 2KB max for individual field values
 _MD5_RE = re.compile(r"\b[a-f0-9]{32}\b", re.IGNORECASE)
 _SHA1_RE = re.compile(r"\b[a-f0-9]{40}\b", re.IGNORECASE)
 _SHA256_RE = re.compile(r"\b[a-f0-9]{64}\b", re.IGNORECASE)
-_IPV4_RE = re.compile(r"\b(?:\d{1,3}\.){3}\d{1,3}\b")
-_IPV6_RE = re.compile(r"\b(?:[0-9a-f]{0,4}:){2,7}[0-9a-f]{0,4}\b", re.IGNORECASE)
+
+# IP address patterns - with negative lookahead to avoid matching timestamps/dates
+_IPV4_RE = re.compile(
+    r"\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b"
+    r"(?![-T:\s]\d)"  # Negative lookahead: not followed by dash, T, colon, or space + digit (timestamp indicators)
+)
+# IPv6 - avoid matching time patterns by ensuring not preceded/followed by timestamp context
+_IPV6_RE = re.compile(
+    r"(?<!\d{4}-\d{2}-\d{2}[T\s])"  # Not preceded by date
+    r"\b(?:[0-9a-f]{1,4}:){7}[0-9a-f]{1,4}\b"  # Full IPv6
+    r"|(?:[0-9a-f]{1,4}:){1,7}:"  # Partial IPv6
+    r"(?![\s]\d{2}:\d{2})",  # Not followed by space + time
+    re.IGNORECASE
+)
 _PORT_RE = re.compile(r"\bport\s*(?:=|is|:)?\s*(\d{1,5})\b", re.IGNORECASE)
+
+# Timestamp detection patterns - used to exclude timestamp components from extraction
+_TIMESTAMP_RE = re.compile(
+    r"\b\d{4}-\d{2}-\d{2}[T\s]\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2}|UTC|GMT)?\b",
+    re.IGNORECASE
+)
+_DATE_RE = re.compile(r"\b\d{4}-\d{2}-\d{2}\b")
+_TIME_RE = re.compile(r"\b\d{2}:\d{2}:\d{2}\b")
+
+# Process and file patterns
 _PROCESS_BINARY_RE = re.compile(r"\b([a-zA-Z0-9_\\-]+\.(?:exe|dll|bat|cmd|ps1|vbs|sh))\b", re.IGNORECASE)
-# Additional pattern for common process names without extensions
-_PROCESS_NAME_RE = re.compile(r"\b(powershell|cmd|chrome|firefox|explorer|winword|excel|notepad|calc|msiexec|svchost|rundll32|regsvr32|wscript|cscript|java|python)\b", re.IGNORECASE)
+# Additional pattern for common process names without extensions (including mshta)
+_PROCESS_NAME_RE = re.compile(
+    r"\b(powershell|cmd|mshta|chrome|firefox|explorer|winword|excel|notepad|calc|"
+    r"msiexec|svchost|rundll32|regsvr32|wscript|cscript|java|python)\b",
+    re.IGNORECASE
+)
 _FILE_PATH_RE = re.compile(r"([A-Za-z]:\\[^\s'\"]+|/[^\s'\"]+)")
+
+# Hostname/device name patterns - matches common hostname formats
+_HOSTNAME_RE = re.compile(
+    r"\b(?:device|host|hostname|computer|computername|endpoint|system|machine)\s+"
+    r"(?:is|=|equals|named|called)?\s*['\"]?([A-Z0-9][A-Z0-9-]{0,62}[A-Z0-9]?)['\"]?",
+    re.IGNORECASE
+)
+
+# User and domain patterns
 _USERNAME_RE = re.compile(
     r"user(?:name)?\s+(?:is|=|equals|like)?\s*['\"]?([A-Za-z0-9_.@-]+)['\"]?",
     re.IGNORECASE,
@@ -260,6 +295,12 @@ class CQLQueryBuilder:
             expressions.extend(nl_expressions)
             expression_details.extend(nl_meta)
 
+        # Add event type filter for process queries (CQL best practice)
+        event_type_filter = self._infer_event_type(natural_language_intent, filters)
+        if event_type_filter:
+            expressions.insert(0, event_type_filter)
+            expression_details.insert(0, {"type": "event_type", "value": event_type_filter})
+
         # Build the base query from expressions
         if expressions:
             combined = f" {operator} ".join(expressions)
@@ -420,18 +461,24 @@ class CQLQueryBuilder:
                 f"Intent exceeds maximum length of {MAX_INTENT_LENGTH} characters"
             )
 
+        # Sanitize text by removing timestamp patterns that could be misinterpreted
+        sanitized_text = self._sanitize_text_for_extraction(text)
+
         expressions = []
         metadata = []
 
         # Extract various indicators
-        expressions.extend(self._collect_hash_expressions(text, fields))
-        expressions.extend(self._collect_ip_expressions(text, fields))
-        expressions.extend(self._collect_domain_expressions(text, fields))
-        expressions.extend(self._collect_username_expressions(text, fields))
-        expressions.extend(self._collect_process_expressions(text, fields))
-        expressions.extend(self._collect_path_expressions(text, fields))
-        expressions.extend(self._collect_cmdline_expressions(text, fields))
-        expressions.extend(self._collect_port_expressions(text, fields))
+        # Use sanitized text for most extractions, but use original text for process names
+        # (since we need to match against the original query intent)
+        expressions.extend(self._collect_hash_expressions(sanitized_text, fields))
+        expressions.extend(self._collect_ip_expressions(sanitized_text, fields))
+        expressions.extend(self._collect_domain_expressions(sanitized_text, fields))
+        expressions.extend(self._collect_hostname_expressions(text, fields))  # Use original text
+        expressions.extend(self._collect_username_expressions(sanitized_text, fields))
+        expressions.extend(self._collect_process_expressions(text, fields))  # Use original text
+        expressions.extend(self._collect_path_expressions(sanitized_text, fields))
+        expressions.extend(self._collect_cmdline_expressions(sanitized_text, fields))
+        expressions.extend(self._collect_port_expressions(sanitized_text, fields))
 
         # Deduplicate
         seen = set()
@@ -443,6 +490,25 @@ class CQLQueryBuilder:
                 metadata.append({"type": "natural_language", "expression": expr})
 
         return unique_expressions, metadata
+    
+    def _sanitize_text_for_extraction(self, text: str) -> str:
+        """
+        Sanitize text by removing/masking timestamp patterns that could be misinterpreted.
+        
+        This prevents timestamp components from being extracted as IPs or other indicators.
+        """
+        sanitized = text
+        
+        # Replace full timestamps with placeholder
+        sanitized = _TIMESTAMP_RE.sub("[TIMESTAMP]", sanitized)
+        
+        # Replace standalone dates with placeholder
+        sanitized = _DATE_RE.sub("[DATE]", sanitized)
+        
+        # Replace standalone times with placeholder
+        sanitized = _TIME_RE.sub("[TIME]", sanitized)
+        
+        return sanitized
 
     def _collect_hash_expressions(
         self, text: str, fields: Dict[str, Dict[str, Any]]
@@ -470,11 +536,32 @@ class CQLQueryBuilder:
         
         for regex in [_IPV4_RE, _IPV6_RE]:
             for match in regex.finditer(text):
+                value = match.group(0)
+                
+                # Additional validation: skip if it looks like a timestamp component
+                if self._is_timestamp_component(value):
+                    continue
+                
+                # Validate IPv4 octets are in valid range (0-255)
+                if regex == _IPV4_RE:
+                    octets = value.split('.')
+                    if any(int(octet) > 255 for octet in octets):
+                        continue
+                
                 field = self._choose_field(fields, ip_fields)
                 if field:
-                    value = match.group(0)
                     expressions.append(f"{field} = {self._quote(value)}")
         return expressions
+    
+    def _is_timestamp_component(self, value: str) -> bool:
+        """Check if a value looks like it's part of a timestamp."""
+        # Check if surrounded by timestamp-like context in original text
+        # This is a fallback check in case sanitization didn't catch it
+        if re.match(r"^\d{4}$", value):  # Year-like
+            return True
+        if re.match(r"^\d{2}:\d{2}:\d{2}$", value):  # Time format
+            return True
+        return False
 
     def _collect_domain_expressions(
         self, text: str, fields: Dict[str, Dict[str, Any]]
@@ -489,6 +576,21 @@ class CQLQueryBuilder:
             if field:
                 value = match.group(1)
                 expressions.append(f"{field} contains {self._quote(value)}")
+        return expressions
+    
+    def _collect_hostname_expressions(
+        self, text: str, fields: Dict[str, Dict[str, Any]]
+    ) -> List[str]:
+        """Extract hostname/device name filter expressions."""
+        expressions = []
+        categories = self._get_field_categories()
+        hostname_fields = categories.get("hostname_fields", [])
+        
+        for match in _HOSTNAME_RE.finditer(text):
+            field = self._choose_field(fields, hostname_fields)
+            if field:
+                value = match.group(1)
+                expressions.append(f"{field} = {self._quote(value)}")
         return expressions
 
     def _collect_username_expressions(
@@ -631,6 +733,37 @@ class CQLQueryBuilder:
             logger.warning(f"Error searching for example match: {e}")
             return None
 
+    def _infer_event_type(
+        self, natural_language_intent: Optional[str], filters: Optional[Any]
+    ) -> Optional[str]:
+        """
+        Infer the required CQL event type filter (#event_simpleName).
+        
+        Many CQL queries require explicit event type filtering for optimal performance.
+        """
+        if not natural_language_intent:
+            return None
+        
+        intent_lower = natural_language_intent.lower()
+        
+        # Process execution events
+        process_keywords = ["process", "execution", "spawning", "mshta", "cmd", "powershell", 
+                          "executable", "binary", "command"]
+        if any(kw in intent_lower for kw in process_keywords):
+            return "#event_simpleName=ProcessRollup2"
+        
+        # Network events
+        network_keywords = ["network", "connection", "dns", "http", "remote"]
+        if any(kw in intent_lower for kw in network_keywords):
+            return "#event_simpleName=NetworkConnectIP4"
+        
+        # File events
+        file_keywords = ["file", "written", "created", "modified"]
+        if any(kw in intent_lower for kw in file_keywords):
+            return "#event_simpleName=FileWritten"
+        
+        return None
+    
     def _choose_field(
         self, fields: Dict[str, Dict[str, Any]], candidates: List[str]
     ) -> Optional[str]:
@@ -643,25 +776,74 @@ class CQLQueryBuilder:
     def _build_time_filter(self, time_range: Union[str, Dict[str, Any]]) -> str:
         """Build a time filter expression."""
         if isinstance(time_range, str):
-            # Handle relative time (e.g., "24h", "7d")
-            return f"@timestamp >= now() - {time_range}"
+            # Check if it's a relative time range (e.g., "24h", "7d")
+            if re.match(r"^\d+[hdwmy]$", time_range, re.IGNORECASE):
+                return f"@timestamp >= now() - {time_range}"
+            
+            # Handle ISO format timestamp as start time
+            if re.match(r"\d{4}-\d{2}-\d{2}", time_range):
+                # Parse and convert to CQL format if needed
+                # CQL uses ISO 8601 format: YYYY-MM-DDTHH:MM:SS
+                normalized = self._normalize_timestamp(time_range)
+                return f"@timestamp >= {normalized}"
+            
+            return ""
         elif isinstance(time_range, dict):
             # Handle absolute time range
             start = time_range.get("start")
             end = time_range.get("end")
+            
             if start and end:
-                return f"@timestamp >= '{start}' AND @timestamp <= '{end}'"
+                start_normalized = self._normalize_timestamp(start)
+                end_normalized = self._normalize_timestamp(end)
+                return f"@timestamp >= {start_normalized} AND @timestamp <= {end_normalized}"
             elif start:
-                return f"@timestamp >= '{start}'"
+                start_normalized = self._normalize_timestamp(start)
+                return f"@timestamp >= {start_normalized}"
             elif end:
-                return f"@timestamp <= '{end}'"
+                end_normalized = self._normalize_timestamp(end)
+                return f"@timestamp <= {end_normalized}"
         return ""
+    
+    def _normalize_timestamp(self, timestamp: str) -> str:
+        """
+        Normalize timestamp to CQL-compatible format.
+        
+        CQL expects timestamps in ISO 8601 format:
+        - YYYY-MM-DDTHH:MM:SSZ
+        - epoch milliseconds as integer
+        """
+        if not timestamp:
+            return ""
+        
+        # Remove common timezone indicators and normalize
+        ts = timestamp.strip()
+        
+        # If already in epoch format (numbers only), return as-is
+        if ts.isdigit():
+            return ts
+        
+        # First, remove UTC/GMT text markers (but preserve Z if present)
+        ts = re.sub(r"\s+(UTC|GMT)\s*$", "", ts, flags=re.IGNORECASE)
+        
+        # Replace the space between date and time with T (ISO 8601 format)
+        # Pattern: YYYY-MM-DD HH:MM:SS -> YYYY-MM-DDTHH:MM:SS
+        if "T" not in ts:
+            # Only replace the first space (between date and time)
+            ts = re.sub(r"(\d{4}-\d{2}-\d{2})\s+(\d{2}:\d{2}:\d{2})", r"\1T\2", ts)
+        
+        # Ensure Z suffix for UTC if no timezone indicator present
+        if not re.search(r"[Z\+\-]\d{2}:\d{2}$", ts) and not ts.endswith("Z"):
+            ts += "Z"
+        
+        # Return with quotes (CQL prefers quoted timestamps)
+        return f'"{ts}"'
 
     def _quote(self, value: str) -> str:
         """Quote a string value for use in CQL queries."""
-        # Escape backslashes and single quotes
-        escaped = value.replace("\\", "\\\\").replace("'", "\\'")
-        return f"'{escaped}'"
+        # Escape backslashes and double quotes (CQL uses double quotes)
+        escaped = value.replace("\\", "\\\\").replace('"', '\\"')
+        return f'"{escaped}"'
 
     def _format_values(
         self, values: Sequence[Any], field_type: str

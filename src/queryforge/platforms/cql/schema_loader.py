@@ -533,6 +533,7 @@ class CQLSchemaLoader:
         categories = {
             "ip_fields": [],
             "domain_fields": [],
+            "hostname_fields": [],
             "process_name_fields": [],
             "cmdline_fields": [],
             "file_name_fields": [],
@@ -584,6 +585,10 @@ class CQLSchemaLoader:
             if "Domain" in field_name and field_name not in categories["domain_fields"]:
                 categories["domain_fields"].append(field_name)
             
+            if "Computer" in field_name or field_name in ["aid", "ComputerName", "ComputerNameFQDN"]:
+                if field_name not in categories["hostname_fields"]:
+                    categories["hostname_fields"].append(field_name)
+            
             if "FileName" in field_name or field_name in ["ImageFileName", "ParentBaseFileName", "ContextBaseFileName"]:
                 if field_name not in categories["process_name_fields"]:
                     categories["process_name_fields"].append(field_name)
@@ -623,6 +628,9 @@ class CQLSchemaLoader:
         
         if not categories["domain_fields"]:
             categories["domain_fields"] = ["DomainName", "DNSRequestDomain", "HttpHost"]
+        
+        if not categories["hostname_fields"]:
+            categories["hostname_fields"] = ["ComputerName", "aid", "ComputerNameFQDN"]
         
         if not categories["process_name_fields"]:
             categories["process_name_fields"] = ["FileName", "ImageFileName", "ParentBaseFileName", "ContextBaseFileName"]
