@@ -315,7 +315,7 @@ def register_cql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
             Do not present invalid queries as final results.
         """
         try:
-            validator = CQLValidator(schema_loader)
+            validator = CQLValidator(schema_loader, runtime)
             result = validator.validate(query, dataset, metadata)
             
             logger.info(
@@ -377,7 +377,7 @@ def register_cql_tools(mcp: FastMCP, runtime: ServerRuntime) -> None:
             }
         """
         try:
-            validator = CQLValidator(schema_loader)
+            validator = CQLValidator(schema_loader, runtime)
             corrections_applied = []
             retry_count = 0
 
@@ -515,9 +515,9 @@ def _extract_cql_corrections(validation: Dict[str, Any]) -> Dict[str, Any]:
                     correct_field = match.group(2)
                     field_corrections[wrong_field] = correct_field
 
-            # Extract dataset suggestions
-            if "dataset" in message.lower():
-                match = re.search(r"use ['\"]([^'\"]+)['\"]", suggestion, re.IGNORECASE)
+            # Extract dataset suggestions (handles both "use 'X'" and "Consider using dataset 'X'")
+            if "dataset" in message.lower() and ("consider" in suggestion.lower() or "use" in suggestion.lower()):
+                match = re.search(r"(?:use|using)\s+(?:dataset\s+)?['\"]([^'\"]+)['\"]", suggestion, re.IGNORECASE)
                 if match:
                     corrections["suggested_dataset"] = match.group(1)
 

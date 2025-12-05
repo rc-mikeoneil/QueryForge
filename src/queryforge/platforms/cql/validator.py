@@ -40,7 +40,7 @@ logger = logging.getLogger(__name__)
 class CQLValidator(BaseValidator):
     """Validator for CrowdStrike Query Language (CQL)."""
 
-    def __init__(self, schema_loader) -> None:
+    def __init__(self, schema_loader, runtime=None) -> None:
         """
         Initialize CQL validator.
 
@@ -48,8 +48,11 @@ class CQLValidator(BaseValidator):
         ----------
         schema_loader : CQLSchemaLoader
             Schema loader instance for accessing CQL schema definitions.
+        runtime : ServerRuntime, optional
+            Runtime for RAG-enhanced dataset validation.
         """
         self.schema_loader = schema_loader
+        self.runtime = runtime
         # Load schema from schema_loader
         self.schema = {
             "operators": schema_loader.get_operators(),
@@ -203,11 +206,87 @@ class CQLValidator(BaseValidator):
 
         return issues
 
+    def _validate_dataset_appropriateness(
+        self,
+        query: str,
+        metadata: Dict[str, Any]
+    ) -> List[ValidationIssue]:
+        """
+        Validate if the selected dataset is appropriate for the query intent.
+        
+        Uses RAG to find semantically better dataset matches and suggests
+        corrections if a more appropriate dataset exists.
+        """
+        issues = []
+        
+        # Get dataset and natural language intent from metadata
+        dataset = metadata.get("dataset")
+        intent = metadata.get("rag_enhanced", {}).get("intent") or metadata.get("natural_language_intent")
+        
+        if not dataset or not intent:
+            return issues  # Cannot validate without both
+        
+        try:
+            # Get all available datasets
+            datasets_data = self.schema_loader.get_datasets()
+            all_datasets = {}
+            for d in datasets_data.get("datasets", []):
+                key = d.get("name", "")
+                all_datasets[key] = {
+                    "name": d.get("display_name", key),
+                    "metadata": {"description": d.get("description", "")}
+                }
+            
+            if not all_datasets or not self.runtime:
+                return issues  # Cannot do semantic validation without runtime
+            
+            # Use RAG to find semantically relevant datasets
+            from queryforge.server.server_tools_shared import get_rag_enhanced_datasets
+            
+            rag_result = get_rag_enhanced_datasets(
+                runtime=self.runtime,
+                query_intent=intent,
+                source_filter="cql",
+                all_datasets=all_datasets,
+                k=3,  # Get top 3 matches
+            )
+            
+            # Get ranked datasets
+            ranked_datasets = list(rag_result.get("datasets", {}).keys())
+            
+            if not ranked_datasets:
+                return issues
+            
+            # Check if current dataset is the best match
+            best_dataset = ranked_datasets[0]
+            
+            if best_dataset != dataset:
+                # Current dataset is not the best match
+                available_datasets_str = ", ".join(ranked_datasets[:3])
+                issues.append(ValidationIssue(
+                    severity=ValidationSeverity.ERROR,
+                    category="schema",
+                    message=f"Dataset '{dataset}' may not be appropriate for this query intent",
+                    suggestion=f"Consider using dataset '{best_dataset}' instead. Top matches: {available_datasets_str}"
+                ))
+                
+                logger.info(
+                    "Dataset validation: '%s' not optimal for intent. Suggested: '%s'",
+                    dataset, best_dataset
+                )
+        
+        except Exception as exc:
+            logger.warning("Dataset appropriateness validation failed: %s", exc)
+            # Don't fail validation if RAG check fails
+        
+        return issues
+
     def validate_schema(self, query: str, metadata: Dict[str, Any]) -> List[ValidationIssue]:
         """
         Validate query against CQL schema.
 
         Checks:
+        - Dataset appropriateness for query intent (if natural language provided)
         - Dataset exists
         - Fields exist in the selected dataset
         - Field data types match usage
@@ -224,6 +303,10 @@ class CQLValidator(BaseValidator):
                 suggestion="Provide dataset in metadata for schema validation"
             ))
             return issues
+        
+        # Validate dataset appropriateness (if natural language intent available)
+        dataset_issues = self._validate_dataset_appropriateness(query, metadata)
+        issues.extend(dataset_issues)
 
         # Get fields for this dataset
         fields_data = self.schema_loader.get_fields(dataset)
